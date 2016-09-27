@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+<class name="BAM.BAMRecommender.BAMDescription" table="bam">
+
+	<id name="caseId" column="caseId">
+
+	</id>
+	<property name="utilizacaoDoEnlace" column="utilizacaoDoEnlace"/>
+	<property name="numeroDePreempcoesCT0" column="numeroDePreempcoesCT0"/>
+	<property name="numeroDePreempcoesCT1" column="numeroDePreempcoesCT1"/>
+	<property name="numeroDePreempcoesCT2" column="numeroDePreempcoesCT2"/>
+	<property name="numeroDeBloqueiosCT0" column="numeroDeBloqueiosCT0"/>
+	<property name="numeroDeBloqueiosCT1" column="numeroDeBloqueiosCT1"/>
+	<property name="numeroDeBloqueiosCT2" column="numeroDeBloqueiosCT2"/>
+	<property name="numeroDeDevolucoesCT0" column="numeroDeDevolucoesCT0"/>
+	<property name="numeroDeDevolucoesCT1" column="numeroDeDevolucoesCT1"/>
+	<property name="numeroDeDevolucoesCT2" column="numeroDeDevolucoesCT2"/>
+
+	<property name="BAMAtual" column="BAMAtual">
+		<type name="jcolibri.connector.databaseutils.EnumUserType">
+			<param name="enumClassName">BAM.BAMRecommender.BAMDescription$BAMTypes</param>
+    	</type>
+  	</property>
+  		<property name="problema" column="problema">
+		<type name="jcolibri.connector.databaseutils.EnumUserType">
+			<param name="enumClassName">BAM.BAMRecommender.BAMDescription$Problemas</param>
+    	</type>
+  	</property>
+
+</class>
+</hibernate-mapping>
