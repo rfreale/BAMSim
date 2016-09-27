@@ -1,0 +1,326 @@
+what,kind,bundleId,bundleVersion,description,time
+started,bundle,org.eclipse.m2e.discovery,1.0.0.20110607-2117,"org.eclipse.m2e.discovery",1448976538238
+started,bundle,org.eclipse.m2e.logback.configuration,1.0.0.20110607-2117,"org.eclipse.m2e.logback.configuration",1448976538238
+started,bundle,org.eclipse.mylyn.bugzilla.core,3.6.0.v20110608-1400,"org.eclipse.mylyn.bugzilla.core",1448976538239
+started,bundle,org.eclipse.mylyn.bugzilla.ui,3.6.0.v20110608-1400,"org.eclipse.mylyn.bugzilla.ui",1448976538240
+started,bundle,org.eclipse.mylyn.commons.identity,0.8.0.v20110608-1400,"org.eclipse.mylyn.commons.identity",1448976538240
+started,bundle,org.eclipse.mylyn.commons.net,3.6.0.v20110608-1400,"org.eclipse.mylyn.commons.net",1448976538240
+started,bundle,org.eclipse.mylyn.commons.ui,3.6.0.v20110608-1400,"org.eclipse.mylyn.commons.ui",1448976538241
+started,bundle,org.eclipse.mylyn.context.core,3.6.0.v20110608-1400,"org.eclipse.mylyn.context.core",1448976538242
+started,bundle,org.eclipse.mylyn.context.ui,3.6.0.v20110608-1400,"org.eclipse.mylyn.context.ui",1448976538242
+started,bundle,org.eclipse.mylyn.monitor.ui,3.6.0.v20110608-1400,"org.eclipse.mylyn.monitor.ui",1448976538243
+started,bundle,org.eclipse.mylyn.tasks.ui,3.6.0.v20110608-1400,"org.eclipse.mylyn.tasks.ui",1448976538243
+started,bundle,org.eclipse.mylyn.team.ui,3.6.0.v20110608-1400,"org.eclipse.mylyn.team.ui",1448976538244
+started,bundle,org.eclipse.search,3.7.0.v20110505-0800,"org.eclipse.search",1448976538245
+started,bundle,org.eclipse.team.core,3.6.0.I20110525-0800,"org.eclipse.team.core",1448976538245
+started,bundle,org.eclipse.team.cvs.core,3.3.400.I20110510-0800,"org.eclipse.team.cvs.core",1448976538246
+started,bundle,org.eclipse.team.cvs.ui,3.3.400.I20110510-0800,"org.eclipse.team.cvs.ui",1448976538247
+started,bundle,org.eclipse.team.ui,3.6.100.I20110525-0800,"org.eclipse.team.ui",1448976538248
+started,bundle,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui",1448976538249
+started,bundle,org.eclipse.ui.console,3.5.100.v20110511,"org.eclipse.ui.console",1448976538250
+started,bundle,org.eclipse.ui.editors,3.7.0.v20110517-0800,"org.eclipse.ui.editors",1448976538250
+started,bundle,org.eclipse.ui.forms,3.5.100.v20110425,"org.eclipse.ui.forms",1448976538251
+started,bundle,org.eclipse.ui.ide,3.7.0.I20110519-0100,"org.eclipse.ui.ide",1448976538252
+started,bundle,org.eclipse.ui.net,1.2.100.I20110511-0800,"org.eclipse.ui.net",1448976538253
+started,bundle,org.eclipse.ui.views,3.6.0.I20110412-0800,"org.eclipse.ui.views",1448976538253
+started,bundle,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"org.eclipse.ui.workbench",1448976538254
+started,bundle,org.eclipse.ui.workbench.texteditor,3.7.0.v20110505-0800,"org.eclipse.ui.workbench.texteditor",1448976538255
+started,bundle,org.eclipse.update.configurator,3.3.100.v20100512,"org.eclipse.update.configurator",1448976538255
+started,bundle,org.eclipse.update.core,3.2.500.v20110330,"org.eclipse.update.core",1448976538256
+started,bundle,org.eclipse.update.scheduler,3.2.300.v20100512,"org.eclipse.update.scheduler",1448976538256
+started,bundle,org.eclipse.wb.discovery.core,1.0.0.r37x201106081733,"org.eclipse.wb.discovery.core",1448976538257
+started,bundle,org.eclipse.wb.discovery.ui,1.0.0.r37x201106081733,"org.eclipse.wb.discovery.ui",1448976538257
+started,bundle,es.ucm.gaia.colibristudio.LibraryPool,1.0.0,"es.ucm.gaia.colibristudio.LibraryPool",1448976538258
+started,bundle,es.ucm.gaia.colibristudio.ViewColoursInfo,1.0.0,"es.ucm.gaia.colibristudio.ViewColoursInfo",1448976538258
+started,bundle,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"es.ucm.gaia.colibristudio.ViewTemplateEditor",1448976538259
+os,sysinfo,,,"win32",1448976538262
+arch,sysinfo,,,"x86_64",1448976538262
+ws,sysinfo,,,"win32",1448976538262
+locale,sysinfo,,,"pt_BR",1448976538262
+processors,sysinfo,,,"4",1448976538262
+java.runtime.name,sysinfo,,,"Java(TM) SE Runtime Environment",1448976538262
+java.runtime.version,sysinfo,,,"1.8.0_66-b18",1448976538262
+java.specification.name,sysinfo,,,"Java Platform API Specification",1448976538262
+java.specification.vendor,sysinfo,,,"Oracle Corporation",1448976538262
+java.specification.version,sysinfo,,,"1.8",1448976538262
+java.vendor,sysinfo,,,"Oracle Corporation",1448976538262
+java.version,sysinfo,,,"1.8.0_66",1448976538262
+java.vm.info,sysinfo,,,"mixed mode",1448976538262
+java.vm.name,sysinfo,,,"Java HotSpot(TM) 64-Bit Server VM",1448976538262
+java.vm.specification.name,sysinfo,,,"Java Virtual Machine Specification",1448976538262
+java.vm.specification.vendor,sysinfo,,,"Oracle Corporation",1448976538262
+java.vm.specification.version,sysinfo,,,"1.8",1448976538262
+java.vm.vendor,sysinfo,,,"Oracle Corporation",1448976538262
+java.vm.version,sysinfo,,,"25.66-b18",1448976538262
+started,bundle,org.eclipse.m2e.usagedata,1.0.0.20110607-2117,"org.eclipse.m2e.usagedata",1448976538265
+started,bundle,es.ucm.gaia.colibristudio.WizardNewProject,1.0.0,"es.ucm.gaia.colibristudio.WizardNewProject",1448976541669
+started,bundle,es.ucm.gaia.colibristudio.ViewCaseBaseSelector,1.0.0,"es.ucm.gaia.colibristudio.ViewCaseBaseSelector",1448976542060
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976542880
+opened,view,org.eclipse.ui.ide,3.7.0.I20110519-0100,"org.eclipse.ui.views.ProblemView",1448976543053
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976629722
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976631049
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976634576
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976640452
+opened,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448976742225
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448976742249
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976743203
+activated,view,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.PackageExplorer",1448976747354
+started,bundle,org.eclipse.compare,3.5.200.I20110525-0800,"org.eclipse.compare",1448976747441
+executed,command,org.eclipse.ui.ide,3.7.0.I20110519-0100,"org.eclipse.ui.project.closeProject",1448976752029
+closed,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448976752139
+started,bundle,es.ucm.gaia.colibristudio.RunButton,1.0.0,"es.ucm.gaia.colibristudio.RunButton",1448976756777
+started,bundle,org.eclipse.debug.ui,3.7.0.v20110518,"org.eclipse.debug.ui",1448976756821
+started,bundle,org.eclipse.jdt.debug,3.7.0.v20110509,"org.eclipse.jdt.debug",1448976756835
+started,bundle,org.eclipse.m2e.launching,1.0.0.20110607-2117,"org.eclipse.m2e.launching",1448976756945
+started,bundle,org.eclipse.jdt.debug.ui,3.6.0.v20110512,"org.eclipse.jdt.debug.ui",1448976757000
+started,bundle,es.ucm.gaia.colibristudio.ViewPlainTextConnector,1.0.0,"es.ucm.gaia.colibristudio.ViewPlainTextConnector",1448976761873
+opened,view,es.ucm.gaia.colibristudio.ViewPlainTextConnector,1.0.0,"colibristudio.plaintextconnector.views.TextConnectorView",1448976761899
+activated,view,es.ucm.gaia.colibristudio.ViewPlainTextConnector,1.0.0,"colibristudio.plaintextconnector.views.TextConnectorView",1448976761921
+opened,view,es.ucm.gaia.colibristudio.ViewCaseBaseSelector,1.0.0,"colibristudio.casebaseselector.views.CaseBaseSelector",1448976764097
+activated,view,es.ucm.gaia.colibristudio.ViewCaseBaseSelector,1.0.0,"colibristudio.casebaseselector.views.CaseBaseSelector",1448976764122
+started,bundle,es.ucm.gaia.colibristudio.ViewCaseDesigner,1.0.0,"es.ucm.gaia.colibristudio.ViewCaseDesigner",1448976765281
+opened,view,es.ucm.gaia.colibristudio.ViewCaseDesigner,1.0.0,"colibristudio.casedesigner.views.CaseDesignerView",1448976765341
+activated,view,es.ucm.gaia.colibristudio.ViewCaseDesigner,1.0.0,"colibristudio.casedesigner.views.CaseDesignerView",1448976765381
+activated,view,es.ucm.gaia.colibristudio.ViewPlainTextConnector,1.0.0,"colibristudio.plaintextconnector.views.TextConnectorView",1448976767537
+started,bundle,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"es.ucm.gaia.colibristudio.ViewSimilarity",1448976768404
+opened,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448976768471
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448976768500
+opened,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.TemplateEditorView",1448976769200
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.TemplateEditorView",1448976769212
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.SystemEditorView",1448976770496
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976785685
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976788564
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976789967
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976791586
+activated,view,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.PackageExplorer",1448976793219
+activated,view,org.eclipse.ui.ide,3.7.0.I20110519-0100,"org.eclipse.ui.views.ProblemView",1448976795225
+activated,view,es.ucm.gaia.colibristudio.ViewCaseDesigner,1.0.0,"colibristudio.casedesigner.views.CaseDesignerView",1448976807303
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976816632
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976823779
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976829123
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976830617
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976830927
+started,bundle,org.eclipse.jdt.junit,3.7.0.v20110505-0800,"org.eclipse.jdt.junit",1448976832104
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976833369
+activated,view,es.ucm.gaia.colibristudio.ViewCaseBaseSelector,1.0.0,"colibristudio.casebaseselector.views.CaseBaseSelector",1448976835766
+activated,view,es.ucm.gaia.colibristudio.ViewPlainTextConnector,1.0.0,"colibristudio.plaintextconnector.views.TextConnectorView",1448976838779
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976841980
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976845413
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976845500
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976848265
+activated,view,es.ucm.gaia.colibristudio.ViewCaseBaseSelector,1.0.0,"colibristudio.casebaseselector.views.CaseBaseSelector",1448976883751
+activated,view,es.ucm.gaia.colibristudio.ViewPlainTextConnector,1.0.0,"colibristudio.plaintextconnector.views.TextConnectorView",1448976886936
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448976887692
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976892312
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976897077
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.TemplateEditorView",1448976906364
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448976907312
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976909133
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976910448
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976911751
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976912730
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976914133
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976921333
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976926896
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976932008
+activated,view,es.ucm.gaia.colibristudio.ViewPlainTextConnector,1.0.0,"colibristudio.plaintextconnector.views.TextConnectorView",1448976933189
+activated,view,es.ucm.gaia.colibristudio.ViewCaseBaseSelector,1.0.0,"colibristudio.casebaseselector.views.CaseBaseSelector",1448976935810
+activated,view,es.ucm.gaia.colibristudio.ViewCaseDesigner,1.0.0,"colibristudio.casedesigner.views.CaseDesignerView",1448976936748
+activated,view,es.ucm.gaia.colibristudio.ViewCaseBaseSelector,1.0.0,"colibristudio.casebaseselector.views.CaseBaseSelector",1448976941516
+activated,view,es.ucm.gaia.colibristudio.ViewPlainTextConnector,1.0.0,"colibristudio.plaintextconnector.views.TextConnectorView",1448976942194
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.TemplateEditorView",1448976942969
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.SystemEditorView",1448976944023
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448976944862
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976947159
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976948194
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976955970
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976957114
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976959857
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976964634
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976966476
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976968599
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976970967
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976972441
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976975133
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976977677
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976983078
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448976984643
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.TemplateEditorView",1448977002795
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.SystemEditorView",1448977003788
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448977007703
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448977009367
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448977010836
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448977012341
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448977024702
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448977026378
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448977026415
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448977027690
+error,log,,,"Unhandled event loop exception",1448977029731
+error,log,,,"Unhandled event loop exception",1448977029847
+error,log,,,"Unhandled event loop exception",1448977029963
+error,log,,,"Unhandled event loop exception",1448977030174
+error,log,,,"Unhandled event loop exception",1448977030312
+error,log,,,"Unhandled event loop exception",1448977030442
+error,log,,,"Unhandled event loop exception",1448977030549
+error,log,,,"Unhandled event loop exception",1448977030660
+error,log,,,"Unhandled event loop exception",1448977030775
+error,log,,,"Unhandled event loop exception",1448977030911
+error,log,,,"Unhandled event loop exception",1448977031029
+error,log,,,"Unhandled event loop exception",1448977031165
+error,log,,,"Unhandled event loop exception",1448977031297
+error,log,,,"Unhandled event loop exception",1448977031413
+error,log,,,"Unhandled event loop exception",1448977031517
+error,log,,,"Unhandled event loop exception",1448977031620
+error,log,,,"Unhandled event loop exception",1448977031748
+error,log,,,"Unhandled event loop exception",1448977031863
+error,log,,,"Unhandled event loop exception",1448977031977
+error,log,,,"Unhandled event loop exception",1448977032152
+error,log,,,"Unhandled event loop exception",1448977032347
+error,log,,,"Unhandled event loop exception",1448977032488
+error,log,,,"Unhandled event loop exception",1448977032562
+error,log,,,"Unhandled event loop exception",1448977032654
+error,log,,,"Unhandled event loop exception",1448977032746
+error,log,,,"Unhandled event loop exception",1448977032832
+error,log,,,"Unhandled event loop exception",1448977032907
+error,log,,,"Unhandled event loop exception",1448977032971
+error,log,,,"Unhandled event loop exception",1448977033058
+error,log,,,"Unhandled event loop exception",1448977033124
+error,log,,,"Unhandled event loop exception",1448977033200
+error,log,,,"Unhandled event loop exception",1448977033307
+error,log,,,"Unhandled event loop exception",1448977033387
+error,log,,,"Unhandled event loop exception",1448977033450
+error,log,,,"Unhandled event loop exception",1448977033512
+error,log,,,"Unhandled event loop exception",1448977033587
+error,log,,,"Unhandled event loop exception",1448977033650
+error,log,,,"Unhandled event loop exception",1448977033716
+error,log,,,"Unhandled event loop exception",1448977033784
+error,log,,,"Unhandled event loop exception",1448977033847
+error,log,,,"Unhandled event loop exception",1448977033920
+error,log,,,"Unhandled event loop exception",1448977033997
+error,log,,,"Unhandled event loop exception",1448977034113
+error,log,,,"Unhandled event loop exception",1448977034197
+error,log,,,"Unhandled event loop exception",1448977034390
+error,log,,,"Unhandled event loop exception",1448977034509
+error,log,,,"Unhandled event loop exception",1448977034677
+error,log,,,"Unhandled event loop exception",1448977034764
+error,log,,,"Unhandled event loop exception",1448977034822
+error,log,,,"Unhandled event loop exception",1448977034888
+error,log,,,"Unhandled event loop exception",1448977034950
+error,log,,,"Unhandled event loop exception",1448977034966
+error,log,,,"Error occurred during status handling",1448977034968
+error,log,,,"Unhandled event loop exception",1448977035064
+error,log,,,"Unhandled event loop exception",1448977035081
+error,log,,,"An unexpected exception was thrown.",1448977035083
+error,log,,,"Unhandled event loop exception",1448977035085
+error,log,,,"An internal error has occurred.",1448977035089
+error,log,,,"Error occurred during status handling",1448977035089
+error,log,,,"An internal error has occurred.",1448977035090
+error,log,,,"Unhandled event loop exception",1448977035264
+error,log,,,"Unhandled event loop exception",1448977035330
+error,log,,,"Unhandled event loop exception",1448977035393
+error,log,,,"Unhandled event loop exception",1448977035454
+error,log,,,"Unhandled event loop exception",1448977035522
+error,log,,,"Unhandled event loop exception",1448977035584
+error,log,,,"Unhandled event loop exception",1448977035648
+error,log,,,"Unhandled event loop exception",1448977035720
+error,log,,,"Unhandled event loop exception",1448977035810
+error,log,,,"Unhandled event loop exception",1448977035891
+error,log,,,"Unhandled event loop exception",1448977035974
+error,log,,,"Unhandled event loop exception",1448977036068
+error,log,,,"Unhandled event loop exception",1448977036154
+error,log,,,"Unhandled event loop exception",1448977036221
+error,log,,,"Unhandled event loop exception",1448977036325
+error,log,,,"Unhandled event loop exception",1448977036475
+error,log,,,"Unhandled event loop exception",1448977036586
+error,log,,,"Unhandled event loop exception",1448977036705
+error,log,,,"Unhandled event loop exception",1448977036818
+error,log,,,"Unhandled event loop exception",1448977036931
+error,log,,,"Unhandled event loop exception",1448977037063
+error,log,,,"Unhandled event loop exception",1448977037186
+error,log,,,"Unhandled event loop exception",1448977037327
+error,log,,,"Unhandled event loop exception",1448977037439
+error,log,,,"Unhandled event loop exception",1448977037553
+error,log,,,"Unhandled event loop exception",1448977037673
+error,log,,,"Unhandled event loop exception",1448977037790
+error,log,,,"Unhandled event loop exception",1448977037922
+error,log,,,"Unhandled event loop exception",1448977038041
+error,log,,,"Unhandled event loop exception",1448977038164
+error,log,,,"Unhandled event loop exception",1448977038274
+error,log,,,"Unhandled event loop exception",1448977038387
+error,log,,,"Unhandled event loop exception",1448977038505
+error,log,,,"Unhandled event loop exception",1448977038621
+error,log,,,"Unhandled event loop exception",1448977038749
+error,log,,,"Unhandled event loop exception",1448977038864
+error,log,,,"Unhandled event loop exception",1448977038973
+error,log,,,"Unhandled event loop exception",1448977039113
+error,log,,,"Unhandled event loop exception",1448977039228
+error,log,,,"Unhandled event loop exception",1448977039368
+error,log,,,"Unhandled event loop exception",1448977039487
+error,log,,,"Unhandled event loop exception",1448977039596
+error,log,,,"Unhandled event loop exception",1448977039682
+error,log,,,"Unhandled event loop exception",1448977039758
+error,log,,,"Unhandled event loop exception",1448977039830
+error,log,,,"Unhandled event loop exception",1448977039894
+error,log,,,"Unhandled event loop exception",1448977039961
+error,log,,,"Unhandled event loop exception",1448977040044
+error,log,,,"Unhandled event loop exception",1448977040130
+error,log,,,"Unhandled event loop exception",1448977040202
+error,log,,,"Unhandled event loop exception",1448977040294
+error,log,,,"Unhandled event loop exception",1448977040362
+error,log,,,"Unhandled event loop exception",1448977040424
+error,log,,,"Unhandled event loop exception",1448977040494
+error,log,,,"Unhandled event loop exception",1448977040559
+error,log,,,"Unhandled event loop exception",1448977040619
+error,log,,,"Unhandled event loop exception",1448977040686
+error,log,,,"Unhandled event loop exception",1448977040746
+error,log,,,"Unhandled event loop exception",1448977040809
+error,log,,,"Unhandled event loop exception",1448977040887
+error,log,,,"Unhandled event loop exception",1448977040948
+error,log,,,"Unhandled event loop exception",1448977041065
+error,log,,,"Unhandled event loop exception",1448977041407
+error,log,,,"An unexpected exception was thrown.",1448977041408
+error,log,,,"Unhandled event loop exception",1448977041412
+error,log,,,"Widget disposed too early for part viewpanel.views.TemplateEditorView",1448977041849
+error,log,,,"Widget disposed too early for part colibristudio.similarityconfig.views.SimilarityConfigView",1448977041854
+error,log,,,"Widget disposed too early for part colibristudio.casedesigner.views.CaseDesignerView",1448977041862
+error,log,,,"Widget disposed too early for part colibristudio.casebaseselector.views.CaseBaseSelector",1448977041864
+error,log,,,"Widget disposed too early for part colibristudio.plaintextconnector.views.TextConnectorView",1448977041865
+error,log,,,"Widget disposed too early for part org.eclipse.ui.views.ProblemView",1448977041867
+error,log,,,"Widget disposed too early for part colibristudio.viewcoloursinfo.views.SampleView",1448977041870
+error,log,,,"Widget disposed too early for part org.eclipse.jdt.ui.PackageExplorer",1448977041875
+error,log,,,"Widget disposed too early for part org.eclipse.ui.console.ConsoleView",1448977041879
+error,log,,,"Widget disposed too early for part viewpanel.views.SystemEditorView",1448977041881
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.SystemEditorView",1448977041882
+error,log,,,"Widget disposed too early for part org.eclipse.jdt.ui.CompilationUnitEditor",1448977041899
+error,log,,,"An internal error has occurred.",1448977042104
+error,log,,,"Error occurred during status handling",1448977042105
+error,log,,,"An internal error has occurred.",1448977042106
+error,log,,,"Unhandled event loop exception",1448977042106
+error,log,,,"Unhandled event loop exception",1448977042108
+error,log,,,"Unhandled event loop exception",1448977042108
+error,log,,,"Unhandled event loop exception",1448977042109
+error,log,,,"Unhandled event loop exception",1448977042110
+error,log,,,"Unhandled event loop exception",1448977042111
+error,log,,,"Unhandled event loop exception",1448977042112
+error,log,,,"Unhandled event loop exception",1448977042112
+error,log,,,"Unhandled event loop exception",1448977042113
+error,log,,,"Unhandled event loop exception",1448977042114
+error,log,,,"Unhandled event loop exception",1448977042115
+error,log,,,"Unhandled event loop exception",1448977042116
+error,log,,,"Unhandled event loop exception",1448977042117
+error,log,,,"Unhandled event loop exception",1448977042118
+error,log,,,"Unhandled event loop exception",1448977042119
+error,log,,,"Unhandled event loop exception",1448977042121
+error,log,,,"Unhandled event loop exception",1448977042122
+error,log,,,"Unhandled event loop exception",1448977042123
+error,log,,,"Unhandled event loop exception",1448977042124
+error,log,,,"Unhandled event loop exception",1448977042125
+error,log,,,"Unhandled event loop exception",1448977042125
+error,log,,,"Unhandled event loop exception",1448977042126
+error,log,,,"Unhandled event loop exception",1448977042127
+error,log,,,"Unhandled event loop exception",1448977042128
+error,log,,,"Unhandled event loop exception",1448977042129
+error,log,,,"Unhandled event loop exception",1448977042129
+error,log,,,"Unhandled event loop exception",1448977042130
+error,log,,,"Unhandled event loop exception",1448977042131
+error,log,,,"Unhandled event loop exception",1448977042132

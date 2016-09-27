@@ -1,0 +1,276 @@
+what,kind,bundleId,bundleVersion,description,time
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448929911791
+closed,editor,org.eclipse.wst.xml.ui,1.1.200.v201105111835,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1448929911791
+started,bundle,org.eclipse.jdt.junit.core,3.7.0.v20110518-0800,"org.eclipse.jdt.junit.core",1448929915123
+activated,view,es.ucm.gaia.colibristudio.ViewCaseDesigner,1.0.0,"colibristudio.casedesigner.views.CaseDesignerView",1448929915856
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1448929919155
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448929919877
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448929948380
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448929955950
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448929973967
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1448929979091
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448929979604
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448929985033
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1448929987045
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448929987606
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448929990597
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448929991712
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448929992841
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1448929994448
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448929994937
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448929997443
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1448929999257
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448929999813
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930002703
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1448930005665
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930006076
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930008853
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1448930010841
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930011324
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930013025
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1448930015059
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930016164
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930102422
+activated,view,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.PackageExplorer",1448930103464
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448930104366
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930106013
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930215156
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448930218275
+activated,view,es.ucm.gaia.colibristudio.ViewPlainTextConnector,1.0.0,"colibristudio.plaintextconnector.views.TextConnectorView",1448930219157
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930221218
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930226032
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930226101
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930230684
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930237973
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930253860
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930255659
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930257288
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930257354
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930261177
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930276162
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930283076
+activated,view,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.PackageExplorer",1448930305547
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448930305792
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930324170
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930336002
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.TemplateEditorView",1448930344100
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448930345059
+activated,view,es.ucm.gaia.colibristudio.ViewCaseBaseSelector,1.0.0,"colibristudio.casebaseselector.views.CaseBaseSelector",1448930347237
+activated,view,es.ucm.gaia.colibristudio.ViewPlainTextConnector,1.0.0,"colibristudio.plaintextconnector.views.TextConnectorView",1448930387395
+activated,view,es.ucm.gaia.colibristudio.ViewCaseDesigner,1.0.0,"colibristudio.casedesigner.views.CaseDesignerView",1448930390371
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448930395987
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.TemplateEditorView",1448930400892
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.SystemEditorView",1448930402972
+error,log,,,"Unhandled event loop exception",1448930406957
+activated,view,es.ucm.gaia.colibristudio.ViewPlainTextConnector,1.0.0,"colibristudio.plaintextconnector.views.TextConnectorView",1448930442230
+activated,view,es.ucm.gaia.colibristudio.ViewCaseBaseSelector,1.0.0,"colibristudio.casebaseselector.views.CaseBaseSelector",1448930443077
+activated,view,es.ucm.gaia.colibristudio.ViewPlainTextConnector,1.0.0,"colibristudio.plaintextconnector.views.TextConnectorView",1448930444328
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448930445299
+activated,view,es.ucm.gaia.colibristudio.ViewCaseBaseSelector,1.0.0,"colibristudio.casebaseselector.views.CaseBaseSelector",1448930451321
+activated,view,es.ucm.gaia.colibristudio.ViewCaseDesigner,1.0.0,"colibristudio.casedesigner.views.CaseDesignerView",1448930452200
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448930464966
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930468003
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930524075
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930533213
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930542503
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930543824
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930602238
+activated,view,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.PackageExplorer",1448930607956
+opened,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448930608186
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448930608245
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448930620625
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448930622328
+closed,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448930622328
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448930623232
+closed,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448930623232
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930632123
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930634195
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930639217
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930640920
+started,bundle,org.eclipse.mylyn.ide.ui,3.6.0.v20110608-1400,"org.eclipse.mylyn.ide.ui",1448930644508
+started,bundle,org.eclipse.mylyn.java.ui,3.6.0.v20110608-1400,"org.eclipse.mylyn.java.ui",1448930644528
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.text.contentAssist.proposals",1448930644800
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930648610
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930652060
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.text.contentAssist.proposals",1448930654065
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.text.contentAssist.proposals",1448930659378
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930663011
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930664545
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.text.contentAssist.proposals",1448930667918
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930680138
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930682024
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.text.contentAssist.proposals",1448930684219
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930692083
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930694538
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.text.contentAssist.proposals",1448930698553
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930705828
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930707855
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.text.contentAssist.proposals",1448930708437
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930713851
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930716436
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.text.contentAssist.proposals",1448930722489
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930727983
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930732284
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.text.contentAssist.proposals",1448930745886
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930749808
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930754129
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.text.contentAssist.proposals",1448930756281
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930762797
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930764546
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.text.contentAssist.proposals",1448930766175
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930770643
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930773826
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.text.contentAssist.proposals",1448930776036
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.text.contentAssist.proposals",1448930783366
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930791276
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930793691
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930799381
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930802243
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930826375
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930828006
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930829894
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930832868
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.text.contentAssist.proposals",1448930839498
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930848267
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930849748
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930851814
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930854747
+started,bundle,org.eclipse.mylyn.java.tasks,3.6.0.v20110608-1400,"org.eclipse.mylyn.java.tasks",1448930864993
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1448930865033
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.paste",1448930866276
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930867165
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930869879
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1448930898156
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930899736
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930919533
+activated,view,org.eclipse.ui.console,3.5.100.v20110511,"org.eclipse.ui.console.ConsoleView",1448930928139
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.SystemEditorView",1448930939479
+activated,view,es.ucm.gaia.colibristudio.ViewCaseDesigner,1.0.0,"colibristudio.casedesigner.views.CaseDesignerView",1448930942643
+activated,view,es.ucm.gaia.colibristudio.ViewCaseBaseSelector,1.0.0,"colibristudio.casebaseselector.views.CaseBaseSelector",1448930943877
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448930951805
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930973752
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448930986215
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448930991976
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931010056
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931011233
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931013696
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931022684
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1448931032427
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931032441
+error,log,,,"Unhandled event loop exception",1448931032458
+error,log,,,"Unhandled event loop exception",1448931032459
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931033578
+error,log,,,"Unhandled event loop exception",1448931034285
+error,log,,,"Unhandled event loop exception",1448931034883
+error,log,,,"Unhandled event loop exception",1448931036227
+error,log,,,"Unhandled event loop exception",1448931036594
+error,log,,,"Unhandled event loop exception",1448931037007
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931040254
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931041368
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1448931050705
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931050716
+error,log,,,"Unhandled event loop exception",1448931050732
+error,log,,,"Unhandled event loop exception",1448931050734
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931051814
+error,log,,,"Unhandled event loop exception",1448931052670
+activated,view,es.ucm.gaia.colibristudio.ViewPlainTextConnector,1.0.0,"colibristudio.plaintextconnector.views.TextConnectorView",1448931055039
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448931055783
+error,log,,,"Unhandled event loop exception",1448931056499
+error,log,,,"Unhandled event loop exception",1448931057445
+error,log,,,"Unhandled event loop exception",1448931057662
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931064929
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931070182
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1448931072932
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931072944
+error,log,,,"Unhandled event loop exception",1448931072961
+error,log,,,"Unhandled event loop exception",1448931072962
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931075895
+error,log,,,"Unhandled event loop exception",1448931078158
+error,log,,,"Unhandled event loop exception",1448931078704
+error,log,,,"Unhandled event loop exception",1448931079595
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.TemplateEditorView",1448931081461
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448931082323
+error,log,,,"Unhandled event loop exception",1448931083150
+error,log,,,"Unhandled event loop exception",1448931083394
+error,log,,,"Unhandled event loop exception",1448931084547
+error,log,,,"Unhandled event loop exception",1448931084909
+error,log,,,"Unhandled event loop exception",1448931085722
+error,log,,,"Unhandled event loop exception",1448931085939
+error,log,,,"Unhandled event loop exception",1448931086611
+error,log,,,"Unhandled event loop exception",1448931087791
+error,log,,,"Unhandled event loop exception",1448931088379
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931090403
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931091704
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931096788
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931101901
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.copy",1448931106890
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931107489
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931109901
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.paste",1448931111422
+error,log,,,"Problems occurred when invoking code from plug-in: ""org.eclipse.jface"".",1448931111872
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931111883
+error,log,,,"Unhandled event loop exception",1448931111901
+error,log,,,"Unhandled event loop exception",1448931111904
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931114138
+error,log,,,"Unhandled event loop exception",1448931115032
+error,log,,,"Unhandled event loop exception",1448931115468
+error,log,,,"Unhandled event loop exception",1448931115891
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931118053
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931119069
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931125802
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931127693
+activated,view,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.PackageExplorer",1448931134253
+opened,editor,org.eclipse.wst.xml.ui,1.1.200.v201105111835,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1448931134523
+activated,editor,org.eclipse.wst.xml.ui,1.1.200.v201105111835,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1448931134625
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448931207502
+activated,editor,org.eclipse.wst.xml.ui,1.1.200.v201105111835,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1448931213559
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.file.save",1448931300981
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.TemplateEditorView",1448931305657
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448931307134
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931316981
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931321260
+activated,editor,org.eclipse.wst.xml.ui,1.1.200.v201105111835,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1448931328236
+activated,editor,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.CompilationUnitEditor",1448931328339
+closed,editor,org.eclipse.wst.xml.ui,1.1.200.v201105111835,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1448931328339
+activated,view,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.PackageExplorer",1448931329234
+opened,editor,org.eclipse.wst.xml.ui,1.1.200.v201105111835,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1448931329455
+activated,editor,org.eclipse.wst.xml.ui,1.1.200.v201105111835,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1448931329539
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448931340156
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931340295
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931344157
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931346040
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931347287
+activated,editor,org.eclipse.wst.xml.ui,1.1.200.v201105111835,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1448931349794
+closed,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448931349798
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.TemplateEditorView",1448931351768
+activated,view,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.PackageExplorer",1448931357410
+activated,editor,org.eclipse.wst.xml.ui,1.1.200.v201105111835,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart",1448931357595
+activated,view,org.eclipse.jdt.ui,3.7.0.v20110531-1200,"org.eclipse.jdt.ui.PackageExplorer",1448931358574
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.SystemEditorView",1448931371652
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.TemplateEditorView",1448931373983
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.perspectives.showPerspective",1448931381773
+executed,command,,,"jcolibriperspective.perspectives.CBRPerspective",1448931381773
+activated,view,es.ucm.gaia.colibristudio.ViewPlainTextConnector,1.0.0,"colibristudio.plaintextconnector.views.TextConnectorView",1448931387837
+opened,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448931399269
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448931399301
+executed,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.views.showView",1448931399301
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931405401
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931407447
+no handler,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.undo",1448931413747
+no handler,command,org.eclipse.ui,3.7.0.I20110602-0100,"org.eclipse.ui.edit.undo",1448931413747
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931423341
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931426146
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931429377
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931433147
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931436478
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931438760
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931441662
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931443860
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931447235
+error,log,,,"Unhandled event loop exception",1448931448550
+deactivated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931451823
+activated,workbench,org.eclipse.ui.workbench,3.7.0.I20110519-0100,"",1448931457768
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.SystemEditorView",1448931473171
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.TemplateEditorView",1448931474919
+activated,view,es.ucm.gaia.colibristudio.ViewSimilarity,1.0.0,"colibristudio.similarityconfig.views.SimilarityConfigView",1448931477269
+activated,view,es.ucm.gaia.colibristudio.ViewTemplateEditor,1.0.0,"viewpanel.views.TemplateEditorView",1448931479336

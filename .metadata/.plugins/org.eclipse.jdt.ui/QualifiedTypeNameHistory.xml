@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="jcolibri.method.retrieve.NNretrieval.similarity.global.Average"/>
+<fullyQualifiedTypeName name="jcolibri.method.retrieve.NNretrieval.similarity.global.Maximum"/>
+<fullyQualifiedTypeName name="jcolibri.method.retrieve.NNretrieval.similarity.global.Euclidean"/>
+<fullyQualifiedTypeName name="jcolibri.method.retrieve.NNretrieval.similarity.local.Equal"/>
+<fullyQualifiedTypeName name="jcolibri.method.retrieve.NNretrieval.similarity.local.Threshold"/>
+<fullyQualifiedTypeName name="jcolibri.method.retrieve.NNretrieval.similarity.local.recommenders.InrecaLessIsBetter"/>
+<fullyQualifiedTypeName name="jcolibri.method.retrieve.NNretrieval.similarity.local.EnumDistance"/>
+<fullyQualifiedTypeName name="jcolibri.method.retrieve.NNretrieval.similarity.local.Interval"/>
+<fullyQualifiedTypeName name="BAM.BAMRecommender.BAMDescription.BAMTypes"/>
+<fullyQualifiedTypeName name="javax.swing.JCheckBox"/>
+<fullyQualifiedTypeName name="BAM.BAMRecommender.gui.RetainDialog"/>
+<fullyQualifiedTypeName name="jcolibri.cbrcore.CBRQuery"/>
+<fullyQualifiedTypeName name="representation.Preem"/>
+<fullyQualifiedTypeName name="Simulador.Estatisticas"/>
+<fullyQualifiedTypeName name="BAM.BAMRecommender.BAMRecommenderNoGUI"/>
+<fullyQualifiedTypeName name="BAM.BAMRecommender.BAMDescription.Problemas"/>
+<fullyQualifiedTypeName name="BAM.BAMRecommender.BAMDescription"/>
+<fullyQualifiedTypeName name="Simulador.No"/>
+<fullyQualifiedTypeName name="BAM.BAMRecommender.BAMSolution"/>
+<fullyQualifiedTypeName name="jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction"/>
+<fullyQualifiedTypeName name="jcolibri.method.retrieve.NNretrieval.similarity.GlobalSimilarityFunction"/>
+<fullyQualifiedTypeName name="DSTE.ParametrosDSTE"/>
+<fullyQualifiedTypeName name="java.awt.Font"/>
+<fullyQualifiedTypeName name="org.jrobin.graph.RrdGraphConstants"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="DSTE.EstatisticasDSTE"/>
+</qualifiedTypeNameHistroy>

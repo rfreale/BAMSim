@@ -1,0 +1,61 @@
+package representation;
+
+import jcolibri.cbrcore.Attribute;
+import jcolibri.cbrcore.CaseComponent;
+ import colibristudio.annotations.JCOLIBRIAttributeType;
+
+
+public class Desc implements CaseComponent { 
+
+
+	/* Generated Class. Please Do Not Modify... */ 
+
+
+	private java.lang.Integer IDDesc;
+
+
+	public java.lang.Integer getIDDesc()
+		{
+			return IDDesc;
+		}
+	public void setIDDesc(java.lang.Integer IDDesc0)
+		{
+			this.IDDesc = IDDesc0;
+		}
+
+	private java.lang.Integer ValorDesc;
+
+
+	public java.lang.Integer getValorDesc()
+		{
+			return ValorDesc;
+		}
+	public void setValorDesc(java.lang.Integer ValorDesc1)
+		{
+			this.ValorDesc = ValorDesc1;
+		}
+
+	private Preem.class Preem;
+
+
+	public Preem.class getPreem()
+		{
+			return Preem;
+		}
+	public void setPreem(Preem.class Preem4)
+		{
+			this.Preem = Preem4;
+		}
+
+
+	@Override
+	public Attribute getIdAttribute()
+		{
+			return new Attribute("IDDesc",this.getClass());
+		} 
+
+	public String toString()		{
+			return "["+ ValorDesc + " , " + Preem + " , " + IDDesc +"]";
+		}
+
+}

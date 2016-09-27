@@ -1,0 +1,43 @@
+package representation;
+
+import jcolibri.cbrcore.Attribute;
+import jcolibri.cbrcore.CaseComponent;
+ import colibristudio.annotations.JCOLIBRIAttributeType;
+
+
+public class Preem.class  { 
+
+
+	/* Generated Class. Please Do Not Modify... */ 
+
+
+	private java.lang.Integer PreemCT0;
+
+
+	public java.lang.Integer getPreemCT0()
+		{
+			return PreemCT0;
+		}
+	public void setPreemCT0(java.lang.Integer PreemCT02)
+		{
+			this.PreemCT0 = PreemCT02;
+		}
+
+	private java.lang.Integer PreemCT1;
+
+
+	public java.lang.Integer getPreemCT1()
+		{
+			return PreemCT1;
+		}
+	public void setPreemCT1(java.lang.Integer PreemCT13)
+		{
+			this.PreemCT1 = PreemCT13;
+		}
+
+
+	public String toString()		{
+			return "["+ PreemCT1 + " , " + PreemCT0 +"]";
+		}
+
+}
