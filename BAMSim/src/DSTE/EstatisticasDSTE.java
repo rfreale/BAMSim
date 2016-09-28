@@ -67,47 +67,9 @@ public class EstatisticasDSTE {
 	private long curretTime;
 	public String filename;
 	public Color [] cores ={Color.BLUE,Color.CYAN,Color.GRAY,Color.MAGENTA,Color.ORANGE,Color.PINK,Color.RED,Color.GREEN};
-	/*final BasicStroke wideStroke = 
-		    new BasicStroke(width*2);
-	final BasicStroke mediumStroke =
-	    new BasicStroke(width);
-	final BasicStroke wideRound = 
-	    new BasicStroke(width*4,
-	            BasicStroke.CAP_ROUND ,
-	            BasicStroke.JOIN_ROUND );
-	final BasicStroke wideBevel = 
-	    new BasicStroke(width*4,
-	            BasicStroke.CAP_BUTT ,
-	            BasicStroke.JOIN_BEVEL );*/
 
-	BasicStroke dotDashStroke = 
-	    new BasicStroke(6 /*width*/,
-	            BasicStroke.CAP_BUTT /*end style*/,
-	            BasicStroke.JOIN_MITER /*join style*/,
-	            3.0f /*miter trim limit */,
-	            new float[] {3.0f} /* pattern array */,
-	            0.0f /* offset to start of pattern */);
-	
-	BasicStroke dotDashStroke2 = 
-		    new BasicStroke(6 /*width*/,
-		            BasicStroke.CAP_BUTT /*end style*/,
-		            BasicStroke.JOIN_MITER /*join style*/,
-		            1.0f /*miter trim limit */,
-		            new float[] {5.0f, 3.0f, 1.0f, 3.0f } /* pattern array */,
-		            0.0f /* offset to start of pattern */);
-	BasicStroke dotDashStroke3 = 
-		    new BasicStroke(6 /*width*/,
-		            BasicStroke.CAP_BUTT /*end style*/,
-		            BasicStroke.JOIN_MITER /*join style*/,
-		            1.0f /*miter trim limit */,
-		            new float[] {5.0f} /* pattern array */,
-		            0.0f /* offset to start of pattern */);
-	
-	
-	BasicStroke dashStroke = 		    new BasicStroke(6);
-	
-	BasicStroke[] dashStrokeList = {dotDashStroke,dotDashStroke2,dotDashStroke3};
-	
+
+	private int graphWidthLine=6;
 	private int graphWidth=((9*250)-236+24+31);
 	private int graphHeight=((3*250)-242+33+15);
 	private Font graphLargeFont=new Font("Arial", Font.BOLD, 70);
@@ -120,6 +82,34 @@ public class EstatisticasDSTE {
     private	int graphLabelUnitCount=20;
     private	int graphLabelSpan= 0;
     private	String graphSimpleDateFormat="HH:mm";
+    
+    private BasicStroke dotDashStroke = 
+    	    new BasicStroke(graphWidthLine /*width*/,
+    	            BasicStroke.CAP_BUTT /*end style*/,
+    	            BasicStroke.JOIN_MITER /*join style*/,
+    	            3.0f /*miter trim limit */,
+    	            new float[] {3.0f} /* pattern array */,
+    	            0.0f /* offset to start of pattern */);
+    	
+    private BasicStroke dotDashStroke2 = 
+    		    new BasicStroke(graphWidthLine /*width*/,
+    		            BasicStroke.CAP_BUTT /*end style*/,
+    		            BasicStroke.JOIN_MITER /*join style*/,
+    		            1.0f /*miter trim limit */,
+    		            new float[] {5.0f, 3.0f, 1.0f, 3.0f } /* pattern array */,
+    		            0.0f /* offset to start of pattern */);
+    private BasicStroke dotDashStroke3 = 
+    		    new BasicStroke(graphWidthLine /*width*/,
+    		            BasicStroke.CAP_BUTT /*end style*/,
+    		            BasicStroke.JOIN_MITER /*join style*/,
+    		            1.0f /*miter trim limit */,
+    		            new float[] {5.0f} /* pattern array */,
+    		            0.0f /* offset to start of pattern */);
+    	
+    	
+    private BasicStroke dashStroke = 		    new BasicStroke(graphWidthLine);
+    	
+    private BasicStroke[] dashStrokeList = {dotDashStroke,dotDashStroke2,dotDashStroke3};
 
 	
 	
@@ -396,7 +386,7 @@ public class EstatisticasDSTE {
 		//graphDef.setMinValue(0);
 		graphDef.setTitle("LSPs Geradas");
 		graphDef.datasource("lspGeradas", "saida/"+filename+"/"+filename+".rrd", "lspGeradas", "MAX");
-		graphDef.line("lspGeradas", new Color(0xFF, 0, 0), "LSPs Geradas Total", 8);
+		graphDef.line("lspGeradas", new Color(0xFF, 0, 0), "LSPs Geradas Total", graphWidthLine);
 		graphDef.setWidth(this.graphWidth);
 		graphDef.setHeight(this.graphHeight);
 		graphDef.setLargeFont(this.graphLargeFont);
@@ -464,7 +454,7 @@ public class EstatisticasDSTE {
 		//graphDef.setMinValue(0);
 		graphDef.setTitle("Preempções Acumuladas");
 		graphDef.datasource("preempcao", "saida/"+filename+"/"+filename+".rrd", "preempcao", "MAX");
-		graphDef.line("preempcao", new Color(0xFF, 0, 0), "Preempção Total", 8);
+		graphDef.line("preempcao", new Color(0xFF, 0, 0), "Preempção Total", graphWidthLine);
 		graphDef.setWidth(this.graphWidth);
 		graphDef.setHeight(this.graphHeight);
 		graphDef.setLargeFont(this.graphLargeFont);
@@ -488,7 +478,7 @@ public class EstatisticasDSTE {
 		for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 		{
 			graphDef2.datasource("preempcao_CT"+i, "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao_CT"+i, "LAST");
-			graphDef2.line("preempcao_CT"+i, cores[i], "Preempcões em CT"+i);
+			graphDef2.line("preempcao_CT"+i, cores[i], "Preempcões em CT"+i, graphWidthLine);
 			
 		}
 		graphDef2.setWidth(this.graphWidth);
@@ -576,7 +566,7 @@ public class EstatisticasDSTE {
 		//graphDef.setMinValue(0);
 		graphDef.setTitle("Bloqueios Acumulados");
 		graphDef.datasource("bloqueio", "saida/"+filename+"/"+filename+".rrd", "bloqueio", "MAX");
-		graphDef.line("bloqueio", new Color(0xFF, 0, 0), "Bloqueio", 8);
+		graphDef.line("bloqueio", new Color(0xFF, 0, 0), "Bloqueio", graphWidthLine);
 		graphDef.setWidth(this.graphWidth);
 		graphDef.setHeight(this.graphHeight);
 		graphDef.setLargeFont(this.graphLargeFont);
@@ -601,7 +591,7 @@ public class EstatisticasDSTE {
 		for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 		{
 			graphDef2.datasource("bloqueio_CT"+i, "saida/"+filename+"/"+filename+"_absoluto.rrd", "bloqueio_CT"+i, "LAST");
-			graphDef2.line("bloqueio_CT"+i, cores[i], "Bloqueios em CT"+i);
+			graphDef2.line("bloqueio_CT"+i, cores[i], "Bloqueios em CT"+i, graphWidthLine);
 			
 		}
 		graphDef2.setWidth(this.graphWidth);
@@ -685,7 +675,7 @@ public class EstatisticasDSTE {
 		//graphDef.setMinValue(0);
 		graphDef.setTitle("Devoluções Acumuladas");
 		graphDef.datasource("devolucao", "saida/"+filename+"/"+filename+".rrd", "devolucao", "MAX");
-		graphDef.line("devolucao", new Color(0xFF, 0, 0), "Devolução", 8);
+		graphDef.line("devolucao", new Color(0xFF, 0, 0), "Devolução", graphWidthLine);
 		graphDef.setWidth(this.graphWidth);
 		graphDef.setHeight(this.graphHeight);
 		graphDef.setLargeFont(this.graphLargeFont);
@@ -708,7 +698,7 @@ public class EstatisticasDSTE {
 		for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 		{
 			graphDef2.datasource("devolucao_CT"+i, "saida/"+filename+"/"+filename+"_absoluto.rrd", "devolucao_CT"+i, "LAST");
-			graphDef2.line("devolucao_CT"+i, cores[i], "Devoluções em CT"+i);
+			graphDef2.line("devolucao_CT"+i, cores[i], "Devoluções em CT"+i, graphWidthLine);
 			
 		}
 		graphDef2.setWidth(this.graphWidth);
@@ -864,10 +854,10 @@ public class EstatisticasDSTE {
 		
 		for(i=0;i<ParametrosDSTE.MaxClassType;i++)
 		{
-			graphDef.line(link.Descricao+"_CT"+i, cores[i],"TC"+i, 6,dashStrokeList[i]);
+			graphDef.line(link.Descricao+"_CT"+i, cores[i],"TC"+i, graphWidthLine,dashStrokeList[i]);
 		}
 		//graphDef.line(link.Descricao+"_total",cores[i],"Total",2);
-		graphDef.line(link.Descricao+"_total",cores[i],"Total",6,dashStroke);
+		graphDef.line(link.Descricao+"_total",cores[i],"Total",graphWidthLine,dashStroke);
 		
 		graphDef.setWidth(this.graphWidth);
 		graphDef.setHeight(this.graphHeight);
