@@ -113,11 +113,11 @@ public class EstatisticasDSTE {
 	private Font graphLargeFont=new Font("Arial", Font.BOLD, 70);
 	private Font graphSmallFont=new Font("Arial", Font.BOLD, 40);
     private int graphMinorUnit=RrdGraphConstants.MINUTE;
-    private	int graphMinorUnitCount= 10;
-    private	int graphMajorUnit=RrdGraphConstants.HOUR;
-    private	int graphMajorUnitCount=1;
-    private	int graphLabelUnit=RrdGraphConstants.HOUR;
-    private	int graphLabelUnitCount=2;
+    private	int graphMinorUnitCount= 1;
+    private	int graphMajorUnit=RrdGraphConstants.MINUTE;
+    private	int graphMajorUnitCount=10;
+    private	int graphLabelUnit=RrdGraphConstants.MINUTE;
+    private	int graphLabelUnitCount=20;
     private	int graphLabelSpan= 0;
     private	String graphSimpleDateFormat="HH:mm";
 
