@@ -1,8 +1,0 @@
-package representation;
-
-import colibristudio.annotations.JCOLIBRIAttributeType;
-
-@JCOLIBRIAttributeType
-public enum TypeBAM {
-   MAM
-}
