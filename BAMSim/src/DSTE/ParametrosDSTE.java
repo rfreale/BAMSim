@@ -52,7 +52,35 @@ public class ParametrosDSTE {
 	
 	
 	
+	public static void topologiaManual(Topologia t)
+	{
+		
+		t.roteador[0]= new Roteador(); 
+		t.roteador[0].ID = 0;
+		t.roteador[0].Descricao = "S1";
+		t.roteador[1]= new Roteador(); 
+		t.roteador[1].ID = 1;
+		t.roteador[1].Descricao = "D1";
+		
+		
+		
+		t.link[0]=new Link();
+		t.link[0].Descricao = "S1->D1";
+		t.link[0].ID = 1;
+		t.link[0].CustoEnlace = 1;
+		t.link[0].CargaEnlace = 1000;
+		t.link[0].lsrSrc = t.roteador[0];
+		t.link[0].lsrDest = t.roteador[1];		
+		
+
+	}
 	
+	public static void matrizDeCaminhosManual(Topologia t)
+	{
+		
+		t.adicionar(0,0,0);
+		
+	}
 	
 	
 	/*
