@@ -101,11 +101,7 @@ public class Topologia {
 	}
 	public void carregarMatrizDeCaminhosManual()
 	{
-		// Matriz de caminhos R0 para R1 
-		//0->1
-		this.adicionar(0,0,0);
-		
-		
+		ParametrosDSTE.matrizDeCaminhosManual(this);
 	}
 	
 	public void adicionar(int roteadorID, int caminhoID, int linkID) {  
@@ -122,22 +118,7 @@ public class Topologia {
 	public void carregarTopologiaManual()
 	{
 		
-		roteador[0]= new Roteador(); 
-		roteador[0].ID = 0;
-		roteador[0].Descricao = "S1";
-		roteador[1]= new Roteador(); 
-		roteador[1].ID = 1;
-		roteador[1].Descricao = "D1";
-		
-		
-		
-		link[0]=new Link();
-		link[0].Descricao = "S1->D1";
-		link[0].ID = 1;
-		link[0].CustoEnlace = 1;
-		link[0].CargaEnlace = 1000;
-		link[0].lsrSrc = roteador[0];
-		link[0].lsrDest = roteador[1];
+		ParametrosDSTE.topologiaManual(this);
 		
 		
 
