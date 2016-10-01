@@ -44,10 +44,24 @@ public class EstatisticasDSTE {
 	public int lspEstabelecidas = 0;
 	public double bandaAtendida = 0;
 	public double bandaGerada = 0;
+	public double bandaEstabelecida = 0;
 
+	public int [] lspGeradasCT = new int [ParametrosDSTE.MaxClassType];
+	public double [] bandaGeradaCT = new double [ParametrosDSTE.MaxClassType];
+	public int [] lspEstabelecidasCT = new int [ParametrosDSTE.MaxClassType];
+	public double [] bandaEstabelecidaCT = new double [ParametrosDSTE.MaxClassType];
+	public int [] lspAtendidaCT = new int [ParametrosDSTE.MaxClassType];
+	public double [] bandaAtendidaCT = new double [ParametrosDSTE.MaxClassType];
+
+	
+	
 	public int [] preempcoesCT = new int [ParametrosDSTE.MaxClassType];
 	public int [] devolucoesCT = new int [ParametrosDSTE.MaxClassType];
 	public int [] bloqueiosCT = new int [ParametrosDSTE.MaxClassType];
+	
+	
+	
+	
 	
 	//auxiliares
 	public int preempcoesAUX = 0;
@@ -891,6 +905,7 @@ public class EstatisticasDSTE {
 		retorno+=String.format("N�mero de LSPs Atendidas = %d\r\n", lspAtendidas);
 		retorno+=String.format("Total de Banda Gerada = %6.2f\r\n", bandaGerada);
 		retorno+=String.format("Total de Banda Atendida = %6.2f\r\n", bandaAtendida);
+		retorno+=String.format("Total de Banda Estabelecida = %6.2f\r\n", bandaEstabelecida);
 		for(int i=0;i<bloqueiosCT.length;i++){ 
 			retorno+="bloqueiosCT["+i+"] = "+bloqueiosCT[i]+"\r\n"; 
 		} 
@@ -900,8 +915,26 @@ public class EstatisticasDSTE {
 		for(int i=0;i<devolucoesCT.length;i++){ 
 			retorno+="devolucoesCT["+i+"] = "+devolucoesCT[i]+"\r\n"; 
 		} 
+		for(int i=0;i<lspGeradasCT.length;i++){ 
+			retorno+="lspGeradasCT["+i+"] = "+lspGeradasCT[i]+"\r\n"; 
+		} 
 		
-		  
+		for(int i=0;i<lspEstabelecidasCT.length;i++){ 
+			retorno+="lspEstabelecidasCT["+i+"] = "+lspEstabelecidasCT[i]+"\r\n"; 
+		} 
+		for(int i=0;i<lspAtendidaCT.length;i++){ 
+			retorno+="lspAtendidaCT["+i+"] = "+lspAtendidaCT[i]+"\r\n"; 
+		} 
+		for(int i=0;i<bandaGeradaCT.length;i++){ 
+			retorno+="bandaGeradaCT["+i+"] = "+bandaGeradaCT[i]+"\r\n"; 
+		} 
+		for(int i=0;i<bandaAtendidaCT.length;i++){ 
+			retorno+="bandaAtendidaCT["+i+"] = "+bandaAtendidaCT[i]+"\r\n"; 
+		} 
+		for(int i=0;i<bandaEstabelecidaCT.length;i++){ 
+			retorno+="bandaEstabelecidaCT["+i+"] = "+bandaEstabelecidaCT[i]+"\r\n"; 
+		} 
+
 		
 		retorno+="============================ Fim dos Estat�sticas DSTE ============================";
 

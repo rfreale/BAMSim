@@ -97,7 +97,7 @@ public class BBNRNoiseReduction extends AbstractCaseBaseEditMethod {
 			jcolibri.util.ProgressController.step(this.getClass());
 		}
 		
-		caseLiabilitySetSizes = CaseResult.sortResults(false, caseLiabilitySetSizes);
+		caseLiabilitySetSizes = CaseResult.sortCaseResults(false, caseLiabilitySetSizes);
 
 		LinkedList<CBRCase> allCasesToBeRemoved = new LinkedList<CBRCase>();
 		

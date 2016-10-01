@@ -188,7 +188,9 @@ public class TesteSimulacao {
 			case 1:
 				// Estabelecer uma lsp
 				rodada.estatistica.lspGeradas++;
+				rodada.estatistica.lspGeradasCT[((Lsp) dados.item).CT]++;
 				rodada.estatistica.bandaGerada += ((Lsp) dados.item).Carga;
+				rodada.estatistica.bandaGeradaCT[((Lsp) dados.item).CT] += ((Lsp) dados.item).Carga;
 				Debug.setMensagem("Tipo 1 - Tentar estabelecer LSP "
 						+ ((Lsp) dados.item).ID + " com "
 						+ ((Lsp) dados.item).Carga + " Mbps");
@@ -204,6 +206,10 @@ public class TesteSimulacao {
 					((Lsp) dados.item).estabelecerLSP(menorCaminho);
 					((Lsp) dados.item).status = LspStatus.estabelecida;
 					rodada.estatistica.lspEstabelecidas++;
+					rodada.estatistica.lspEstabelecidasCT[((Lsp) dados.item).CT]++;
+					rodada.estatistica.bandaEstabelecida += ((Lsp) dados.item).Carga;
+					rodada.estatistica.bandaEstabelecidaCT[((Lsp) dados.item).CT] += ((Lsp) dados.item).Carga;
+					
 					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID
 							+ " Estabelecida ========");
 
@@ -226,6 +232,8 @@ public class TesteSimulacao {
 						+ ((Lsp) dados.item).Carga + " Mbps");
 				((Lsp) dados.item).desestabeleceLSP();
 				rodada.estatistica.lspAtendidas++;
+				rodada.estatistica.lspAtendidaCT[((Lsp) dados.item).CT]++;
+				rodada.estatistica.bandaAtendidaCT[((Lsp) dados.item).CT] += ((Lsp) dados.item).Carga;
 				rodada.estatistica.bandaAtendida += ((Lsp) dados.item).Carga;
 				((Lsp) dados.item).status = LspStatus.finalizada;
 
@@ -644,8 +652,8 @@ case 9:
 				break;
 
 			}
-			// Debug.setMensagem(" ==== Status dos Links  ====");
-			// Debug.setMensagem(to.statusLinks());
+			Debug.setMensagem(" ==== Status dos Links  ====");
+			Debug.setMensagem(to.statusLinks());
 			Debug.setMensagem(rodada.imprime_evchain(), 0, 0);
 
 		}

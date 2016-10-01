@@ -40,7 +40,7 @@ public class CaseResult extends QueryResult
 	 * @return the sorted list.
 	 */
 	@SuppressWarnings("unchecked")
-	public static List sortResults(boolean ascending, List<CaseResult> toSort)
+	public static List sortCaseResults(boolean ascending, List<CaseResult> toSort)
 	{   Collections.sort(toSort);
 	    if(ascending)
 	    {	return toSort;	    	    

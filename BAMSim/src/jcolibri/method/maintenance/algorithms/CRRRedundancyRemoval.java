@@ -83,7 +83,7 @@ public class CRRRedundancyRemoval extends AbstractCaseBaseEditMethod {
 			jcolibri.util.ProgressController.step(this.getClass());
 		}
 		
-		caseCoverageSetSizes = CaseResult.sortResults(true, caseCoverageSetSizes);
+		caseCoverageSetSizes = CaseResult.sortCaseResults(true, caseCoverageSetSizes);
 		List<CBRCase> newCases = new LinkedList<CBRCase>();
 		List<CBRCase> allCasesToBeRemoved = new LinkedList<CBRCase>();
 		
@@ -108,7 +108,7 @@ public class CRRRedundancyRemoval extends AbstractCaseBaseEditMethod {
 			    		removeThese.remove(cResult.getCase());
 			    	}
 			    }
-			    caseCoverageSetSizes = CaseResult.sortResults(true, caseCoverageSetSizes);
+			    caseCoverageSetSizes = CaseResult.sortCaseResults(true, caseCoverageSetSizes);
 			} catch (InitializingException e)
 			{   LogFactory.getLog(this.getClass()).error(e);
 			}

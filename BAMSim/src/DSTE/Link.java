@@ -33,6 +33,16 @@ public class Link {
 		double BandaPreemptada =0; // Variável que contém a Banda Preemptada atual no Enlace, se preempção for necessária
 		double TotalBandaPreemptada = 0; // Variável com o total de banda preemptada de cada enlace para computação das estatísticas finais
 		double BandaPreemptadaCT[] = new double[ParametrosDSTE.MaxClassType];
+		
+		public int preempcoes = 0;
+		public int devolucoes = 0;
+		public int bloqueios = 0;
+		public int lspEstabelecidas = 0;
+		public double bandaAtendida = 0;
+
+		public int [] preempcoesCT = new int [ParametrosDSTE.MaxClassType];
+		public int [] devolucoesCT = new int [ParametrosDSTE.MaxClassType];
+		public int [] bloqueiosCT = new int [ParametrosDSTE.MaxClassType];
 
 		
 		Link()
