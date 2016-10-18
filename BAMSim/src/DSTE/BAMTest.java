@@ -1,25 +1,207 @@
 package DSTE;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.*;
 
+import org.jrobin.core.FetchData;
+import org.jrobin.core.FetchRequest;
+import org.jrobin.core.RrdDb;
+import org.jrobin.core.RrdDef;
+import org.jrobin.core.RrdException;
+import org.jrobin.core.Sample;
+import org.jrobin.graph.RrdGraph;
+import org.jrobin.graph.RrdGraphDef;
 import org.junit.Test;
+import org.rosuda.JRI.REXP;
+import org.rosuda.JRI.RVector;
+import org.rosuda.JRI.Rengine;
+//import org.rosuda.REngine.REXP;
+import org.rosuda.REngine.REXPMismatchException;
+import org.rosuda.REngine.REngineException;
+import org.rosuda.REngine.RList;
+import org.rosuda.REngine.Rserve.RConnection;
+import org.rosuda.REngine.Rserve.RserveException;
 
-import Simulador.*;
-
-import org.jrobin.core.*;
-import org.jrobin.graph.*;
+import Simulador.Debug;
+import Simulador.Estatisticas;
+import Simulador.GeradorDeNumerosAleatorios;
+import Simulador.No;
+import Simulador.RodadaDeSimulacao;
 
 public class BAMTest {
+	@Test
+	public void carregarMatrizDeCaminhosArquivo()
+	{
+		
+		try {
+			Topologia t = new Topologia();
+			t.carregarTopologiaArquivo();
+			t.gerarTopologiaDosRoteadores();
+			t.gerarTopologiaDosLinks();
+			System.out.println(t.imprimirTopologiaDosRoteadores());
+			System.out.println(t.imprimirTopologiaDosLinks());
+			System.out.println(t.imprimirCaminhos());
+			
+			FileInputStream stream = new FileInputStream(ParametrosDSTE.filenameMatrizCaminhos);
+			InputStreamReader reader = new InputStreamReader(stream);
+			BufferedReader br = new BufferedReader(reader);
+			String linha = br.readLine();
+			int count=0;
+			while(linha != null) {
+				StringTokenizer st2 = new StringTokenizer(linha, "-");
+				t.adicionar(Integer.parseInt((String)st2.nextElement()), Integer.parseInt((String)st2.nextElement()), Integer.parseInt((String)st2.nextElement()));
+				//System.out.println((String)st2.nextElement()+"-"+(String)st2.nextElement()+"-"+(String)st2.nextElement());
+				linha = br.readLine();	
+				count++;
+			}
+				
+			
+			System.out.println("Total de caminhos :"+count);
+			br.close();
+			System.out.println(t.imprimirCaminhos());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		
+
+	}
+	@Test
+	public void rJava() throws RserveException, REXPMismatchException
+	{
+		int ROTEADORES =999;
+		int teste =9;
+		
+		String resultado = String.format("%0"+String.valueOf(ROTEADORES).length()+"d", teste);
+		 System.out.println(resultado);
+	}
+	@Test
+	public void rJava2() throws REXPMismatchException, REngineException
+	{
+
+				Topologia t = new Topologia();
+				t.carregarTopologiaArquivo();
+				t.gerarTopologiaDosRoteadores();
+				t.gerarTopologiaDosLinks();
+				System.out.println(t.imprimirTopologiaDosRoteadores());
+				System.out.println(t.imprimirTopologiaDosLinks());
+				System.out.println(t.imprimirCaminhos());
+				
+	            try {
+
+	  			  File outputfile = new File("topologias/NSF-14n-42e_Caminhos.txt");
+	  			  outputfile.getParentFile().mkdirs();
+	  			  
+	  			  BufferedWriter writer = new BufferedWriter(new FileWriter(outputfile,false));
+
+	        	Rengine re = new Rengine(new String[]{"--no-save"}, false, null);
+
+	        	re.eval("source('D:\\\\GitHub\\\\BAMSim\\\\rjava\\\\grafo.r')");
+	        	for (int z=0; z<ParametrosDSTE.ROTEADORES;z++)
+	    		{
+	        		System.out.println(" ==== Roteador "+t.roteador[z].Descricao+"("+t.roteador[z].ID+") ====\r\n");
+	    			
+	    			
+	        		
+	    			REXP caminhosREXP= re.eval("sortestPathByName(net,'"+t.roteador[z].Descricao+"')$epath");
+		            if (caminhosREXP != null)
+		            {
+		            	System.out.println(caminhosREXP+"\n");
+		            	
+			            RVector caminhosVector = caminhosREXP.asVector();
+			            for (int i=0; i < caminhosVector.size(); i++)
+			            {
+			            	System.out.println("=== "+i+" ===");
+			            	for (int j=0; j < caminhosVector.at(i).asIntArray().length; j++)
+				            {
+			            		System.out.println(caminhosVector.at(i).asIntArray()[j]);
+			            		t.adicionar(z,i,caminhosVector.at(i).asIntArray()[j]-1);
+			            		 writer.write(String.valueOf(z)+"-"+String.valueOf(i)+"-"+String.valueOf(caminhosVector.at(i).asIntArray()[j]-1));
+			            		 writer.newLine();
+				            }
+			            	
+			            }
+		            }
+	            
+	    		}
+	            System.out.println(t.imprimirCaminhos());
+
+	  			  
+	  			 
+	  			  
+	  			  writer.close();  
+	  		 
+	  		  }
+	  		  catch (IOException e) {
+	  			   // TODO Auto-generated catch block
+	  			   System.out.println("Erro na gravação do arquivo:"+e.toString());
+	  		  }
+	            
+
+                
+                
+	            
+	            
+
+	            
+	            
+	            
+	        
+	        
+	    
+	}
+	
+	@Test
+	public void path() throws IOException, RrdException
+	{
+		String current = new java.io.File( ".//topologias" ).getCanonicalPath();
+        System.out.println("Current dir:"+current);
+        String currentDir = System.getProperty("user.dir");
+        System.out.println("Current dir using System:" +currentDir);
+		
+        try {
+            FileReader arq = new FileReader(ParametrosDSTE.filenameTopologia);
+            BufferedReader lerArq = new BufferedReader(arq);
+       
+            String linha = lerArq.readLine(); // lê a primeira linha
+      // a variável "linha" recebe o valor "null" quando o processo
+      // de repetição atingir o final do arquivo texto
+            while (linha != null) {
+              System.out.printf("%s\n", linha);
+       
+              linha = lerArq.readLine(); // lê da segunda até a última linha
+            }
+       
+            arq.close();
+          } catch (IOException e) {
+              System.err.printf("Erro na abertura do arquivo: %s.\n",
+                e.getMessage());
+          }
+
+	}
 	@Test
 	public void gerarLinkRRDPNG() throws IOException, RrdException
 	{

@@ -127,7 +127,7 @@ public class Topologia {
 	{
 		
 		try {
-			FileInputStream stream = new FileInputStream("D:\\Dropbox\\Java\\workspace\\BAMSim\\NTT-55n-144e.txt");
+			FileInputStream stream = new FileInputStream(ParametrosDSTE.filenameTopologia);
 			InputStreamReader reader = new InputStreamReader(stream);
 			BufferedReader br = new BufferedReader(reader);
 			String linha = br.readLine();
@@ -163,11 +163,12 @@ public class Topologia {
 			this.roteador= new Roteador[ParametrosDSTE.ROTEADORES];
 			this.link= new Link[ParametrosDSTE.LINKS];
 			
+
 			for(int i=0;i<ParametrosDSTE.ROTEADORES;i++)
 			{
 				roteador[i]= new Roteador(); 
 				roteador[i].ID = i;
-				roteador[i].Descricao = "R"+i;
+				roteador[i].Descricao = "R"+String.format("%0"+String.valueOf(ParametrosDSTE.ROTEADORES).length()+"d", i);
 			}
 			
 			int count=0;
@@ -184,7 +185,7 @@ public class Topologia {
 					link[count].Descricao = roteador[origem].Descricao+"->"+roteador[destino].Descricao;
 					link[count].ID = count;
 					link[count].CustoEnlace = 1;
-					link[count].CargaEnlace = 622;
+					link[count].CargaEnlace = 1000;
 					link[count].lsrSrc = roteador[origem];
 					link[count].lsrDest = roteador[destino];
 					count++;
@@ -193,6 +194,38 @@ public class Topologia {
 			}
 			System.out.println("Total de links :"+count);
 			br.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		
+
+	}
+	
+	public void carregarMatrizDeCaminhosArquivo()
+	{
+		
+		try {
+						
+			FileInputStream stream = new FileInputStream(ParametrosDSTE.filenameMatrizCaminhos);
+			InputStreamReader reader = new InputStreamReader(stream);
+			BufferedReader br = new BufferedReader(reader);
+			String linha = br.readLine();
+			int count=0;
+			while(linha != null) {
+				StringTokenizer st2 = new StringTokenizer(linha, "-");
+				this.adicionar(Integer.parseInt((String)st2.nextElement()), Integer.parseInt((String)st2.nextElement()), Integer.parseInt((String)st2.nextElement()));
+				//System.out.println((String)st2.nextElement()+"-"+(String)st2.nextElement()+"-"+(String)st2.nextElement());
+				linha = br.readLine();	
+				count++;
+			}
+				
+			
+			System.out.println("Total de caminhos :"+count);
+			br.close();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -19,7 +19,7 @@ import jcolibri.method.retrieve.NNretrieval.similarity.local.ontology.OntDetail;
 
 public class ParametrosDSTE {
 	//public static final int MaxInteracoes=50;
-	public static final int MaxCaminhos = 10;
+	public static final int MaxCaminhos = 20;
 	//public static final int MaxOverlapFactor = 5;
 	public static final int MaxSaltos = 10;
 	//public static final int NumEnlacesFullDuplex = 12;
@@ -50,8 +50,12 @@ public class ParametrosDSTE {
 	public static final int RRDSteps = 2;  //Número de 'steps' que devemos esperar até armazenarmos no arquivo o valor da leitura
 	public static final int RRDLinhas= (int) (TempoSimulacao/(RRDSteps*RRDAmostra));  //rows  quantas leituras vamos armazenar.
 	
+	public static final Boolean topologiaManual= false;
+	public static final Boolean matrizCaminhosManual= false;
+	public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
+	public static final String filenameMatrizCaminhos= ".//topologias//NSF-14n-42e_Caminhos.txt";
 	
-	
+
 	public static void topologiaManual(Topologia t)
 	{
 		

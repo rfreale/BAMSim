@@ -7,6 +7,7 @@ import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.exception.ExecutionException;
 
+import org.apache.hivemind.SymbolSourceContribution;
 import org.jrobin.core.RrdException;
 
 import BAM.BAMRecommender.BAMDescription;
@@ -40,16 +41,33 @@ public class TesteSimulacao {
 		 * ParametrosDSTE.BCPadrao= new double[] { 30, // BC[0] =CT0 + CT1 + CT2
 		 * (Valor do Enlace) 30, // BC[1] = CT1 + CT2 40 // BC[2] = CT2 };
 		 */
-		// Carrega a topologia da rede manual
-		Debug.setMensagem("Inicio: to.carregarTopologiaManual()", 10, 10);
-		to.carregarTopologiaManual();
-		// to.carregarTopologiaArquivo();
-		Debug.setMensagem("Fim: to.carregarTopologiaManual()", 10, 10);
-
-		// Carrega a matriz de caminhos por roteador manual
-		Debug.setMensagem("Inicio: to.carregarMatrizDeCaminhosManual()", 10, 10);
-		to.carregarMatrizDeCaminhosManual();
-		Debug.setMensagem("Fim: to.carregarMatrizDeCaminhosManual()", 10, 10);
+		
+		if (ParametrosDSTE.topologiaManual)
+		{
+			// Carrega a topologia da rede manual
+			Debug.setMensagem("Inicio: to.carregarTopologiaManual()", 10, 10);
+			to.carregarTopologiaManual();
+			Debug.setMensagem("Fim: to.carregarTopologiaManual()", 10, 10);
+		} else
+		{
+			// Carrega a topologia da rede manual
+			Debug.setMensagem("Inicio: to.carregarTopologiaArquivo()", 10, 10);
+			to.carregarTopologiaArquivo();
+			Debug.setMensagem("Fim: to.carregarTopologiaArquivo()", 10, 10);
+		}
+		if (ParametrosDSTE.matrizCaminhosManual)
+		{
+			// Carrega a matriz de caminhos por roteador manual
+			Debug.setMensagem("Inicio: to.carregarMatrizDeCaminhosManual()", 10, 10);
+			to.carregarMatrizDeCaminhosManual();
+			Debug.setMensagem("Fim: to.carregarMatrizDeCaminhosManual()", 10, 10);
+		}else
+		{
+			// Carrega a topologia da rede manual
+			Debug.setMensagem("Inicio: to.carregarMatrizDeCaminhosArquivo()", 10, 10);
+			to.carregarMatrizDeCaminhosArquivo();
+			Debug.setMensagem("Fim: to.carregarMatrizDeCaminhosArquivo()", 10, 10);
+		}
 
 		// Gera Topologia Roteador x Roteador
 		Debug.setMensagem("Inicio: to.gerarTopologiaDosRoteadores()", 10, 10);
@@ -115,7 +133,7 @@ public class TesteSimulacao {
 			throws IOException, RrdException, ExecutionException {
 		No dados;
 		// Lsp lsp;
-		
+		rodada.estatistica.tempoSimulacaoInicio=System.currentTimeMillis();
 		//tempo de simulaÃ§Ã£o
 		while (ParametrosDSTE.condicaoDeParada(rodada))
 		{
@@ -198,8 +216,11 @@ public class TesteSimulacao {
 						+ " - Tipo 1 - Tentar estabelecer LSP "
 						+ ((Lsp) dados.item).ID + " com "
 						+ ((Lsp) dados.item).Carga + " Mbps", rodada.filename);*/
+				Long tempoInicial=System.nanoTime();
 				Link[] menorCaminho = Roteamento.TryPath_CSPF(
 						((Lsp) dados.item), to);
+				rodada.estatistica.tempoAcumuladoGrantDeny+=System.nanoTime()-tempoInicial;
+				
 				if (menorCaminho != null) {
 					Debug.setMensagem(" ==== Menor caminho  ====");
 					Debug.setMensagem(to.imprimirCaminho(menorCaminho));
@@ -223,7 +244,7 @@ public class TesteSimulacao {
 					rodada.estatistica.bloqueios++;
 					rodada.estatistica.bloqueiosCT[((Lsp) dados.item).CT]++;
 				}
-
+				rodada.estatistica.tempoAcumuladoEstabelecimento+=System.nanoTime()-tempoInicial;
 				break;
 			case 2:
 				// Desestabelece LSP: Liberacao da Banda Ocupada
@@ -506,7 +527,7 @@ public class TesteSimulacao {
 
 				break;
 			
-case 8:
+				case 8:
 				//Gera LSP - Tipo 8 - R2 -->R4
 				Debug.setMensagem("Tipo 8 - Agenda/Cria LSP R2 -->R4");
 				Debug.setMensagem("Agenda estabelecimento da LSP "+((Lsp)dados.item).ID+" - R2 -->R4");
@@ -579,7 +600,7 @@ case 8:
 				break;
 					
 
-case 9:
+				case 9:
 				//Gera LSP - Tipo 9 – R3 -->R4
 				Debug.setMensagem("Tipo 9 - Agenda/Cria LSP R3 -->R4");
 				Debug.setMensagem("Agenda estabelecimento da LSP "+((Lsp)dados.item).ID+" – R3 -->R4");
@@ -659,7 +680,7 @@ case 9:
 		}
 		Debug.setMensagem("\r\n\r\n ==== Status dos Links  ====");
 		Debug.setMensagem(to.statusLinks());
-
+		rodada.estatistica.tempoSimulacaoFim=System.currentTimeMillis();
 		Debug.setMensagem(rodada.estatistica.getEstatisticas());
 		try {
 			rodada.estatistica.gerarRRDPNGpreempcao();

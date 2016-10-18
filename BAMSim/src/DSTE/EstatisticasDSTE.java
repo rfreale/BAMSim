@@ -78,6 +78,13 @@ public class EstatisticasDSTE {
 	public int [] bloqueiosCTAUX = new int [ParametrosDSTE.MaxClassType];
 	
 	private long starTime = ParametrosDSTE.RRDStarTime;
+	public long tempoAcumuladoGrantDeny=0;
+	public long tempoAcumuladoEstabelecimento=0;
+	
+	public long tempoSimulacaoInicio;
+	public long tempoSimulacaoFim;
+	
+	
 	private long curretTime;
 	public String filename;
 	public Color [] cores ={Color.BLUE,Color.CYAN,Color.GRAY,Color.MAGENTA,Color.ORANGE,Color.PINK,Color.RED,Color.GREEN};
@@ -897,6 +904,13 @@ public class EstatisticasDSTE {
 	public String getEstatisticas()
 	{
 		String retorno="============================ Inï¿½cio dos Estatï¿½sticas DSTE ============================\r\n";
+		
+		retorno+=String.format( "Tempo de Simulação = %03d:%02d:%02d\r\n", (tempoSimulacaoFim-tempoSimulacaoInicio) / 3600000, ( (tempoSimulacaoFim-tempoSimulacaoInicio) / 60000 ) % 60 , ((tempoSimulacaoFim-tempoSimulacaoInicio) / 1000 ) % 60);
+		retorno+=String.format("Tempo de Simulação (ms) %d\r\n", tempoSimulacaoFim-tempoSimulacaoInicio);
+		retorno+=String.format("Acumulado GRANT/DENY (ns) %d\r\n", tempoAcumuladoGrantDeny);
+		retorno+=String.format("Média GRANT/DENY (ns) %d\r\n", tempoAcumuladoGrantDeny/lspGeradas);
+		retorno+=String.format("Acumulado Estabelecimento (ns) %d\r\n", tempoAcumuladoEstabelecimento);
+		retorno+=String.format("Média Estabelecimento (ns) %d\r\n", tempoAcumuladoEstabelecimento/lspGeradas);
 		retorno+=String.format("Nï¿½mero de LSPs Preemptadas = %d\r\n", preempcoes);
 		retorno+=String.format("Nï¿½mero de LSPs Preemptadas Debt = %d\r\n", devolucoes); 
 		retorno+=String.format("Nï¿½mero de LSPs Bloqueadas = %d\r\n", bloqueios);
