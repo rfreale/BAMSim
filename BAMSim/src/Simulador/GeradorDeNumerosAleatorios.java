@@ -67,6 +67,12 @@ public class GeradorDeNumerosAleatorios {
 		//if (a>b) then error(0,"uniform Argument Error: a > b");
 		return(a+(b-a)*ranf());
 	}
+	public static int uniform(int a, int b)
+	{ /* 'uniform' returns a psuedo-random variate from a uniform     */
+		/* distribution with lower bound a and upper bound b.           */
+		//if (a>b) then error(0,"uniform Argument Error: a > b");
+		return( (int) (rand.nextInt(b - a+1)  + a));
+	}
 
 
 }

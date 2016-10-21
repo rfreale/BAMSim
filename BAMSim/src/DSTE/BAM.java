@@ -6,7 +6,21 @@ import Simulador.RodadaDeSimulacao;
 
 public class BAM {
 
-	
+	public static BAMStatus NoPreemptionBestEffort(Link link, Lsp lsp)
+	{
+		BAMStatus aux=BAMStatus.aceita;
+		
+			if(link.getCargaEnlaceAtual() + lsp.Carga>link.CargaEnlace)
+			{
+				
+				aux=BAMStatus.bloqueada;
+				//Sem espaço
+			}
+			else
+				aux=BAMStatus.aceita;
+		
+		return aux;
+	}
 	public static BAMStatus NoPreemptionRDM(Link link, Lsp lsp)
 	{
 		BAMStatus aux=BAMStatus.aceita;

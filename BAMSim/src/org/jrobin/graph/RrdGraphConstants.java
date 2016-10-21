@@ -237,7 +237,7 @@ public interface RrdGraphConstants {
 	/**
 	 * Default image format
 	 */
-	String DEFAULT_IMAGE_FORMAT = "gif";
+	String DEFAULT_IMAGE_FORMAT = "png";
 	/**
 	 * Default image quality, used only for jpeg graphs
 	 */

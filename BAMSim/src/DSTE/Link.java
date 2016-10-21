@@ -59,6 +59,9 @@ public class Link {
 			
 			switch(this.bamType)
 			{
+				case NoPreemptionBestEffort:
+				return BAM.NoPreemptionBestEffort(this, lsp);
+				
 				case NoPreemptionMAM:
 					return BAM.NoPreemptionMAM(this, lsp);
 				

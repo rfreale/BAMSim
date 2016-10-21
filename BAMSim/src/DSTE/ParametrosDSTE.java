@@ -36,12 +36,12 @@ public class ParametrosDSTE {
 	public static final long SLABloqueios = 5;
 	public static final long SLAUtilizacao = 90;
 	public static final boolean RecomendacaoCBRSwitchBAM = false;
-	public static final long TempoSimulacao = 3600*3;//86400
+	public static final long TempoSimulacao = 3600*24;//86400
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
 	 */
-	public static final long RRDStarTime = 1451617200-3600;  //start /// date +"%s"
+	public static final long RRDStarTime = 1451617200;  //start /// date +"%s"
 	public static final long RRDAmostra = 30;  //step
 	public static final long RRDBatida =RRDAmostra*2 ; //heartbeat
 	public static final double RRDMin =Double.NaN;    //valor mínimo fora dos quais não deve ser considerada a leitura.
@@ -172,11 +172,11 @@ public class ParametrosDSTE {
 				75, // BC[1] = CT1 + CT2
 				40 // BC[1] = CT2
 			};
-	*/		
+			
 			
 	
 	
-	
+*/	
 	public static double [] BCPadrao= new double[]           //para MAN
 			{	25, // BC[0] =CT0 (Valor do Enlace)
 				35, // BC[1] = CT1

@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javafx.scene.shape.Line;
 
@@ -77,7 +78,7 @@ public class EstatisticasDSTE {
 	public int [] devolucoesCTAUX = new int [ParametrosDSTE.MaxClassType];
 	public int [] bloqueiosCTAUX = new int [ParametrosDSTE.MaxClassType];
 	
-	private long starTime = ParametrosDSTE.RRDStarTime;
+	public long starTime = ParametrosDSTE.RRDStarTime;
 	public long tempoAcumuladoGrantDeny=0;
 	public long tempoAcumuladoEstabelecimento=0;
 	
@@ -85,26 +86,26 @@ public class EstatisticasDSTE {
 	public long tempoSimulacaoFim;
 	
 	
-	private long curretTime;
+	public long curretTime;
 	public String filename;
 	public Color [] cores ={Color.BLUE,Color.CYAN,Color.GRAY,Color.MAGENTA,Color.ORANGE,Color.PINK,Color.RED,Color.GREEN};
 
 
-	private int graphWidthLine=6;
-	private int graphWidth=((9*250)-236+24+31);
-	private int graphHeight=((3*250)-242+33+15);
-	private Font graphLargeFont=new Font("Arial", Font.BOLD, 70);
-	private Font graphSmallFont=new Font("Arial", Font.BOLD, 40);
-    private int graphMinorUnit=RrdGraphConstants.MINUTE;
-    private	int graphMinorUnitCount= 1;
-    private	int graphMajorUnit=RrdGraphConstants.MINUTE;
-    private	int graphMajorUnitCount=10;
-    private	int graphLabelUnit=RrdGraphConstants.MINUTE;
-    private	int graphLabelUnitCount=20;
-    private	int graphLabelSpan= 0;
-    private	String graphSimpleDateFormat="HH:mm";
+	public int graphWidthLine=6;
+	public int graphWidth=((9*250)-236+24+31);
+	public int graphHeight=((3*250)-242+33+15);
+	public Font graphLargeFont=new Font("Arial", Font.BOLD, 70);
+	public Font graphSmallFont=new Font("Arial", Font.BOLD, 40);
+	public int graphMinorUnit=RrdGraphConstants.MINUTE;
+	public	int graphMinorUnitCount= 5;
+	public	int graphMajorUnit=RrdGraphConstants.HOUR;
+	public	int graphMajorUnitCount=1;
+	public	int graphLabelUnit=RrdGraphConstants.HOUR;
+	public	int graphLabelUnitCount=2;
+	public	int graphLabelSpan= 0;
+	public	String graphSimpleDateFormat="HH:mm";
     
-    private BasicStroke dotDashStroke = 
+	public BasicStroke dotDashStroke = 
     	    new BasicStroke(graphWidthLine /*width*/,
     	            BasicStroke.CAP_BUTT /*end style*/,
     	            BasicStroke.JOIN_MITER /*join style*/,
@@ -112,14 +113,14 @@ public class EstatisticasDSTE {
     	            new float[] {3.0f} /* pattern array */,
     	            0.0f /* offset to start of pattern */);
     	
-    private BasicStroke dotDashStroke2 = 
+	public BasicStroke dotDashStroke2 = 
     		    new BasicStroke(graphWidthLine /*width*/,
     		            BasicStroke.CAP_BUTT /*end style*/,
     		            BasicStroke.JOIN_MITER /*join style*/,
     		            1.0f /*miter trim limit */,
     		            new float[] {5.0f, 3.0f, 1.0f, 3.0f } /* pattern array */,
     		            0.0f /* offset to start of pattern */);
-    private BasicStroke dotDashStroke3 = 
+	public BasicStroke dotDashStroke3 = 
     		    new BasicStroke(graphWidthLine /*width*/,
     		            BasicStroke.CAP_BUTT /*end style*/,
     		            BasicStroke.JOIN_MITER /*join style*/,
@@ -128,9 +129,9 @@ public class EstatisticasDSTE {
     		            0.0f /* offset to start of pattern */);
     	
     	
-    private BasicStroke dashStroke = 		    new BasicStroke(graphWidthLine);
+	public BasicStroke dashStroke = 		    new BasicStroke(graphWidthLine);
     	
-    private BasicStroke[] dashStrokeList = {dotDashStroke,dotDashStroke2,dotDashStroke3};
+	public BasicStroke[] dashStrokeList = {dotDashStroke,dotDashStroke2,dotDashStroke3};
 
 	
 	
@@ -908,9 +909,13 @@ public class EstatisticasDSTE {
 		retorno+=String.format( "Tempo de Simulação = %03d:%02d:%02d\r\n", (tempoSimulacaoFim-tempoSimulacaoInicio) / 3600000, ( (tempoSimulacaoFim-tempoSimulacaoInicio) / 60000 ) % 60 , ((tempoSimulacaoFim-tempoSimulacaoInicio) / 1000 ) % 60);
 		retorno+=String.format("Tempo de Simulação (ms) %d\r\n", tempoSimulacaoFim-tempoSimulacaoInicio);
 		retorno+=String.format("Acumulado GRANT/DENY (ns) %d\r\n", tempoAcumuladoGrantDeny);
+		retorno+=String.format("Acumulado GRANT/DENY (ms) %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoGrantDeny));
 		retorno+=String.format("Média GRANT/DENY (ns) %d\r\n", tempoAcumuladoGrantDeny/lspGeradas);
+		retorno+=String.format("Média GRANT/DENY (ms) %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoGrantDeny/lspGeradas));
 		retorno+=String.format("Acumulado Estabelecimento (ns) %d\r\n", tempoAcumuladoEstabelecimento);
+		retorno+=String.format("Acumulado Estabelecimento (ms) %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoEstabelecimento));
 		retorno+=String.format("Média Estabelecimento (ns) %d\r\n", tempoAcumuladoEstabelecimento/lspGeradas);
+		retorno+=String.format("Média Estabelecimento (ms) %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoEstabelecimento/lspGeradas));
 		retorno+=String.format("Nï¿½mero de LSPs Preemptadas = %d\r\n", preempcoes);
 		retorno+=String.format("Nï¿½mero de LSPs Preemptadas Debt = %d\r\n", devolucoes); 
 		retorno+=String.format("Nï¿½mero de LSPs Bloqueadas = %d\r\n", bloqueios);

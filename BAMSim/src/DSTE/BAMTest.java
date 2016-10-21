@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
@@ -47,6 +48,7 @@ import Simulador.Debug;
 import Simulador.Estatisticas;
 import Simulador.GeradorDeNumerosAleatorios;
 import Simulador.No;
+import Simulador.ParametrosDoSimulador;
 import Simulador.RodadaDeSimulacao;
 
 public class BAMTest {
@@ -305,6 +307,20 @@ public class BAMTest {
 		for (int i=0;i<50;i++)
 		{
 			System.out.println(GeradorDeNumerosAleatorios.poisson(lambda));
+
+		}
+		
+	}
+	@Test
+	public void testUniforme() 
+	{
+		Random rand = new Random(ParametrosDoSimulador.semente);
+		for (int i=0;i<50;i++)
+		{
+			//System.out.println(GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.MaxClassType-1));
+			System.out.println(GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES-1));
+			
+			//System.out.println(rand.nextInt(99));
 
 		}
 		
@@ -2018,6 +2034,115 @@ public class BAMTest {
 				System.out.print(link.imprimirUtilizacaoGBAM());
 				//System.out.print(Lsp.imprime_lista(link.ListaLSPs)+"\n - Carga:"+link.getCargaEnlaceAtual()+"\n");
 				
+	}
+	@Test
+	public void gerarRRDPNGpreempcao() throws IOException, RrdException
+	{
+		String filename= "1476799105354";
+		EstatisticasDSTE e = new EstatisticasDSTE("a");
+		
+		//Acumulado
+		RrdGraphDef graphDef = new RrdGraphDef();
+		graphDef.setTimeSpan(e.starTime,e.starTime+3600*24);
+		graphDef.setVerticalLabel("Number");
+		//graphDef.setMinValue(0);
+		graphDef.setTitle("Preempções Acumuladas");
+		graphDef.datasource("preempcao", "saida/"+filename+"/"+filename+".rrd", "preempcao", "MAX");
+		graphDef.line("preempcao", new Color(0xFF, 0, 0), "Preempção Total", e.graphWidthLine);
+		graphDef.setWidth(e.graphWidth);
+		graphDef.setHeight(e.graphHeight);
+		graphDef.setLargeFont(e.graphLargeFont);
+        graphDef.setSmallFont(e.graphSmallFont);
+        graphDef.setTimeAxis(e.graphMinorUnit, e.graphMinorUnitCount,
+        		e.graphMajorUnit, e.graphLabelUnitCount,
+        		e.graphLabelUnit, e.graphLabelUnitCount,
+        		e.graphLabelSpan, e.graphSimpleDateFormat);
+
+
+		//Por tempo
+		RrdGraphDef graphDef2 = new RrdGraphDef();
+		graphDef2.setTimeSpan(e.starTime,e.starTime+3600*24);
+		graphDef2.setVerticalLabel("Number");
+		//graphDef.setMinValue(0);
+		graphDef2.setTitle("Preempções x LSPs Geradas");
+		graphDef2.datasource("preempcao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao", "LAST");
+		graphDef2.datasource("lspGeradas", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspGeradas", "LAST");
+		graphDef2.area("lspGeradas", Color.GREEN, "LSPs Geradas");
+		graphDef2.area("preempcao", Color.RED, "Preempções");
+		for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
+		{
+			graphDef2.datasource("preempcao_CT"+i, "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao_CT"+i, "LAST");
+			graphDef2.line("preempcao_CT"+i, e.cores[i], "Preempcões em CT"+i, e.graphWidthLine);
+			
+		}
+		graphDef2.setWidth(e.graphWidth);
+		graphDef2.setHeight(e.graphHeight);
+		graphDef2.setLargeFont(e.graphLargeFont);
+        graphDef2.setSmallFont(e.graphSmallFont);
+        graphDef2.setTimeAxis(e.graphMinorUnit, e.graphMinorUnitCount,
+        		e.graphMajorUnit, e.graphLabelUnitCount,
+        		e.graphLabelUnit, e.graphLabelUnitCount,
+        		e.graphLabelSpan, e.graphSimpleDateFormat);
+		
+		//Percentual
+		
+		RrdGraphDef graphDef3 = new RrdGraphDef();
+		graphDef3.setTimeSpan(e.starTime,e.starTime+3600*24);
+		graphDef3.setMaxValue(100);
+		graphDef3.setVerticalLabel("Percent");
+		//graphDef.setMinValue(0);
+		graphDef3.setTitle("Preempções");
+
+		graphDef3.datasource("preempcao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao", "LAST");
+		graphDef3.datasource("lspGeradas", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspGeradas", "LAST");
+		graphDef3.datasource("prempcoes", "preempcao,lspGeradas,/,100,*");
+		graphDef3.area("prempcoes", Color.gray, "% Prempções");
+		
+		graphDef3.setWidth(e.graphWidth);
+		graphDef3.setHeight(e.graphHeight);
+		graphDef3.setLargeFont(e.graphLargeFont);
+        graphDef3.setSmallFont(e.graphSmallFont);
+        graphDef3.setTimeAxis(e.graphMinorUnit, e.graphMinorUnitCount,
+        		e.graphMajorUnit, e.graphLabelUnitCount,
+        		e.graphLabelUnit, e.graphLabelUnitCount,
+        		e.graphLabelSpan, e.graphSimpleDateFormat);
+		
+		
+		//acumulado
+		RrdGraph graph = new RrdGraph(graphDef);
+		int totalWidth=graph.getRrdGraphInfo().getWidth();
+	    int totalHeight=graph.getRrdGraphInfo().getHeight();
+	    BufferedImage img=new BufferedImage(totalWidth,totalHeight,BufferedImage.TYPE_USHORT_565_RGB);
+	    Graphics gfx=img.getGraphics();
+	    graph.render(gfx);
+	    File outputfile = new File("saida/"+filename+"/"+filename+"_prempt_acum.png");
+	    outputfile.mkdirs();
+	    ImageIO.write(img,"png",outputfile);
+	   
+	    //Portempo
+		graph = new RrdGraph(graphDef2);
+		totalWidth=graph.getRrdGraphInfo().getWidth();
+	    totalHeight=graph.getRrdGraphInfo().getHeight();
+	    img=new BufferedImage(totalWidth,totalHeight,BufferedImage.TYPE_USHORT_565_RGB);
+	    gfx=img.getGraphics();
+	    graph.render(gfx);
+	    outputfile = new File("saida/"+filename+"/"+filename+"_prempt.png");
+	    outputfile.mkdirs();
+	    ImageIO.write(img,"png",outputfile);
+	    
+	    //Portempo
+  		graph = new RrdGraph(graphDef3);
+  		totalWidth=graph.getRrdGraphInfo().getWidth();
+  	    totalHeight=graph.getRrdGraphInfo().getHeight();
+  	    img=new BufferedImage(totalWidth,totalHeight,BufferedImage.TYPE_USHORT_565_RGB);
+  	    gfx=img.getGraphics();
+  	    graph.render(gfx);
+  	    outputfile = new File("saida/"+filename+"/"+filename+"_prempt_percent.png");
+  	    outputfile.mkdirs();
+  	    ImageIO.write(img,"png",outputfile);
+
+
+	    
 	}
 
 }
