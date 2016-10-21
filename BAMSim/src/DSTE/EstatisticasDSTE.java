@@ -856,6 +856,7 @@ public class EstatisticasDSTE {
 		
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setTimeSpan(starTime,curretTime);
+		//graphDef.setTimeSpan(1451617200,curretTime); //Aqui pega do momento 01 ao 02hs
 		graphDef.setVerticalLabel("Mbps");
 		graphDef.setMaxValue(link.CargaEnlace);
 		graphDef.setTitle("Link "+link.ID);

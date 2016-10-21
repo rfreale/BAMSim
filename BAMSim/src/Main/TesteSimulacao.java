@@ -280,12 +280,12 @@ public class TesteSimulacao {
 					if (((Lsp)dados.item).CT==1)
 					{
 						((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-						rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(7), dados);
+						rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
 					}
 					if (((Lsp)dados.item).CT==2)
 					{
 						((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-						rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(7), dados);
+						rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(5), dados);
 					} 
 				}else // 10.800
 				{
@@ -456,7 +456,7 @@ public class TesteSimulacao {
 					if (((Lsp)dados.item).CT==0)
 					{
 						((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-						rodada.schedulep (7, GeradorDeNumerosAleatorios.expntl(15), dados);
+						rodada.schedulep (7, GeradorDeNumerosAleatorios.expntl(25), dados);
 					}
 					if (((Lsp)dados.item).CT==1)
 					{
@@ -478,7 +478,7 @@ public class TesteSimulacao {
 					if (((Lsp)dados.item).CT==1)
 					{
 						((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-						rodada.schedulep (7, GeradorDeNumerosAleatorios.expntl(10), dados);
+						rodada.schedulep (7, GeradorDeNumerosAleatorios.expntl(5), dados);
 					}
 					if (((Lsp)dados.item).CT==2)
 					{
@@ -531,7 +531,7 @@ case 8:
 					if (((Lsp)dados.item).CT==1)
 					{
 						((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-						rodada.schedulep (8, GeradorDeNumerosAleatorios.expntl(15), dados);
+						rodada.schedulep (8, GeradorDeNumerosAleatorios.expntl(25), dados);
 					}
 					if (((Lsp)dados.item).CT==2)
 					{
@@ -545,17 +545,17 @@ case 8:
 				if (((Lsp)dados.item).CT==0)
 				{
 					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-					rodada.schedulep (8, GeradorDeNumerosAleatorios.expntl(10), dados);
+					rodada.schedulep (8, GeradorDeNumerosAleatorios.expntl(20), dados);
 				}
 				if (((Lsp)dados.item).CT==1)
 				{
 					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-					rodada.schedulep (8, GeradorDeNumerosAleatorios.expntl(14), dados);
+					rodada.schedulep (8, GeradorDeNumerosAleatorios.expntl(20), dados);
 				}
 				if (((Lsp)dados.item).CT==2)
 				{
 					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-					rodada.schedulep (8, GeradorDeNumerosAleatorios.expntl(14), dados);
+					rodada.schedulep (8, GeradorDeNumerosAleatorios.expntl(20), dados);
 				} 
 			}else // 10.800
 			{
@@ -609,7 +609,7 @@ case 9:
 					if (((Lsp)dados.item).CT==2)
 					{
 						((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-						rodada.schedulep (9, GeradorDeNumerosAleatorios.expntl(15), dados);
+						rodada.schedulep (9, GeradorDeNumerosAleatorios.expntl(25), dados);
 					}
 				
 
@@ -618,17 +618,17 @@ case 9:
 				if (((Lsp)dados.item).CT==0)
 				{
 					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-					rodada.schedulep (9, GeradorDeNumerosAleatorios.expntl(14), dados);
+					rodada.schedulep (9, GeradorDeNumerosAleatorios.expntl(5), dados);
 				}
 				if (((Lsp)dados.item).CT==1)
 				{
 					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-					rodada.schedulep (9, GeradorDeNumerosAleatorios.expntl(14), dados);
+					rodada.schedulep (9, GeradorDeNumerosAleatorios.expntl(20), dados);
 				}
 				if (((Lsp)dados.item).CT==2)
 				{
 					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-					rodada.schedulep (9, GeradorDeNumerosAleatorios.expntl(10), dados);
+					rodada.schedulep (9, GeradorDeNumerosAleatorios.expntl(20), dados);
 				} 
 			}else // 10.800
 			{
