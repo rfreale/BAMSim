@@ -182,7 +182,7 @@ public class Topologia {
 					int destino=Integer.parseInt((String)st2.nextElement());
 					System.out.println("Destino: "+destino+"(Pelo link:"+count+")");
 					link[count]=new Link();
-					link[count].Descricao = roteador[origem].Descricao+"->"+roteador[destino].Descricao;
+					link[count].Descricao = "Physical Link "+count+" ("+roteador[origem].Descricao+"->"+roteador[destino].Descricao+")";
 					link[count].ID = count;
 					link[count].CustoEnlace = 1;
 					link[count].CargaEnlace = 1000;
@@ -344,6 +344,11 @@ public class Topologia {
 				if(ParametrosDoSimulador.DebugFile>=8)
 					retorno+=("LSPs no enlace:"+Lsp.imprime_lista(aux.ListaLSPs)+"\r\n");
 				retorno+=("Carga:"+aux.getCargaEnlaceAtual()+"\r\n");
+				retorno+=("Preempções:"+aux.preempcoes+"\r\n");
+				retorno+=("Devoluções:"+aux.devolucoes+"\r\n");
+				retorno+=("LSP Estabelecidas:"+aux.lspEstabelecidas+"\r\n");
+				retorno+=("LSP Unbroken:"+aux.lspUnbroken+"\r\n");
+				retorno+=("Banda Unbroken:"+aux.bandaUnbroken+"\r\n");
 			}	
 		retorno+=("\r\n--------------------------------------------------------------\r\n");
 		return retorno;

@@ -36,7 +36,7 @@ public class ParametrosDSTE {
 	public static final long SLABloqueios = 5;
 	public static final long SLAUtilizacao = 90;
 	public static final boolean RecomendacaoCBRSwitchBAM = false;
-	public static final long TempoSimulacao = 3600*24;//86400
+	public static final long TempoSimulacao = 3600*1;//86400
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -198,7 +198,7 @@ public class ParametrosDSTE {
 	public static boolean condicaoDeParada(RodadaDeSimulacao rodada)
 	{
 		// rodada.simtime()<=36000
-		//rodada.estatistica.lspGeradas<=500
+		//rodada.estatistica.lspRequested<=500
 		if(rodada.simtime() <= TempoSimulacao) 
 			return true;
 		else

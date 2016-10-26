@@ -71,6 +71,8 @@ public class Lsp {
 			}
 			
 			caminho[j].insereLsp(this);
+			caminho[j].lspEstabelecidas++;
+			caminho[j].lspEstabelecidasCT[this.CT]++;
 			if(caminho[j].lsrDest.ID==this.dest)
 			{
 				break;
@@ -92,6 +94,9 @@ public class Lsp {
 			for(int j=0;this.caminho[j]!=null&&j<ParametrosDSTE.MaxSaltos;j++)
 			{
 				this.caminho[j].removeLsp(this);
+				caminho[j].lspUnbroken++;
+				caminho[j].lspUnbrokenCT[this.CT]++;
+				caminho[j].bandaUnbroken+=this.Carga;
 				if(caminho[j].lsrDest.ID==this.dest)
 				{
 					break;
@@ -111,6 +116,8 @@ public class Lsp {
 			for(int j=0;this.caminho[j]!=null&&j<ParametrosDSTE.MaxSaltos;j++)
 			{
 				this.caminho[j].removeLsp(this);
+				this.caminho[j].preempcoes++;
+				this.caminho[j].preempcoesCT[this.CT]++;
 				if(caminho[j].lsrDest.ID==this.dest)
 				{
 					break;
@@ -138,6 +145,8 @@ public class Lsp {
 			for(int j=0;this.caminho[j]!=null&&j<ParametrosDSTE.MaxSaltos;j++)
 			{
 				this.caminho[j].removeLsp(this);
+				this.caminho[j].devolucoes++;
+				this.caminho[j].devolucoesCT[this.CT]++;
 				if(caminho[j].lsrDest.ID==this.dest)
 				{
 					break;

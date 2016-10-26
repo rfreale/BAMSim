@@ -142,7 +142,7 @@ public class TesteSimulacao {
 			 * BancoDeDados.setXML("<interacao>\r\n");
 			 * BancoDeDados.setXML("<interacao_total_lsps_geradas>"
 			 * +EstatisticasDSTE
-			 * .lspGeradas+"</interacao_total_lsps_geradas>\r\n"); for(int
+			 * .lspRequested+"</interacao_total_lsps_geradas>\r\n"); for(int
 			 * j=0;j<ParametrosDSTE.MaxClassType;j++)
 			 * BancoDeDados.setXML("<interacao_lsps_preempted_class_"
 			 * +j+">"+EstatisticasDSTE
@@ -205,10 +205,10 @@ public class TesteSimulacao {
 			switch (rodada.causep_ev) {
 			case 1:
 				// Estabelecer uma lsp
-				rodada.estatistica.lspGeradas++;
-				rodada.estatistica.lspGeradasCT[((Lsp) dados.item).CT]++;
-				rodada.estatistica.bandaGerada += ((Lsp) dados.item).Carga;
-				rodada.estatistica.bandaGeradaCT[((Lsp) dados.item).CT] += ((Lsp) dados.item).Carga;
+				rodada.estatistica.lspRequested++;
+				rodada.estatistica.lspRequestedCT[((Lsp) dados.item).CT]++;
+				rodada.estatistica.bandaRequested += ((Lsp) dados.item).Carga;
+				rodada.estatistica.bandaRequestedCT[((Lsp) dados.item).CT] += ((Lsp) dados.item).Carga;
 				Debug.setMensagem("Tipo 1 - Tentar estabelecer LSP "
 						+ ((Lsp) dados.item).ID + " com "
 						+ ((Lsp) dados.item).Carga + " Mbps");
@@ -252,10 +252,10 @@ public class TesteSimulacao {
 						+ ((Lsp) dados.item).ID + " com "
 						+ ((Lsp) dados.item).Carga + " Mbps");
 				((Lsp) dados.item).desestabeleceLSP();
-				rodada.estatistica.lspAtendidas++;
-				rodada.estatistica.lspAtendidaCT[((Lsp) dados.item).CT]++;
-				rodada.estatistica.bandaAtendidaCT[((Lsp) dados.item).CT] += ((Lsp) dados.item).Carga;
-				rodada.estatistica.bandaAtendida += ((Lsp) dados.item).Carga;
+				rodada.estatistica.lspUnbroken++;
+				rodada.estatistica.lspUnbrokenCT[((Lsp) dados.item).CT]++;
+				rodada.estatistica.bandaUnbrokenCT[((Lsp) dados.item).CT] += ((Lsp) dados.item).Carga;
+				rodada.estatistica.bandaUnbroken += ((Lsp) dados.item).Carga;
 				((Lsp) dados.item).status = LspStatus.finalizada;
 
 				break;
@@ -433,7 +433,7 @@ public class TesteSimulacao {
 		Debug.setMensagem(rodada.estatistica.getEstatisticas());
 		try {
 			rodada.estatistica.gerarRRDPNGpreempcao();
-			rodada.estatistica.gerarRRDPNGlspGeradas();
+			rodada.estatistica.gerarRRDPNGlspRequested();
 			rodada.estatistica.gerarRRDPNGbloqueio();
 			rodada.estatistica.gerarRRDPNGdevolucao();
 			rodada.estatistica.gerarRRDXML();

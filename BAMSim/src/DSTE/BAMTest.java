@@ -52,6 +52,15 @@ import Simulador.ParametrosDoSimulador;
 import Simulador.RodadaDeSimulacao;
 
 public class BAMTest {
+	
+	@Test
+	public void scalaX()
+	{
+		double x=11;
+		System.out.println(x/5/10);
+		System.out.println(x%50);
+		System.out.println(x-(x%50));
+	}
 	@Test
 	public void carregarMatrizDeCaminhosArquivo()
 	{
@@ -77,11 +86,15 @@ public class BAMTest {
 				linha = br.readLine();	
 				count++;
 			}
-				
+			
 			
 			System.out.println("Total de caminhos :"+count);
 			br.close();
 			System.out.println(t.imprimirCaminhos());
+			
+			
+			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

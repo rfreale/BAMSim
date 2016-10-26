@@ -36,13 +36,14 @@ public class Link {
 		
 		public int preempcoes = 0;
 		public int devolucoes = 0;
-		public int bloqueios = 0;
 		public int lspEstabelecidas = 0;
-		public double bandaAtendida = 0;
+		public int lspUnbroken = 0;
+		public double bandaUnbroken = 0;
 
+		public int [] lspUnbrokenCT = new int [ParametrosDSTE.MaxClassType];
+		public int [] lspEstabelecidasCT = new int [ParametrosDSTE.MaxClassType];
 		public int [] preempcoesCT = new int [ParametrosDSTE.MaxClassType];
 		public int [] devolucoesCT = new int [ParametrosDSTE.MaxClassType];
-		public int [] bloqueiosCT = new int [ParametrosDSTE.MaxClassType];
 
 		
 		Link()
