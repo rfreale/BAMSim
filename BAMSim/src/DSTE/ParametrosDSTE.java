@@ -28,15 +28,15 @@ public class ParametrosDSTE {
 	public static int LINKS = 6; // Nï¿½mero de LINKS (Simplex) do Modelo
 	public static int ROTEADORES = 5; // Nï¿½mero de roteadores DSTE
 	public static BAMType BAMTypePadrao = BAMType.PreemptionGBAM;  //NoPreemptionMAM  //PreemptionAllocCTSharing  //PreemptionRDM
-	public static final long Janela = 30;
+	public static final long Janela = 300;
 	
 	//SLAs em Percentual
-	public static final long SLAPreempcoes = 5;
+	public static final long SLAPreempcoes = 10;
 	public static final long SLADevolucoes = 5;
 	public static final long SLABloqueios = 5;
 	public static final long SLAUtilizacao = 90;
-	public static final boolean RecomendacaoCBRSwitchBAM = false;
-	public static final long TempoSimulacao = 3600*1;//86400
+	public static final boolean RecomendacaoCBRSwitchBAM = true;
+	public static final long TempoSimulacao = 3600*5;//86400
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -52,10 +52,192 @@ public class ParametrosDSTE {
 	
 	public static final Boolean topologiaManual= false;
 	public static final Boolean matrizCaminhosManual= false;
-	public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
-	public static final String filenameMatrizCaminhos= ".//topologias//NSF-14n-42e_Caminhos.txt";
+	//public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
+	//public static final String filenameMatrizCaminhos= ".//topologias//NSF-14n-42e_Caminhos.txt";
+	public static final String filenameTopologia= ".//topologias//PTP-2n-1e.txt";
+	public static final String filenameMatrizCaminhos= ".//topologias//PTP-2n-1e_Caminhos.txt";
 	
+	public static void trafegoManual(RodadaDeSimulacao rodada,Topologia to, No dados)
+	{
+		
+		//Inicializar Tráfego
+		if(dados==null)
+		{
+			for(int i=0; i<ParametrosDSTE.MaxClassType;i++)
+			{
+				int auxCT=i;
+				dados = new No();
+				Lsp lsp = new Lsp(rodada);
+				lsp.CargaReduzida = 0;
+				lsp.src = 0; //id do router fonte
+				lsp.dest = 1; // id do router destino
+				lsp.CT =auxCT;
+				lsp.Carga = (int)GeradorDeNumerosAleatorios.uniform(5,15);
+				dados.item = lsp;
+				Debug.setMensagem("Agenda estabelecimento da LSP "+((Lsp)dados.item).ID+" - "
+						+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
+						+" -->"
+						+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
+				rodada.schedulep (3, 0.0, dados);
+			}
+		}
+		else
+		{
+			//Repetição do tráfego
+			Debug.setMensagem("Agenda estabelecimento da LSP "+((Lsp)dados.item).ID+" - "
+					+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
+					+" -->"
+					+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
+			rodada.schedulep (1, 0.0, dados);
+	
+			
+	
+			
+			int auxCT=((Lsp)dados.item).CT;
+			dados = new No();
+			Lsp lsp = new Lsp(rodada);
+			lsp.CargaReduzida = 0;
+			lsp.src = 0; //id do router fonte
+			lsp.dest = 1; // id do router destino
+			lsp.CT =auxCT;
+			lsp.Carga = (int)GeradorDeNumerosAleatorios.uniform(5,15);
+			dados.item = lsp;
+			
+			double tempoDeVida=250;
+			Debug.setMensagem("Cria LSP "+((Lsp)dados.item).ID+" - R0 -->R4");
+			if(rodada.simtime() <= 3600*1)
+			{
+				if (((Lsp)dados.item).CT==0)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
+				}
+				if (((Lsp)dados.item).CT==1)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
+				}
+				if (((Lsp)dados.item).CT==2)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
+				}
+			}else if (rodada.simtime() <= 3600*2)
+			{
+				if (((Lsp)dados.item).CT==0)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
+				}
+				if (((Lsp)dados.item).CT==1)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
+				}
+				if (((Lsp)dados.item).CT==2)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
+				} 
+				// 10.800
+			}else if (rodada.simtime() <= 3600*3)
+			{
+				if (((Lsp)dados.item).CT==0)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
+				}
+				if (((Lsp)dados.item).CT==1)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
+				}
+				if (((Lsp)dados.item).CT==2)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
+				} 
+			}
+			else if (rodada.simtime() <= 3600*4)// 14.400
+			{
+				if (((Lsp)dados.item).CT==0)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
+				}
+				if (((Lsp)dados.item).CT==1)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
+				}
+				if (((Lsp)dados.item).CT==2)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
+				}
+			}else // 14.400
+			{
+				if (((Lsp)dados.item).CT==0)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
+				}
+				if (((Lsp)dados.item).CT==1)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
+				}
+				if (((Lsp)dados.item).CT==2)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
+				}
+			}
 
+		}
+			
+		
+		
+	}
+	//Aleatório
+	public static void trafegoManual2(RodadaDeSimulacao rodada,Topologia to, No dados)
+	{
+		
+		
+		if(dados!=null)
+		{
+			Debug.setMensagem("Agenda estabelecimento da LSP "+((Lsp)dados.item).ID+" - "
+					+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
+					+" -->"
+					+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
+			rodada.schedulep (1, 0.0, dados);
+		}
+
+		dados = new No();
+		Lsp lsp = new Lsp(rodada);
+		lsp.CargaReduzida = 0;
+		lsp.src = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES-1); //id do router fonte
+		do {
+			lsp.dest = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES-1); // id do router destino
+		} while (lsp.src==lsp.dest);
+		//lsp.src = 0;
+		//lsp.dest = 1;
+		lsp.CT =GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.MaxClassType-1); 
+		lsp.Carga = GeradorDeNumerosAleatorios.uniform(5,30);
+		dados.item = lsp;
+		Debug.setMensagem("Cria LSP "+((Lsp)dados.item).ID+" - "
+				+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
+				+" -->"
+				+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
+		((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(300);
+		if(rodada.simtime() <2000)
+			rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(2), dados);
+		else
+			rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(20), dados);
+			
+		
+		
+	}
 	public static void topologiaManual(Topologia t)
 	{
 		
@@ -244,7 +426,13 @@ public class ParametrosDSTE {
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 10.0);
 		
-		attribute = new Attribute("utilizacaoDoEnlace",BAMDescription.class); 
+		attribute = new Attribute("utilizacaoDoEnlaceCT0",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 2.0);
+		attribute = new Attribute("utilizacaoDoEnlaceCT1",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 2.0);
+		attribute = new Attribute("utilizacaoDoEnlaceCT2",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
 		config.setWeight(attribute, 2.0);
 
@@ -258,10 +446,10 @@ public class ParametrosDSTE {
 		config.addMapping(attribute, new Interval(100));
 		config.setWeight(attribute, 2.0);
 		
-		//testar sem pois nunca existe esse valor
+		/*nunca existe esse valor
 		attribute = new Attribute("numeroDePreempcoesCT2",BAMDescription.class);
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 0.0);
+		config.setWeight(attribute, 0.0);*/
 		
 
 		attribute = new Attribute("numeroDeBloqueiosCT0",BAMDescription.class);
@@ -278,10 +466,10 @@ public class ParametrosDSTE {
 		config.addMapping(attribute, new Interval(100));
 		config.setWeight(attribute, 2.0);
 		
-		//testar sem pois nunca existe esse valor
+		/*nunca existe esse valor
 		attribute = new Attribute("numeroDeDevolucoesCT0",BAMDescription.class);
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 0.0);
+		config.setWeight(attribute, 0.0);*/
 		
 		
 		attribute = new Attribute("numeroDeDevolucoesCT1",BAMDescription.class);
@@ -312,9 +500,9 @@ public class ParametrosDSTE {
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 10.0);
 		
-		attribute = new Attribute("utilizacaoDoEnlace",BAMDescription.class); 
+		/*attribute = new Attribute("utilizacaoDoEnlace",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 9.0);
+		config.setWeight(attribute, 9.0);*/
 
 
 		attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class); 
@@ -364,5 +552,6 @@ public class ParametrosDSTE {
 		
 		return config;
 	}
+	
 
 }

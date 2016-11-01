@@ -54,7 +54,9 @@ public class RevisionDialog extends JDialog {
 	JLabel caseId;
 	JComboBox BAMAtual;
 	JComboBox problema;
-	SpinnerNumberModel  utilizacaoDoEnlace;
+	SpinnerNumberModel  utilizacaoDoEnlaceCT0;
+	SpinnerNumberModel  utilizacaoDoEnlaceCT1;
+	SpinnerNumberModel  utilizacaoDoEnlaceCT2;
 	SpinnerNumberModel  numeroDePreempcoesCT0;
 	SpinnerNumberModel  numeroDePreempcoesCT1;
 	SpinnerNumberModel  numeroDePreempcoesCT2;
@@ -119,9 +121,17 @@ public class RevisionDialog extends JDialog {
 				"AltaPreempcaoCT2", "AltoBloqueioCT2", "AltaDevolucaoCT2"};
 		panel.add(problema = new JComboBox(_problema));
 		
-		panel.add(new JLabel("Utilização do Enlace"));
-		utilizacaoDoEnlace = new SpinnerNumberModel(0,0,100,1); 
-		panel.add(new JSpinner(utilizacaoDoEnlace));
+		panel.add(new JLabel("Utilização do Enlace CT0"));
+		utilizacaoDoEnlaceCT0 = new SpinnerNumberModel(0,0,100,1); 
+		panel.add(new JSpinner(utilizacaoDoEnlaceCT0));
+		
+		panel.add(new JLabel("Utilização do Enlace CT1"));
+		utilizacaoDoEnlaceCT1 = new SpinnerNumberModel(0,0,100,1); 
+		panel.add(new JSpinner(utilizacaoDoEnlaceCT1));
+		
+		panel.add(new JLabel("Utilização do Enlace CT2"));
+		utilizacaoDoEnlaceCT2 = new SpinnerNumberModel(0,0,100,1); 
+		panel.add(new JSpinner(utilizacaoDoEnlaceCT2));
 		
 		panel.add(new JLabel("Number de Preempções em CT0"));
 		numeroDePreempcoesCT0 = new SpinnerNumberModel(0,0,100,1); 
@@ -276,7 +286,9 @@ public class RevisionDialog extends JDialog {
 		
 		this.BAMAtual.setSelectedItem(desc.getBAMAtual().toString());
 		this.problema.setSelectedItem(desc.getProblema().toString());
-		this.utilizacaoDoEnlace.setValue(desc.getUtilizacaoDoEnlace());
+		this.utilizacaoDoEnlaceCT0.setValue(desc.getUtilizacaoDoEnlaceCT0());
+		this.utilizacaoDoEnlaceCT1.setValue(desc.getUtilizacaoDoEnlaceCT1());
+		this.utilizacaoDoEnlaceCT2.setValue(desc.getUtilizacaoDoEnlaceCT2());
 		this.numeroDePreempcoesCT0.setValue(desc.getNumeroDePreempcoesCT0());
 		this.numeroDePreempcoesCT1.setValue(desc.getNumeroDePreempcoesCT1());
 		this.numeroDePreempcoesCT2.setValue(desc.getNumeroDePreempcoesCT2());
@@ -302,7 +314,9 @@ public class RevisionDialog extends JDialog {
 		
 		BAMDescription desc = (BAMDescription) _case.getDescription();
 		
-		desc.setUtilizacaoDoEnlace(this.utilizacaoDoEnlace.getNumber().doubleValue());
+		desc.setUtilizacaoDoEnlaceCT0(this.utilizacaoDoEnlaceCT0.getNumber().doubleValue());
+		desc.setUtilizacaoDoEnlaceCT1(this.utilizacaoDoEnlaceCT1.getNumber().doubleValue());
+		desc.setUtilizacaoDoEnlaceCT2(this.utilizacaoDoEnlaceCT2.getNumber().doubleValue());
 		desc.setNumeroDeBloqueiosCT0(this.numeroDeBloqueiosCT0.getNumber().intValue());
 		desc.setNumeroDeBloqueiosCT1(this.numeroDeBloqueiosCT1.getNumber().intValue());
 		desc.setNumeroDeBloqueiosCT2(this.numeroDeBloqueiosCT2.getNumber().intValue());

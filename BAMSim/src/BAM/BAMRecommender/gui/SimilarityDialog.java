@@ -59,7 +59,9 @@ public class SimilarityDialog extends JDialog {
 	
 	SimilConfigPanel bamAtual;
 	SimilConfigPanel problema;
-	SimilConfigPanel  utilizacaoDoEnlace;
+	SimilConfigPanel  utilizacaoDoEnlaceCT0;
+	SimilConfigPanel  utilizacaoDoEnlaceCT1;
+	SimilConfigPanel  utilizacaoDoEnlaceCT2;
 	SimilConfigPanel  numeroDePreempcoesCT0;
 	SimilConfigPanel  numeroDePreempcoesCT1;
 	SimilConfigPanel  numeroDePreempcoesCT2;
@@ -142,9 +144,17 @@ public class SimilarityDialog extends JDialog {
 		panel.add(problema = new SimilConfigPanel(enumfunctions));
 		problema.weight.setValue(10);
 		
-		panel.add(new JLabel("Utilização do Enlace"));
-		panel.add(utilizacaoDoEnlace = new SimilConfigPanel(numberfunctions));
-		utilizacaoDoEnlace.weight.setValue(9);
+		panel.add(new JLabel("Utilização do Enlace CT0"));
+		panel.add(utilizacaoDoEnlaceCT0 = new SimilConfigPanel(numberfunctions));
+		utilizacaoDoEnlaceCT0.weight.setValue(5);
+		
+		panel.add(new JLabel("Utilização do Enlace CT1"));
+		panel.add(utilizacaoDoEnlaceCT1 = new SimilConfigPanel(numberfunctions));
+		utilizacaoDoEnlaceCT1.weight.setValue(5);
+		
+		panel.add(new JLabel("Utilização do Enlace CT2"));
+		panel.add(utilizacaoDoEnlaceCT2 = new SimilConfigPanel(numberfunctions));
+		utilizacaoDoEnlaceCT2.weight.setValue(5);
 		
 		panel.add(new JLabel("Number de Preempções em CT0"));
 		panel.add(numeroDePreempcoesCT0 = new SimilConfigPanel(numberfunctions));
@@ -152,7 +162,7 @@ public class SimilarityDialog extends JDialog {
 		
 		panel.add(new JLabel("Number de Preempções em CT1"));
 		panel.add(numeroDePreempcoesCT1 = new SimilConfigPanel(numberfunctions));
-		numeroDePreempcoesCT1.weight.setValue(6);
+		numeroDePreempcoesCT1.weight.setValue(5);
 		
 		panel.add(new JLabel("Number de Preempções em CT2"));
 		panel.add(numeroDePreempcoesCT2 = new SimilConfigPanel(numberfunctions));
@@ -160,15 +170,15 @@ public class SimilarityDialog extends JDialog {
 		
 		panel.add(new JLabel("Number de Bloqueios em CT0"));
 		panel.add(numeroDeBloqueiosCT0 = new SimilConfigPanel(numberfunctions));
-		numeroDeBloqueiosCT0.weight.setValue(2);
+		numeroDeBloqueiosCT0.weight.setValue(5);
 		
 		panel.add(new JLabel("Number de Bloqueios em CT1"));
 		panel.add(numeroDeBloqueiosCT1 = new SimilConfigPanel(numberfunctions));
-		numeroDeBloqueiosCT1.weight.setValue(3);
+		numeroDeBloqueiosCT1.weight.setValue(5);
 		
 		panel.add(new JLabel("Number de Bloqueios em CT2"));
 		panel.add(numeroDeBloqueiosCT2 = new SimilConfigPanel(numberfunctions));
-		numeroDeBloqueiosCT2.weight.setValue(4);
+		numeroDeBloqueiosCT2.weight.setValue(5);
 		
 		panel.add(new JLabel("Number de Devoluções em CT0"));
 		panel.add(numeroDeDevolucoesCT0 = new SimilConfigPanel(numberfunctions));
@@ -176,11 +186,11 @@ public class SimilarityDialog extends JDialog {
 		
 		panel.add(new JLabel("Number de Devoluções em CT1"));
 		panel.add(numeroDeDevolucoesCT1 = new SimilConfigPanel(numberfunctions));
-		numeroDeDevolucoesCT1.weight.setValue(7);
+		numeroDeDevolucoesCT1.weight.setValue(5);
 		
 		panel.add(new JLabel("Number de Devoluções em CT2"));
 		panel.add(numeroDeDevolucoesCT2 = new SimilConfigPanel(numberfunctions));
-		numeroDeDevolucoesCT2.weight.setValue(8);
+		numeroDeDevolucoesCT2.weight.setValue(5);
 		
 		panel.add(new JLabel());
 		panel.add(new JLabel());
@@ -191,7 +201,7 @@ public class SimilarityDialog extends JDialog {
 
 //		Lay out the panel.
 		Utils.makeCompactGrid(panel,
-		                15, 2, //rows, cols
+		                17, 2, //rows, cols
 		                6, 6,        //initX, initY
 		                20, 10);       //xPad, yPad
 		
@@ -264,8 +274,20 @@ public class SimilarityDialog extends JDialog {
 		config.addMapping(attribute, function);
 		config.setWeight(attribute, similConfig.getWeight());
 		
-		similConfig = this.utilizacaoDoEnlace;
-		attribute = new Attribute("utilizacaoDoEnlace",BAMDescription.class);
+		similConfig = this.utilizacaoDoEnlaceCT0;
+		attribute = new Attribute("utilizacaoDoEnlaceCT0",BAMDescription.class);
+		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
+		config.addMapping(attribute, function);
+		config.setWeight(attribute, similConfig.getWeight());
+		
+		similConfig = this.utilizacaoDoEnlaceCT1;
+		attribute = new Attribute("utilizacaoDoEnlaceCT1",BAMDescription.class);
+		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
+		config.addMapping(attribute, function);
+		config.setWeight(attribute, similConfig.getWeight());
+		
+		similConfig = this.utilizacaoDoEnlaceCT2;
+		attribute = new Attribute("utilizacaoDoEnlaceCT2",BAMDescription.class);
 		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
 		config.addMapping(attribute, function);
 		config.setWeight(attribute, similConfig.getWeight());

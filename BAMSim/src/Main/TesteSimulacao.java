@@ -97,7 +97,7 @@ public class TesteSimulacao {
 
 		// Inicializa tr�fego
 		Debug.setMensagem("\r\n\r\n ==== Inicializa o tr�fego  ====");
-		inciatrafego(rodada);
+		rodada.schedulep (3, 0.0, null);	
 
 		// agenda estat�sticas
 		rodada.schedulep(4, ParametrosDSTE.RRDAmostra, null);
@@ -260,34 +260,8 @@ public class TesteSimulacao {
 
 				break;
 			case 3:
-				
 				Debug.setMensagem("Tipo 3 - Agenda/Cria LSP ");
-						
-				
-				Debug.setMensagem("Agenda estabelecimento da LSP "+((Lsp)dados.item).ID+" - "
-						+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
-						+" -->"
-						+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
-				rodada.schedulep (1, 0.0, dados);
-		
-				dados = new No();
-				Lsp lsp = new Lsp(rodada);
-				lsp.CargaReduzida = 0;
-				lsp.src = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES-1); //id do router fonte
-				do {
-					lsp.dest = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES-1); // id do router destino
-				} while (lsp.src==lsp.dest);
-				lsp.CT =GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.MaxClassType-1); 
-				lsp.Carga = GeradorDeNumerosAleatorios.uniform(5,30);
-				dados.item = lsp;
-				Debug.setMensagem("Cria LSP "+((Lsp)dados.item).ID+" - "
-						+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
-						+" -->"
-						+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
-				((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(300);
-				rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(2), dados);
-					
-				
+				ParametrosDSTE.trafegoManual(rodada, to, dados);
 
 				break;
 
@@ -302,20 +276,20 @@ public class TesteSimulacao {
 				break;
 			case 5:
 				//Avalia BAM via CBR
-				
+
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
-				if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
+				if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
 					query = rodada.estatistica.getQuery(to.link[0],
 							Problemas.AltaDevolucao, to.link[0].bamType);
 					cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
 
-				} else if (rodada.estatistica.preempcoes(ParametrosDSTE.Janela) >= ParametrosDSTE.SLAPreempcoes) {
+				} else if (rodada.estatistica.preempcoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) >= ParametrosDSTE.SLAPreempcoes) {
 					query = rodada.estatistica.getQuery(to.link[0],
 							Problemas.AltaPreempcao, to.link[0].bamType);
 					cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
 
-				} else if ((rodada.estatistica.bloqueios(ParametrosDSTE.Janela) >= ParametrosDSTE.SLABloqueios)&&((to.link[0].getCargaEnlaceAtual() * 100 / to.link[0].CargaEnlace) <= ParametrosDSTE.SLAUtilizacao)) {
+				} else if ((rodada.estatistica.bloqueios(ParametrosDSTE.Janela)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) >= ParametrosDSTE.SLABloqueios)&&((to.link[0].getCargaEnlaceAtual() * 100 / to.link[0].CargaEnlace) <= ParametrosDSTE.SLAUtilizacao)) {
 					query = rodada.estatistica.getQuery(to.link[0],
 							Problemas.BaixaUtilizacao, to.link[0].bamType);
 					cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
@@ -370,7 +344,7 @@ public class TesteSimulacao {
 						break;
 					}
 					
-					BancoDeDados.setXML("Recomenda BAM"+solution.getBAMNovo()+" em "+ rodada.simtime(), rodada.filename);
+					BancoDeDados.setXML("Problema:"+((BAMDescription) query.getDescription()).getProblema()+"->Recomenda BAM"+solution.getBAMNovo()+" em "+ rodada.simtime()+":\n"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
 					BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 					BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
 					CBRCase novocase = new CBRCase();
@@ -446,96 +420,7 @@ public class TesteSimulacao {
 
 	}
 
-	public void inciatrafego(RodadaDeSimulacao rodada) {
 
-		//Fonte 1 
-		No dados = new No();
-		Lsp lsp = new Lsp(rodada);
-		lsp.src = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES-1); //id do router fonte
-		do {
-			lsp.dest = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES-1); // id do router destino
-		} while (lsp.src==lsp.dest);
-		
-		
-		
-		lsp.CT = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.MaxClassType-1); 
-		lsp.Carga = GeradorDeNumerosAleatorios.uniform(5,15);
-		lsp.tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-		dados.item = lsp;
-		rodada.schedulep (3, 0.0, dados);	
-		Debug.setMensagem(rodada.imprime_evchain());
-		
-		//Fonte 2
-		dados = new No();
-		lsp = new Lsp(rodada);
-		lsp.src = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES-1); //id do router fonte
-		do {
-			lsp.dest = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES-1); // id do router destino
-		} while (lsp.src==lsp.dest);
-		
-		
-		
-		lsp.CT =GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.MaxClassType-1); 
-		lsp.Carga = GeradorDeNumerosAleatorios.uniform(5,15);
-		lsp.tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-		dados.item = lsp;
-		rodada.schedulep (3, 0.0, dados);	
-		Debug.setMensagem(rodada.imprime_evchain());
-		
-		
-		//Fonte 3
-		dados = new No();
-		lsp = new Lsp(rodada);
-		lsp.src = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES-1); //id do router fonte
-		do {
-			lsp.dest = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES-1); // id do router destino
-		} while (lsp.src==lsp.dest);
-		
-		
-		
-		lsp.CT =GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.MaxClassType-1); 
-		lsp.Carga = GeradorDeNumerosAleatorios.uniform(5,15);
-		lsp.tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-		dados.item = lsp;
-		rodada.schedulep (3, 0.0, dados);	
-		Debug.setMensagem(rodada.imprime_evchain());
-		
-		//Fonte 4
-		dados = new No();
-		lsp = new Lsp(rodada);
-		lsp.src = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES-1); //id do router fonte
-		do {
-			lsp.dest = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES-1); // id do router destino
-		} while (lsp.src==lsp.dest);
-		
-		
-		
-		lsp.CT =GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.MaxClassType-1); 
-		lsp.Carga = GeradorDeNumerosAleatorios.uniform(5,15);
-		lsp.tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-		dados.item = lsp;
-		rodada.schedulep (3, 0.0, dados);	
-		Debug.setMensagem(rodada.imprime_evchain());
-		
-		//Fonte 4
-		dados = new No();
-		lsp = new Lsp(rodada);
-		lsp.src = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES-1); //id do router fonte
-		do {
-			lsp.dest = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES-1); // id do router destino
-		} while (lsp.src==lsp.dest);
-		
-		
-		
-		lsp.CT =GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.MaxClassType-1); 
-		lsp.Carga = GeradorDeNumerosAleatorios.uniform(5,15);
-		lsp.tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
-		dados.item = lsp;
-		rodada.schedulep (3, 0.0, dados);	
-		Debug.setMensagem(rodada.imprime_evchain());
-
-
-	}
 
 
 }

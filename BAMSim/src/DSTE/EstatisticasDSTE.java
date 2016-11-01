@@ -101,7 +101,7 @@ public class EstatisticasDSTE {
 	public	int graphMajorUnit=RrdGraphConstants.HOUR;
 	public	int graphMajorUnitCount=1;
 	public	int graphLabelUnit=RrdGraphConstants.HOUR;
-	public	int graphLabelUnitCount=2;
+	public	int graphLabelUnitCount=1;
 	public	int graphLabelSpan= 0;
 	public	String graphSimpleDateFormat="HH:mm";
     
@@ -969,7 +969,9 @@ public class EstatisticasDSTE {
 	public CBRQuery getQuery(Link link, Problemas problema, BAMType BAMAtual)
 	{
 		BAMDescription desc = new BAMDescription();
-		desc.setUtilizacaoDoEnlace(link.getCargaEnlaceAtual()*100/link.CargaEnlace);
+		desc.setUtilizacaoDoEnlaceCT0(link.CargaCTAtual[0]*100/link.CargaEnlace);
+		desc.setUtilizacaoDoEnlaceCT1(link.CargaCTAtual[1]*100/link.CargaEnlace);
+		desc.setUtilizacaoDoEnlaceCT2(link.CargaCTAtual[2]*100/link.CargaEnlace);
 		try {
 			if (lspRequested(ParametrosDSTE.Janela)!=0)
 			{

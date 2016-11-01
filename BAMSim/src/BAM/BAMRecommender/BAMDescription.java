@@ -23,7 +23,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	
 	
 	public enum BAMTypes {
-		NoPreemptionMAM(0), NoPreemptionRDM(1), NoPreemptionAllocCTSharing(2),PreemptionMAM(3), PreemptionRDM(4), PreemptionAllocCTSharing(5),PreemptionGBAM(6);
+		NoPreemptionMAM(0), NoPreemptionRDM(1), NoPreemptionAllocCTSharing(2),PreemptionMAM(3), PreemptionRDM(4), PreemptionAllocCTSharing(5),PreemptionGBAM(6),NoPreemptionBestEffort(7);
 		private final int status; 
 		
 		BAMTypes(int valorStatus)
@@ -38,10 +38,10 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 
 	}
 	public enum Problemas {
-		AltaPreempcao(0), AltoBloqueio(1), AltaDevolucao(2), BaixaUtilizacao(3),
-		AltaPreempcaoCT0(4), AltoBloqueioCT0(5), AltaDevolucaoCT0(6),
-		AltaPreempcaoCT1(7), AltoBloqueioCT1(8), AltaDevolucaoCT1(9),
-		AltaPreempcaoCT2(10), AltoBloqueioCT2(11), AltaDevolucaoCT2(12);
+		AltaPreempcao(0), 		AltoBloqueio(1), 		AltaDevolucao(2), 		BaixaUtilizacao(3),
+		AltaPreempcaoCT0(4), 	AltoBloqueioCT0(5), 	AltaDevolucaoCT0(6),	BaixaUtilizacaoCT0(7),
+		AltaPreempcaoCT1(8), 	AltoBloqueioCT1(8), 	AltaDevolucaoCT1(10),	BaixaUtilizacaoCT1(11),
+		AltaPreempcaoCT2(12), 	AltoBloqueioCT2(13), 	AltaDevolucaoCT2(14),	BaixaUtilizacaoCT2(15);
 		private final int status; 
 		
 		Problemas(int valorStatus)
@@ -59,7 +59,24 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	String  caseId;
 	BAMTypes BAMAtual;
 	Problemas problema;
-	Double  utilizacaoDoEnlace;
+	//Limites
+	Double BC0;
+	Double BC1;
+	Double BC2;
+	//Tolerancia
+	Integer  toleranciaPreempcoesCT0;
+	Integer  toleranciaPreempcoesCT1;
+	Integer  toleranciaPreempcoesCT2;
+	Integer  toleranciaBloqueiosCT0;
+	Integer  toleranciaBloqueiosCT1;
+	Integer  toleranciaBloqueiosCT2;
+	Integer  toleranciaDevolucoesCT0;
+	Integer  toleranciaDevolucoesCT1;
+	Integer  toleranciaDevolucoesCT2;
+	//Medições
+	Double  utilizacaoDoEnlaceCT0;
+	Double  utilizacaoDoEnlaceCT1;
+	Double  utilizacaoDoEnlaceCT2;
 	Integer  numeroDePreempcoesCT0;
 	Integer  numeroDePreempcoesCT1;
 	Integer  numeroDePreempcoesCT2;
@@ -81,189 +98,323 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	return null;
 	}
 
-	/**
-	 * @return the problema
-	 */
+	
+
+	public String getCaseId() {
+		return caseId;
+	}
+
+
+
+	public void setCaseId(String caseId) {
+		this.caseId = caseId;
+	}
+
+
+
+	public BAMTypes getBAMAtual() {
+		return BAMAtual;
+	}
+
+
+
+	public void setBAMAtual(BAMTypes bAMAtual) {
+		BAMAtual = bAMAtual;
+	}
+
+
+
 	public Problemas getProblema() {
 		return problema;
 	}
 
 
-	/**
-	 * @param problema the problema to set
-	 */
+
 	public void setProblema(Problemas problema) {
 		this.problema = problema;
-	} 
+	}
+
+
+
+	public Double getBC0() {
+		return BC0;
+	}
+
+
+
+	public void setBC0(Double bC) {
+		BC0 = bC;
+	}
 	
-	/**
-	 * @return the utilizacaoDoEnlace
-	 */
-	public Double getUtilizacaoDoEnlace() {
-		return utilizacaoDoEnlace;
+	public Double getBC1() {
+		return BC1;
 	}
 
-	/**
-	 * @param utilizacaoDoEnlace the utilizacaoDoEnlace to set
-	 */
-	public void setUtilizacaoDoEnlace(Double utilizacaoDoEnlace) {
-		this.utilizacaoDoEnlace = utilizacaoDoEnlace;
+
+
+	public void setBC1(Double bC) {
+		BC1 = bC;
+	}
+	
+	public Double getBC2() {
+		return BC2;
 	}
 
-	/**
-	 * @return the numeroDePreempcoesCT0
-	 */
+
+	public void setBC2(Double bC) {
+		BC2 = bC;
+	}
+
+
+	public Integer getToleranciaPreempcoesCT0() {
+		return toleranciaPreempcoesCT0;
+	}
+
+
+
+	public void setToleranciaPreempcoesCT0(Integer toleranciaPreempcoesCT0) {
+		this.toleranciaPreempcoesCT0 = toleranciaPreempcoesCT0;
+	}
+
+
+
+	public Integer getToleranciaPreempcoesCT1() {
+		return toleranciaPreempcoesCT1;
+	}
+
+
+
+	public void setToleranciaPreempcoesCT1(Integer toleranciaPreempcoesCT1) {
+		this.toleranciaPreempcoesCT1 = toleranciaPreempcoesCT1;
+	}
+
+
+
+	public Integer getToleranciaPreempcoesCT2() {
+		return toleranciaPreempcoesCT2;
+	}
+
+
+
+	public void setToleranciaPreempcoesCT2(Integer toleranciaPreempcoesCT2) {
+		this.toleranciaPreempcoesCT2 = toleranciaPreempcoesCT2;
+	}
+
+
+
+	public Integer getToleranciaBloqueiosCT0() {
+		return toleranciaBloqueiosCT0;
+	}
+
+
+
+	public void setToleranciaBloqueiosCT0(Integer toleranciaBloqueiosCT0) {
+		this.toleranciaBloqueiosCT0 = toleranciaBloqueiosCT0;
+	}
+
+
+
+	public Integer getToleranciaBloqueiosCT1() {
+		return toleranciaBloqueiosCT1;
+	}
+
+
+
+	public void setToleranciaBloqueiosCT1(Integer toleranciaBloqueiosCT1) {
+		this.toleranciaBloqueiosCT1 = toleranciaBloqueiosCT1;
+	}
+
+
+
+	public Integer getToleranciaBloqueiosCT2() {
+		return toleranciaBloqueiosCT2;
+	}
+
+
+
+	public void setToleranciaBloqueiosCT2(Integer toleranciaBloqueiosCT2) {
+		this.toleranciaBloqueiosCT2 = toleranciaBloqueiosCT2;
+	}
+
+
+
+	public Integer getToleranciaDevolucoesCT0() {
+		return toleranciaDevolucoesCT0;
+	}
+
+
+
+	public void setToleranciaDevolucoesCT0(Integer toleranciaDevolucoesCT0) {
+		this.toleranciaDevolucoesCT0 = toleranciaDevolucoesCT0;
+	}
+
+
+
+	public Integer getToleranciaDevolucoesCT1() {
+		return toleranciaDevolucoesCT1;
+	}
+
+
+
+	public void setToleranciaDevolucoesCT1(Integer toleranciaDevolucoesCT1) {
+		this.toleranciaDevolucoesCT1 = toleranciaDevolucoesCT1;
+	}
+
+
+
+	public Integer getToleranciaDevolucoesCT2() {
+		return toleranciaDevolucoesCT2;
+	}
+
+
+
+	public void setToleranciaDevolucoesCT2(Integer toleranciaDevolucoesCT2) {
+		this.toleranciaDevolucoesCT2 = toleranciaDevolucoesCT2;
+	}
+
+
+
+	public Double getUtilizacaoDoEnlaceCT0() {
+		return utilizacaoDoEnlaceCT0;
+	}
+
+
+
+	public void setUtilizacaoDoEnlaceCT0(Double utilizacaoDoEnlaceCT0) {
+		this.utilizacaoDoEnlaceCT0 = utilizacaoDoEnlaceCT0;
+	}
+
+
+
+	public Double getUtilizacaoDoEnlaceCT1() {
+		return utilizacaoDoEnlaceCT1;
+	}
+
+
+
+	public void setUtilizacaoDoEnlaceCT1(Double utilizacaoDoEnlaceCT1) {
+		this.utilizacaoDoEnlaceCT1 = utilizacaoDoEnlaceCT1;
+	}
+
+
+
+	public Double getUtilizacaoDoEnlaceCT2() {
+		return utilizacaoDoEnlaceCT2;
+	}
+
+
+
+	public void setUtilizacaoDoEnlaceCT2(Double utilizacaoDoEnlaceCT2) {
+		this.utilizacaoDoEnlaceCT2 = utilizacaoDoEnlaceCT2;
+	}
+
+
+
 	public Integer getNumeroDePreempcoesCT0() {
 		return numeroDePreempcoesCT0;
 	}
 
-	/**
-	 * @param numeroDePreempcoesCT0 the numeroDePreempcoesCT0 to set
-	 */
+
+
 	public void setNumeroDePreempcoesCT0(Integer numeroDePreempcoesCT0) {
 		this.numeroDePreempcoesCT0 = numeroDePreempcoesCT0;
 	}
 
-	/**
-	 * @return the numeroDePreempcoesCT1
-	 */
+
+
 	public Integer getNumeroDePreempcoesCT1() {
 		return numeroDePreempcoesCT1;
 	}
 
-	/**
-	 * @param numeroDePreempcoesCT1 the numeroDePreempcoesCT1 to set
-	 */
+
+
 	public void setNumeroDePreempcoesCT1(Integer numeroDePreempcoesCT1) {
 		this.numeroDePreempcoesCT1 = numeroDePreempcoesCT1;
 	}
 
-	/**
-	 * @return the numeroDePreempcoesCT2
-	 */
+
+
 	public Integer getNumeroDePreempcoesCT2() {
 		return numeroDePreempcoesCT2;
 	}
 
-	/**
-	 * @param numeroDePreempcoesCT2 the numeroDePreempcoesCT2 to set
-	 */
+
+
 	public void setNumeroDePreempcoesCT2(Integer numeroDePreempcoesCT2) {
 		this.numeroDePreempcoesCT2 = numeroDePreempcoesCT2;
 	}
 
-	/**
-	 * @return the numeroDeBloqueiosCT0
-	 */
+
+
 	public Integer getNumeroDeBloqueiosCT0() {
 		return numeroDeBloqueiosCT0;
 	}
 
-	/**
-	 * @param numeroDeBloqueiosCT0 the numeroDeBloqueiosCT0 to set
-	 */
+
+
 	public void setNumeroDeBloqueiosCT0(Integer numeroDeBloqueiosCT0) {
 		this.numeroDeBloqueiosCT0 = numeroDeBloqueiosCT0;
 	}
 
-	/**
-	 * @return the numeroDeBloqueiosCT1
-	 */
+
+
 	public Integer getNumeroDeBloqueiosCT1() {
 		return numeroDeBloqueiosCT1;
 	}
 
-	/**
-	 * @param numeroDeBloqueiosCT1 the numeroDeBloqueiosCT1 to set
-	 */
+
+
 	public void setNumeroDeBloqueiosCT1(Integer numeroDeBloqueiosCT1) {
 		this.numeroDeBloqueiosCT1 = numeroDeBloqueiosCT1;
 	}
 
-	/**
-	 * @return the numeroDeBloqueiosCT2
-	 */
+
+
 	public Integer getNumeroDeBloqueiosCT2() {
 		return numeroDeBloqueiosCT2;
 	}
 
-	/**
-	 * @param numeroDeBloqueiosCT2 the numeroDeBloqueiosCT2 to set
-	 */
+
+
 	public void setNumeroDeBloqueiosCT2(Integer numeroDeBloqueiosCT2) {
 		this.numeroDeBloqueiosCT2 = numeroDeBloqueiosCT2;
 	}
 
-	/**
-	 * @return the numeroDeDevolucoesCT0
-	 */
+
+
 	public Integer getNumeroDeDevolucoesCT0() {
 		return numeroDeDevolucoesCT0;
 	}
 
-	/**
-	 * @param numeroDeDevolucoesCT0 the numeroDeDevolucoesCT0 to set
-	 */
+
+
 	public void setNumeroDeDevolucoesCT0(Integer numeroDeDevolucoesCT0) {
 		this.numeroDeDevolucoesCT0 = numeroDeDevolucoesCT0;
 	}
 
-	/**
-	 * @return the numeroDeDevolucoesCT1
-	 */
+
+
 	public Integer getNumeroDeDevolucoesCT1() {
 		return numeroDeDevolucoesCT1;
 	}
 
-	/**
-	 * @param numeroDeDevolucoesCT1 the numeroDeDevolucoesCT1 to set
-	 */
+
+
 	public void setNumeroDeDevolucoesCT1(Integer numeroDeDevolucoesCT1) {
 		this.numeroDeDevolucoesCT1 = numeroDeDevolucoesCT1;
 	}
 
-	/**
-	 * @return the numeroDeDevolucoesCT2
-	 */
+
+
 	public Integer getNumeroDeDevolucoesCT2() {
 		return numeroDeDevolucoesCT2;
 	}
 
-	/**
-	 * @param numeroDeDevolucoesCT2 the numeroDeDevolucoesCT2 to set
-	 */
+
+
 	public void setNumeroDeDevolucoesCT2(Integer numeroDeDevolucoesCT2) {
 		this.numeroDeDevolucoesCT2 = numeroDeDevolucoesCT2;
 	}
-
-	/**
-	 * @return the BAMAtual
-	 */
-	public BAMTypes getBAMAtual() {
-		return BAMAtual;
-	}
-	/**
-	 * @param BAMAtual the BAMAtual to set
-	 */
-	public void setBAMAtual(BAMTypes _BAMAtual) {
-		BAMAtual = _BAMAtual;
-	}
-
-	/**
-	 * @return the caseId
-	 */
-	public String getCaseId() {
-		return caseId;
-	}
-	/**
-	 * @param caseId the caseId to set
-	 */
-	public void setCaseId(String caseId) {
-		this.caseId = caseId;
-	}
-	/**
-	 * @return the duration
-	 */
 
 	public Attribute getIdAttribute() {
 		return new Attribute("caseId", this.getClass());
@@ -277,7 +428,9 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 		return "(CaseID=" + caseId 
 				+ ", BAMAtual=" + BAMAtual
 				+ ", Problema=" + problema
-				+ ", utilizacaoDoEnlace=" + utilizacaoDoEnlace
+				+ ", utilizacaoDoEnlace=" + utilizacaoDoEnlaceCT0
+				+ ", utilizacaoDoEnlace=" + utilizacaoDoEnlaceCT1
+				+ ", utilizacaoDoEnlace=" + utilizacaoDoEnlaceCT2
 				+ ", numeroDePreempcoesCT0=" + numeroDePreempcoesCT0
 				+ ", numeroDePreempcoesCT1=" + numeroDePreempcoesCT1
 				+ ", numeroDePreempcoesCT2=" + numeroDePreempcoesCT2
@@ -292,5 +445,5 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	{
 		return "("+caseId+";"+HolidayType+";"+NumberOfPersons+";"+Region+";"+Transportation+";"+Duration+";"+Season+";"+Accommodation+")";
 	}*/
-	
+
 }

@@ -51,7 +51,9 @@ JLabel image;
 	JLabel  caseId;
 	JLabel  BAMAtual;
 	JLabel  problemaAtual;
-	JLabel  utilizacaoDoEnlace;
+	JLabel  utilizacaoDoEnlaceCT0;
+	JLabel  utilizacaoDoEnlaceCT1;
+	JLabel  utilizacaoDoEnlaceCT2;
 	JLabel  numeroDePreempcoesCT0;
 	JLabel  numeroDePreempcoesCT1;
 	JLabel  numeroDePreempcoesCT2;
@@ -63,7 +65,9 @@ JLabel image;
 	JLabel  numeroDeDevolucoesCT2;
 	JLabel  BAMAtualNew;
 	JLabel  problemaNew;
-	JLabel  utilizacaoDoEnlaceNew;
+	JLabel  utilizacaoDoEnlaceCT0New;
+	JLabel  utilizacaoDoEnlaceCT1New;
+	JLabel  utilizacaoDoEnlaceCT2New;
 	JLabel  numeroDePreempcoesCT0New;
 	JLabel  numeroDePreempcoesCT1New;
 	JLabel  numeroDePreempcoesCT2New;
@@ -128,12 +132,20 @@ JLabel image;
 		panel.add(this.BAMAtualNew = new JLabel());
 		
 		panel.add(new JLabel("Problema Atual"));
-		panel.add(this.BAMAtual = new JLabel());
+		panel.add(this.problemaAtual = new JLabel());
 		panel.add(this.problemaNew = new JLabel());
 		
-		panel.add(new JLabel("Utilização do Enlace"));
-		panel.add(this.utilizacaoDoEnlace= new JLabel());
-		panel.add(this.utilizacaoDoEnlaceNew= new JLabel());
+		panel.add(new JLabel("Utilização do Enlace CT0"));
+		panel.add(this.utilizacaoDoEnlaceCT0= new JLabel());
+		panel.add(this.utilizacaoDoEnlaceCT0New= new JLabel());
+		
+		panel.add(new JLabel("Utilização do Enlace CT1"));
+		panel.add(this.utilizacaoDoEnlaceCT1= new JLabel());
+		panel.add(this.utilizacaoDoEnlaceCT1New= new JLabel());
+		
+		panel.add(new JLabel("Utilização do Enlace CT2"));
+		panel.add(this.utilizacaoDoEnlaceCT2= new JLabel());
+		panel.add(this.utilizacaoDoEnlaceCT2New= new JLabel());
 		
 		panel.add(new JLabel("Number de Preempções em CT0"));
 		panel.add(this.numeroDePreempcoesCT0= new JLabel());
@@ -187,7 +199,7 @@ JLabel image;
 		
 //		Lay out the panel.
 		Utils.makeCompactGrid(panel,
-		                16, 3, //rows, cols
+		                18, 3, //rows, cols
 		                6, 6,        //initX, initY
 		                30, 10);       //xPad, yPad
 		
@@ -305,11 +317,13 @@ JLabel image;
 		currentCase = 0;
 		if(numcases<casebasesize)
 			numcases = casebasesize;
-		idEditor.setText("bam"+(numcases++));
+		idEditor.setText("bam"+(numcases+1));
 		this.query=_query;
 		showCase();
 	}
-	
+	public static String valueOf(Object obj) {
+	    return (obj == null) ? "null" : obj.toString();
+	}
 	void showCase()
 	{
 		
@@ -322,29 +336,33 @@ JLabel image;
 		
 		this.BAMAtual.setText(desc.getBAMAtual().toString());
 		this.problemaAtual.setText(desc.getProblema().toString());
-		this.utilizacaoDoEnlace.setText(desc.getUtilizacaoDoEnlace().toString());
-		this.numeroDePreempcoesCT0.setText(desc.getNumeroDePreempcoesCT0().toString());
-		this.numeroDePreempcoesCT1.setText(desc.getNumeroDePreempcoesCT1().toString());
-		this.numeroDePreempcoesCT2.setText(desc.getNumeroDePreempcoesCT2().toString());
-		this.numeroDeBloqueiosCT0.setText(desc.getNumeroDeBloqueiosCT0().toString());
-		this.numeroDeBloqueiosCT1.setText(desc.getNumeroDeBloqueiosCT1().toString());
-		this.numeroDeBloqueiosCT2.setText(desc.getNumeroDeBloqueiosCT2().toString());
-		this.numeroDeDevolucoesCT0.setText(desc.getNumeroDeDevolucoesCT0().toString());
-		this.numeroDeDevolucoesCT1.setText(desc.getNumeroDeDevolucoesCT1().toString());
-		this.numeroDeDevolucoesCT2.setText(desc.getNumeroDeDevolucoesCT2().toString());
+		this.utilizacaoDoEnlaceCT0.setText(valueOf(desc.getUtilizacaoDoEnlaceCT0()));
+		this.utilizacaoDoEnlaceCT1.setText(valueOf(desc.getUtilizacaoDoEnlaceCT1()));
+		this.utilizacaoDoEnlaceCT2.setText(valueOf(desc.getUtilizacaoDoEnlaceCT2()));
+		this.numeroDePreempcoesCT0.setText(valueOf(desc.getNumeroDePreempcoesCT0()));
+		this.numeroDePreempcoesCT1.setText(valueOf(desc.getNumeroDePreempcoesCT1()));
+		this.numeroDePreempcoesCT2.setText(valueOf(desc.getNumeroDePreempcoesCT2()));
+		this.numeroDeBloqueiosCT0.setText(valueOf(desc.getNumeroDeBloqueiosCT0()));
+		this.numeroDeBloqueiosCT1.setText(valueOf(desc.getNumeroDeBloqueiosCT1()));
+		this.numeroDeBloqueiosCT2.setText(valueOf(desc.getNumeroDeBloqueiosCT2()));
+		this.numeroDeDevolucoesCT0.setText(valueOf(desc.getNumeroDeDevolucoesCT0()));
+		this.numeroDeDevolucoesCT1.setText(valueOf(desc.getNumeroDeDevolucoesCT1()));
+		this.numeroDeDevolucoesCT2.setText(valueOf(desc.getNumeroDeDevolucoesCT2()));
 			
 		this.BAMAtualNew.setText(descNew.getBAMAtual().toString());
 		this.problemaNew.setText(descNew.getProblema().toString());
-		this.utilizacaoDoEnlaceNew.setText(descNew.getUtilizacaoDoEnlace().toString());
-		this.numeroDePreempcoesCT0New.setText(descNew.getNumeroDePreempcoesCT0().toString());
-		this.numeroDePreempcoesCT1New.setText(descNew.getNumeroDePreempcoesCT1().toString());
-		this.numeroDePreempcoesCT2New.setText(descNew.getNumeroDePreempcoesCT2().toString());
-		this.numeroDeBloqueiosCT0New.setText(descNew.getNumeroDeBloqueiosCT0().toString());
-		this.numeroDeBloqueiosCT1New.setText(descNew.getNumeroDeBloqueiosCT1().toString());
-		this.numeroDeBloqueiosCT2New.setText(descNew.getNumeroDeBloqueiosCT2().toString());
-		this.numeroDeDevolucoesCT0New.setText(descNew.getNumeroDeDevolucoesCT0().toString());
-		this.numeroDeDevolucoesCT1New.setText(descNew.getNumeroDeDevolucoesCT1().toString());
-		this.numeroDeDevolucoesCT2New.setText(descNew.getNumeroDeDevolucoesCT2().toString());
+		this.utilizacaoDoEnlaceCT0New.setText(valueOf(descNew.getUtilizacaoDoEnlaceCT0()));
+		this.utilizacaoDoEnlaceCT1New.setText(valueOf(descNew.getUtilizacaoDoEnlaceCT1()));
+		this.utilizacaoDoEnlaceCT2New.setText(valueOf(descNew.getUtilizacaoDoEnlaceCT2()));
+		this.numeroDePreempcoesCT0New.setText(valueOf(descNew.getNumeroDePreempcoesCT0()));
+		this.numeroDePreempcoesCT1New.setText(valueOf(descNew.getNumeroDePreempcoesCT1()));
+		this.numeroDePreempcoesCT2New.setText(valueOf(descNew.getNumeroDePreempcoesCT2()));
+		this.numeroDeBloqueiosCT0New.setText(valueOf(descNew.getNumeroDeBloqueiosCT0()));
+		this.numeroDeBloqueiosCT1New.setText(valueOf(descNew.getNumeroDeBloqueiosCT1()));
+		this.numeroDeBloqueiosCT2New.setText(valueOf(descNew.getNumeroDeBloqueiosCT2()));
+		this.numeroDeDevolucoesCT0New.setText(valueOf(descNew.getNumeroDeDevolucoesCT0()));
+		this.numeroDeDevolucoesCT1New.setText(valueOf(descNew.getNumeroDeDevolucoesCT1()));
+		this.numeroDeDevolucoesCT2New.setText(valueOf(descNew.getNumeroDeDevolucoesCT2()));
 		
 		BAMSolution sol = (BAMSolution) _case.getSolution();
 		this.BAMNovo.setText(sol.getBAMNovo().toString());

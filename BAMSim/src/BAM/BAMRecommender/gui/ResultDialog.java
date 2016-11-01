@@ -51,7 +51,9 @@ public class ResultDialog extends JDialog {
 	JLabel caseId;
 	JLabel BAMAtual;
 	JLabel problema;
-	JLabel  utilizacaoDoEnlace;
+	JLabel  utilizacaoDoEnlaceCT0;
+	JLabel  utilizacaoDoEnlaceCT1;
+	JLabel  utilizacaoDoEnlaceCT2;
 	JLabel  numeroDePreempcoesCT0;
 	JLabel  numeroDePreempcoesCT1;
 	JLabel  numeroDePreempcoesCT2;
@@ -111,8 +113,14 @@ public class ResultDialog extends JDialog {
 		panel.add(new JLabel("Problema"));
 		panel.add(this.problema = new JLabel());
 		
-		panel.add(new JLabel("Utilização do Enlace"));
-		panel.add(this.utilizacaoDoEnlace= new JLabel());
+		panel.add(new JLabel("Utilização do Enlace CT0"));
+		panel.add(this.utilizacaoDoEnlaceCT0= new JLabel());
+		
+		panel.add(new JLabel("Utilização do Enlace CT1"));
+		panel.add(this.utilizacaoDoEnlaceCT1= new JLabel());
+		
+		panel.add(new JLabel("Utilização do Enlace CT2"));
+		panel.add(this.utilizacaoDoEnlaceCT2= new JLabel());
 		
 		panel.add(new JLabel("Number de Preempções em CT0"));
 		panel.add(this.numeroDePreempcoesCT0= new JLabel());
@@ -154,7 +162,7 @@ public class ResultDialog extends JDialog {
 		
 //		Lay out the panel.
 		Utils.makeCompactGrid(panel,
-		                16, 2, //rows, cols
+		                18, 2, //rows, cols
 		                6, 6,        //initX, initY
 		                30, 10);       //xPad, yPad
 		
@@ -247,9 +255,12 @@ public class ResultDialog extends JDialog {
 		currentCase = 0;
 		showCase();
 	}
-	
+	public static String valueOf(Object obj) {
+	    return (obj == null) ? "null" : obj.toString();
+	}
 	void showCase()
 	{
+		
 		RetrievalResult rr = cases.get(currentCase);
 		double sim = rr.getEval();
 		
@@ -258,18 +269,20 @@ public class ResultDialog extends JDialog {
 		
 		BAMDescription desc = (BAMDescription) _case.getDescription();
 		
-		this.BAMAtual.setText(desc.getBAMAtual().toString());
-		this.problema.setText(desc.getProblema().toString());
-		this.utilizacaoDoEnlace.setText(desc.getUtilizacaoDoEnlace().toString());
-		this.numeroDePreempcoesCT0.setText(desc.getNumeroDePreempcoesCT0().toString());
-		this.numeroDePreempcoesCT1.setText(desc.getNumeroDePreempcoesCT1().toString());
-		this.numeroDePreempcoesCT2.setText(desc.getNumeroDePreempcoesCT2().toString());
-		this.numeroDeBloqueiosCT0.setText(desc.getNumeroDeBloqueiosCT0().toString());
-		this.numeroDeBloqueiosCT1.setText(desc.getNumeroDeBloqueiosCT1().toString());
-		this.numeroDeBloqueiosCT2.setText(desc.getNumeroDeBloqueiosCT2().toString());
-		this.numeroDeDevolucoesCT0.setText(desc.getNumeroDeDevolucoesCT0().toString());
-		this.numeroDeDevolucoesCT1.setText(desc.getNumeroDeDevolucoesCT1().toString());
-		this.numeroDeDevolucoesCT2.setText(desc.getNumeroDeDevolucoesCT2().toString());
+		this.BAMAtual.setText(valueOf(desc.getBAMAtual()));
+		this.problema.setText(valueOf(desc.getProblema()));
+		this.utilizacaoDoEnlaceCT0.setText(valueOf(desc.getUtilizacaoDoEnlaceCT0()));
+		this.utilizacaoDoEnlaceCT1.setText(valueOf(desc.getUtilizacaoDoEnlaceCT1()));
+		this.utilizacaoDoEnlaceCT2.setText(valueOf(desc.getUtilizacaoDoEnlaceCT2()));
+		this.numeroDePreempcoesCT0.setText(valueOf(desc.getNumeroDePreempcoesCT0()));
+		this.numeroDePreempcoesCT1.setText(valueOf(desc.getNumeroDePreempcoesCT1()));
+		this.numeroDePreempcoesCT2.setText(valueOf(desc.getNumeroDePreempcoesCT2()));
+		this.numeroDeBloqueiosCT0.setText(valueOf(desc.getNumeroDeBloqueiosCT0()));
+		this.numeroDeBloqueiosCT1.setText(valueOf(desc.getNumeroDeBloqueiosCT1()));
+		this.numeroDeBloqueiosCT2.setText(valueOf(desc.getNumeroDeBloqueiosCT2()));
+		this.numeroDeDevolucoesCT0.setText(valueOf(desc.getNumeroDeDevolucoesCT0()));
+		this.numeroDeDevolucoesCT1.setText(valueOf(desc.getNumeroDeDevolucoesCT1()));
+		this.numeroDeDevolucoesCT2.setText(valueOf(desc.getNumeroDeDevolucoesCT2()));
 			
 		BAMSolution sol = (BAMSolution) _case.getSolution();
 		this.BAMNovo.setText(sol.getBAMNovo().toString());
