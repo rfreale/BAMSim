@@ -109,13 +109,13 @@ public class HSQLDBserver
 	    conn.prepareStatement("insert into bam values('bam7','PreemptionAllocCTSharing','AltaDevolucao'	,null,null,null,	null,null,null,	null,null,null,	null,null,null,	null,100,100,			null,null,null,null,null,null,null,null,null,'PreemptionRDM',true);").execute();
 	    conn.prepareStatement("insert into bam values('bam8','NoPreemptionMAM','AltaDevolucao'			,null,null,null,	null,null,null,	null,null,null,	null,null,null,	null,100,100,			null,null,null,null,null,null,null,null,null,'PreemptionRDM',true);").execute();
 	    conn.prepareStatement("insert into bam values('bam9','PreemptionRDM','AltaDevolucao'			,null,null,null,	null,null,null,	null,null,null,	null,null,null,	null,100,100,			null,null,null,null,null,null,null,null,null,'PreemptionRDM',true);").execute();
-
+	    /*
 	  //Alta Devolução e Preempção
 	    //																									BC				Utilização		Preempção		Bloqueio		Devolução			Outros
 	    conn.prepareStatement("insert into bam values('bam10','PreemptionAllocCTSharing','AltaDevolucao',null,null,null,	null,null,null,	100,100,null,	null,null,null,	null,100,100,			null,null,null,null,null,null,null,null,null,'NoPreemptionMAM',true);").execute();
 	    conn.prepareStatement("insert into bam values('bam11','NoPreemptionMAM','AltaDevolucao'			,null,null,null,	null,null,null,	100,100,null,	null,null,null,	null,100,100,			null,null,null,null,null,null,null,null,null,'NoPreemptionMAM',true);").execute();
 	    conn.prepareStatement("insert into bam values('bam12','PreemptionRDM','AltaDevolucao'			,null,null,null,	null,null,null,	100,100,null,	null,null,null,	null,100,100,			null,null,null,null,null,null,null,null,null,'NoPreemptionMAM',true);").execute();
-	    /*
+	   
 	    conn.prepareStatement("insert into bam values('bam7','PreemptionAllocCTSharing',100,0,0,0,0,0,0,0,50,50,'PreemptionRDM',true);").execute();
 	    conn.prepareStatement("insert into bam values('bam8','PreemptionAllocCTSharing',100,0,0,0,0,0,0,0,50,0,'PreemptionRDM',true);").execute();
 	    conn.prepareStatement("insert into bam values('bam9','PreemptionAllocCTSharing',100,0,0,0,0,0,0,0,0,50,'PreemptionRDM',true);").execute();

@@ -42,14 +42,14 @@ public class EstatisticasDSTE {
 	public int bloqueios = 0;
 	public int lspRequested = 0;
 	public int lspUnbroken = 0;
-	public int lspEstabelecidas = 0;
+	public int lspEstablished = 0;
 	public double bandaUnbroken = 0;
 	public double bandaRequested = 0;
 	public double bandaEstabelecida = 0;
 
 	public int [] lspRequestedCT = new int [ParametrosDSTE.MaxClassType];
 	public double [] bandaRequestedCT = new double [ParametrosDSTE.MaxClassType];
-	public int [] lspEstabelecidasCT = new int [ParametrosDSTE.MaxClassType];
+	public int [] lspEstablishedCT = new int [ParametrosDSTE.MaxClassType];
 	public double [] bandaEstabelecidaCT = new double [ParametrosDSTE.MaxClassType];
 	public int [] lspUnbrokenCT = new int [ParametrosDSTE.MaxClassType];
 	public double [] bandaUnbrokenCT = new double [ParametrosDSTE.MaxClassType];
@@ -70,7 +70,7 @@ public class EstatisticasDSTE {
 	public int bloqueiosAUX = 0;
 	public int lspRequestedAUX = 0;
 	public int lspUnbrokenAUX = 0;
-	public int lspEstabelecidasAUX = 0;
+	public int lspEstablishedAUX = 0;
 	public double bandaUnbrokenAUX = 0;
 	public double bandaRequestedAUX = 0;
 
@@ -167,7 +167,7 @@ public class EstatisticasDSTE {
 			}
 			rrdDef.addDatasource("lspRequested", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			rrdDef.addDatasource("lspUnbroken", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
-			rrdDef.addDatasource("lspEstabelecidas", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			rrdDef.addDatasource("lspEstablished", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			rrdDef.addDatasource("bandaUnbroken", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			rrdDef.addDatasource("bandaRequested", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			
@@ -205,7 +205,7 @@ public class EstatisticasDSTE {
 			}
 			rrdDef.addDatasource("lspRequested", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			rrdDef.addDatasource("lspUnbroken", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
-			rrdDef.addDatasource("lspEstabelecidas", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			rrdDef.addDatasource("lspEstablished", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			rrdDef.addDatasource("bandaUnbroken", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			rrdDef.addDatasource("bandaRequested", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			
@@ -257,7 +257,7 @@ public class EstatisticasDSTE {
 			curretTime=(long) (starTime+time);
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
 		Sample sample = rrdDb.createSample();
-		sample.setAndUpdate(starTime+time+":"+preempcoes+":"+preempcoesCT[0]+":"+preempcoesCT[1]+":"+preempcoesCT[2]+":"+bloqueios+":"+bloqueiosCT[0]+":"+bloqueiosCT[1]+":"+bloqueiosCT[2]+":"+devolucoes+":"+devolucoesCT[0]+":"+devolucoesCT[1]+":"+devolucoesCT[2]+":"+lspRequested+":"+lspUnbroken+":"+lspEstabelecidas+":"+bandaUnbroken+":"+bandaRequested);
+		sample.setAndUpdate(starTime+time+":"+preempcoes+":"+preempcoesCT[0]+":"+preempcoesCT[1]+":"+preempcoesCT[2]+":"+bloqueios+":"+bloqueiosCT[0]+":"+bloqueiosCT[1]+":"+bloqueiosCT[2]+":"+devolucoes+":"+devolucoesCT[0]+":"+devolucoesCT[1]+":"+devolucoesCT[2]+":"+lspRequested+":"+lspUnbroken+":"+lspEstablished+":"+bandaUnbroken+":"+bandaRequested);
 
 		rrdDb.close();
 
@@ -269,7 +269,7 @@ public class EstatisticasDSTE {
 		int bloqueios = this.bloqueios-this.bloqueiosAUX;
 		int lspRequested = this.lspRequested-this.lspRequestedAUX;
 		int lspUnbroken = this.lspUnbroken-this.lspUnbrokenAUX;
-		int lspEstabelecidas = this.lspEstabelecidas-this.lspEstabelecidasAUX;
+		int lspEstablished = this.lspEstablished-this.lspEstablishedAUX;
 		double bandaUnbroken = this.bandaUnbroken-this.bandaUnbrokenAUX;
 		double bandaRequested = this.bandaRequested-this.bandaRequestedAUX;
 
@@ -289,7 +289,7 @@ public class EstatisticasDSTE {
 			curretTime=(long) (starTime+time);
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_absoluto.rrd");
 		Sample sample = rrdDb.createSample();
-		sample.setAndUpdate(starTime+time+":"+preempcoes+":"+preempcoesCT[0]+":"+preempcoesCT[1]+":"+preempcoesCT[2]+":"+bloqueios+":"+bloqueiosCT[0]+":"+bloqueiosCT[1]+":"+bloqueiosCT[2]+":"+devolucoes+":"+devolucoesCT[0]+":"+devolucoesCT[1]+":"+devolucoesCT[2]+":"+lspRequested+":"+lspUnbroken+":"+lspEstabelecidas+":"+bandaUnbroken+":"+bandaRequested);
+		sample.setAndUpdate(starTime+time+":"+preempcoes+":"+preempcoesCT[0]+":"+preempcoesCT[1]+":"+preempcoesCT[2]+":"+bloqueios+":"+bloqueiosCT[0]+":"+bloqueiosCT[1]+":"+bloqueiosCT[2]+":"+devolucoes+":"+devolucoesCT[0]+":"+devolucoesCT[1]+":"+devolucoesCT[2]+":"+lspRequested+":"+lspUnbroken+":"+lspEstablished+":"+bandaUnbroken+":"+bandaRequested);
 
 		rrdDb.close();
 		
@@ -298,7 +298,7 @@ public class EstatisticasDSTE {
 		this.bloqueiosAUX=this.bloqueios;
 		this.lspRequestedAUX=this.lspRequested;
 		this.lspUnbrokenAUX=this.lspUnbroken;
-		this.lspEstabelecidasAUX=this.lspEstabelecidas;
+		this.lspEstablishedAUX=this.lspEstablished;
 		this.bandaUnbrokenAUX=this.bandaUnbroken;
 		this.bandaRequestedAUX=this.bandaRequested;
 
@@ -345,6 +345,19 @@ public class EstatisticasDSTE {
 		
 		rrdDb.close();
 		return lspRequested;
+	}
+	
+	public int lspEstablished(long time) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int lspEstablished=(int) (fetchData.getAggregate("lspEstablished", "MAX")-fetchData.getAggregate("lspEstablished", "MIN"));
+		
+		rrdDb.close();
+		return lspEstablished;
 	}
 	public int bloqueios(long time) throws IOException, RrdException
 	{
@@ -464,6 +477,182 @@ public class EstatisticasDSTE {
 
 	    
 	}
+	
+	public void gerarRRDPNGlspUnbroken() throws IOException, RrdException
+	{
+
+		//RrdDb rrdDb = new RrdDb(filename+"/"+filename+".rrd");
+		/*FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", starTime,i);
+		FetchData fetchData = fetchRequest.fetchData();
+		fetchData.dump();*/
+		
+		//Acumulado
+		RrdGraphDef graphDef = new RrdGraphDef();
+		graphDef.setTimeSpan(starTime,curretTime);
+		graphDef.setVerticalLabel("Number");
+		graphDef.setValueAxis(this.lspUnbroken/50, 10);
+		graphDef.setMinValue(0);
+		graphDef.setTitle("LSPs Unbroken");
+		graphDef.datasource("lspUnbroken", "saida/"+filename+"/"+filename+".rrd", "lspUnbroken", "MAX");
+		graphDef.line("lspUnbroken", new Color(0xFF, 0, 0), "LSPs Unbroken", graphWidthLine);
+		graphDef.setWidth(this.graphWidth);
+		graphDef.setHeight(this.graphHeight);
+		graphDef.setLargeFont(this.graphLargeFont);
+        graphDef.setSmallFont(this.graphSmallFont);
+        graphDef.setTimeAxis(this.graphMinorUnit, this.graphMinorUnitCount,
+        		this.graphMajorUnit, this.graphLabelUnitCount,
+        		this.graphLabelUnit, this.graphLabelUnitCount,
+        		this.graphLabelSpan, this.graphSimpleDateFormat);
+
+
+
+		//Por tempo
+		RrdGraphDef graphDef2 = new RrdGraphDef();
+		graphDef2.setTimeSpan(starTime,curretTime);
+		graphDef2.setVerticalLabel("Number");
+		//graphDef.setMinValue(0);
+		//graphDef2.setStep(3600);
+		graphDef2.setTitle("LSPs Unbroken");
+		graphDef2.datasource("lspUnbroken", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspUnbroken", "LAST");
+		
+		graphDef2.area("lspUnbroken", Color.gray, "LSPs Unbroken");
+		graphDef2.setWidth(this.graphWidth);
+		graphDef2.setHeight(this.graphHeight);
+		graphDef2.setLargeFont(this.graphLargeFont);
+        graphDef2.setSmallFont(this.graphSmallFont);
+        graphDef2.setTimeAxis(this.graphMinorUnit, this.graphMinorUnitCount,
+        		this.graphMajorUnit, this.graphLabelUnitCount,
+        		this.graphLabelUnit, this.graphLabelUnitCount,
+        		this.graphLabelSpan, this.graphSimpleDateFormat);
+		
+		//acumulado
+		RrdGraph graph = new RrdGraph(graphDef);
+		int totalWidth=graph.getRrdGraphInfo().getWidth();
+	    int totalHeight=graph.getRrdGraphInfo().getHeight();
+	    BufferedImage img=new BufferedImage(totalWidth,totalHeight,BufferedImage.TYPE_USHORT_565_RGB);
+	    Graphics gfx=img.getGraphics();
+	    graph.render(gfx);
+	    File outputfile = new File("saida/"+filename+"/"+filename+"_lsps_unbroken_acum.png");
+	    outputfile.mkdirs();
+	    ImageIO.write(img,"png",outputfile);
+	   
+	    //Portempo
+		graph = new RrdGraph(graphDef2);
+		totalWidth=graph.getRrdGraphInfo().getWidth();
+	    totalHeight=graph.getRrdGraphInfo().getHeight();
+	    img=new BufferedImage(totalWidth,totalHeight,BufferedImage.TYPE_USHORT_565_RGB);
+	    gfx=img.getGraphics();
+	    graph.render(gfx);
+	    outputfile = new File("saida/"+filename+"/"+filename+"_lsps_unbroken.png");
+	    outputfile.mkdirs();
+	    ImageIO.write(img,"png",outputfile);
+
+	    
+	}
+	
+	public void gerarRRDPNGlspEstablished() throws IOException, RrdException
+	{
+
+		//RrdDb rrdDb = new RrdDb(filename+"/"+filename+".rrd");
+		/*FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", starTime,i);
+		FetchData fetchData = fetchRequest.fetchData();
+		fetchData.dump();*/
+		
+		//Acumulado
+		RrdGraphDef graphDef = new RrdGraphDef();
+		graphDef.setTimeSpan(starTime,curretTime);
+		graphDef.setVerticalLabel("Number");
+		graphDef.setValueAxis(this.lspEstablished/50, 10);
+		graphDef.setMinValue(0);
+		graphDef.setTitle("LSPs Established");
+		graphDef.datasource("lspEstablished", "saida/"+filename+"/"+filename+".rrd", "lspEstablished", "MAX");
+		graphDef.line("lspEstablished", new Color(0xFF, 0, 0), "LSPs Established", graphWidthLine);
+		graphDef.setWidth(this.graphWidth);
+		graphDef.setHeight(this.graphHeight);
+		graphDef.setLargeFont(this.graphLargeFont);
+        graphDef.setSmallFont(this.graphSmallFont);
+        graphDef.setTimeAxis(this.graphMinorUnit, this.graphMinorUnitCount,
+        		this.graphMajorUnit, this.graphLabelUnitCount,
+        		this.graphLabelUnit, this.graphLabelUnitCount,
+        		this.graphLabelSpan, this.graphSimpleDateFormat);
+
+
+
+		//Por tempo
+		RrdGraphDef graphDef2 = new RrdGraphDef();
+		graphDef2.setTimeSpan(starTime,curretTime);
+		graphDef2.setVerticalLabel("Number");
+		//graphDef.setMinValue(0);
+		//graphDef2.setStep(3600);
+		graphDef2.setTitle("LSPs Established");
+		graphDef2.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "LAST");
+		
+		graphDef2.area("lspEstablished", Color.gray, "LSPs Established");
+		graphDef2.setWidth(this.graphWidth);
+		graphDef2.setHeight(this.graphHeight);
+		graphDef2.setLargeFont(this.graphLargeFont);
+        graphDef2.setSmallFont(this.graphSmallFont);
+        graphDef2.setTimeAxis(this.graphMinorUnit, this.graphMinorUnitCount,
+        		this.graphMajorUnit, this.graphLabelUnitCount,
+        		this.graphLabelUnit, this.graphLabelUnitCount,
+        		this.graphLabelSpan, this.graphSimpleDateFormat);
+        
+      //Percentual
+		
+  		RrdGraphDef graphDef3 = new RrdGraphDef();
+  		graphDef3.setTimeSpan(starTime,curretTime);
+  		graphDef3.setMaxValue(100);
+  		graphDef3.setVerticalLabel("Percent");
+  		//graphDef.setMinValue(0);
+  		graphDef3.setTitle("LSPs Established x LSPs Requested (Percent)");
+  		graphDef3.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "LAST");
+  		graphDef3.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "LAST");
+  		graphDef3.datasource("lspEstablisheds", "lspEstablished,lspRequested,/,100,*");
+  		graphDef3.area("lspEstablisheds", Color.gray, "% Established");
+  		graphDef3.setWidth(this.graphWidth);
+  		graphDef3.setHeight(this.graphHeight);
+  		graphDef3.setLargeFont(this.graphLargeFont);
+          graphDef3.setSmallFont(this.graphSmallFont);
+          graphDef3.setTimeAxis(this.graphMinorUnit, this.graphMinorUnitCount,
+          		this.graphMajorUnit, this.graphLabelUnitCount,
+          		this.graphLabelUnit, this.graphLabelUnitCount,
+          		this.graphLabelSpan, this.graphSimpleDateFormat);
+		
+		//acumulado
+		RrdGraph graph = new RrdGraph(graphDef);
+		int totalWidth=graph.getRrdGraphInfo().getWidth();
+	    int totalHeight=graph.getRrdGraphInfo().getHeight();
+	    BufferedImage img=new BufferedImage(totalWidth,totalHeight,BufferedImage.TYPE_USHORT_565_RGB);
+	    Graphics gfx=img.getGraphics();
+	    graph.render(gfx);
+	    File outputfile = new File("saida/"+filename+"/"+filename+"_lsps_established_acum.png");
+	    outputfile.mkdirs();
+	    ImageIO.write(img,"png",outputfile);
+	   
+	    //Portempo
+		graph = new RrdGraph(graphDef2);
+		totalWidth=graph.getRrdGraphInfo().getWidth();
+	    totalHeight=graph.getRrdGraphInfo().getHeight();
+	    img=new BufferedImage(totalWidth,totalHeight,BufferedImage.TYPE_USHORT_565_RGB);
+	    gfx=img.getGraphics();
+	    graph.render(gfx);
+	    outputfile = new File("saida/"+filename+"/"+filename+"_lsps_established.png");
+	    outputfile.mkdirs();
+	    ImageIO.write(img,"png",outputfile);
+	    
+	  //Percentual
+  		graph = new RrdGraph(graphDef3);
+  		totalWidth=graph.getRrdGraphInfo().getWidth();
+  	    totalHeight=graph.getRrdGraphInfo().getHeight();
+  	    img=new BufferedImage(totalWidth,totalHeight,BufferedImage.TYPE_USHORT_565_RGB);
+  	    gfx=img.getGraphics();
+  	    graph.render(gfx);
+  	    outputfile = new File("saida/"+filename+"/"+filename+"_lsps_established_percent.png");
+  	    outputfile.mkdirs();
+  	    ImageIO.write(img,"png",outputfile);
+
+	    
+	}
 
 	public void gerarRRDPNGpreempcao() throws IOException, RrdException
 	{
@@ -494,10 +683,10 @@ public class EstatisticasDSTE {
 		graphDef2.setTimeSpan(starTime,curretTime);
 		graphDef2.setVerticalLabel("Number");
 		//graphDef.setMinValue(0);
-		graphDef2.setTitle("Preemptions x LSPs Requested");
+		graphDef2.setTitle("Preemptions x LSPs Established");
 		graphDef2.datasource("preempcao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao", "LAST");
-		graphDef2.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "LAST");
-		graphDef2.area("lspRequested", Color.GREEN, "LSPs Requested");
+		graphDef2.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "LAST");
+		graphDef2.area("lspEstablished", Color.GREEN, "LSPs Established");
 		graphDef2.area("preempcao", Color.RED, "Preemptions");
 		for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 		{
@@ -521,11 +710,11 @@ public class EstatisticasDSTE {
 		graphDef3.setMaxValue(100);
 		graphDef3.setVerticalLabel("Percent");
 		//graphDef.setMinValue(0);
-		graphDef3.setTitle("Preemptions (Percent)");
+		graphDef3.setTitle("Preemptions X LSPs Established (Percent)");
 
 		graphDef3.datasource("preempcao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao", "LAST");
-		graphDef3.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "LAST");
-		graphDef3.datasource("prempcoes", "preempcao,lspRequested,/,100,*");
+		graphDef3.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "LAST");
+		graphDef3.datasource("prempcoes", "preempcao,lspEstablished,/,100,*");
 		graphDef3.area("prempcoes", Color.gray, "% Preemptions");
 		
 		graphDef3.setWidth(this.graphWidth);
@@ -636,7 +825,7 @@ public class EstatisticasDSTE {
 		graphDef3.setMaxValue(100);
 		graphDef3.setVerticalLabel("Percent");
 		//graphDef.setMinValue(0);
-		graphDef3.setTitle("Blocking (Percent)");
+		graphDef3.setTitle("Blocking x LSPs Requested (Percent)");
 		graphDef3.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "LAST");
 		graphDef3.datasource("bloqueio", "saida/"+filename+"/"+filename+"_absoluto.rrd", "bloqueio", "LAST");
 		graphDef3.datasource("bloqueios", "bloqueio,lspRequested,/,100,*");
@@ -716,10 +905,10 @@ public class EstatisticasDSTE {
 		graphDef2.setTimeSpan(starTime,curretTime);
 		graphDef2.setVerticalLabel("Number");
 		//graphDef.setMinValue(0);
-		graphDef2.setTitle("Devolutions x LSPs Requested");
+		graphDef2.setTitle("Devolutions x LSPs Established");
 		graphDef2.datasource("devolucao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "devolucao", "LAST");
-		graphDef2.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "LAST");
-		graphDef2.area("lspRequested", Color.GREEN, "LSPs Requested");
+		graphDef2.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "LAST");
+		graphDef2.area("lspEstablished", Color.GREEN, "LSPs Established");
 		graphDef2.area("devolucao", Color.RED, "Devolutions");
 		for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 		{
@@ -742,10 +931,10 @@ public class EstatisticasDSTE {
 		graphDef3.setMaxValue(100);
 		graphDef3.setVerticalLabel("Percent");
 		//graphDef.setMinValue(0);
-		graphDef3.setTitle("Devolutions (Percent)");
-		graphDef3.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "LAST");
+		graphDef3.setTitle("Devolutions x LSP Established (Percent)");
+		graphDef3.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "LAST");
 		graphDef3.datasource("devolucao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "devolucao", "LAST");
-		graphDef3.datasource("devolucoes", "devolucao,lspRequested,/,100,*");
+		graphDef3.datasource("devolucoes", "devolucao,lspEstablished,/,100,*");
 		graphDef3.area("devolucoes", Color.gray, "% Devolutions");
 		graphDef3.setWidth(this.graphWidth);
 		graphDef3.setHeight(this.graphHeight);
@@ -911,17 +1100,17 @@ public class EstatisticasDSTE {
 		String retorno="============================ Início dos Estatisticas DSTE ============================\r\n";
 		
 		retorno+=String.format("Simulation Time = %03d:%02d:%02d\r\n", (tempoSimulacaoFim-tempoSimulacaoInicio) / 3600000, ( (tempoSimulacaoFim-tempoSimulacaoInicio) / 60000 ) % 60 , ((tempoSimulacaoFim-tempoSimulacaoInicio) / 1000 ) % 60);
-		retorno+=String.format("Simulation Time (ms) %d\r\n", tempoSimulacaoFim-tempoSimulacaoInicio);
-		retorno+=String.format("Total GRANT/DENY (ns) %d\r\n", tempoAcumuladoGrantDeny);
-		retorno+=String.format("Total GRANT/DENY (ms) %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoGrantDeny));
-		retorno+=String.format("Average GRANT/DENY (ns) %d\r\n", tempoAcumuladoGrantDeny/lspRequested);
-		retorno+=String.format("Average GRANT/DENY (ms) %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoGrantDeny/lspRequested));
-		retorno+=String.format("Establishment Total(ns) %d\r\n", tempoAcumuladoEstabelecimento);
-		retorno+=String.format("Establishment Total(ms) %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoEstabelecimento));
-		retorno+=String.format("Average of Establishment (ns) %d\r\n", tempoAcumuladoEstabelecimento/lspRequested);
-		retorno+=String.format("Average of Establishment (ms) %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoEstabelecimento/lspRequested));
+		retorno+=String.format("Simulation Time (ms) = %d\r\n", tempoSimulacaoFim-tempoSimulacaoInicio);
+		retorno+=String.format("Total GRANT/DENY (ns) = %d\r\n", tempoAcumuladoGrantDeny);
+		retorno+=String.format("Total GRANT/DENY (ms) = %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoGrantDeny));
+		retorno+=String.format("Average GRANT/DENY (ns) = %d\r\n", tempoAcumuladoGrantDeny/lspRequested);
+		retorno+=String.format("Average GRANT/DENY (ms) = %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoGrantDeny/lspRequested));
+		retorno+=String.format("Establishment Total(ns) = %d\r\n", tempoAcumuladoEstabelecimento);
+		retorno+=String.format("Establishment Total(ms) = %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoEstabelecimento));
+		retorno+=String.format("Average of Establishment (ns) = %d\r\n", tempoAcumuladoEstabelecimento/lspRequested);
+		retorno+=String.format("Average of Establishment (ms) = %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoEstabelecimento/lspRequested));
 		retorno+=String.format("LSPs Requested = %d\r\n", lspRequested);
-		retorno+=String.format("LSPs Established = %d\r\n", lspEstabelecidas);
+		retorno+=String.format("LSPs Established = %d\r\n", lspEstablished);
 		retorno+=String.format("LSPs Unbroken = %d\r\n", lspUnbroken);
 		retorno+=String.format("LSPs Preemptions = %d\r\n", preempcoes);
 		retorno+=String.format("LSPs Devolutions = %d\r\n", devolucoes); 
@@ -942,8 +1131,8 @@ public class EstatisticasDSTE {
 			retorno+="LSP Requested TC["+i+"] = "+lspRequestedCT[i]+"\r\n"; 
 		} 
 		
-		for(int i=0;i<lspEstabelecidasCT.length;i++){ 
-			retorno+="LSP EstablishedTC["+i+"] = "+lspEstabelecidasCT[i]+"\r\n"; 
+		for(int i=0;i<lspEstablishedCT.length;i++){ 
+			retorno+="LSP EstablishedTC["+i+"] = "+lspEstablishedCT[i]+"\r\n"; 
 		} 
 		for(int i=0;i<lspUnbrokenCT.length;i++){ 
 			retorno+="LSP UnbrokenTC["+i+"] = "+lspUnbrokenCT[i]+"\r\n"; 
@@ -978,12 +1167,12 @@ public class EstatisticasDSTE {
 				desc.setNumeroDeBloqueiosCT0(this.bloqueiosCT(ParametrosDSTE.Janela,0)*100/lspRequested(ParametrosDSTE.Janela));
 				desc.setNumeroDeBloqueiosCT1(this.bloqueiosCT(ParametrosDSTE.Janela,1)*100/lspRequested(ParametrosDSTE.Janela));
 				desc.setNumeroDeBloqueiosCT2(this.bloqueiosCT(ParametrosDSTE.Janela,2)*100/lspRequested(ParametrosDSTE.Janela));
-				desc.setNumeroDeDevolucoesCT0(this.devolucoesCT(ParametrosDSTE.Janela,0)*100/lspRequested(ParametrosDSTE.Janela));
-				desc.setNumeroDeDevolucoesCT1(this.devolucoesCT(ParametrosDSTE.Janela,1)*100/lspRequested(ParametrosDSTE.Janela));
-				desc.setNumeroDeDevolucoesCT2(this.devolucoesCT(ParametrosDSTE.Janela,2)*100/lspRequested(ParametrosDSTE.Janela));
-				desc.setNumeroDePreempcoesCT0(this.preempcoesCT(ParametrosDSTE.Janela,0)*100/lspRequested(ParametrosDSTE.Janela));
-				desc.setNumeroDePreempcoesCT1(this.preempcoesCT(ParametrosDSTE.Janela,1)*100/lspRequested(ParametrosDSTE.Janela));
-				desc.setNumeroDePreempcoesCT2(this.preempcoesCT(ParametrosDSTE.Janela,2)*100/lspRequested(ParametrosDSTE.Janela));
+				desc.setNumeroDeDevolucoesCT0(this.devolucoesCT(ParametrosDSTE.Janela,0)*100/lspEstablished(ParametrosDSTE.Janela));
+				desc.setNumeroDeDevolucoesCT1(this.devolucoesCT(ParametrosDSTE.Janela,1)*100/lspEstablished(ParametrosDSTE.Janela));
+				desc.setNumeroDeDevolucoesCT2(this.devolucoesCT(ParametrosDSTE.Janela,2)*100/lspEstablished(ParametrosDSTE.Janela));
+				desc.setNumeroDePreempcoesCT0(this.preempcoesCT(ParametrosDSTE.Janela,0)*100/lspEstablished(ParametrosDSTE.Janela));
+				desc.setNumeroDePreempcoesCT1(this.preempcoesCT(ParametrosDSTE.Janela,1)*100/lspEstablished(ParametrosDSTE.Janela));
+				desc.setNumeroDePreempcoesCT2(this.preempcoesCT(ParametrosDSTE.Janela,2)*100/lspEstablished(ParametrosDSTE.Janela));
 			}else
 			{
 				desc.setNumeroDeBloqueiosCT0(0);

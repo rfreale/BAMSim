@@ -33,8 +33,8 @@ public class ParametrosDSTE {
 	//SLAs em Percentual
 	public static final long SLAPreempcoes = 10;
 	public static final long SLADevolucoes = 5;
-	public static final long SLABloqueios = 5;
-	public static final long SLAUtilizacao = 90;
+	public static final long SLABloqueios = 10;
+	public static final long SLAUtilizacao = 80;
 	public static final boolean RecomendacaoCBRSwitchBAM = true;
 	public static final long TempoSimulacao = 3600*5;//86400
 	/*//////Dados do RRDTools
@@ -420,31 +420,31 @@ public class ParametrosDSTE {
 
 		attribute = new Attribute("BAMAtual",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 100.0);
 
 		attribute = new Attribute("problema",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 100.0);
 		
 		attribute = new Attribute("utilizacaoDoEnlaceCT0",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 2.0);
+		config.setWeight(attribute, 10.0);
 		attribute = new Attribute("utilizacaoDoEnlaceCT1",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 2.0);
+		config.setWeight(attribute, 10.0);
 		attribute = new Attribute("utilizacaoDoEnlaceCT2",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 2.0);
+		config.setWeight(attribute, 10.0);
 
 
 		attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 2.0);
+		config.setWeight(attribute, 10.0);
 
 
 		attribute = new Attribute("numeroDePreempcoesCT1",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 2.0);
+		config.setWeight(attribute, 10.0);
 		
 		/*nunca existe esse valor
 		attribute = new Attribute("numeroDePreempcoesCT2",BAMDescription.class);
@@ -454,17 +454,17 @@ public class ParametrosDSTE {
 
 		attribute = new Attribute("numeroDeBloqueiosCT0",BAMDescription.class);
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 2.0);
+		config.setWeight(attribute, 10.0);
 		
 
 		attribute = new Attribute("numeroDeBloqueiosCT1",BAMDescription.class);
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 2.0);
+		config.setWeight(attribute, 10.0);
 		
 
 		attribute = new Attribute("numeroDeBloqueiosCT2",BAMDescription.class);
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 2.0);
+		config.setWeight(attribute, 10.0);
 		
 		/*nunca existe esse valor
 		attribute = new Attribute("numeroDeDevolucoesCT0",BAMDescription.class);
@@ -474,12 +474,12 @@ public class ParametrosDSTE {
 		
 		attribute = new Attribute("numeroDeDevolucoesCT1",BAMDescription.class);
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 2.0);
+		config.setWeight(attribute, 10.0);
 		
 		
 		attribute = new Attribute("numeroDeDevolucoesCT2",BAMDescription.class);
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 2.0);
+		config.setWeight(attribute, 10.0);
 
 		
 		return config;
@@ -494,11 +494,11 @@ public class ParametrosDSTE {
 
 		attribute = new Attribute("BAMAtual",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 100.0);
 
 		attribute = new Attribute("problema",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 100.0);
 		
 		/*attribute = new Attribute("utilizacaoDoEnlace",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));

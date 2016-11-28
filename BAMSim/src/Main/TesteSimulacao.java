@@ -226,8 +226,8 @@ public class TesteSimulacao {
 					Debug.setMensagem(to.imprimirCaminho(menorCaminho));
 					((Lsp) dados.item).estabelecerLSP(menorCaminho);
 					((Lsp) dados.item).status = LspStatus.estabelecida;
-					rodada.estatistica.lspEstabelecidas++;
-					rodada.estatistica.lspEstabelecidasCT[((Lsp) dados.item).CT]++;
+					rodada.estatistica.lspEstablished++;
+					rodada.estatistica.lspEstablishedCT[((Lsp) dados.item).CT]++;
 					rodada.estatistica.bandaEstabelecida += ((Lsp) dados.item).Carga;
 					rodada.estatistica.bandaEstabelecidaCT[((Lsp) dados.item).CT] += ((Lsp) dados.item).Carga;
 					
@@ -279,12 +279,12 @@ public class TesteSimulacao {
 
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
-				if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
+				if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
 					query = rodada.estatistica.getQuery(to.link[0],
 							Problemas.AltaDevolucao, to.link[0].bamType);
 					cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
 
-				} else if (rodada.estatistica.preempcoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) >= ParametrosDSTE.SLAPreempcoes) {
+				} else if (rodada.estatistica.preempcoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLAPreempcoes) {
 					query = rodada.estatistica.getQuery(to.link[0],
 							Problemas.AltaPreempcao, to.link[0].bamType);
 					cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
@@ -405,9 +405,12 @@ public class TesteSimulacao {
 		Debug.setMensagem(to.statusLinks());
 		rodada.estatistica.tempoSimulacaoFim=System.currentTimeMillis();
 		Debug.setMensagem(rodada.estatistica.getEstatisticas());
+		Debug.setMensagem(BAMRecommenderNoGUI.getInstance().getStringCases());
 		try {
 			rodada.estatistica.gerarRRDPNGpreempcao();
 			rodada.estatistica.gerarRRDPNGlspRequested();
+			rodada.estatistica.gerarRRDPNGlspEstablished();
+			rodada.estatistica.gerarRRDPNGlspUnbroken();
 			rodada.estatistica.gerarRRDPNGbloqueio();
 			rodada.estatistica.gerarRRDPNGdevolucao();
 			rodada.estatistica.gerarRRDXML();

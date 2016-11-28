@@ -214,6 +214,14 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		_connector.close();
 		HSQLDBserver.shutDown();
 	}
+	
+	public String getStringCases() throws ExecutionException {
+		String aux ="";
+		java.util.Collection<CBRCase> cases = _caseBase.getCases();
+		for(CBRCase c: cases)
+			aux +=c+"\r\n";
+		return aux;
+	}
 
 
 	

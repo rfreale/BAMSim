@@ -138,11 +138,11 @@ public class SimilarityDialog extends JDialog {
 		
 		panel.add(new JLabel("BAM Atual"));
 		panel.add(bamAtual = new SimilConfigPanel(enumfunctions));
-		bamAtual.weight.setValue(10);
+		bamAtual.weight.setValue(100);
 		
 		panel.add(new JLabel("Problema"));
 		panel.add(problema = new SimilConfigPanel(enumfunctions));
-		problema.weight.setValue(10);
+		problema.weight.setValue(100);
 		
 		panel.add(new JLabel("Utilização do Enlace CT0"));
 		panel.add(utilizacaoDoEnlaceCT0 = new SimilConfigPanel(numberfunctions));
@@ -401,7 +401,7 @@ public class SimilarityDialog extends JDialog {
 			
 			this.add(functionCombo);
 			
-			weight = new JSlider(0,10,10);
+			weight = new JSlider(0,100,10);
 			weight.setPaintLabels(false);
 			
 			this.add(weight);

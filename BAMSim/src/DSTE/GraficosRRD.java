@@ -16,7 +16,7 @@ import org.junit.Test;
 public class GraficosRRD {
 
 
-	public static void agregarLspGeradas(String [] filenames) throws IOException, RrdException
+	public static void agregarLspRequested(String [] filenames) throws IOException, RrdException
 	{
 		
 		//Acumulado
@@ -27,19 +27,19 @@ public class GraficosRRD {
 		
 		for (String filename:filenames)
 		{
-			graphDef.datasource(filename+"_lspGeradas", filename+"/"+filename+".rrd", "lspGeradas", "AVERAGE");
+			graphDef.datasource(filename+"_lspRequested", filename+"/"+filename+".rrd", "lspRequested", "AVERAGE");
 		}
 		
 		String aux="";
 		for (String filename:filenames)
 		{
-			aux+=filename+"_lspGeradas,";
+			aux+=filename+"_lspRequested,";
 		}
 		for (int j=0;j<filenames.length-1;j++)
 			aux+="+,";
 		aux+=filenames.length+",/";
-		graphDef.datasource("lspGeradas", aux);
-		graphDef.line("lspGeradas", new Color(0xFF, 0, 0), "LSPs Geradas Total", 2);
+		graphDef.datasource("lspRequested", aux);
+		graphDef.line("lspRequested", new Color(0xFF, 0, 0), "LSPs Geradas Total", 2);
 				
 
 		//Por tempo
@@ -49,23 +49,23 @@ public class GraficosRRD {
 		graphDef2.setTitle("LSPs Geradas");
 		for (String filename:filenames)
 		{
-			graphDef2.datasource(filename+"_lspGeradasMIN", filename+"/"+filename+".rrd", "lspGeradas", "MIN");
-			graphDef2.datasource(filename+"_lspGeradasMAX", filename+"/"+filename+".rrd", "lspGeradas", "MAX");
-			graphDef2.datasource(filename+"_lspGeradas", filename+"_lspGeradasMAX,"+filename+"_lspGeradasMIN,-");
+			graphDef2.datasource(filename+"_lspRequestedMIN", filename+"/"+filename+".rrd", "lspRequested", "MIN");
+			graphDef2.datasource(filename+"_lspRequestedMAX", filename+"/"+filename+".rrd", "lspRequested", "MAX");
+			graphDef2.datasource(filename+"_lspRequested", filename+"_lspRequestedMAX,"+filename+"_lspRequestedMIN,-");
 		}
 		aux="";
 		for (String filename:filenames)
 		{
-			aux+=filename+"_lspGeradas,";
+			aux+=filename+"_lspRequested,";
 		}
 		for (int j=0;j<filenames.length-1;j++)
 			aux+="+,";
 		aux+=filenames.length+",/";
-		graphDef2.datasource("lspGeradas", aux);
+		graphDef2.datasource("lspRequested", aux);
 	
-		graphDef2.area("lspGeradas", Color.gray, "LSPs Geradas por Tempo");
-		//graphDef2.line("lspGeradasMIN", Color.RED, "LSPs MIN Geradas por Tempo");
-		//graphDef2.line("lspGeradasMAX", Color.GREEN, "LSPs MAX Geradas por Tempo");
+		graphDef2.area("lspRequested", Color.gray, "LSPs Geradas por Tempo");
+		//graphDef2.line("lspRequestedMIN", Color.RED, "LSPs MIN Geradas por Tempo");
+		//graphDef2.line("lspRequestedMAX", Color.GREEN, "LSPs MAX Geradas por Tempo");
 
 
 		//acumulado
@@ -96,13 +96,13 @@ public class GraficosRRD {
 	{
 			//Acumulado
 			RrdGraphDef graphDef = new RrdGraphDef();
-			graphDef.setTimeSpan(ParametrosDSTE.RRDStarTime,ParametrosDSTE.RRDStarTime+86400);
+			graphDef.setTimeSpan(ParametrosDSTE.RRDStarTime,ParametrosDSTE.RRDStarTime+ParametrosDSTE.TempoSimulacao);
 			graphDef.setVerticalLabel("Number");
 			graphDef.setTitle(titulo);
 			
 			for (String filename:filenames)
 			{
-				graphDef.datasource(filename+"_"+dsName, filename+"/"+filename+".rrd", dsName, "AVERAGE");
+				graphDef.datasource(filename+"_"+dsName, "saida/"+filename+"/"+filename+".rrd", dsName, "MAX");
 			}
 			
 			String aux="";
@@ -119,18 +119,13 @@ public class GraficosRRD {
 
 			//Por tempo
 			RrdGraphDef graphDef2 = new RrdGraphDef();
-			graphDef2.setTimeSpan(ParametrosDSTE.RRDStarTime,ParametrosDSTE.RRDStarTime+86400);
+			graphDef2.setTimeSpan(ParametrosDSTE.RRDStarTime,ParametrosDSTE.RRDStarTime+ParametrosDSTE.TempoSimulacao);
 			graphDef2.setVerticalLabel("Number");
 			graphDef2.setTitle(titulo);
 			for (String filename:filenames)
 			{
-				graphDef2.datasource(filename+"_"+"lspGeradasMIN", filename+"/"+filename+".rrd", "lspGeradas", "MIN");
-				graphDef2.datasource(filename+"_"+"lspGeradasMAX",filename+"/"+filename+".rrd", "lspGeradas", "MAX");
-				graphDef2.datasource(filename+"_lspGeradas", filename+"_lspGeradasMAX,"+filename+"_lspGeradasMIN,-");
-				
-				graphDef2.datasource(filename+"_"+dsName+"MIN", filename+"/"+filename+".rrd", dsName, "MIN");
-				graphDef2.datasource(filename+"_"+dsName+"MAX", filename+"/"+filename+".rrd", dsName, "MAX");
-				graphDef2.datasource(filename+"_"+dsName, filename+"_"+dsName+"MAX,"+filename+"_"+dsName+"MIN,-");
+				graphDef2.datasource(filename+"_aux_lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "LAST");		
+				graphDef2.datasource(filename+"_"+dsName, "saida/"+filename+"/"+filename+"_absoluto.rrd", dsName, "LAST");
 			}
 			aux="";
 			for (String filename:filenames)
@@ -145,32 +140,31 @@ public class GraficosRRD {
 			aux="";
 			for (String filename:filenames)
 			{
-				aux+=filename+"_lspGeradas,";
+				aux+=filename+"_aux_lspRequested,";
 			}
 			for (int j=0;j<filenames.length-1;j++)
 				aux+="+,";
 			aux+=filenames.length+",/";
-			graphDef2.datasource("lspGeradas", aux);
+			graphDef2.datasource("lspRequested_aux", aux);
 			
-			graphDef2.area("lspGeradas", Color.GREEN, "LSPs Geradas");
+			graphDef2.area("lspRequested_aux", Color.GREEN, "LSPs Geradas");
 			graphDef2.area(dsName, Color.RED, titulo+" por Tempo");
 
 
 			//Percentual
 			
 			RrdGraphDef graphDef3 = new RrdGraphDef();
-			graphDef3.setTimeSpan(ParametrosDSTE.RRDStarTime,ParametrosDSTE.RRDStarTime+86400);
+			graphDef3.setTimeSpan(ParametrosDSTE.RRDStarTime,ParametrosDSTE.RRDStarTime+ParametrosDSTE.TempoSimulacao);
 			graphDef3.setMaxValue(100);
 			graphDef3.setVerticalLabel("Percent");
 			//graphDef.setMinValue(0);
 			graphDef3.setTitle(titulo);
 			for (String filename:filenames)
 			{
-				graphDef3.datasource(filename+"_"+"lspGeradasMIN", filename+"/"+filename+".rrd", "lspGeradas", "MIN");
-				graphDef3.datasource(filename+"_"+"lspGeradasMAX",filename+"/"+filename+".rrd", "lspGeradas", "MAX");
-				graphDef3.datasource(filename+"_"+dsName+"MIN", filename+"/"+filename+".rrd", dsName, "MIN");
-				graphDef3.datasource(filename+"_"+dsName+"MAX", filename+"/"+filename+".rrd", dsName, "MAX");
-				graphDef3.datasource(filename+"_"+dsName, filename+"_"+dsName+"MAX,"+filename+"_"+dsName+"MIN,-,"+filename+"_lspGeradasMAX,"+filename+"_lspGeradasMIN,-,/,100,*");
+				graphDef3.datasource(filename+"_aux_lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "LAST");		
+				graphDef3.datasource(filename+"_aux_"+dsName, "saida/"+filename+"/"+filename+"_absoluto.rrd", dsName, "LAST");
+				
+				graphDef3.datasource(filename+"_"+dsName, filename+"_aux_"+dsName+","+filename+"_aux_lspRequested,/,100,*");
 			}
 			aux="";
 			for (String filename:filenames)
@@ -191,7 +185,7 @@ public class GraficosRRD {
 		    BufferedImage img=new BufferedImage(totalWidth,totalHeight,BufferedImage.TYPE_USHORT_565_RGB);
 		    Graphics gfx=img.getGraphics();
 		    graph.render(gfx);
-		    File outputfile = new File(filenames[0]+"media/"+dsName+"_acum.png");
+		    File outputfile = new File("saida/"+filenames[0]+"media/"+dsName+"_acum.png");
 		    outputfile.mkdirs();
 		    ImageIO.write(img,"png",outputfile);
 		    
@@ -203,7 +197,7 @@ public class GraficosRRD {
 	  	    img=new BufferedImage(totalWidth,totalHeight,BufferedImage.TYPE_USHORT_565_RGB);
 	  	    gfx=img.getGraphics();
 	  	    graph.render(gfx);
-	  	    outputfile = new File(filenames[0]+"media/"+dsName+".png");
+	  	    outputfile = new File("saida/"+filenames[0]+"media/"+dsName+".png");
 	  	    outputfile.mkdirs();
 	  	    ImageIO.write(img,"png",outputfile);
 	  	    
@@ -214,7 +208,7 @@ public class GraficosRRD {
 	  	    img=new BufferedImage(totalWidth,totalHeight,BufferedImage.TYPE_USHORT_565_RGB);
 	  	    gfx=img.getGraphics();
 	  	    graph.render(gfx);
-	  	    outputfile = new File(filenames[0]+"media/"+dsName+"_percent.png");
+	  	    outputfile = new File("saida/"+filenames[0]+"media/"+dsName+"_percent.png");
 	  	    outputfile.mkdirs();
 	  	    ImageIO.write(img,"png",outputfile);
 			    
