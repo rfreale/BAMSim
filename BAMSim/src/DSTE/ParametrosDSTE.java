@@ -37,7 +37,11 @@ public class ParametrosDSTE {
 	public static final long SLAUtilizacao = 80;
 	public static final boolean RecomendacaoCBRSwitchBAM = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.65;
+	
+	
 	public static final long TempoSimulacao = 3600*5;//86400
+	
+	
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -58,6 +62,32 @@ public class ParametrosDSTE {
 	public static final String filenameTopologia= ".//topologias//PTP-2n-1e.txt";
 	public static final String filenameMatrizCaminhos= ".//topologias//PTP-2n-1e_Caminhos.txt";
 	
+	/*
+	public static double [] BCPadrao= new double[]    // para AllocCTSharing  //PreemptionRDM
+			{	100, // BC[0] =CT0 + CT1 + CT2 (Valor do Enlace)
+				75, // BC[1] = CT1 + CT2
+				40 // BC[2] = CT2
+			};
+*/	
+	public static double [] BCPadrao= new double[]           //para MAN ou G-BAM
+			{	25, // BC[0] =CT0 (Valor do Enlace)
+				35, // BC[1] = CT1
+				40 // BC[2] =  CT2
+			};
+	
+	//G-BAM
+	public static double [] BCHTLPadrao= new double[]
+			{	0, //BC0 Nunca mudar
+				100, //BC1
+				100 //BC2
+			};
+	
+	public static double [] BCLTHPadrao= new double[]
+			{	100, //BC0 
+				100, //BC1
+				0  //BC2 Nunca mudar
+			};
+	
 	public static void trafegoManual(RodadaDeSimulacao rodada,Topologia to, No dados)
 	{
 		
@@ -74,6 +104,7 @@ public class ParametrosDSTE {
 				lsp.dest = 1; // id do router destino
 				lsp.CT =auxCT;
 				lsp.Carga = (int)GeradorDeNumerosAleatorios.uniform(5,15);
+				lsp.tempoDeVida=GeradorDeNumerosAleatorios.expntl(250);
 				dados.item = lsp;
 				Debug.setMensagem("Agenda estabelecimento da LSP "+((Lsp)dados.item).ID+" - "
 						+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
@@ -349,34 +380,7 @@ public class ParametrosDSTE {
 	}
 	
 	
-	/*
-	public static double [] BCPadrao= new double[]    // para AllocCTSharing  //PreemptionRDM
-			{	100, // BC[0] =CT0 + CT1 + CT2 (Valor do Enlace)
-				75, // BC[1] = CT1 + CT2
-				40 // BC[1] = CT2
-			};
-			
-			
-	
-	
-*/	
-	public static double [] BCPadrao= new double[]           //para MAN
-			{	25, // BC[0] =CT0 (Valor do Enlace)
-				35, // BC[1] = CT1
-				40 // BC[2] =  CT2
-			};
-	
-	public static double [] BCHTLPadrao= new double[]
-			{	0, //BC0 Nunca mudar
-				100, //BC1
-				100 //BC2
-			};
-	
-	public static double [] BCLTHPadrao= new double[]
-			{	100, //BC0 
-				100, //BC1
-				0  //BC2 Nunca mudar
-			};
+
 		
 	public static boolean condicaoDeParada(RodadaDeSimulacao rodada)
 	{
