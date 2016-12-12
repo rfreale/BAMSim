@@ -428,9 +428,9 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 		return "(CaseID=" + caseId 
 				+ ", BAMAtual=" + BAMAtual
 				+ ", Problema=" + problema
-				+ ", utilizacaoDoEnlace=" + utilizacaoDoEnlaceCT0
-				+ ", utilizacaoDoEnlace=" + utilizacaoDoEnlaceCT1
-				+ ", utilizacaoDoEnlace=" + utilizacaoDoEnlaceCT2
+				+ ", utilizacaoDoEnlaceCT0=" + utilizacaoDoEnlaceCT0
+				+ ", utilizacaoDoEnlaceCT1=" + utilizacaoDoEnlaceCT1
+				+ ", utilizacaoDoEnlaceCT2=" + utilizacaoDoEnlaceCT2
 				+ ", numeroDePreempcoesCT0=" + numeroDePreempcoesCT0
 				+ ", numeroDePreempcoesCT1=" + numeroDePreempcoesCT1
 				+ ", numeroDePreempcoesCT2=" + numeroDePreempcoesCT2

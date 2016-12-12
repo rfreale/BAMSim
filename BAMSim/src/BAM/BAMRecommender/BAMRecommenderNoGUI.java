@@ -29,11 +29,15 @@ import BAM.BAMRecommender.gui.ResultDialog;
 import BAM.BAMRecommender.gui.RetainDialog;
 import BAM.BAMRecommender.gui.RevisionDialog;
 import BAM.BAMRecommender.gui.SimilarityDialog;
+import DSTE.ParametrosDSTE;
 import jcolibri.exception.ExecutionException;
 import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
 import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
+import jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
+import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
+import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.selection.SelectCases;
 import jcolibri.method.reuse.NumericDirectProportionMethod;
 import jcolibri.util.FileIO;
@@ -55,6 +59,21 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 	 */
 	public NNConfig getSimConfig() {
 		return simConfig;
+	}
+
+	/**
+	 * @param simConfig the simConfig to set
+	 */
+	public void setSimConfigDB2(NNConfig simConfigDB2) {
+		this.simConfigDB2 = simConfigDB2;
+	}
+	
+	NNConfig simConfigDB2=getSimilarityConfigDB2();
+	/**
+	 * @return the simConfig
+	 */
+	public NNConfig getSimConfigDB2() {
+		return simConfigDB2;
 	}
 
 	/**
@@ -82,6 +101,11 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 	/** CaseBase object */
 	CBRCaseBase _caseBase;
 	
+	/** Connector object */
+	Connector _connectorDB2;
+	/** CaseBase object */
+	CBRCaseBase _caseBaseDB2;
+	
 	
 	
 	/**
@@ -89,6 +113,10 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 	 */
 	public CBRCaseBase getCaseBase() {
 		return _caseBase;
+	}
+	
+	public CBRCaseBase getCaseBaseDB2() {
+		return _caseBaseDB2;
 	}
 
 
@@ -105,6 +133,14 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 			// Create a Lineal case base for in-memory organization
 			_caseBase = new LinealCaseBase();
 			
+			// Create a data base connector
+			_connectorDB2 = new DataBaseConnector();
+			// Init the ddbb connector with the config file
+			_connectorDB2.initFromXMLfile(jcolibri.util.FileIO
+					.findFile("BAM/BAMRecommender/databaseconfig2.xml"));
+			// Create a Lineal case base for in-memory organization
+			_caseBaseDB2 = new LinealCaseBase();
+			
 			
 			
 		} catch (Exception e) {
@@ -112,15 +148,25 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		}
 	}
 	
+	
 	public CBRCaseBase preCycle() throws ExecutionException {
 		// Load cases from connector into the case base
 		_caseBase.init(_connector);		
+		System.out.println("===================DB==================");
 		// Print the cases
 		java.util.Collection<CBRCase> cases = _caseBase.getCases();
 		for(CBRCase c: cases)
 			System.out.println(c);
+		System.out.println("===================DB2==================");
+		// Load cases from connector into the case base
+		_caseBaseDB2.init(_connectorDB2);		
+		// Print the cases
+		cases = _caseBaseDB2.getCases();
+		for(CBRCase c: cases)
+			System.out.println(c);
 		return _caseBase;
 	}
+	
 
 	public CBRCase cycle(CBRQuery query) throws ExecutionException {
 		
@@ -133,9 +179,25 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		// Execute NN
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
 		// Select k cases
-		Collection<CBRCase> selectedcases = SelectCases.selectTopK(eval, 1);
+		//Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval,3);
 		
-		return selectedcases.iterator().next();
+		BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
+		BAMSolution sol = null;
+		CBRCase novocase = new CBRCase();
+		novocase.setDescription(desc);
+		
+		
+		for(RetrievalResult rr: eval)
+		{
+			sol = ((BAMSolution) rr.get_case().getSolution()).clone();
+			novocase.setSolution(sol);
+
+			if((!this.equal(novocase, _caseBaseDB2))&&rr.getEval()>=ParametrosDSTE.RecomendacaoCBRLimiarDeCorte)
+				return rr.get_case();
+			
+		}
+			
+		return null;
 		// Show result
 		/*
 		ArrayList<RetrievalResult> cases;
@@ -206,21 +268,150 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		
 		
 	}
+	
+	
+	
+	public boolean equal(CBRCase cbrcase, CBRCaseBase caseBase)
+	{
+		CBRQuery query = new CBRQuery();
+		
+		// Obtain configuration for KNN
+
+		simConfigDB2.setDescriptionSimFunction(new Average());
+		query.setDescription(cbrcase.getDescription());
+		
+		
+		// Execute NN
+		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase.getCases(), query, simConfigDB2);
+		// Select k cases
+		for(RetrievalResult rr: eval)
+		{
+			if(rr.getEval()>=1.0)
+			{
+				if(
+						((BAMSolution) rr.get_case().getSolution()).BAMNovo 
+						== 
+						((BAMSolution) cbrcase.getSolution()).BAMNovo
+					&&
+						((BAMSolution) rr.get_case().getSolution()).aceita 
+							== 
+						((BAMSolution) cbrcase.getSolution()).aceita
+					)
+				{
+					return true;
+				}
+			}
+					
+						
+		}
+		
+		
+		return false;
+	}
 
 	public void postCycle() throws ExecutionException {
 		java.util.Collection<CBRCase> cases = _caseBase.getCases();
+		System.out.println("===================DB==================");
 		for(CBRCase c: cases)
 			System.out.println(c);
 		_connector.close();
+		System.out.println("===================DB2==================");
+		cases = _caseBaseDB2.getCases();
+		for(CBRCase c: cases)
+			System.out.println(c);
+		_connectorDB2.close();
+		
 		HSQLDBserver.shutDown();
 	}
 	
 	public String getStringCases() throws ExecutionException {
-		String aux ="";
+		String aux ="===================DB==================\r\n";
 		java.util.Collection<CBRCase> cases = _caseBase.getCases();
 		for(CBRCase c: cases)
 			aux +=c+"\r\n";
+		aux +="===================DB2==================\r\n";
+		cases = _caseBaseDB2.getCases();
+		for(CBRCase c: cases)
+			aux +=c+"\r\n";
 		return aux;
+	}
+	
+	private NNConfig getSimilarityConfigDB2()
+	{
+		NNConfig config = new NNConfig();
+		Attribute attribute;
+		
+		LocalSimilarityFunction function;
+		
+
+		attribute = new Attribute("BAMAtual",BAMDescription.class); 
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+
+		attribute = new Attribute("problema",BAMDescription.class); 
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+		
+		attribute = new Attribute("utilizacaoDoEnlaceCT0",BAMDescription.class); 
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+		attribute = new Attribute("utilizacaoDoEnlaceCT1",BAMDescription.class); 
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+		attribute = new Attribute("utilizacaoDoEnlaceCT2",BAMDescription.class); 
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+
+
+		attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class); 
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+
+
+		attribute = new Attribute("numeroDePreempcoesCT1",BAMDescription.class); 
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+		
+		/*nunca existe esse valor
+		attribute = new Attribute("numeroDePreempcoesCT2",BAMDescription.class);
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 0.0);*/
+		
+
+		attribute = new Attribute("numeroDeBloqueiosCT0",BAMDescription.class);
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+		
+
+		attribute = new Attribute("numeroDeBloqueiosCT1",BAMDescription.class);
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+		
+
+		attribute = new Attribute("numeroDeBloqueiosCT2",BAMDescription.class);
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+		
+		/*nunca existe esse valor
+		attribute = new Attribute("numeroDeDevolucoesCT0",BAMDescription.class);
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 0.0);*/
+		
+		
+		attribute = new Attribute("numeroDeDevolucoesCT1",BAMDescription.class);
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+		
+		
+		attribute = new Attribute("numeroDeDevolucoesCT2",BAMDescription.class);
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+		
+		attribute = new Attribute("numeroDeDevolucoesCT2",BAMDescription.class);
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+		
+		return config;
 	}
 
 

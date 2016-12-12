@@ -28,7 +28,7 @@ public class ParametrosDSTE {
 	public static int LINKS = 6; // N�mero de LINKS (Simplex) do Modelo
 	public static int ROTEADORES = 5; // N�mero de roteadores DSTE
 	public static BAMType BAMTypePadrao = BAMType.PreemptionGBAM;  //NoPreemptionMAM  //PreemptionAllocCTSharing  //PreemptionRDM
-	public static final long Janela = 300;
+	public static final long Janela = 600;
 	
 	//SLAs em Percentual
 	public static final long SLAPreempcoes = 10;
@@ -36,6 +36,7 @@ public class ParametrosDSTE {
 	public static final long SLABloqueios = 10;
 	public static final long SLAUtilizacao = 80;
 	public static final boolean RecomendacaoCBRSwitchBAM = true;
+	public static final double RecomendacaoCBRLimiarDeCorte = 0.65;
 	public static final long TempoSimulacao = 3600*5;//86400
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max

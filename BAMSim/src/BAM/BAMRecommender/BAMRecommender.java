@@ -65,6 +65,11 @@ public class BAMRecommender implements StandardCBRApplication {
 	/** CaseBase object */
 	CBRCaseBase _caseBase;
 	
+	/** Connector object */
+	Connector _connector2;
+	/** CaseBase object */
+	CBRCaseBase _caseBase2;
+	
 	SimilarityDialog similarityDialog;
 	ResultDialog resultDialog;
 	AutoAdaptationDialog autoAdaptDialog;
@@ -84,6 +89,15 @@ public class BAMRecommender implements StandardCBRApplication {
 					.findFile("BAM/BAMRecommender/databaseconfig.xml"));
 			// Create a Lineal case base for in-memory organization
 			_caseBase = new LinealCaseBase();
+			
+			
+			// Create a data base connector
+			_connector2 = new DataBaseConnector();
+			// Init the ddbb connector with the config file
+			_connector2.initFromXMLfile(jcolibri.util.FileIO
+					.findFile("BAM/BAMRecommender/databaseconfig2.xml"));
+			// Create a Lineal case base for in-memory organization
+			_caseBase2 = new LinealCaseBase();
 			
 			// Obtain a reference to OntoBridge
 			//OntoBridge ob = jcolibri.util.OntoBridgeSingleton.getOntoBridge();
@@ -116,6 +130,15 @@ public class BAMRecommender implements StandardCBRApplication {
 		java.util.Collection<CBRCase> cases = _caseBase.getCases();
 		for(CBRCase c: cases)
 			System.out.println(c);
+		
+		// Load cases from connector into the case base
+		_caseBase2.init(_connector2);		
+		// Print the cases
+		cases = _caseBase2.getCases();
+		for(CBRCase c: cases)
+			System.out.println(c);
+		
+		
 		return _caseBase;
 	}
 
