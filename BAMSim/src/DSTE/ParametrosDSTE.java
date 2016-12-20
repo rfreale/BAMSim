@@ -25,8 +25,8 @@ public class ParametrosDSTE {
 	//public static final int NumEnlacesFullDuplex = 12;
 	public static final int MaxH = 0;
 	public static final int MaxClassType = 3;
-	public static int LINKS = 6; // N�mero de LINKS (Simplex) do Modelo
-	public static int ROTEADORES = 5; // N�mero de roteadores DSTE
+	public static int LINKS = 6; // Número de LINKS (Simplex) do Modelo
+	public static int ROTEADORES = 5; // Número de roteadores DSTE
 	public static BAMType BAMTypePadrao = BAMType.PreemptionGBAM;  //NoPreemptionMAM  //PreemptionAllocCTSharing  //PreemptionRDM
 	public static final long Janela = 600;
 	
@@ -47,7 +47,7 @@ public class ParametrosDSTE {
 	public static final long RRDBatida =RRDAmostra*2 ; //heartbeat
 	public static final double RRDMin =Double.NaN;    //valor mínimo fora dos quais não deve ser considerada a leitura.
 	public static final double RRDMax = Double.NaN;   //valor máximo fora dos quais não deve ser considerada a leitura.
-	public static final double RRDXff = 0.5;   //percentagem de pontos primários que podem ser 'desconhecidos'
+	public static final double RRDXff = 0.5;   //percentagem de pontos primÃ¡rios que podem ser 'desconhecidos'
 	public static final int RRDSteps = 2;  //Número de 'steps' que devemos esperar até armazenarmos no arquivo o valor da leitura
 	public static final int RRDLinhas= (int) (TempoSimulacao/(RRDSteps*RRDAmostra));  //rows  quantas leituras vamos armazenar.
 	
@@ -61,7 +61,7 @@ public class ParametrosDSTE {
 	public static void trafegoManual(RodadaDeSimulacao rodada,Topologia to, No dados)
 	{
 		
-		//Inicializar Tr�fego
+		//Inicializar Tráfego
 		if(dados==null)
 		{
 			for(int i=0; i<ParametrosDSTE.MaxClassType;i++)
@@ -84,7 +84,7 @@ public class ParametrosDSTE {
 		}
 		else
 		{
-			//Repeti��o do tr�fego
+			//Repetição do tráfego
 			Debug.setMensagem("Agenda estabelecimento da LSP "+((Lsp)dados.item).ID+" - "
 					+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
 					+" -->"
@@ -200,7 +200,7 @@ public class ParametrosDSTE {
 		
 		
 	}
-	//Aleat�rio
+	//Aleatório
 	public static void trafegoManual2(RodadaDeSimulacao rodada,Topologia to, No dados)
 	{
 		
@@ -389,7 +389,7 @@ public class ParametrosDSTE {
 	}
 	public static String getParametros()
 	{
-		String retorno="============================ In�cio dos Par�mtros DSTE ============================\r\n";
+		String retorno="============================ Início dos Parâmetros DSTE ============================\r\n";
 		retorno+="MaxCaminhos:"+MaxCaminhos+"\r\n";
 		retorno+="MaxSaltos:"+MaxSaltos+"\r\n";
 		retorno+="MaxH:"+MaxH+"\r\n";
@@ -403,7 +403,7 @@ public class ParametrosDSTE {
 			
 		}   
 		
-		retorno+="============================ Fim dos Par�mtros DSTE ============================";
+		retorno+="============================ Fim dos Parâmetros DSTE ============================";
 
 		
 		

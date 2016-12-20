@@ -1,6 +1,6 @@
 /**
  * Travel Recommender example for the jCOLIBRI2 framework. 
- * @author Juan A. Recio-García.
+ * @author Juan A. Recio-Garcï¿½a.
  * GAIA - Group for Artificial Intelligence Applications
  * http://gaia.fdi.ucm.es
  * 25/07/2006
@@ -73,7 +73,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	Integer  toleranciaDevolucoesCT0;
 	Integer  toleranciaDevolucoesCT1;
 	Integer  toleranciaDevolucoesCT2;
-	//Medições
+	//MediÃ§Ãµes
 	Double  utilizacaoDoEnlaceCT0;
 	Double  utilizacaoDoEnlaceCT1;
 	Double  utilizacaoDoEnlaceCT2;
