@@ -139,7 +139,7 @@ public class EstatisticasDSTE {
 	{
 		
 		try{
-			//Criar base padrão
+			//Criar base padrÃ£o
 			this.filename=filename;
 			curretTime=starTime;
 			RrdDef rrdDef;
@@ -316,7 +316,7 @@ public class EstatisticasDSTE {
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
-		//Faz a subtração dos dois valores para pegar o valor na janela
+		//Faz a subtraÃ§Ã£o dos dois valores para pegar o valor na janela
 		int prempcoes=(int) (fetchData.getAggregate("preempcao", "MAX")-fetchData.getAggregate("preempcao", "MIN"));
 		
 		rrdDb.close();
@@ -328,7 +328,7 @@ public class EstatisticasDSTE {
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
-		//Faz a subtração dos dois valores para pegar o valor na janela
+		//Faz a subtraÃ§Ã£o dos dois valores para pegar o valor na janela
 		int prempcoes=(int) (fetchData.getAggregate("preempcao_CT"+ct, "MAX")-fetchData.getAggregate("preempcao_CT"+ct, "MIN"));
 		
 		rrdDb.close();
@@ -340,7 +340,7 @@ public class EstatisticasDSTE {
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
-		//Faz a subtração dos dois valores para pegar o valor na janela
+		//Faz a subtraÃ§Ã£o dos dois valores para pegar o valor na janela
 		int lspRequested=(int) (fetchData.getAggregate("lspRequested", "MAX")-fetchData.getAggregate("lspRequested", "MIN"));
 		
 		rrdDb.close();
@@ -353,7 +353,7 @@ public class EstatisticasDSTE {
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
-		//Faz a subtração dos dois valores para pegar o valor na janela
+		//Faz a subtraÃ§Ã£o dos dois valores para pegar o valor na janela
 		int lspEstablished=(int) (fetchData.getAggregate("lspEstablished", "MAX")-fetchData.getAggregate("lspEstablished", "MIN"));
 		
 		rrdDb.close();
@@ -365,7 +365,7 @@ public class EstatisticasDSTE {
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
-		//Faz a subtração dos dois valores para pegar o valor na janela
+		//Faz a subtraÃ§Ã£o dos dois valores para pegar o valor na janela
 		int bloqueios=(int) (fetchData.getAggregate("bloqueio", "MAX")-fetchData.getAggregate("bloqueio", "MIN"));
 		
 		rrdDb.close();
@@ -377,7 +377,7 @@ public class EstatisticasDSTE {
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
-		//Faz a subtração dos dois valores para pegar o valor na janela
+		//Faz a subtraÃ§Ã£o dos dois valores para pegar o valor na janela
 		int bloqueios=(int) (fetchData.getAggregate("bloqueio_CT"+ct, "MAX")-fetchData.getAggregate("bloqueio_CT"+ct, "MIN"));
 		
 		rrdDb.close();
@@ -389,7 +389,7 @@ public class EstatisticasDSTE {
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
-		//Faz a subtração dos dois valores para pegar o valor na janela
+		//Faz a subtraÃ§Ã£o dos dois valores para pegar o valor na janela
 		int devolucoes=(int) (fetchData.getAggregate("devolucao", "MAX")-fetchData.getAggregate("devolucao", "MIN"));
 		rrdDb.close();
 		return devolucoes;
@@ -400,7 +400,7 @@ public class EstatisticasDSTE {
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
-		//Faz a subtração dos dois valores para pegar o valor na janela
+		//Faz a subtraÃ§Ã£o dos dois valores para pegar o valor na janela
 		int devolucoes=(int) (fetchData.getAggregate("devolucao_CT"+ct, "MAX")-fetchData.getAggregate("devolucao_CT"+ct, "MIN"));
 		
 		rrdDb.close();
@@ -1097,7 +1097,7 @@ public class EstatisticasDSTE {
 	}
 	public String getEstatisticas()
 	{
-		String retorno="============================ Início dos Estatisticas DSTE ============================\r\n";
+		String retorno="============================ InÃ­cio dos Estatisticas DSTE ============================\r\n";
 		
 		retorno+=String.format("Simulation Time = %03d:%02d:%02d\r\n", (tempoSimulacaoFim-tempoSimulacaoInicio) / 3600000, ( (tempoSimulacaoFim-tempoSimulacaoInicio) / 60000 ) % 60 , ((tempoSimulacaoFim-tempoSimulacaoInicio) / 1000 ) % 60);
 		retorno+=String.format("Simulation Time (ms) = %d\r\n", tempoSimulacaoFim-tempoSimulacaoInicio);
@@ -1148,7 +1148,7 @@ public class EstatisticasDSTE {
 		} 
 
 		
-		retorno+="============================ Fim dos Estatï¿½sticas DSTE ============================";
+		retorno+="============================ Fim dos EstatÃ¯Â¿Å“sticas DSTE ============================";
 
 		
 		
@@ -1192,13 +1192,13 @@ public class EstatisticasDSTE {
 				desc.setBAMAtual(BAMTypes.valueOf(BAMAtual.toString()));
 			}else
 			{
-				//Se BCLTH diferente de 0 é pq reflete Alloc
+				//Se BCLTH diferente de 0 Ã© pq reflete Alloc
 				if (link.BCLTH[0]!=0)
 					desc.setBAMAtual(BAMTypes.PreemptionAllocCTSharing);
-				//Se BCLTH diferente é igual a 0 e BCHTL diferente de 0 é pq reflete RDM
+				//Se BCLTH diferente Ã© igual a 0 e BCHTL diferente de 0 Ã© pq reflete RDM
 				else if (link.BCHTL[2]!=0)
 					desc.setBAMAtual(BAMTypes.PreemptionRDM);
-				//Se BCLTH e BCHTL igual a 0 é pq reflete MAM
+				//Se BCLTH e BCHTL igual a 0 Ã© pq reflete MAM
 				else
 					desc.setBAMAtual(BAMTypes.NoPreemptionMAM);
 			}

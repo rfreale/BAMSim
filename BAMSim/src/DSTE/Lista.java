@@ -1,6 +1,6 @@
 package DSTE;
 import Simulador.*;
-/*********** ESTRUTURAS B¡SICAS PARA ESTRUTURA«√O DAS INFORMA«’ES EM LISTAS ENCADEADAS **********/
+/*********** ESTRUTURAS B√ÅSICAS PARA ESTRUTURA√á√ÉO DAS INFORMA√á√ïES EM LISTAS ENCADEADAS **********/
 
 public class Lista {
 	No primeiro;
@@ -10,7 +10,7 @@ public class Lista {
 		this.inicia_lista(this);
 	}
 	/***************************************************************/
-	/* FUN«’ES AUXILIARES DOS ALGORITMOS DE ROTEAMENTO E PREEMP«√O */
+	/* FUN√á√ïES AUXILIARES DOS ALGORITMOS DE ROTEAMENTO E PREEMP√á√ÉO */
 	/***************************************************************/
 
 	// Rotina que Inicia uma Estrutura de dados Tipo Lista
@@ -55,7 +55,7 @@ public class Lista {
 			aux.prox = retorno.prox;
 			//free(retorno);
 		}
-		else // NESSE CASO O ELEMENTO A SER RETIRADO … O ULTIMO DA LISTA
+		else // NESSE CASO O ELEMENTO A SER RETIRADO √â O ULTIMO DA LISTA
 		{
 			ListaLSPs.ultimo = aux;
 			ListaLSPs.ultimo.prox = null;
@@ -64,7 +64,7 @@ public class Lista {
 		return(retorno);	
 	}
 	// Rotina que Retira Elemento do Final de um Lista
-	public static No Retira_Lista_Final(Lista L) //Retira o Elemento (NÛ) do Final da Lista
+	public static No Retira_Lista_Final(Lista L) //Retira o Elemento (N√≥) do Final da Lista
 	{
 		No aux, retorno;
 
@@ -78,7 +78,7 @@ public class Lista {
 
 		else
 		{		
-			while(aux.prox.prox != L.ultimo.prox ) // OBS: RESOLVI O PROBLEMA A PRINCÃPIO MAS NAO ENTENDI O PQ AINDA!!???!?!?	
+			while(aux.prox.prox != L.ultimo.prox ) // OBS: RESOLVI O PROBLEMA A PRINC√åPIO MAS NAO ENTENDI O PQ AINDA!!???!?!?	
 				aux = aux.prox;
 			retorno=L.ultimo;
 			L.ultimo = aux;

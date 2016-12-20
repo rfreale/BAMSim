@@ -138,27 +138,27 @@ public class Topologia {
 			}
 			else
 			{
-				System.out.println("Arquivo inválido!");
+				System.out.println("Arquivo invÃ¡lido!");
 			}
 			if(linha != null)
 			{
-				System.out.println("Número de roteadores: "+linha);
+				System.out.println("NÃºmero de roteadores: "+linha);
 				ParametrosDSTE.ROTEADORES = Integer.parseInt(linha); 
 				linha = br.readLine();
 			}
 			else
 			{
-				System.out.println("Arquivo inválido!");
+				System.out.println("Arquivo invÃ¡lido!");
 			}
 			if(linha != null)
 			{
-				System.out.println("Número de enlaces: "+linha);
+				System.out.println("NÃºmero de enlaces: "+linha);
 				ParametrosDSTE.LINKS = Integer.parseInt(linha); 
 				linha = br.readLine();
 			}
 			else
 			{
-				System.out.println("Arquivo inválido!");
+				System.out.println("Arquivo invÃ¡lido!");
 			}
 			this.roteador= new Roteador[ParametrosDSTE.ROTEADORES];
 			this.link= new Link[ParametrosDSTE.LINKS];
@@ -344,8 +344,8 @@ public class Topologia {
 				if(ParametrosDoSimulador.DebugFile>=8)
 					retorno+=("LSPs no enlace:"+Lsp.imprime_lista(aux.ListaLSPs)+"\r\n");
 				retorno+=("Carga:"+aux.getCargaEnlaceAtual()+"\r\n");
-				retorno+=("Preempções:"+aux.preempcoes+"\r\n");
-				retorno+=("Devoluções:"+aux.devolucoes+"\r\n");
+				retorno+=("PreempÃ§Ãµes:"+aux.preempcoes+"\r\n");
+				retorno+=("DevoluÃ§Ãµes:"+aux.devolucoes+"\r\n");
 				retorno+=("LSP Estabelecidas:"+aux.lspEstabelecidas+"\r\n");
 				retorno+=("LSP Unbroken:"+aux.lspUnbroken+"\r\n");
 				retorno+=("Banda Unbroken:"+aux.bandaUnbroken+"\r\n");

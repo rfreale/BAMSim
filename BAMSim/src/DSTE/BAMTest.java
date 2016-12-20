@@ -172,7 +172,7 @@ public class BAMTest {
 	  		  }
 	  		  catch (IOException e) {
 	  			   // TODO Auto-generated catch block
-	  			   System.out.println("Erro na gravação do arquivo:"+e.toString());
+	  			   System.out.println("Erro na gravaÃ§Ã£o do arquivo:"+e.toString());
 	  		  }
 	            
 
@@ -201,13 +201,13 @@ public class BAMTest {
             FileReader arq = new FileReader(ParametrosDSTE.filenameTopologia);
             BufferedReader lerArq = new BufferedReader(arq);
        
-            String linha = lerArq.readLine(); // lê a primeira linha
-      // a variável "linha" recebe o valor "null" quando o processo
-      // de repetição atingir o final do arquivo texto
+            String linha = lerArq.readLine(); // lÃª a primeira linha
+      // a variÃ¡vel "linha" recebe o valor "null" quando o processo
+      // de repetiÃ§Ã£o atingir o final do arquivo texto
             while (linha != null) {
               System.out.printf("%s\n", linha);
        
-              linha = lerArq.readLine(); // lê da segunda até a última linha
+              linha = lerArq.readLine(); // lÃª da segunda atÃ© a Ãºltima linha
             }
        
             arq.close();
@@ -273,7 +273,7 @@ public class BAMTest {
 		FetchRequest fetchRequest2 = rrdDb.createFetchRequest("MAX", curretTime-60,curretTime+time);
 		FetchData fetchData = fetchRequest.fetchData();
 		FetchData fetchData2 = fetchRequest2.fetchData();
-		//Faz a subtração dos dois valores para pegar o valor na janela
+		//Faz a subtraÃ§Ã£o dos dois valores para pegar o valor na janela
 		int prempcoes=(int) (fetchData2.getAggregate("preempcao", "MAX")-fetchData.getAggregate("preempcao", "MAX"));
 		
 		rrdDb.close();
@@ -493,11 +493,11 @@ public class BAMTest {
 		graphDef.datasource("preempcao", "BAMSim.rrd", "preempcao", "AVERAGE");
 		graphDef.datasource("preempcao2", "BAMSim2.rrd", "preempcao", "AVERAGE");
 		graphDef.datasource("preempcao3",  "preempcao,preempcao2,30,40,50,+,+,+,+,5,/");
-		graphDef.line("preempcao3", new Color(0xFF, 0, 0), "Preempção", 2);
-		graphDef.line("preempcao2", Color.green, "Preempção", 2);
+		graphDef.line("preempcao3", new Color(0xFF, 0, 0), "PreempÃ§Ã£o", 2);
+		graphDef.line("preempcao2", Color.green, "PreempÃ§Ã£o", 2);
 
-		//graphDef.line("utilizacao", new Color(0xFF, 0, 0), "Utilização", 2);
-		//graphDef.area("preempcao", Color.gray, "Utilização");
+		//graphDef.line("utilizacao", new Color(0xFF, 0, 0), "UtilizaÃ§Ã£o", 2);
+		//graphDef.area("preempcao", Color.gray, "UtilizaÃ§Ã£o");
 		//graphDef.datasource("realspeed", "myspeed,1,*");
 		//graphDef.line("realspeed", new Color(0xFF, 0, 0), null, 2);
 		RrdGraph graph = new RrdGraph(graphDef);
@@ -648,11 +648,11 @@ public class BAMTest {
 		graphDef.datasource("bloqueio", "BAMSim.rrd", "bloqueio", "AVERAGE");
 		graphDef.datasource("devolucao", "BAMSim.rrd", "devolucao", "AVERAGE");
 		graphDef.datasource("utilizacao", "BAMSim.rrd", "utilizacao", "AVERAGE");
-		graphDef.line("preempcao", new Color(0xFF, 0, 0), "Preempção", 2);
+		graphDef.line("preempcao", new Color(0xFF, 0, 0), "PreempÃ§Ã£o", 2);
 		graphDef.line("bloqueio", new Color(0x04, 0, 0xFF), "Bloqueio", 2);
-		graphDef.line("devolucao", Color.GREEN, "Devolução", 2);
-		//graphDef.line("utilizacao", new Color(0xFF, 0, 0), "Utilização", 2);
-		//graphDef.area("preempcao", Color.gray, "Utilização");
+		graphDef.line("devolucao", Color.GREEN, "DevoluÃ§Ã£o", 2);
+		//graphDef.line("utilizacao", new Color(0xFF, 0, 0), "UtilizaÃ§Ã£o", 2);
+		//graphDef.area("preempcao", Color.gray, "UtilizaÃ§Ã£o");
 		//graphDef.datasource("realspeed", "myspeed,1,*");
 		//graphDef.line("realspeed", new Color(0xFF, 0, 0), null, 2);
 		RrdGraph graph = new RrdGraph(graphDef);
@@ -674,7 +674,7 @@ public class BAMTest {
 		//RodadaDeSimulacao sim[] = new RodadaDeSimulacao[ParametrosDoSimulador.MAX_SIMULATIONS];
 				BancoDeDados.setXML("<?xml version='1.0'?>\r\n",filename);
 				BancoDeDados.setXML("<simulacao>\r\n",filename);
-				Debug.setMensagem("============================ Início da Primeira Rodada ============================");
+				Debug.setMensagem("============================ InÃ­cio da Primeira Rodada ============================");
 				RodadaDeSimulacao sim = new RodadaDeSimulacao();
 				Main.TesteSimulacao t1 = new Main.TesteSimulacao(sim);
 				BancoDeDados.setXML("</simulacao>\r\n",filename);
@@ -790,7 +790,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeExtrapolarEnlaceMAM() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 		Roteador roteadorOrigem= new Roteador(); 
 		roteadorOrigem.ID = 0;
@@ -843,7 +843,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeBCMAM() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 		Roteador roteadorOrigem= new Roteador(); 
 		roteadorOrigem.ID = 0;
@@ -905,7 +905,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeExtrapolarEnlaceRDM() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 		Roteador roteadorOrigem= new Roteador(); 
 		roteadorOrigem.ID = 0;
@@ -949,12 +949,12 @@ public class BAMTest {
 		lsp3.CT = 2;
 		lsp3.Carga = link.CargaEnlace+0.1;
 		
-		//RDM sem preempção
+		//RDM sem preempÃ§Ã£o
 		assertEquals("Extrapolar o enlace RDM - CT0", BAMStatus.bloqueada,BAM.NoPreemptionRDM(link, lsp));
 		assertEquals("Extrapolar o enlace RDM - CT1", BAMStatus.bloqueada,BAM.NoPreemptionRDM(link, lsp2));
 		assertEquals("Extrapolar o enlace RDM - CT2", BAMStatus.bloqueada,BAM.NoPreemptionRDM(link, lsp3));
 		
-		//RDM com preempção
+		//RDM com preempÃ§Ã£o
 		assertEquals("Extrapolar o enlace RDM - CT0", BAMStatus.bloqueada,BAM.preemptionRDM(link, lsp));
 		assertEquals("Extrapolar o enlace RDM - CT1", BAMStatus.bloqueada,BAM.preemptionRDM(link, lsp2));
 		assertEquals("Extrapolar o enlace RDM - CT2", BAMStatus.bloqueada,BAM.preemptionRDM(link, lsp3));
@@ -962,7 +962,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeBCRDM() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 		Roteador roteadorOrigem= new Roteador(); 
 		roteadorOrigem.ID = 0;
@@ -1007,12 +1007,12 @@ public class BAMTest {
 		lsp3.CT = 2;
 		lsp3.Carga = (link.BC[2]/link.BC[0])*link.CargaEnlace;
 		
-		//LSPs no limite das BCs sem preempção
+		//LSPs no limite das BCs sem preempÃ§Ã£o
 		assertEquals("Limite o BC0 RDM - CT0", BAMStatus.aceita,BAM.NoPreemptionRDM(link, lsp));
 		assertEquals("Limite o BC1 RDM - CT1", BAMStatus.aceita,BAM.NoPreemptionRDM(link, lsp2));
 		assertEquals("Limite o BC2 RDM - CT2", BAMStatus.aceita,BAM.NoPreemptionRDM(link, lsp3));
 		
-		//LSPs no limite das BCs com preempção
+		//LSPs no limite das BCs com preempÃ§Ã£o
 		assertEquals("Limite o BC0 RDM - CT0", BAMStatus.aceita,BAM.preemptionRDM(link, lsp));
 		assertEquals("Limite o BC1 RDM - CT1", BAMStatus.aceita,BAM.preemptionRDM(link, lsp2));
 		assertEquals("Limite o BC2 RDM - CT2", BAMStatus.aceita,BAM.preemptionRDM(link, lsp3));
@@ -1022,12 +1022,12 @@ public class BAMTest {
 		lsp2.Carga+=0.1;
 		lsp3.Carga+=0.1;
 		
-		//Sem preempção
+		//Sem preempÃ§Ã£o
 		assertEquals("Limite o BC0 MAM - CT0", BAMStatus.bloqueada,BAM.NoPreemptionRDM(link, lsp));
 		assertEquals("Limite o BC1 MAM - CT1", BAMStatus.bloqueada,BAM.NoPreemptionRDM(link, lsp2));
 		assertEquals("Limite o BC2 MAM - CT2", BAMStatus.bloqueada,BAM.NoPreemptionRDM(link, lsp3));
 		
-		//Com preempção
+		//Com preempÃ§Ã£o
 		assertEquals("Limite o BC0 MAM - CT0", BAMStatus.bloqueada,BAM.preemptionRDM(link, lsp));
 		assertEquals("Limite o BC1 MAM - CT1", BAMStatus.bloqueada,BAM.preemptionRDM(link, lsp2));
 		assertEquals("Limite o BC2 MAM - CT2", BAMStatus.bloqueada,BAM.preemptionRDM(link, lsp3));
@@ -1035,7 +1035,7 @@ public class BAMTest {
 		
 	}
 	public void testeExtrapolarEnlaceAlloCTSharing() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 		Roteador roteadorOrigem= new Roteador(); 
 		roteadorOrigem.ID = 0;
@@ -1087,7 +1087,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeBCAlloCTSharing() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 		Roteador roteadorOrigem= new Roteador(); 
 		roteadorOrigem.ID = 0;
@@ -1149,7 +1149,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeBCHTLMAM() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1230,7 +1230,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeBCHTLNoPreemptionRDM() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1311,7 +1311,7 @@ public class BAMTest {
 	}
 		@Test
 	public void testeBCHTLRDM() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 			RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1392,7 +1392,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeBCHTLAllocCTSharing() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1473,7 +1473,7 @@ public class BAMTest {
 	}
 		@Test
 	public void testeBCHTLPreemptionRDM() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 			RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1554,7 +1554,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeBCLTHPreemptionAllocCTSharing() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1642,14 +1642,14 @@ public class BAMTest {
 				System.out.print("testeBCHTLPreemptionAllocCTSharing\n"+Lsp.imprime_lista(link.ListaLSPs)+"\n - Carga:"+link.getCargaEnlaceAtual()+"\n");
 				for(int w=ParametrosDSTE.MaxClassType-1;w>=0;w--)
 				{
-					System.out.print("BC["+r+"] empréstimo real = "+link.emprestimo(w));
+					System.out.print("BC["+r+"] emprÃ©stimo real = "+link.emprestimo(w));
 				}
 				System.out.print("\n");
 
 	}
 	@Test
 	public void testeBCHTLPreemptionAllocCTSharing() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1737,14 +1737,14 @@ public class BAMTest {
 				System.out.print("testeBCHTLPreemptionAllocCTSharing\n"+Lsp.imprime_lista(link.ListaLSPs)+"\n - Carga:"+link.getCargaEnlaceAtual()+"\n");
 				for(int w=ParametrosDSTE.MaxClassType-1;w>=0;w--)
 				{
-					System.out.print("BC["+w+"] empréstimo real = "+link.emprestimo(w));
+					System.out.print("BC["+w+"] emprÃ©stimo real = "+link.emprestimo(w));
 				}
 				System.out.print("\n");
 
 	}
 	@Test
 	public void testeBC_HTL_LTH_PreemptionAllocCTSharing() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1843,14 +1843,14 @@ public class BAMTest {
 				System.out.print("testeBCHTLPreemptionAllocCTSharing\n"+Lsp.imprime_lista(link.ListaLSPs)+"\n - Carga:"+link.getCargaEnlaceAtual()+"\n");
 				for(int w=ParametrosDSTE.MaxClassType-1;w>=0;w--)
 				{
-					System.out.print("BC["+w+"] empréstimo real = "+link.emprestimo(w));
+					System.out.print("BC["+w+"] emprÃ©stimo real = "+link.emprestimo(w));
 				}
 				System.out.print("\n");
 
 	}
 	@Test
 	public void testePreemption() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 				RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1949,7 +1949,7 @@ public class BAMTest {
 
 	@Test
 	public void testeGBAM() {
-		//Definição da Topologia de Testes
+		//DefiniÃ§Ã£o da Topologia de Testes
 				RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -2059,9 +2059,9 @@ public class BAMTest {
 		graphDef.setTimeSpan(e.starTime,e.starTime+3600*24);
 		graphDef.setVerticalLabel("Number");
 		//graphDef.setMinValue(0);
-		graphDef.setTitle("Preempções Acumuladas");
+		graphDef.setTitle("PreempÃ§Ãµes Acumuladas");
 		graphDef.datasource("preempcao", "saida/"+filename+"/"+filename+".rrd", "preempcao", "MAX");
-		graphDef.line("preempcao", new Color(0xFF, 0, 0), "Preempção Total", e.graphWidthLine);
+		graphDef.line("preempcao", new Color(0xFF, 0, 0), "PreempÃ§Ã£o Total", e.graphWidthLine);
 		graphDef.setWidth(e.graphWidth);
 		graphDef.setHeight(e.graphHeight);
 		graphDef.setLargeFont(e.graphLargeFont);
@@ -2077,15 +2077,15 @@ public class BAMTest {
 		graphDef2.setTimeSpan(e.starTime,e.starTime+3600*24);
 		graphDef2.setVerticalLabel("Number");
 		//graphDef.setMinValue(0);
-		graphDef2.setTitle("Preempções x LSPs Geradas");
+		graphDef2.setTitle("PreempÃ§Ãµes x LSPs Geradas");
 		graphDef2.datasource("preempcao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao", "LAST");
 		graphDef2.datasource("lspGeradas", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspGeradas", "LAST");
 		graphDef2.area("lspGeradas", Color.GREEN, "LSPs Geradas");
-		graphDef2.area("preempcao", Color.RED, "Preempções");
+		graphDef2.area("preempcao", Color.RED, "PreempÃ§Ãµes");
 		for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 		{
 			graphDef2.datasource("preempcao_CT"+i, "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao_CT"+i, "LAST");
-			graphDef2.line("preempcao_CT"+i, e.cores[i], "Preempcões em CT"+i, e.graphWidthLine);
+			graphDef2.line("preempcao_CT"+i, e.cores[i], "PreempcÃµes em CT"+i, e.graphWidthLine);
 			
 		}
 		graphDef2.setWidth(e.graphWidth);
@@ -2104,12 +2104,12 @@ public class BAMTest {
 		graphDef3.setMaxValue(100);
 		graphDef3.setVerticalLabel("Percent");
 		//graphDef.setMinValue(0);
-		graphDef3.setTitle("Preempções");
+		graphDef3.setTitle("PreempÃ§Ãµes");
 
 		graphDef3.datasource("preempcao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao", "LAST");
 		graphDef3.datasource("lspGeradas", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspGeradas", "LAST");
 		graphDef3.datasource("prempcoes", "preempcao,lspGeradas,/,100,*");
-		graphDef3.area("prempcoes", Color.gray, "% Prempções");
+		graphDef3.area("prempcoes", Color.gray, "% PrempÃ§Ãµes");
 		
 		graphDef3.setWidth(e.graphWidth);
 		graphDef3.setHeight(e.graphHeight);

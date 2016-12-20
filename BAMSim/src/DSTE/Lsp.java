@@ -8,21 +8,21 @@ import Simulador.RodadaDeSimulacao;
 public class Lsp {
 	
 	public Long ID = (long) 0;
-	public double Carga; // Carga de Tr·fego da LSP (Inicialmente Banda Efetiva)
-	public double CargaReduzida;//ImplementaÁ„o futura de reduÁ„o de carga da LSP
-	public int src; // NÛ Origem da LSP
-	public int dest; // NÛ Destino da LSP
+	public double Carga; // Carga de Tr√°fego da LSP (Inicialmente Banda Efetiva)
+	public double CargaReduzida;//Implementa√ß√£o futura de redu√ß√£o de carga da LSP
+	public int src; // N√≥ Origem da LSP
+	public int dest; // N√≥ Destino da LSP
 	public  int CT; // Tipo de Classe a qual o LSP pertence
 	public int setupPriority = 4; // Prioridade de estabelecimento 0 (maior prioridade) ... 7 (menor prioridade) = 4 (valor default)
-	public int holdPriority = 4; // Prioridade de manutenÁ„o 0 (maior prioridade) ... 7 (menor prioridade) = 4 (valor default)
+	public int holdPriority = 4; // Prioridade de manuten√ß√£o 0 (maior prioridade) ... 7 (menor prioridade) = 4 (valor default)
 	public RodadaDeSimulacao rodada=null;
 	public double tempoDeVida;
 	
 	Link [] caminho=null;
 	public LspStatus status= LspStatus.criada;
-	//int H; // Fator H: Par‚metro associado a escolha da LSP que ser· preemptada
-	//int OverlapFactor; // Fator Of: Par‚metro associado ao n˙mero de Enlaces coincidentes entre LSPs j· estababelecidas e a nova requisiÁ„o
-	//int PosUlt; // ????Teste para tentar salvar o enlace coicidente com as LSPs existente para a nova requisiÁ„o de LSP
+	//int H; // Fator H: Par√¢metro associado a escolha da LSP que ser√° preemptada
+	//int OverlapFactor; // Fator Of: Par√¢metro associado ao n√∫mero de Enlaces coincidentes entre LSPs j√° estababelecidas e a nova requisi√ß√£o
+	//int PosUlt; // ????Teste para tentar salvar o enlace coicidente com as LSPs existente para a nova requisi√ß√£o de LSP
 	public Lsp(RodadaDeSimulacao r)
 	{
 		this.rodada=r;

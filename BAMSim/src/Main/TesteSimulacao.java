@@ -29,11 +29,11 @@ public class TesteSimulacao {
 
 		BancoDeDados.setXML("<?xml version='1.0'?>\r\n", rodada.filename);
 		BancoDeDados.setXML("<simulacao>\r\n", rodada.filename);
-		Debug.setMensagem("============================ In�cio da Primeira Rodada ============================");
+		Debug.setMensagem("============================ Início da Primeira Rodada ============================");
 
 		Topologia to = new Topologia();
 
-		// Mostra par�metros padr�es
+		// Mostra parámetros padrões
 		Debug.setMensagem(ParametrosDSTE.getParametros(), 7, 7);
 
 		/*
@@ -95,14 +95,14 @@ public class TesteSimulacao {
 		Debug.setMensagem("\r\n\r\n ==== Status dos Links  ====");
 		Debug.setMensagem(to.statusLinks());
 
-		// Inicializa tr�fego
-		Debug.setMensagem("\r\n\r\n ==== Inicializa o tr�fego  ====");
+		// Inicializa tráfego
+		Debug.setMensagem("\r\n\r\n ==== Inicializa o tráfego  ====");
 		rodada.schedulep (3, 0.0, null);	
 
-		// agenda estat�sticas
+		// agenda estatísticas
 		rodada.schedulep(4, ParametrosDSTE.RRDAmostra, null);
 
-		// agenda avalia��o CBR
+		// agenda avaliação CBR
 		if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
 		{
 			rodada.schedulep (5, ParametrosDSTE.Janela+2*ParametrosDSTE.RRDAmostra, null);
@@ -116,14 +116,14 @@ public class TesteSimulacao {
 		// inciatrafego2(rodada);
 
 		// Inicializa a cadeia de eventos
-		Debug.setMensagem("\r\n\r\n ==== Inicio da simula��o  ====");
+		Debug.setMensagem("\r\n\r\n ==== Inicio da simulação  ====");
 		try {
 			cadeiaDeEventos(rodada, to);
 		} catch (ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Debug.setMensagem("\r\n\r\n ==== Fim da si				mula��o  ====");
+		Debug.setMensagem("\r\n\r\n ==== Fim da simulação  ====");
 		BancoDeDados.setXML("</simulacao>\r\n", rodada.filename);
 		Debug.setMensagem("============================ Fim da Primeira Rodada ============================");
 
@@ -206,7 +206,7 @@ public class TesteSimulacao {
 
 			
 			case 4:
-				//Insere estat�sticas RDD
+				//Insere estatísticas RDD
 				rodada.estatistica.inserirDadosRRD((long) rodada.simtime());
 				rodada.estatistica.inserirDadosAbsolutoRRD((long) rodada.simtime());
 				rodada.estatistica.statusLinks(to, (long) rodada.simtime());
@@ -293,7 +293,7 @@ public class TesteSimulacao {
 					no.item=novocase;
 					
 					
-					//Agenda avaliar renten��o 
+					//Agenda avaliar rentenção 
 					rodada.schedulep(6, ParametrosDSTE.Janela, no);
 					
 					
@@ -305,7 +305,7 @@ public class TesteSimulacao {
 				}
 				break;
 			case 6:
-				//Avalia renten��o
+				//Avalia rentenção
 				CBRQuery queryRetain = null;
 				CBRCase novocase = ((CBRCase)dados.item);
 				if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
@@ -326,7 +326,7 @@ public class TesteSimulacao {
 
 				if (queryRetain!=null)
 				{
-					BancoDeDados.setXML(rodada.simtime()+"  - N�o reteve - Problema:"+((BAMDescription) queryRetain.getDescription()).getProblema()+":"+((BAMDescription) queryRetain.getDescription()).toString(), rodada.filename);
+					BancoDeDados.setXML(rodada.simtime()+"  - Não reteve - Problema:"+((BAMDescription) queryRetain.getDescription()).getProblema()+":"+((BAMDescription) queryRetain.getDescription()).toString(), rodada.filename);
 					BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
 					if(!recommender.equal(novocase, recommender.getCaseBaseDB2()))
 					{
