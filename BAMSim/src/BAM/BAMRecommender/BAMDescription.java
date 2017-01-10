@@ -57,6 +57,10 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	}
 	//Colocar sintoma
 	String  caseId;
+	//Inclusão do gestor
+	String gestor;
+	
+
 	BAMTypes BAMAtual;
 	Problemas problema;
 	//Limites
@@ -111,6 +115,18 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	}
 
 
+	
+	public String getGestor() {
+		return gestor;
+	}
+
+
+
+	public void setGestor(String gestor) {
+		this.gestor = gestor;
+	}
+	
+	
 
 	public BAMTypes getBAMAtual() {
 		return BAMAtual;
@@ -426,6 +442,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	@Override
 	public String toString() {
 		return "(CaseID=" + caseId 
+				//inserir  gestor e tolerancia  <=
 				+ ", BAMAtual=" + BAMAtual
 				+ ", Problema=" + problema
 				+ ", utilizacaoDoEnlaceCT0=" + utilizacaoDoEnlaceCT0

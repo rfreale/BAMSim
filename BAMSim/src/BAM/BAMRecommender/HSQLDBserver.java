@@ -1,7 +1,7 @@
 /**
  * HSQLDBserver.java
  * jCOLIBRI2 framework. 
- * @author Juan A. Recio-García.
+ * @author Juan A. Recio-Garcï¿½a.
  * GAIA - Group for Artificial Intelligence Applications
  * http://gaia.fdi.ucm.es
  * 04/07/2007
@@ -62,6 +62,7 @@ public class HSQLDBserver
 	   // conn.prepareStatement("use bam;").execute();
 	   // conn.prepareStatement("drop table bam;").execute();
 	    conn.prepareStatement("create table bam(caseId VARCHAR(15), "
+	    		+ "gestor VARCHAR(30), "
 	    		+ "BAMAtual VARCHAR(30), problema VARCHAR(30), "
 	    		+ "BC0 DECIMAL(10,2), "
 	    		+ "BC1 DECIMAL(10,2), "
@@ -91,6 +92,7 @@ public class HSQLDBserver
 	    		+ "aceita BIT);").execute();
 	    
 	    conn2.prepareStatement("create table bam(caseId VARCHAR(15), "
+	    		+ "gestor VARCHAR(30), "
 	    		+ "BAMAtual VARCHAR(30), problema VARCHAR(30), "
 	    		+ "BC0 DECIMAL(10,2), "
 	    		+ "BC1 DECIMAL(10,2), "
@@ -121,32 +123,32 @@ public class HSQLDBserver
 	    
 	   
 	    
-	    //Baixa Utilização
-	    //																									BC				Utilização		Preempção		Bloqueio		Devolução			Outros
-	    conn.prepareStatement("insert into bam values('bam1','PreemptionAllocCTSharing','BaixaUtilizacao'	,null,null,null,	0,0,0,			null,null,null,	null,null,null,	null,null,null,		null,null,null,null,null,null,null,null,null,'PreemptionAllocCTSharing',true);").execute();
-	    conn.prepareStatement("insert into bam values('bam2','NoPreemptionMAM','BaixaUtilizacao'			,null,null,null,	0,0,0,			null,null,null,	null,null,null,	null,null,null,		null,null,null,null,null,null,null,null,null,'PreemptionAllocCTSharing',true);").execute();
-	    conn.prepareStatement("insert into bam values('bam3','PreemptionRDM','BaixaUtilizacao'			,null,null,null,	0,0,0,			null,null,null,	null,null,null,	null,null,null,		null,null,null,null,null,null,null,null,null,'PreemptionAllocCTSharing',true);").execute();
+	    //Baixa UtilizaÃ§ao
+	    //																									BC				UtilizaÃ§ao		PreempÃ§ao		Bloqueio		DevoluÃ§ao			Outros
+	    conn.prepareStatement("insert into bam values('bam1', 'marcos', 'PreemptionAllocCTSharing','BaixaUtilizacao'	,null,null,null,	0,0,0,			null,null,null,	null,null,null,	null,null,null,		null,null,null,null,null,null,null,null,null,'PreemptionAllocCTSharing',true);").execute();
+	    conn.prepareStatement("insert into bam values('bam2', 'marcos', 'NoPreemptionMAM','BaixaUtilizacao'			,null,null,null,	0,0,0,			null,null,null,	null,null,null,	null,null,null,		null,null,null,null,null,null,null,null,null,'PreemptionAllocCTSharing',true);").execute();
+	    conn.prepareStatement("insert into bam values('bam3', 'marcos', 'PreemptionRDM','BaixaUtilizacao'			,null,null,null,	0,0,0,			null,null,null,	null,null,null,	null,null,null,		null,null,null,null,null,null,null,null,null,'PreemptionAllocCTSharing',true);").execute();
   
         //Alto Bloqueio
 	    //conn.prepareStatement("insert into bam values('bam3','PreemptionAllocCTSharing','AltoBloqueio',100,0,0,0,100,100,100,0,0,0,'NoPreemptionMAM',true);").execute();
 	   // conn.prepareStatement("insert into bam values('bam4','PreemptionRDM','AltoBloqueio',100,0,0,0,100,100,100,0,0,0,'NoPreemptionMAM',true);").execute();
 	   // conn.prepareStatement("insert into bam values('bam5','NoPreemptionMAM','AltoBloqueio',100,0,0,0,100,100,100,0,0,0,'NoPreemptionMAM',true);").execute();
 	    
-	    //Alta Preempção
-	    //																									BC				Utilização		Preempção		Bloqueio		Devolução			Outros
+	    //Alta PreempÃ§ao
+	    //																									BC				UtilizaÃ§ao		PreempÃ§ao		Bloqueio		DevoluÃ§ao			Outros
 	    conn.prepareStatement("insert into bam values('bam4','PreemptionAllocCTSharing','AltaPreempcao'	,null,null,null,	null,null,null,	100,100,null,	null,null,null,	null,null,null,		null,null,null,null,null,null,null,null,null,'NoPreemptionMAM',true);").execute();
 	    conn.prepareStatement("insert into bam values('bam5','NoPreemptionMAM','AltaPreempcao'			,null,null,null,	null,null,null,	100,100,null,	null,null,null,	null,null,null,		null,null,null,null,null,null,null,null,null,'NoPreemptionMAM',true);").execute();
 	    conn.prepareStatement("insert into bam values('bam6','PreemptionRDM','AltaPreempcao'			,null,null,null,	null,null,null,	100,100,null,	null,null,null,	null,null,null,		null,null,null,null,null,null,null,null,null,'NoPreemptionMAM',true);").execute();
 
 	   	    
-	    //Alta Devolução
-	    //																									BC				Utilização		Preempção		Bloqueio		Devolução			Outros
+	    //Alta DevoluÃ§ao
+	    //																									BC				UtilizaÃ§ao		PreempÃ§ao		Bloqueio		DevoluÃ§ao			Outros
 	    conn.prepareStatement("insert into bam values('bam7','PreemptionAllocCTSharing','AltaDevolucao'	,null,null,null,	null,null,null,	null,null,null,	null,null,null,	null,100,100,			null,null,null,null,null,null,null,null,null,'PreemptionRDM',true);").execute();
 	    conn.prepareStatement("insert into bam values('bam8','NoPreemptionMAM','AltaDevolucao'			,null,null,null,	null,null,null,	null,null,null,	null,null,null,	null,100,100,			null,null,null,null,null,null,null,null,null,'PreemptionRDM',true);").execute();
 	    conn.prepareStatement("insert into bam values('bam9','PreemptionRDM','AltaDevolucao'			,null,null,null,	null,null,null,	null,null,null,	null,null,null,	null,100,100,			null,null,null,null,null,null,null,null,null,'PreemptionRDM',true);").execute();
 	    /*
-	  //Alta Devolução e Preempção
-	    //																									BC				Utilização		Preempção		Bloqueio		Devolução			Outros
+	  //Alta DevoluÃ§ao e PreempÃ§ao
+	    //																									BC				UtilizaÃ§ao		PreempÃ§ao		Bloqueio		DevoluÃ§ao			Outros
 	    conn.prepareStatement("insert into bam values('bam10','PreemptionAllocCTSharing','AltaDevolucao',null,null,null,	null,null,null,	100,100,null,	null,null,null,	null,100,100,			null,null,null,null,null,null,null,null,null,'NoPreemptionMAM',true);").execute();
 	    conn.prepareStatement("insert into bam values('bam11','NoPreemptionMAM','AltaDevolucao'			,null,null,null,	null,null,null,	100,100,null,	null,null,null,	null,100,100,			null,null,null,null,null,null,null,null,null,'NoPreemptionMAM',true);").execute();
 	    conn.prepareStatement("insert into bam values('bam12','PreemptionRDM','AltaDevolucao'			,null,null,null,	null,null,null,	100,100,null,	null,null,null,	null,100,100,			null,null,null,null,null,null,null,null,null,'NoPreemptionMAM',true);").execute();

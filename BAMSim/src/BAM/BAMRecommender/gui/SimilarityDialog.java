@@ -1,6 +1,6 @@
 /**
  * Travel Recommender example for the jCOLIBRI2 framework. 
- * @author Juan A. Recio-García.
+ * @author Juan A. Recio-Garcï¿½a.
  * GAIA - Group for Artificial Intelligence Applications
  * http://gaia.fdi.ucm.es
  * 25/07/2006
@@ -144,27 +144,27 @@ public class SimilarityDialog extends JDialog {
 		panel.add(problema = new SimilConfigPanel(enumfunctions));
 		problema.weight.setValue(100);
 		
-		panel.add(new JLabel("Utilização do Enlace CT0"));
+		panel.add(new JLabel("Utilizaï¿½ï¿½o do Enlace CT0"));
 		panel.add(utilizacaoDoEnlaceCT0 = new SimilConfigPanel(numberfunctions));
 		utilizacaoDoEnlaceCT0.weight.setValue(5);
 		
-		panel.add(new JLabel("Utilização do Enlace CT1"));
+		panel.add(new JLabel("Utilizaï¿½ï¿½o do Enlace CT1"));
 		panel.add(utilizacaoDoEnlaceCT1 = new SimilConfigPanel(numberfunctions));
 		utilizacaoDoEnlaceCT1.weight.setValue(5);
 		
-		panel.add(new JLabel("Utilização do Enlace CT2"));
+		panel.add(new JLabel("Utilizaï¿½ï¿½o do Enlace CT2"));
 		panel.add(utilizacaoDoEnlaceCT2 = new SimilConfigPanel(numberfunctions));
 		utilizacaoDoEnlaceCT2.weight.setValue(5);
 		
-		panel.add(new JLabel("Number de Preempções em CT0"));
+		panel.add(new JLabel("Number de Preempï¿½ï¿½es em CT0"));
 		panel.add(numeroDePreempcoesCT0 = new SimilConfigPanel(numberfunctions));
 		numeroDePreempcoesCT0.weight.setValue(5);
 		
-		panel.add(new JLabel("Number de Preempções em CT1"));
+		panel.add(new JLabel("Number de Preempï¿½ï¿½es em CT1"));
 		panel.add(numeroDePreempcoesCT1 = new SimilConfigPanel(numberfunctions));
 		numeroDePreempcoesCT1.weight.setValue(5);
 		
-		panel.add(new JLabel("Number de Preempções em CT2"));
+		panel.add(new JLabel("Number de Preempï¿½ï¿½es em CT2"));
 		panel.add(numeroDePreempcoesCT2 = new SimilConfigPanel(numberfunctions));
 		numeroDePreempcoesCT2.weight.setValue(0);
 		
@@ -180,15 +180,15 @@ public class SimilarityDialog extends JDialog {
 		panel.add(numeroDeBloqueiosCT2 = new SimilConfigPanel(numberfunctions));
 		numeroDeBloqueiosCT2.weight.setValue(5);
 		
-		panel.add(new JLabel("Number de Devoluções em CT0"));
+		panel.add(new JLabel("Number de Devoluï¿½ï¿½es em CT0"));
 		panel.add(numeroDeDevolucoesCT0 = new SimilConfigPanel(numberfunctions));
 		numeroDeDevolucoesCT0.weight.setValue(0);
 		
-		panel.add(new JLabel("Number de Devoluções em CT1"));
+		panel.add(new JLabel("Number de Devoluï¿½ï¿½es em CT1"));
 		panel.add(numeroDeDevolucoesCT1 = new SimilConfigPanel(numberfunctions));
 		numeroDeDevolucoesCT1.weight.setValue(5);
 		
-		panel.add(new JLabel("Number de Devoluções em CT2"));
+		panel.add(new JLabel("Number de Devoluï¿½ï¿½es em CT2"));
 		panel.add(numeroDeDevolucoesCT2 = new SimilConfigPanel(numberfunctions));
 		numeroDeDevolucoesCT2.weight.setValue(5);
 		
@@ -201,7 +201,7 @@ public class SimilarityDialog extends JDialog {
 
 //		Lay out the panel.
 		Utils.makeCompactGrid(panel,
-		                17, 2, //rows, cols
+		                17, 2, //rows, cols   ///   <===========add mais linhas
 		                6, 6,        //initX, initY
 		                20, 10);       //xPad, yPad
 		
