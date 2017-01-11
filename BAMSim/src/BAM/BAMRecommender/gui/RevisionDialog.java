@@ -1,6 +1,6 @@
 /**
  * Travel Recommender example for the jCOLIBRI2 framework. 
- * @author Juan A. Recio-García.
+ * @author Juan A. Recio-GarcÃ­a.
  * GAIA - Group for Artificial Intelligence Applications
  * http://gaia.fdi.ucm.es
  * 25/07/2006
@@ -121,27 +121,27 @@ public class RevisionDialog extends JDialog {
 				"AltaPreempcaoCT2", "AltoBloqueioCT2", "AltaDevolucaoCT2"};
 		panel.add(problema = new JComboBox(_problema));
 		
-		panel.add(new JLabel("Utilização do Enlace CT0"));
+		panel.add(new JLabel("UtilizaÃ§Ã£o do Enlace CT0"));
 		utilizacaoDoEnlaceCT0 = new SpinnerNumberModel(0,0,100,1); 
 		panel.add(new JSpinner(utilizacaoDoEnlaceCT0));
 		
-		panel.add(new JLabel("Utilização do Enlace CT1"));
+		panel.add(new JLabel("UtilizaÃ§Ã£o do Enlace CT1"));
 		utilizacaoDoEnlaceCT1 = new SpinnerNumberModel(0,0,100,1); 
 		panel.add(new JSpinner(utilizacaoDoEnlaceCT1));
 		
-		panel.add(new JLabel("Utilização do Enlace CT2"));
+		panel.add(new JLabel("UtilizaÃ§Ã£o do Enlace CT2"));
 		utilizacaoDoEnlaceCT2 = new SpinnerNumberModel(0,0,100,1); 
 		panel.add(new JSpinner(utilizacaoDoEnlaceCT2));
 		
-		panel.add(new JLabel("Number de Preempções em CT0"));
+		panel.add(new JLabel("Number de PreempÃ§Ãµes em CT0"));
 		numeroDePreempcoesCT0 = new SpinnerNumberModel(0,0,100,1); 
 		panel.add(new JSpinner(numeroDePreempcoesCT0));
 		
-		panel.add(new JLabel("Number de Preempções em CT1"));
+		panel.add(new JLabel("Number de PreempÃ§Ãµes em CT1"));
 		numeroDePreempcoesCT1 = new SpinnerNumberModel(0,0,100,1); 
 		panel.add(new JSpinner(numeroDePreempcoesCT1));
 		
-		panel.add(new JLabel("Number de Preempções em CT2"));
+		panel.add(new JLabel("Number de PreempÃ§Ãµes em CT2"));
 		numeroDePreempcoesCT2 = new SpinnerNumberModel(0,0,100,1); 
 		panel.add(new JSpinner(numeroDePreempcoesCT2));
 		
@@ -157,15 +157,15 @@ public class RevisionDialog extends JDialog {
 		numeroDeBloqueiosCT2 = new SpinnerNumberModel(0,0,100,1); 
 		panel.add(new JSpinner(numeroDeBloqueiosCT2));
 		
-		panel.add(new JLabel("Number de Devoluções em CT0"));
+		panel.add(new JLabel("Number de DevoluÃ§Ãµes em CT0"));
 		numeroDeDevolucoesCT0 = new SpinnerNumberModel(0,0,100,1); 
 		panel.add(new JSpinner(numeroDeDevolucoesCT0));
 		
-		panel.add(new JLabel("Number de Devoluções em CT1"));
+		panel.add(new JLabel("Number de DevoluÃ§Ãµes em CT1"));
 		numeroDeDevolucoesCT1 = new SpinnerNumberModel(0,0,100,1); 
 		panel.add(new JSpinner(numeroDeDevolucoesCT1));
 		
-		panel.add(new JLabel("Number de Devoluções em CT2"));
+		panel.add(new JLabel("Number de DevoluÃ§Ãµes em CT2"));
 		numeroDeDevolucoesCT2 = new SpinnerNumberModel(0,0,100,1); 
 		panel.add(new JSpinner(numeroDeDevolucoesCT2));
 		

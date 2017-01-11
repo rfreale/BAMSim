@@ -442,9 +442,18 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	@Override
 	public String toString() {
 		return "(CaseID=" + caseId 
-				//inserir  gestor e tolerancia  <=
+				+ ", gestor=" + gestor              //inserir  gestor e tolerancia  <=
 				+ ", BAMAtual=" + BAMAtual
 				+ ", Problema=" + problema
+				+ ", toleranciaPreempcoesCT0=" + toleranciaPreempcoesCT0
+				+ ", toleranciaPreempcoesCT1=" + toleranciaPreempcoesCT1
+				+ ", toleranciaPreempcoesCT2=" + toleranciaPreempcoesCT2
+				+ ", toleranciaBloqueiosCT0=" + toleranciaBloqueiosCT0
+				+ ", toleranciaBloqueiosCT1=" + toleranciaBloqueiosCT1
+				+ ", toleranciaBloqueiosCT2=" + toleranciaBloqueiosCT2
+				+ ", toleranciaDevolucoesCT0=" + toleranciaDevolucoesCT0
+				+ ", toleranciaDevolucoesCT1=" + toleranciaDevolucoesCT1
+				+ ", toleranciaDevolucoesCT2=" + toleranciaDevolucoesCT2		
 				+ ", utilizacaoDoEnlaceCT0=" + utilizacaoDoEnlaceCT0
 				+ ", utilizacaoDoEnlaceCT1=" + utilizacaoDoEnlaceCT1
 				+ ", utilizacaoDoEnlaceCT2=" + utilizacaoDoEnlaceCT2

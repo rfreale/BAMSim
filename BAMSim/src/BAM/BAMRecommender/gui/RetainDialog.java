@@ -1,6 +1,6 @@
 /**
  * Travel Recommender example for the jCOLIBRI2 framework. 
- * @author Juan A. Recio-García.
+ * @author Juan A. Recio-GarcÃ­a.
  * GAIA - Group for Artificial Intelligence Applications
  * http://gaia.fdi.ucm.es
  * 25/07/2006
@@ -135,27 +135,27 @@ JLabel image;
 		panel.add(this.problemaAtual = new JLabel());
 		panel.add(this.problemaNew = new JLabel());
 		
-		panel.add(new JLabel("Utilização do Enlace CT0"));
+		panel.add(new JLabel("UtilizaÃ§Ã£o do Enlace CT0"));
 		panel.add(this.utilizacaoDoEnlaceCT0= new JLabel());
 		panel.add(this.utilizacaoDoEnlaceCT0New= new JLabel());
 		
-		panel.add(new JLabel("Utilização do Enlace CT1"));
+		panel.add(new JLabel("UtilizaÃ§Ã£o do Enlace CT1"));
 		panel.add(this.utilizacaoDoEnlaceCT1= new JLabel());
 		panel.add(this.utilizacaoDoEnlaceCT1New= new JLabel());
 		
-		panel.add(new JLabel("Utilização do Enlace CT2"));
+		panel.add(new JLabel("UtilizaÃ§Ã£o do Enlace CT2"));
 		panel.add(this.utilizacaoDoEnlaceCT2= new JLabel());
 		panel.add(this.utilizacaoDoEnlaceCT2New= new JLabel());
 		
-		panel.add(new JLabel("Number de Preempções em CT0"));
+		panel.add(new JLabel("Number de PreempÃ§Ãµes em CT0"));
 		panel.add(this.numeroDePreempcoesCT0= new JLabel());
 		panel.add(this.numeroDePreempcoesCT0New= new JLabel());
 		
-		panel.add(new JLabel("Number de Preempções em CT1"));
+		panel.add(new JLabel("Number de PreempÃ§Ãµes em CT1"));
 		panel.add(this.numeroDePreempcoesCT1= new JLabel());
 		panel.add(this.numeroDePreempcoesCT1New= new JLabel());
 		
-		panel.add(new JLabel("Number de Preempções em CT2"));
+		panel.add(new JLabel("Number de PreempÃ§Ãµes em CT2"));
 		panel.add(this.numeroDePreempcoesCT2= new JLabel());
 		panel.add(this.numeroDePreempcoesCT2New= new JLabel());
 		
@@ -171,15 +171,15 @@ JLabel image;
 		panel.add(this.numeroDeBloqueiosCT2= new JLabel());
 		panel.add(this.numeroDeBloqueiosCT2New= new JLabel());
 		
-		panel.add(new JLabel("Number de Devoluções em CT0"));
+		panel.add(new JLabel("Number de DevoluÃ§Ãµes em CT0"));
 		panel.add(this.numeroDeDevolucoesCT0= new JLabel());
 		panel.add(this.numeroDeDevolucoesCT0New= new JLabel());
 		
-		panel.add(new JLabel("Number de Devoluções em CT1"));
+		panel.add(new JLabel("Number de DevoluÃ§Ãµes em CT1"));
 		panel.add(this.numeroDeDevolucoesCT1= new JLabel());
 		panel.add(this.numeroDeDevolucoesCT1New= new JLabel());
 		
-		panel.add(new JLabel("Number de Devoluções em CT2"));
+		panel.add(new JLabel("Number de DevoluÃ§Ãµes em CT2"));
 		panel.add(this.numeroDeDevolucoesCT2= new JLabel());
 		panel.add(this.numeroDeDevolucoesCT2New= new JLabel());
 		
