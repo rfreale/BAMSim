@@ -46,37 +46,85 @@ public class RetainDialog extends JDialog {
 
 	private static int numcases = 0;
 	
-JLabel image;
+	JLabel image;
 	CBRQuery query;
 	JLabel  caseId;
+	JLabel	gestor;
 	JLabel  BAMAtual;
 	JLabel  problemaAtual;
+		
+	JLabel  toleranciaBloqueiosCT0;
+	JLabel  toleranciaBloqueiosCT1;
+	JLabel  toleranciaBloqueiosCT2;
+	
+	JLabel  toleranciaPreempcoesCT0;
+	JLabel  toleranciaPreempcoesCT1;
+	JLabel  toleranciaPreempcoesCT2;
+	
+	JLabel  toleranciaDevolucoesCT0;
+	JLabel  toleranciaDevolucoesCT1;
+	JLabel  toleranciaDevolucoesCT2;
+	
+	JLabel  BC0;
+	JLabel  BC1;
+	JLabel  BC2;
+	
 	JLabel  utilizacaoDoEnlaceCT0;
 	JLabel  utilizacaoDoEnlaceCT1;
 	JLabel  utilizacaoDoEnlaceCT2;
-	JLabel  numeroDePreempcoesCT0;
-	JLabel  numeroDePreempcoesCT1;
-	JLabel  numeroDePreempcoesCT2;
+	
 	JLabel  numeroDeBloqueiosCT0;
 	JLabel  numeroDeBloqueiosCT1;
 	JLabel  numeroDeBloqueiosCT2;
+	
+	JLabel  numeroDePreempcoesCT0;
+	JLabel  numeroDePreempcoesCT1;
+	JLabel  numeroDePreempcoesCT2;
+
 	JLabel  numeroDeDevolucoesCT0;
 	JLabel  numeroDeDevolucoesCT1;
 	JLabel  numeroDeDevolucoesCT2;
+	
+	
+	
+	
+	JLabel	gestorNew;
 	JLabel  BAMAtualNew;
 	JLabel  problemaNew;
+	
+	JLabel  toleranciaBloqueiosCT0New;
+	JLabel  toleranciaBloqueiosCT1New;
+	JLabel  toleranciaBloqueiosCT2New;
+	
+	JLabel  toleranciaPreempcoesCT0New;
+	JLabel  toleranciaPreempcoesCT1New;
+	JLabel  toleranciaPreempcoesCT2New;
+	
+	JLabel  toleranciaDevolucoesCT0New;
+	JLabel  toleranciaDevolucoesCT1New;
+	JLabel  toleranciaDevolucoesCT2New;
+	
+	JLabel  BC0New;
+	JLabel  BC1New;
+	JLabel  BC2New;
+	
+
 	JLabel  utilizacaoDoEnlaceCT0New;
 	JLabel  utilizacaoDoEnlaceCT1New;
 	JLabel  utilizacaoDoEnlaceCT2New;
+	
 	JLabel  numeroDePreempcoesCT0New;
 	JLabel  numeroDePreempcoesCT1New;
 	JLabel  numeroDePreempcoesCT2New;
+	
 	JLabel  numeroDeBloqueiosCT0New;
 	JLabel  numeroDeBloqueiosCT1New;
 	JLabel  numeroDeBloqueiosCT2New;
+	
 	JLabel  numeroDeDevolucoesCT0New;
 	JLabel  numeroDeDevolucoesCT1New;
 	JLabel  numeroDeDevolucoesCT2New;
+	
 	JLabel  BAMNovo;
 	JLabel  aceita;
 	
@@ -104,7 +152,7 @@ JLabel image;
 		{
 		}
 		
-		this.setTitle("Revise cases");
+		this.setTitle("Retain cases = Guardar casos");
 
 		
 		image = new JLabel();
@@ -127,6 +175,10 @@ JLabel image;
 		panel.add(label = new JLabel("New Case"));
 
 		
+		panel.add(new JLabel("Gestor"));
+		panel.add(this.gestor = new JLabel());
+		panel.add(this.gestorNew = new JLabel());
+		
 		panel.add(new JLabel("BAMAtual"));
 		panel.add(this.BAMAtual = new JLabel());
 		panel.add(this.BAMAtualNew = new JLabel());
@@ -135,6 +187,61 @@ JLabel image;
 		panel.add(this.problemaAtual = new JLabel());
 		panel.add(this.problemaNew = new JLabel());
 		
+		
+		
+		panel.add(new JLabel("Limite Bloqueio CTO"));
+		panel.add(this.toleranciaBloqueiosCT0= new JLabel());
+		panel.add(this.toleranciaBloqueiosCT0New= new JLabel());
+		
+		panel.add(new JLabel("Limite Bloqueio CT1"));
+		panel.add(this.toleranciaBloqueiosCT1= new JLabel());
+		panel.add(this.toleranciaBloqueiosCT1New= new JLabel());
+		
+		panel.add(new JLabel("Limite Bloqueio CT2"));
+		panel.add(this.toleranciaBloqueiosCT2= new JLabel());
+		panel.add(this.toleranciaBloqueiosCT2New= new JLabel());
+		
+		
+		panel.add(new JLabel("Limite Preempção CTO"));
+		panel.add(this.toleranciaPreempcoesCT0= new JLabel());
+		panel.add(this.toleranciaPreempcoesCT0New= new JLabel());
+		
+		panel.add(new JLabel("Limite Preempção CT1"));
+		panel.add(this.toleranciaPreempcoesCT1= new JLabel());
+		panel.add(this.toleranciaPreempcoesCT1New= new JLabel());
+		
+		panel.add(new JLabel("Limite Preempção CT2"));
+		panel.add(this.toleranciaPreempcoesCT2= new JLabel());
+		panel.add(this.toleranciaPreempcoesCT2New= new JLabel());
+		
+		
+		
+		panel.add(new JLabel("Limite Devolução CTO"));
+		panel.add(this.toleranciaDevolucoesCT0= new JLabel());
+		panel.add(this.toleranciaDevolucoesCT0New= new JLabel());
+		
+		panel.add(new JLabel("Limite Devolução CT1"));
+		panel.add(this.toleranciaDevolucoesCT1= new JLabel());
+		panel.add(this.toleranciaDevolucoesCT1New= new JLabel());
+		
+		panel.add(new JLabel("Limite Devolução CT2"));
+		panel.add(this.toleranciaDevolucoesCT2= new JLabel());
+		panel.add(this.toleranciaDevolucoesCT2New= new JLabel());
+				
+		
+		panel.add(new JLabel("Largura de Banda em BC0"));
+		panel.add(this.BC0= new JLabel());
+		panel.add(this.BC0New= new JLabel());
+		
+		panel.add(new JLabel("Largura de Banda em BC1"));
+		panel.add(this.BC1= new JLabel());
+		panel.add(this.BC1New= new JLabel());
+		
+		panel.add(new JLabel("Largura de Banda em BC2"));
+		panel.add(this.BC2= new JLabel());
+		panel.add(this.BC2New= new JLabel());
+		
+				
 		panel.add(new JLabel("Utilização do Enlace CT0"));
 		panel.add(this.utilizacaoDoEnlaceCT0= new JLabel());
 		panel.add(this.utilizacaoDoEnlaceCT0New= new JLabel());
@@ -146,6 +253,20 @@ JLabel image;
 		panel.add(new JLabel("Utilização do Enlace CT2"));
 		panel.add(this.utilizacaoDoEnlaceCT2= new JLabel());
 		panel.add(this.utilizacaoDoEnlaceCT2New= new JLabel());
+		
+		
+		panel.add(new JLabel("Number de Bloqueios em CT0"));
+		panel.add(this.numeroDeBloqueiosCT0= new JLabel());
+		panel.add(this.numeroDeBloqueiosCT0New= new JLabel());
+		
+		panel.add(new JLabel("Number de Bloqueios em CT1"));
+		panel.add(this.numeroDeBloqueiosCT1= new JLabel());
+		panel.add(this.numeroDeBloqueiosCT1New= new JLabel());
+		
+		panel.add(new JLabel("Number de Bloqueios em CT2"));
+		panel.add(this.numeroDeBloqueiosCT2= new JLabel());
+		panel.add(this.numeroDeBloqueiosCT2New= new JLabel());
+		
 		
 		panel.add(new JLabel("Number de Preempções em CT0"));
 		panel.add(this.numeroDePreempcoesCT0= new JLabel());
@@ -159,17 +280,6 @@ JLabel image;
 		panel.add(this.numeroDePreempcoesCT2= new JLabel());
 		panel.add(this.numeroDePreempcoesCT2New= new JLabel());
 		
-		panel.add(new JLabel("Number de Bloqueios em CT0"));
-		panel.add(this.numeroDeBloqueiosCT0= new JLabel());
-		panel.add(this.numeroDeBloqueiosCT0New= new JLabel());
-		
-		panel.add(new JLabel("Number de Bloqueios em CT1"));
-		panel.add(this.numeroDeBloqueiosCT1= new JLabel());
-		panel.add(this.numeroDeBloqueiosCT1New= new JLabel());
-		
-		panel.add(new JLabel("Number de Bloqueios em CT2"));
-		panel.add(this.numeroDeBloqueiosCT2= new JLabel());
-		panel.add(this.numeroDeBloqueiosCT2New= new JLabel());
 		
 		panel.add(new JLabel("Number de Devoluções em CT0"));
 		panel.add(this.numeroDeDevolucoesCT0= new JLabel());
@@ -199,7 +309,7 @@ JLabel image;
 		
 //		Lay out the panel.
 		Utils.makeCompactGrid(panel,
-		                18, 3, //rows, cols
+		                31, 3, //rows, cols
 		                6, 6,        //initX, initY
 		                30, 10);       //xPad, yPad
 		
@@ -334,35 +444,80 @@ JLabel image;
 		BAMDescription desc = (BAMDescription) _case.getDescription();
 		BAMDescription descNew =(BAMDescription) query.getDescription();
 		
+		this.gestor.setText(desc.getGestor().toString());
 		this.BAMAtual.setText(desc.getBAMAtual().toString());
 		this.problemaAtual.setText(desc.getProblema().toString());
+		
+		this.toleranciaBloqueiosCT0.setText(valueOf(desc.getToleranciaBloqueiosCT0()));
+		this.toleranciaBloqueiosCT1.setText(valueOf(desc.getToleranciaBloqueiosCT1()));
+		this.toleranciaBloqueiosCT2.setText(valueOf(desc.getToleranciaBloqueiosCT2()));
+		
+		this.toleranciaPreempcoesCT0.setText(valueOf(desc.getToleranciaPreempcoesCT0()));
+		this.toleranciaPreempcoesCT1.setText(valueOf(desc.getToleranciaPreempcoesCT1()));
+		this.toleranciaPreempcoesCT2.setText(valueOf(desc.getToleranciaPreempcoesCT2()));
+		
+		this.toleranciaDevolucoesCT0.setText(valueOf(desc.getToleranciaDevolucoesCT0()));
+		this.toleranciaDevolucoesCT1.setText(valueOf(desc.getToleranciaDevolucoesCT1()));
+		this.toleranciaDevolucoesCT2.setText(valueOf(desc.getToleranciaDevolucoesCT2()));
+		
+		this.BC0.setText(valueOf(desc.getBC0()));
+		this.BC1.setText(valueOf(desc.getBC1()));
+		this.BC2.setText(valueOf(desc.getBC2()));
+		
 		this.utilizacaoDoEnlaceCT0.setText(valueOf(desc.getUtilizacaoDoEnlaceCT0()));
 		this.utilizacaoDoEnlaceCT1.setText(valueOf(desc.getUtilizacaoDoEnlaceCT1()));
 		this.utilizacaoDoEnlaceCT2.setText(valueOf(desc.getUtilizacaoDoEnlaceCT2()));
-		this.numeroDePreempcoesCT0.setText(valueOf(desc.getNumeroDePreempcoesCT0()));
-		this.numeroDePreempcoesCT1.setText(valueOf(desc.getNumeroDePreempcoesCT1()));
-		this.numeroDePreempcoesCT2.setText(valueOf(desc.getNumeroDePreempcoesCT2()));
+		
 		this.numeroDeBloqueiosCT0.setText(valueOf(desc.getNumeroDeBloqueiosCT0()));
 		this.numeroDeBloqueiosCT1.setText(valueOf(desc.getNumeroDeBloqueiosCT1()));
 		this.numeroDeBloqueiosCT2.setText(valueOf(desc.getNumeroDeBloqueiosCT2()));
+		
+		this.numeroDePreempcoesCT0.setText(valueOf(desc.getNumeroDePreempcoesCT0()));
+		this.numeroDePreempcoesCT1.setText(valueOf(desc.getNumeroDePreempcoesCT1()));
+		this.numeroDePreempcoesCT2.setText(valueOf(desc.getNumeroDePreempcoesCT2()));
+		
 		this.numeroDeDevolucoesCT0.setText(valueOf(desc.getNumeroDeDevolucoesCT0()));
 		this.numeroDeDevolucoesCT1.setText(valueOf(desc.getNumeroDeDevolucoesCT1()));
 		this.numeroDeDevolucoesCT2.setText(valueOf(desc.getNumeroDeDevolucoesCT2()));
-			
+		
+		
+		this.gestorNew.setText(descNew.getGestor().toString());
 		this.BAMAtualNew.setText(descNew.getBAMAtual().toString());
 		this.problemaNew.setText(descNew.getProblema().toString());
+		
+		this.toleranciaBloqueiosCT0New.setText(valueOf(descNew.getToleranciaBloqueiosCT0()));
+		this.toleranciaBloqueiosCT1New.setText(valueOf(descNew.getToleranciaBloqueiosCT1()));
+		this.toleranciaBloqueiosCT2New.setText(valueOf(descNew.getToleranciaBloqueiosCT2()));
+		
+		this.toleranciaPreempcoesCT0New.setText(valueOf(descNew.getToleranciaPreempcoesCT0()));
+		this.toleranciaPreempcoesCT1New.setText(valueOf(descNew.getToleranciaPreempcoesCT1()));
+		this.toleranciaPreempcoesCT2New.setText(valueOf(descNew.getToleranciaPreempcoesCT2()));
+		
+		this.toleranciaDevolucoesCT0New.setText(valueOf(descNew.getToleranciaDevolucoesCT0()));
+		this.toleranciaDevolucoesCT1New.setText(valueOf(descNew.getToleranciaDevolucoesCT1()));
+		this.toleranciaDevolucoesCT2New.setText(valueOf(descNew.getToleranciaDevolucoesCT2()));
+		
+		this.BC0New.setText(valueOf(descNew.getBC0()));
+		this.BC1New.setText(valueOf(descNew.getBC1()));
+		this.BC2New.setText(valueOf(descNew.getBC2()));
+		
 		this.utilizacaoDoEnlaceCT0New.setText(valueOf(descNew.getUtilizacaoDoEnlaceCT0()));
 		this.utilizacaoDoEnlaceCT1New.setText(valueOf(descNew.getUtilizacaoDoEnlaceCT1()));
 		this.utilizacaoDoEnlaceCT2New.setText(valueOf(descNew.getUtilizacaoDoEnlaceCT2()));
-		this.numeroDePreempcoesCT0New.setText(valueOf(descNew.getNumeroDePreempcoesCT0()));
-		this.numeroDePreempcoesCT1New.setText(valueOf(descNew.getNumeroDePreempcoesCT1()));
-		this.numeroDePreempcoesCT2New.setText(valueOf(descNew.getNumeroDePreempcoesCT2()));
+		
 		this.numeroDeBloqueiosCT0New.setText(valueOf(descNew.getNumeroDeBloqueiosCT0()));
 		this.numeroDeBloqueiosCT1New.setText(valueOf(descNew.getNumeroDeBloqueiosCT1()));
 		this.numeroDeBloqueiosCT2New.setText(valueOf(descNew.getNumeroDeBloqueiosCT2()));
+		
+		this.numeroDePreempcoesCT0New.setText(valueOf(descNew.getNumeroDePreempcoesCT0()));
+		this.numeroDePreempcoesCT1New.setText(valueOf(descNew.getNumeroDePreempcoesCT1()));
+		this.numeroDePreempcoesCT2New.setText(valueOf(descNew.getNumeroDePreempcoesCT2()));
+		
 		this.numeroDeDevolucoesCT0New.setText(valueOf(descNew.getNumeroDeDevolucoesCT0()));
 		this.numeroDeDevolucoesCT1New.setText(valueOf(descNew.getNumeroDeDevolucoesCT1()));
 		this.numeroDeDevolucoesCT2New.setText(valueOf(descNew.getNumeroDeDevolucoesCT2()));
+		
+		
 		
 		BAMSolution sol = (BAMSolution) _case.getSolution();
 		this.BAMNovo.setText(sol.getBAMNovo().toString());

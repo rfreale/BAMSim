@@ -64,9 +64,9 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	BAMTypes BAMAtual;
 	Problemas problema;
 	//Limites
-	Double BC0;
-	Double BC1;
-	Double BC2;
+	Integer BC0;
+	Integer BC1;
+	Integer BC2;
 	//Tolerancia
 	Integer  toleranciaPreempcoesCT0;
 	Integer  toleranciaPreempcoesCT1;
@@ -152,32 +152,32 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 
 
 
-	public Double getBC0() {
+	public Integer getBC0() {
 		return BC0;
 	}
 
 
 
-	public void setBC0(Double bC) {
+	public void setBC0(Integer bC) {
 		BC0 = bC;
 	}
 	
-	public Double getBC1() {
+	public Integer getBC1() {
 		return BC1;
 	}
 
 
 
-	public void setBC1(Double bC) {
+	public void setBC1(Integer bC) {
 		BC1 = bC;
 	}
 	
-	public Double getBC2() {
+	public Integer getBC2() {
 		return BC2;
 	}
 
 
-	public void setBC2(Double bC) {
+	public void setBC2(Integer bC) {
 		BC2 = bC;
 	}
 

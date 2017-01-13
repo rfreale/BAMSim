@@ -112,7 +112,7 @@ public class SimilarityDialog extends JDialog {
 		{
 		}
 		
-		this.setTitle("Configurando a Similaridade");
+		this.setTitle("Silimarity = Configurando a Similaridade");
 
 		
 		image = new JLabel();
@@ -482,25 +482,6 @@ public class SimilarityDialog extends JDialog {
 		config.addMapping(attribute, function);
 		config.setWeight(attribute, similConfig.getWeight());
 		
-
-		similConfig = this.numeroDePreempcoesCT0;
-		attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class);
-		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
-		config.addMapping(attribute, function);
-		config.setWeight(attribute, similConfig.getWeight());
-
-		similConfig = this.numeroDePreempcoesCT1;
-		attribute = new Attribute("numeroDePreempcoesCT1",BAMDescription.class);
-		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
-		config.addMapping(attribute, function);
-		config.setWeight(attribute, similConfig.getWeight());
-		
-		similConfig = this.numeroDePreempcoesCT2;
-		attribute = new Attribute("numeroDePreempcoesCT2",BAMDescription.class);
-		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
-		config.addMapping(attribute, function);
-		config.setWeight(attribute, similConfig.getWeight());
-		
 		
 		similConfig = this.numeroDeBloqueiosCT0;
 		attribute = new Attribute("numeroDeBloqueiosCT0",BAMDescription.class);
@@ -516,6 +497,25 @@ public class SimilarityDialog extends JDialog {
 		
 		similConfig = this.numeroDeBloqueiosCT2;
 		attribute = new Attribute("numeroDeBloqueiosCT2",BAMDescription.class);
+		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
+		config.addMapping(attribute, function);
+		config.setWeight(attribute, similConfig.getWeight());
+		
+		
+		similConfig = this.numeroDePreempcoesCT0;
+		attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class);
+		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
+		config.addMapping(attribute, function);
+		config.setWeight(attribute, similConfig.getWeight());
+
+		similConfig = this.numeroDePreempcoesCT1;
+		attribute = new Attribute("numeroDePreempcoesCT1",BAMDescription.class);
+		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
+		config.addMapping(attribute, function);
+		config.setWeight(attribute, similConfig.getWeight());
+		
+		similConfig = this.numeroDePreempcoesCT2;
+		attribute = new Attribute("numeroDePreempcoesCT2",BAMDescription.class);
 		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
 		config.addMapping(attribute, function);
 		config.setWeight(attribute, similConfig.getWeight());

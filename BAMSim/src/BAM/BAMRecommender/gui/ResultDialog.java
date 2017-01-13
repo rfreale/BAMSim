@@ -74,13 +74,13 @@ public class ResultDialog extends JDialog {
 	JLabel  utilizacaoDoEnlaceCT1;
 	JLabel  utilizacaoDoEnlaceCT2;
 	
-	JLabel  numeroDePreempcoesCT0;
-	JLabel  numeroDePreempcoesCT1;
-	JLabel  numeroDePreempcoesCT2;
-	
 	JLabel  numeroDeBloqueiosCT0;
 	JLabel  numeroDeBloqueiosCT1;
 	JLabel  numeroDeBloqueiosCT2;
+	
+	JLabel  numeroDePreempcoesCT0;
+	JLabel  numeroDePreempcoesCT1;
+	JLabel  numeroDePreempcoesCT2;	
 	
 	JLabel  numeroDeDevolucoesCT0;
 	JLabel  numeroDeDevolucoesCT1;
@@ -109,7 +109,7 @@ public class ResultDialog extends JDialog {
 		{
 		}
 		
-		this.setTitle("Casos recuperados");
+		this.setTitle("Result casos = Casos Recuperados");
 
 		
 		image = new JLabel();
@@ -191,16 +191,6 @@ public class ResultDialog extends JDialog {
 		panel.add(this.utilizacaoDoEnlaceCT2= new JLabel());
 		
 		
-		panel.add(new JLabel("Number de Preempções em CT0"));
-		panel.add(this.numeroDePreempcoesCT0= new JLabel());
-		
-		panel.add(new JLabel("Number de Preempções em CT1"));
-		panel.add(this.numeroDePreempcoesCT1= new JLabel());
-		
-		panel.add(new JLabel("Number de Preempções em CT2"));
-		panel.add(this.numeroDePreempcoesCT2= new JLabel());
-		
-		
 		panel.add(new JLabel("Number de Bloqueios em CT0"));
 		panel.add(this.numeroDeBloqueiosCT0= new JLabel());
 		
@@ -209,6 +199,16 @@ public class ResultDialog extends JDialog {
 		
 		panel.add(new JLabel("Number de Bloqueios em CT2"));
 		panel.add(this.numeroDeBloqueiosCT2= new JLabel());
+		
+		
+		panel.add(new JLabel("Number de Preempções em CT0"));
+		panel.add(this.numeroDePreempcoesCT0= new JLabel());
+		
+		panel.add(new JLabel("Number de Preempções em CT1"));
+		panel.add(this.numeroDePreempcoesCT1= new JLabel());
+		
+		panel.add(new JLabel("Number de Preempções em CT2"));
+		panel.add(this.numeroDePreempcoesCT2= new JLabel());
 		
 		
 		panel.add(new JLabel("Number de Devoluções em CT0"));
@@ -365,13 +365,13 @@ public class ResultDialog extends JDialog {
 		this.utilizacaoDoEnlaceCT1.setText(valueOf(desc.getUtilizacaoDoEnlaceCT1()));
 		this.utilizacaoDoEnlaceCT2.setText(valueOf(desc.getUtilizacaoDoEnlaceCT2()));
 		
-		this.numeroDePreempcoesCT0.setText(valueOf(desc.getNumeroDePreempcoesCT0()));
-		this.numeroDePreempcoesCT1.setText(valueOf(desc.getNumeroDePreempcoesCT1()));
-		this.numeroDePreempcoesCT2.setText(valueOf(desc.getNumeroDePreempcoesCT2()));
-		
 		this.numeroDeBloqueiosCT0.setText(valueOf(desc.getNumeroDeBloqueiosCT0()));
 		this.numeroDeBloqueiosCT1.setText(valueOf(desc.getNumeroDeBloqueiosCT1()));
 		this.numeroDeBloqueiosCT2.setText(valueOf(desc.getNumeroDeBloqueiosCT2()));
+		
+		this.numeroDePreempcoesCT0.setText(valueOf(desc.getNumeroDePreempcoesCT0()));
+		this.numeroDePreempcoesCT1.setText(valueOf(desc.getNumeroDePreempcoesCT1()));
+		this.numeroDePreempcoesCT2.setText(valueOf(desc.getNumeroDePreempcoesCT2()));
 		
 		this.numeroDeDevolucoesCT0.setText(valueOf(desc.getNumeroDeDevolucoesCT0()));
 		this.numeroDeDevolucoesCT1.setText(valueOf(desc.getNumeroDeDevolucoesCT1()));

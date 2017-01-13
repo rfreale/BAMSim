@@ -97,7 +97,7 @@ public class QueryDialog extends JDialog {
 		{
 		}
 		
-		this.setTitle("Preparando a Consulta");
+		this.setTitle("Query cases = Preparando a Consulta");
 
 		
 		image = new JLabel();
@@ -199,19 +199,6 @@ public class QueryDialog extends JDialog {
 		panel.add(new JSpinner(utilizacaoDoEnlaceCT2));
 		
 		
-		panel.add(new JLabel("Number de Preempções em CT0"));
-		numeroDePreempcoesCT0 = new SpinnerNumberModel(0,0,100,1); 
-		panel.add(new JSpinner(numeroDePreempcoesCT0));
-		
-		panel.add(new JLabel("Number de Preempções em CT1"));
-		numeroDePreempcoesCT1 = new SpinnerNumberModel(0,0,100,1); 
-		panel.add(new JSpinner(numeroDePreempcoesCT1));
-		
-		panel.add(new JLabel("Number de Preempções em CT2"));
-		numeroDePreempcoesCT2 = new SpinnerNumberModel(0,0,100,1); 
-		panel.add(new JSpinner(numeroDePreempcoesCT2));
-		
-		
 		panel.add(new JLabel("Number de Bloqueios em CT0"));
 		numeroDeBloqueiosCT0 = new SpinnerNumberModel(0,0,100,1); 
 		panel.add(new JSpinner(numeroDeBloqueiosCT0));
@@ -223,6 +210,19 @@ public class QueryDialog extends JDialog {
 		panel.add(new JLabel("Number de Bloqueios em CT2"));
 		numeroDeBloqueiosCT2 = new SpinnerNumberModel(0,0,100,1); 
 		panel.add(new JSpinner(numeroDeBloqueiosCT2));
+		
+		
+		panel.add(new JLabel("Number de Preempções em CT0"));
+		numeroDePreempcoesCT0 = new SpinnerNumberModel(0,0,100,1); 
+		panel.add(new JSpinner(numeroDePreempcoesCT0));
+		
+		panel.add(new JLabel("Number de Preempções em CT1"));
+		numeroDePreempcoesCT1 = new SpinnerNumberModel(0,0,100,1); 
+		panel.add(new JSpinner(numeroDePreempcoesCT1));
+		
+		panel.add(new JLabel("Number de Preempções em CT2"));
+		numeroDePreempcoesCT2 = new SpinnerNumberModel(0,0,100,1); 
+		panel.add(new JSpinner(numeroDePreempcoesCT2));
 		
 		
 		panel.add(new JLabel("Number de Devoluções em CT0"));
@@ -315,9 +315,9 @@ public class QueryDialog extends JDialog {
 		desc.setToleranciaPreempcoesCT2(this.toleranciaPreempcoesCT2.getNumber().intValue());
 		
 		
-		desc.setBC0(this.BC0.getNumber().doubleValue());
-		desc.setBC1(this.BC1.getNumber().doubleValue());
-		desc.setBC2(this.BC2.getNumber().doubleValue());
+		desc.setBC0(this.BC0.getNumber().intValue());
+		desc.setBC1(this.BC1.getNumber().intValue());
+		desc.setBC2(this.BC2.getNumber().intValue());
 		
 		
 		
@@ -328,14 +328,16 @@ public class QueryDialog extends JDialog {
 		desc.setNumeroDeBloqueiosCT0(this.numeroDeBloqueiosCT0.getNumber().intValue());
 		desc.setNumeroDeBloqueiosCT1(this.numeroDeBloqueiosCT1.getNumber().intValue());
 		desc.setNumeroDeBloqueiosCT2(this.numeroDeBloqueiosCT2.getNumber().intValue());
+
+		desc.setNumeroDePreempcoesCT0(this.numeroDePreempcoesCT0.getNumber().intValue());
+		desc.setNumeroDePreempcoesCT1(this.numeroDePreempcoesCT1.getNumber().intValue());
+		desc.setNumeroDePreempcoesCT2(this.numeroDePreempcoesCT2.getNumber().intValue());
 		
 		desc.setNumeroDeDevolucoesCT0(this.numeroDeDevolucoesCT0.getNumber().intValue());
 		desc.setNumeroDeDevolucoesCT1(this.numeroDeDevolucoesCT1.getNumber().intValue());
 		desc.setNumeroDeDevolucoesCT2(this.numeroDeDevolucoesCT2.getNumber().intValue());
 		
-		desc.setNumeroDePreempcoesCT0(this.numeroDePreempcoesCT0.getNumber().intValue());
-		desc.setNumeroDePreempcoesCT1(this.numeroDePreempcoesCT1.getNumber().intValue());
-		desc.setNumeroDePreempcoesCT2(this.numeroDePreempcoesCT2.getNumber().intValue());
+
 		
 		
 		
