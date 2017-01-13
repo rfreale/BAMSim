@@ -49,20 +49,43 @@ public class ResultDialog extends JDialog {
 	JLabel image;
 	
 	JLabel caseId;
+	
+	JLabel gestor;
 	JLabel BAMAtual;
 	JLabel problema;
+	
+	JLabel  toleranciaBloqueiosCT0;
+	JLabel  toleranciaBloqueiosCT1;
+	JLabel  toleranciaBloqueiosCT2;
+	
+	JLabel  toleranciaPreempcoesCT0;
+	JLabel  toleranciaPreempcoesCT1;
+	JLabel  toleranciaPreempcoesCT2;
+	
+	JLabel  toleranciaDevolucoesCT0;
+	JLabel  toleranciaDevolucoesCT1;
+	JLabel  toleranciaDevolucoesCT2;
+	
+	JLabel  BC0;
+	JLabel  BC1;
+	JLabel  BC2;
+	
 	JLabel  utilizacaoDoEnlaceCT0;
 	JLabel  utilizacaoDoEnlaceCT1;
 	JLabel  utilizacaoDoEnlaceCT2;
+	
 	JLabel  numeroDePreempcoesCT0;
 	JLabel  numeroDePreempcoesCT1;
 	JLabel  numeroDePreempcoesCT2;
+	
 	JLabel  numeroDeBloqueiosCT0;
 	JLabel  numeroDeBloqueiosCT1;
 	JLabel  numeroDeBloqueiosCT2;
+	
 	JLabel  numeroDeDevolucoesCT0;
 	JLabel  numeroDeDevolucoesCT1;
 	JLabel  numeroDeDevolucoesCT2;
+	
 	JLabel BAMNovo;
 	JLabel aceita;
 	
@@ -106,12 +129,57 @@ public class ResultDialog extends JDialog {
 		label.setFont(label.getFont().deriveFont(Font.BOLD));
 		panel.add(label = new JLabel());
 
+		panel.add(new JLabel("Gestor"));
+		panel.add(this.gestor = new JLabel());
 		
 		panel.add(new JLabel("BAMAtual"));
 		panel.add(this.BAMAtual = new JLabel());
 		
 		panel.add(new JLabel("Problema"));
 		panel.add(this.problema = new JLabel());
+		
+		
+		
+		panel.add(new JLabel("Limite Bloqueio CTO"));
+		panel.add(this.toleranciaBloqueiosCT0= new JLabel());
+		
+		panel.add(new JLabel("Limite Bloqueio CT1"));
+		panel.add(this.toleranciaBloqueiosCT1= new JLabel());
+		
+		panel.add(new JLabel("Limite Bloqueio CT2"));
+		panel.add(this.toleranciaBloqueiosCT2= new JLabel());
+		
+
+
+		panel.add(new JLabel("Limite Preempção CTO"));
+		panel.add(this.toleranciaPreempcoesCT0= new JLabel());
+		
+		panel.add(new JLabel("Limite Preempção CT1"));
+		panel.add(this.toleranciaPreempcoesCT1= new JLabel());
+		
+		panel.add(new JLabel("Limite Preempção CT2"));
+		panel.add(this.toleranciaPreempcoesCT2= new JLabel());
+		
+		
+		panel.add(new JLabel("Limite Devolução CTO"));
+		panel.add(this.toleranciaDevolucoesCT0= new JLabel());
+		
+		panel.add(new JLabel("Limite Devolução CT1"));
+		panel.add(this.toleranciaDevolucoesCT1= new JLabel());
+		
+		panel.add(new JLabel("Limite Devolução CT2"));
+		panel.add(this.toleranciaDevolucoesCT2= new JLabel());
+		
+		
+		panel.add(new JLabel("Largura de Banda em BC0"));
+		panel.add(this.BC0= new JLabel());
+		
+		panel.add(new JLabel("Largura de Banda em BC1"));
+		panel.add(this.BC1= new JLabel());
+		
+		panel.add(new JLabel("Largura de Banda em BC2"));
+		panel.add(this.BC2= new JLabel());
+		
 		
 		panel.add(new JLabel("Utilização do Enlace CT0"));
 		panel.add(this.utilizacaoDoEnlaceCT0= new JLabel());
@@ -122,6 +190,7 @@ public class ResultDialog extends JDialog {
 		panel.add(new JLabel("Utilização do Enlace CT2"));
 		panel.add(this.utilizacaoDoEnlaceCT2= new JLabel());
 		
+		
 		panel.add(new JLabel("Number de Preempções em CT0"));
 		panel.add(this.numeroDePreempcoesCT0= new JLabel());
 		
@@ -130,6 +199,7 @@ public class ResultDialog extends JDialog {
 		
 		panel.add(new JLabel("Number de Preempções em CT2"));
 		panel.add(this.numeroDePreempcoesCT2= new JLabel());
+		
 		
 		panel.add(new JLabel("Number de Bloqueios em CT0"));
 		panel.add(this.numeroDeBloqueiosCT0= new JLabel());
@@ -140,6 +210,7 @@ public class ResultDialog extends JDialog {
 		panel.add(new JLabel("Number de Bloqueios em CT2"));
 		panel.add(this.numeroDeBloqueiosCT2= new JLabel());
 		
+		
 		panel.add(new JLabel("Number de Devoluções em CT0"));
 		panel.add(this.numeroDeDevolucoesCT0= new JLabel());
 		
@@ -148,6 +219,7 @@ public class ResultDialog extends JDialog {
 		
 		panel.add(new JLabel("Number de Devoluções em CT2"));
 		panel.add(this.numeroDeDevolucoesCT2= new JLabel());
+		
 		
 		panel.add(label = new JLabel("Solution"));
 		label.setFont(label.getFont().deriveFont(Font.BOLD));
@@ -162,7 +234,7 @@ public class ResultDialog extends JDialog {
 		
 //		Lay out the panel.
 		Utils.makeCompactGrid(panel,
-		                18, 2, //rows, cols
+		                31, 2, //rows, cols
 		                6, 6,        //initX, initY
 		                30, 10);       //xPad, yPad
 		
@@ -269,17 +341,38 @@ public class ResultDialog extends JDialog {
 		
 		BAMDescription desc = (BAMDescription) _case.getDescription();
 		
+		this.gestor.setText(valueOf(desc.getGestor()));
 		this.BAMAtual.setText(valueOf(desc.getBAMAtual()));
 		this.problema.setText(valueOf(desc.getProblema()));
+		
+		this.toleranciaBloqueiosCT0.setText(valueOf(desc.getToleranciaBloqueiosCT0()));
+		this.toleranciaBloqueiosCT1.setText(valueOf(desc.getToleranciaBloqueiosCT1()));
+		this.toleranciaBloqueiosCT2.setText(valueOf(desc.getToleranciaBloqueiosCT2()));
+
+		this.toleranciaPreempcoesCT0.setText(valueOf(desc.getToleranciaPreempcoesCT0()));
+		this.toleranciaPreempcoesCT1.setText(valueOf(desc.getToleranciaPreempcoesCT1()));
+		this.toleranciaPreempcoesCT2.setText(valueOf(desc.getToleranciaPreempcoesCT2()));
+
+		this.toleranciaDevolucoesCT0.setText(valueOf(desc.getToleranciaDevolucoesCT0()));
+		this.toleranciaDevolucoesCT1.setText(valueOf(desc.getToleranciaDevolucoesCT1()));
+		this.toleranciaDevolucoesCT2.setText(valueOf(desc.getToleranciaDevolucoesCT2()));
+
+		this.BC0.setText(valueOf(desc.getBC0()));
+		this.BC1.setText(valueOf(desc.getBC1()));
+		this.BC2.setText(valueOf(desc.getBC2()));
+		
 		this.utilizacaoDoEnlaceCT0.setText(valueOf(desc.getUtilizacaoDoEnlaceCT0()));
 		this.utilizacaoDoEnlaceCT1.setText(valueOf(desc.getUtilizacaoDoEnlaceCT1()));
 		this.utilizacaoDoEnlaceCT2.setText(valueOf(desc.getUtilizacaoDoEnlaceCT2()));
+		
 		this.numeroDePreempcoesCT0.setText(valueOf(desc.getNumeroDePreempcoesCT0()));
 		this.numeroDePreempcoesCT1.setText(valueOf(desc.getNumeroDePreempcoesCT1()));
 		this.numeroDePreempcoesCT2.setText(valueOf(desc.getNumeroDePreempcoesCT2()));
+		
 		this.numeroDeBloqueiosCT0.setText(valueOf(desc.getNumeroDeBloqueiosCT0()));
 		this.numeroDeBloqueiosCT1.setText(valueOf(desc.getNumeroDeBloqueiosCT1()));
 		this.numeroDeBloqueiosCT2.setText(valueOf(desc.getNumeroDeBloqueiosCT2()));
+		
 		this.numeroDeDevolucoesCT0.setText(valueOf(desc.getNumeroDeDevolucoesCT0()));
 		this.numeroDeDevolucoesCT1.setText(valueOf(desc.getNumeroDeDevolucoesCT1()));
 		this.numeroDeDevolucoesCT2.setText(valueOf(desc.getNumeroDeDevolucoesCT2()));
