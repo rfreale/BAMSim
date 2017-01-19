@@ -1159,11 +1159,10 @@ public class EstatisticasDSTE {
 	public CBRQuery getQuery(Link link, 
 							String  gestor, 
 							BAMType BAMAtual, 
-							Problemas problema,
-							long []SLAUtilizacaoCT,
-							long []SLABloqueiosCT,
-							long []SLAPreempcoesCT, 
-							long []SLADevolucoesCT )   
+							int []SLAUtilizacaoCT,
+							int []SLABloqueiosCT,
+							int []SLAPreempcoesCT, 
+							int []SLADevolucoesCT )   
 	{
 		BAMDescription desc = new BAMDescription();
 		
@@ -1189,21 +1188,21 @@ public class EstatisticasDSTE {
 			}
 			//desc.setProblema(Problemas.valueOf(problema.toString()));
 			
-			desc.setSLAUtilizacaoCT0((int)SLAUtilizacaoCT[0]);
-			desc.setSLAUtilizacaoCT1((int)SLAUtilizacaoCT[1]);
-			desc.setSLAUtilizacaoCT2((int)SLAUtilizacaoCT[2]);
+			desc.setSLAUtilizacaoCT0(SLAUtilizacaoCT[0]);
+			desc.setSLAUtilizacaoCT1(SLAUtilizacaoCT[1]);
+			desc.setSLAUtilizacaoCT2(SLAUtilizacaoCT[2]);
 								
-			desc.setSLABloqueiosCT0( (int) SLABloqueiosCT[0]); 
-			desc.setSLABloqueiosCT1( (int) SLABloqueiosCT[1]);
-			desc.setSLABloqueiosCT2( (int) SLABloqueiosCT[2]);
+			desc.setSLABloqueiosCT0(  SLABloqueiosCT[0]); 
+			desc.setSLABloqueiosCT1(  SLABloqueiosCT[1]);
+			desc.setSLABloqueiosCT2(  SLABloqueiosCT[2]);
 			
-			desc.setSLAPreempcoesCT0( (int) SLAPreempcoesCT[0]);
-			desc.setSLAPreempcoesCT1( (int) SLAPreempcoesCT[1]);
-			//desc.setSLAPreempcoesCT2( (int) SLAPreempcoesCT[2]);
+			desc.setSLAPreempcoesCT0(  SLAPreempcoesCT[0]);
+			desc.setSLAPreempcoesCT1(  SLAPreempcoesCT[1]);
+			//desc.setSLAPreempcoesCT2(  SLAPreempcoesCT[2]);
 			
-			//desc.setSLADevolucoesCT0( (int) SLADevolucoesCT[0]);
-			desc.setSLADevolucoesCT1( (int) SLADevolucoesCT[1]);
-			desc.setSLADevolucoesCT2( (int) SLADevolucoesCT[2]);
+			//desc.setSLADevolucoesCT0(  SLADevolucoesCT[0]);
+			desc.setSLADevolucoesCT1(  SLADevolucoesCT[1]);
+			desc.setSLADevolucoesCT2(  SLADevolucoesCT[2]);
 			
 						
 			desc.setBC0( (int) (link.BC[0] * link.CargaEnlace) );

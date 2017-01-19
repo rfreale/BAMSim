@@ -215,10 +215,22 @@ public class TesteSimulacao {
 				break;
 			case 5:
 				//Avalia BAM via CBR
-/*
+
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
 				
+				query = rodada.estatistica.getQuery(to.link[0], "Eliseu", to.link[0].bamType, ParametrosDSTE.SLAUtilizacaoCT, 
+						ParametrosDSTE.SLABloqueiosCT,ParametrosDSTE.SLAPreempcoesCT,ParametrosDSTE.SLADevolucoesCT);
+				cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
+				
+				if (cbrCase != null) {
+					
+					BAMSolution solution = (BAMSolution) cbrCase.getSolution();
+					//solution.getBAMNovo();
+				}
+					
+				
+				/*
 				if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
 					query = rodada.estatistica.getQuery(to.link[0],
 							Problemas.AltaDevolucao, to.link[0].bamType);
