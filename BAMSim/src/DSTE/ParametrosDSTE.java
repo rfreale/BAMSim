@@ -32,16 +32,18 @@ public class ParametrosDSTE {
 	
 	//SLAs em Percentual
 	
-	public static final long []toleranciaBloqueiosCT   = new long [] {80, 70, 80} ;  // ou SLA
-	public static final long []toleranciaPreempcoesCT  = new long [] {80, 80, 00} ;  // ou SLA
-	public static final long []toleranciaDevolucoesCT  = new long [] {00, 80, 80} ;  // ou SLA
+	public static final long []SLAUtilizacaoCT   = new long [] {32, 40, 45} ;  // ou SLA
+	public static final long []SLABloqueiosCT    = new long [] {80, 70, 80} ;  // ou SLA
+	public static final long []SLAPreempcoesCT   = new long [] {80, 80, 00} ;  // ou SLA
+	public static final long []SLADevolucoesCT   = new long [] {00, 80, 80} ;  // ou SLA
 	
 	
 	
-	/*public static final long SLAPreempcoes = 10;
+	public static final int  Escada = 128; //limite da função de similaridade Threshold
+	public static final long SLAPreempcoes = 10;
 	public static final long SLADevolucoes = 5;
 	public static final long SLABloqueios = 10;
-	public static final long SLAUtilizacao = 80;*/
+	public static final long SLAUtilizacao = 80;
 	public static final boolean RecomendacaoCBRSwitchBAM = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.65;
 	public static final long TempoSimulacao = 3600*5;//86400
@@ -428,51 +430,118 @@ public class ParametrosDSTE {
 
 		attribute = new Attribute("BAMAtual",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 100.0);
+		config.setWeight(attribute, 1.0);
 
 		/*attribute = new Attribute("problema",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 100.0);*/
 		
+		attribute = new Attribute("SLAUtilizacaoCT0",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("SLAUtilizacaoCT1",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("SLAUtilizacaoCT2",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+				
+		attribute = new Attribute("SLABloqueiosCT0",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("SLABloqueiosCT1",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("SLABloqueiosCT2",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+				
+		attribute = new Attribute("SLAPreempcoesCT0",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("SLAPreempcoesCT1",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+		/*attribute = new Attribute("SLAPreempcoesCT2",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);*/
+		
+		
+		/*attribute = new Attribute("SLADevolucoesCT0",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);*/
+				
+		attribute = new Attribute("SLADevolucoesCT1",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("SLADevolucoesCT2",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+				
+		attribute = new Attribute("BC0",BAMDescription.class); 
+		config.addMapping(attribute, new Threshold(Escada));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("BC1",BAMDescription.class); 
+		config.addMapping(attribute, new Threshold(Escada));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("BC2",BAMDescription.class); 
+		config.addMapping(attribute, new Threshold(Escada));
+		config.setWeight(attribute, 1.0);
+		
+				
 		attribute = new Attribute("utilizacaoDoEnlaceCT0",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 1.0);
+		
 		attribute = new Attribute("utilizacaoDoEnlaceCT1",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 1.0);
+		
 		attribute = new Attribute("utilizacaoDoEnlaceCT2",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 1.0);
+		
 
+		attribute = new Attribute("numeroDeBloqueiosCT0",BAMDescription.class);
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
 
+		attribute = new Attribute("numeroDeBloqueiosCT1",BAMDescription.class);
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+
+		attribute = new Attribute("numeroDeBloqueiosCT2",BAMDescription.class);
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+				
 		attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
-
+		config.setWeight(attribute, 1.0);
 
 		attribute = new Attribute("numeroDePreempcoesCT1",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 1.0);
 		
 		/*nunca existe esse valor
 		attribute = new Attribute("numeroDePreempcoesCT2",BAMDescription.class);
 		config.addMapping(attribute, new Interval(100));
 		config.setWeight(attribute, 0.0);*/
 		
-
-		attribute = new Attribute("numeroDeBloqueiosCT0",BAMDescription.class);
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
-		
-
-		attribute = new Attribute("numeroDeBloqueiosCT1",BAMDescription.class);
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
-		
-
-		attribute = new Attribute("numeroDeBloqueiosCT2",BAMDescription.class);
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
 		
 		/*nunca existe esse valor
 		attribute = new Attribute("numeroDeDevolucoesCT0",BAMDescription.class);
@@ -482,12 +551,12 @@ public class ParametrosDSTE {
 		
 		attribute = new Attribute("numeroDeDevolucoesCT1",BAMDescription.class);
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 1.0);
 		
 		
 		attribute = new Attribute("numeroDeDevolucoesCT2",BAMDescription.class);
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 1.0);
 
 		
 		return config;

@@ -219,7 +219,7 @@ public class TesteSimulacao {
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
 				
-			/*	if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
+				if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
 					query = rodada.estatistica.getQuery(to.link[0],
 							Problemas.AltaDevolucao, to.link[0].bamType);
 					cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
@@ -235,7 +235,7 @@ public class TesteSimulacao {
 					query = rodada.estatistica.getQuery(to.link[0],
 							Problemas.BaixaUtilizacao, to.link[0].bamType);
 					cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
-				}*/
+				}
 				
 				if (cbrCase != null) {
 					
@@ -313,7 +313,7 @@ public class TesteSimulacao {
 				CBRQuery queryRetain = null;
 				CBRCase novocase = ((CBRCase)dados.item);
 				
-				/*if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
+				if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
 					queryRetain = rodada.estatistica.getQuery(to.link[0],
 							Problemas.AltaDevolucao, to.link[0].bamType);
 					
@@ -327,7 +327,7 @@ public class TesteSimulacao {
 					queryRetain = rodada.estatistica.getQuery(to.link[0],
 							Problemas.BaixaUtilizacao, to.link[0].bamType);
 					
-				}*/
+				}
 
 				if (queryRetain!=null)
 				{

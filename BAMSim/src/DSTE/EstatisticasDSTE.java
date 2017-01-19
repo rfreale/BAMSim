@@ -1159,17 +1159,18 @@ public class EstatisticasDSTE {
 	public CBRQuery getQuery(Link link, 
 							String  gestor, 
 							BAMType BAMAtual, 
-							Problemas problema, 
-							long []toleranciaBloqueiosCT,
-							long []toleranciaPreempcoesCT, 
-							long []toleranciaDevolucoesCT
-			)   
+							Problemas problema,
+							long []SLAUtilizacao,
+							long []SLABloqueiosCT,
+							long []SLAPreempcoesCT, 
+							long []SLADevolucoesCT )   
 	{
 		BAMDescription desc = new BAMDescription();
 		
 		try {
 			
 			desc.setGestor(gestor);
+			
 			//Compatibilidade com G-BAM apenas refeltindo MAM, RDM e Alloc
 			if(BAMAtual!=BAMType.PreemptionGBAM)
 			{
@@ -1186,24 +1187,28 @@ public class EstatisticasDSTE {
 				else
 					desc.setBAMAtual(BAMTypes.NoPreemptionMAM);
 			}
-			desc.setProblema(Problemas.valueOf(problema.toString()));
+			//desc.setProblema(Problemas.valueOf(problema.toString()));
 			
-			/*desc.setToleranciaBloqueiosCT0( (int) toleranciaBloqueiosCT[0]); ///////////////////========================<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-			desc.setToleranciaBloqueiosCT1( (int) toleranciaBloqueiosCT[1]);
-			desc.setToleranciaBloqueiosCT2( (int) toleranciaBloqueiosCT[2]);
+			desc.setSLAUtilizacaoCT0((int)SLAUtilizacao[0]);
+			desc.setSLAUtilizacaoCT1((int)SLAUtilizacao[1]);
+			desc.setSLAUtilizacaoCT2((int)SLAUtilizacao[2]);
+								
+			desc.setSLABloqueiosCT0( (int) SLABloqueiosCT[0]); 
+			desc.setSLABloqueiosCT1( (int) SLABloqueiosCT[1]);
+			desc.setSLABloqueiosCT2( (int) SLABloqueiosCT[2]);
 			
-			desc.setToleranciaPreempcoesCT0( (int) toleranciaPreempcoesCT[0]);
-			desc.setToleranciaPreempcoesCT1( (int) toleranciaPreempcoesCT[1]);
-			desc.setToleranciaPreempcoesCT2( (int) toleranciaPreempcoesCT[2]);
+			desc.setSLAPreempcoesCT0( (int) SLAPreempcoesCT[0]);
+			desc.setSLAPreempcoesCT1( (int) SLAPreempcoesCT[1]);
+			//desc.setSLAPreempcoesCT2( (int) SLAPreempcoesCT[2]);
 			
-			desc.setToleranciaDevolucoesCT0( (int) toleranciaDevolucoesCT[0]);
-			desc.setToleranciaDevolucoesCT1( (int) toleranciaDevolucoesCT[1]);
-			desc.setToleranciaDevolucoesCT2( (int) toleranciaDevolucoesCT[2]);
+			//desc.setSLADevolucoesCT0( (int) SLADevolucoesCT[0]);
+			desc.setSLADevolucoesCT1( (int) SLADevolucoesCT[1]);
+			desc.setSLADevolucoesCT2( (int) SLADevolucoesCT[2]);
 			
 						
 			desc.setBC0( (int) (link.BC[0] * link.CargaEnlace) );
 			desc.setBC0( (int) (link.BC[1] * link.CargaEnlace) );
-			desc.setBC0( (int) (link.BC[2] * link.CargaEnlace) );*/
+			desc.setBC0( (int) (link.BC[2] * link.CargaEnlace) );
 			
 			desc.setUtilizacaoDoEnlaceCT0(link.CargaCTAtual[0]*100/link.CargaEnlace);
 			desc.setUtilizacaoDoEnlaceCT1(link.CargaCTAtual[1]*100/link.CargaEnlace);
@@ -1218,9 +1223,9 @@ public class EstatisticasDSTE {
 				
 				desc.setNumeroDePreempcoesCT0(this.preempcoesCT(ParametrosDSTE.Janela,0)*100/lspEstablished(ParametrosDSTE.Janela));
 				desc.setNumeroDePreempcoesCT1(this.preempcoesCT(ParametrosDSTE.Janela,1)*100/lspEstablished(ParametrosDSTE.Janela));
-				desc.setNumeroDePreempcoesCT2(this.preempcoesCT(ParametrosDSTE.Janela,2)*100/lspEstablished(ParametrosDSTE.Janela));
+				//desc.setNumeroDePreempcoesCT2(this.preempcoesCT(ParametrosDSTE.Janela,2)*100/lspEstablished(ParametrosDSTE.Janela));
 				
-				desc.setNumeroDeDevolucoesCT0(this.devolucoesCT(ParametrosDSTE.Janela,0)*100/lspEstablished(ParametrosDSTE.Janela));
+				//desc.setNumeroDeDevolucoesCT0(this.devolucoesCT(ParametrosDSTE.Janela,0)*100/lspEstablished(ParametrosDSTE.Janela));
 				desc.setNumeroDeDevolucoesCT1(this.devolucoesCT(ParametrosDSTE.Janela,1)*100/lspEstablished(ParametrosDSTE.Janela));
 				desc.setNumeroDeDevolucoesCT2(this.devolucoesCT(ParametrosDSTE.Janela,2)*100/lspEstablished(ParametrosDSTE.Janela));
 				
@@ -1234,9 +1239,9 @@ public class EstatisticasDSTE {
 				
 				desc.setNumeroDePreempcoesCT0(0);
 				desc.setNumeroDePreempcoesCT1(0);
-				desc.setNumeroDePreempcoesCT2(0);
+				//desc.setNumeroDePreempcoesCT2(0);
 				
-				desc.setNumeroDeDevolucoesCT0(0);
+				//desc.setNumeroDeDevolucoesCT0(0);
 				desc.setNumeroDeDevolucoesCT1(0);
 				desc.setNumeroDeDevolucoesCT2(0);
 				
