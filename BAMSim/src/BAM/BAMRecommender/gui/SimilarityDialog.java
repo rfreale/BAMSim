@@ -1,5 +1,5 @@
-/**
- * Travel Recommender example for the jCOLIBRI2 framework. 
+/** Segunda
+/// * Travel Recommender example for the jCOLIBRI2 framework. 
  * @author Juan A. Recio-García.
  * GAIA - Group for Artificial Intelligence Applications
  * http://gaia.fdi.ucm.es
@@ -56,21 +56,27 @@ public class SimilarityDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 
 	JLabel image;	
+	
+	
 		
 	SimilConfigPanel	BAMAtual;
-	SimilConfigPanel	problema;
+	//SimilConfigPanel	problema;
+	
+	SimilConfigPanel	SLAUtilizacaoCT0;
+	SimilConfigPanel	SLAUtilizacaoCT1;
+	SimilConfigPanel	SLAUtilizacaoCT2;
+	
+	SimilConfigPanel	SLABloqueiosCT0;
+	SimilConfigPanel	SLABloqueiosCT1;
+	SimilConfigPanel	SLABloqueiosCT2;
 		
-	SimilConfigPanel	toleranciaBloqueiosCT0;
-	SimilConfigPanel	toleranciaBloqueiosCT1;
-	SimilConfigPanel	toleranciaBloqueiosCT2;
+	SimilConfigPanel	SLAPreempcoesCT0;
+	SimilConfigPanel	SLAPreempcoesCT1;
+	//SimilConfigPanel	SLAPreempcoesCT2;
 		
-	SimilConfigPanel	toleranciaPreempcoesCT0;
-	SimilConfigPanel	toleranciaPreempcoesCT1;
-	SimilConfigPanel	toleranciaPreempcoesCT2;
-		
-	SimilConfigPanel	toleranciaDevolucoesCT0;
-	SimilConfigPanel	toleranciaDevolucoesCT1;
-	SimilConfigPanel	toleranciaDevolucoesCT2;
+	//SimilConfigPanel	SLADevolucoesCT0;
+	SimilConfigPanel	SLADevolucoesCT1;
+	SimilConfigPanel	SLADevolucoesCT2;
 		
 	SimilConfigPanel	BC0;
 	SimilConfigPanel	BC1;
@@ -86,9 +92,9 @@ public class SimilarityDialog extends JDialog {
 		
 	SimilConfigPanel	numeroDePreempcoesCT0;
 	SimilConfigPanel	numeroDePreempcoesCT1;
-	SimilConfigPanel	numeroDePreempcoesCT2;
+	//SimilConfigPanel	numeroDePreempcoesCT2;
 		
-	SimilConfigPanel	numeroDeDevolucoesCT0;
+	//SimilConfigPanel	numeroDeDevolucoesCT0;
 	SimilConfigPanel	numeroDeDevolucoesCT1;
 	SimilConfigPanel	numeroDeDevolucoesCT2;
 		
@@ -150,8 +156,8 @@ public class SimilarityDialog extends JDialog {
 		
 		Vector<String> numberfunctions = new Vector<String>();
 		numberfunctions.add("Interval");  
-		//numberfunctions.add("Threshold");
-		////numberfunctions.add("Equal");
+		numberfunctions.add("Threshold");
+		numberfunctions.add("Equal");
 		
 		Vector<String> numberfunctions2 = new Vector<String>();
 		numberfunctions2.add("Threshold");
@@ -171,8 +177,10 @@ public class SimilarityDialog extends JDialog {
 		ontofunctions.add("Equal");
 		
 		JPanel panel = new JPanel();
-		//panel.setLayout(new GridLayout(10,2));
-		panel.setLayout(new SpringLayout());
+		panel.setLayout(new GridLayout(15,2));
+		
+		panel.setPreferredSize(new Dimension(1200, 550));
+		//panel.setLayout(new SpringLayout());
 		
 		JLabel label;
 		panel.add(label = new JLabel("Atributo"));
@@ -187,52 +195,80 @@ public class SimilarityDialog extends JDialog {
 		label.setFont(label.getFont().deriveFont(Font.BOLD));
 		panel.add(l);
 		
+		JLabel label2;
+		panel.add(label2 = new JLabel("Atributo"));
+		label2.setFont(label2.getFont().deriveFont(Font.BOLD));
+		JPanel l2 = new JPanel();
+		l2.setLayout(new GridLayout(1,3));
+		l2.add(label2 = new JLabel("Função"));
+		label2.setFont(label2.getFont().deriveFont(Font.BOLD));
+		l2.add(label2 = new JLabel("Peso"));
+		label2.setFont(label2.getFont().deriveFont(Font.BOLD));
+		l2.add(label2 = new JLabel("Parâmetro da função."));
+		label2.setFont(label2.getFont().deriveFont(Font.BOLD));
+		panel.add(l2);
+		
+		
+		
 		panel.add(new JLabel("BAM Atual"));
 		panel.add(BAMAtual = new SimilConfigPanel(stringfunctions));   
 		BAMAtual.weight.setValue(1);
 		
-		panel.add(new JLabel("Problema"));
+		/*panel.add(new JLabel("Problema"));
 		panel.add(problema = new SimilConfigPanel(stringfunctions));   
-		problema.weight.setValue(1);
+		problema.weight.setValue(1);*/
 		
 		
-		panel.add(new JLabel("Limite Bloqueio CTO"));
-		panel.add(toleranciaBloqueiosCT0 = new SimilConfigPanel(numberfunctions));   
-		toleranciaBloqueiosCT0.weight.setValue(1);
+		panel.add(new JLabel("SLA Utilização CTO"));
+		panel.add(SLAUtilizacaoCT0 = new SimilConfigPanel(numberfunctions));   
+		SLAUtilizacaoCT0.weight.setValue(1);
 		
-		panel.add(new JLabel("Limite Bloqueio CT1"));
-		panel.add(toleranciaBloqueiosCT1 = new SimilConfigPanel(numberfunctions));   
-		toleranciaBloqueiosCT1.weight.setValue(1);
+		panel.add(new JLabel("SLA Utilização CT1"));
+		panel.add(SLAUtilizacaoCT1 = new SimilConfigPanel(numberfunctions));   
+		SLAUtilizacaoCT1.weight.setValue(1);
 		
-		panel.add(new JLabel("Limite Bloqueio CT2"));
-		panel.add(toleranciaBloqueiosCT2 = new SimilConfigPanel(numberfunctions));   
-		toleranciaBloqueiosCT2.weight.setValue(1);
-		
-		
-		panel.add(new JLabel("Limite Preempção CTO"));
-		panel.add(toleranciaPreempcoesCT0 = new SimilConfigPanel(numberfunctions));   
-		toleranciaPreempcoesCT0.weight.setValue(1);
-		
-		panel.add(new JLabel("Limite Preempção CT1"));
-		panel.add(toleranciaPreempcoesCT1 = new SimilConfigPanel(numberfunctions));   
-		toleranciaPreempcoesCT1.weight.setValue(1);
-		
-		panel.add(new JLabel("Limite Preempção CT2"));
-		panel.add(toleranciaPreempcoesCT2 = new SimilConfigPanel(numberfunctions));   
-		toleranciaPreempcoesCT2.weight.setValue(1);
+		panel.add(new JLabel("SLA Utilização CT2"));
+		panel.add(SLAUtilizacaoCT2 = new SimilConfigPanel(numberfunctions));   
+		SLAUtilizacaoCT2.weight.setValue(1);
 		
 		
-		panel.add(new JLabel("Limite Devolução CTO"));
-		panel.add(toleranciaDevolucoesCT0 = new SimilConfigPanel(numberfunctions));   
-		toleranciaDevolucoesCT0.weight.setValue(1);
+		panel.add(new JLabel("SLA Bloqueio CTO"));
+		panel.add(SLABloqueiosCT0 = new SimilConfigPanel(numberfunctions));   
+		SLABloqueiosCT0.weight.setValue(1);
 		
-		panel.add(new JLabel("Limite Devolução CT1"));
-		panel.add(toleranciaDevolucoesCT1 = new SimilConfigPanel(numberfunctions));   
-		toleranciaDevolucoesCT1.weight.setValue(1);
+		panel.add(new JLabel("SLA Bloqueio CT1"));
+		panel.add(SLABloqueiosCT1 = new SimilConfigPanel(numberfunctions));   
+		SLABloqueiosCT1.weight.setValue(1);
 		
-		panel.add(new JLabel("Limite Devolução CT2"));
-		panel.add(toleranciaDevolucoesCT2 = new SimilConfigPanel(numberfunctions));   
-		toleranciaDevolucoesCT2.weight.setValue(1);
+		panel.add(new JLabel("SLA Bloqueio CT2"));
+		panel.add(SLABloqueiosCT2 = new SimilConfigPanel(numberfunctions));   
+		SLABloqueiosCT2.weight.setValue(1);
+		
+		
+		panel.add(new JLabel("SLA Preempção CTO"));
+		panel.add(SLAPreempcoesCT0 = new SimilConfigPanel(numberfunctions));   
+		SLAPreempcoesCT0.weight.setValue(1);
+		
+		panel.add(new JLabel("SLA Preempção CT1"));
+		panel.add(SLAPreempcoesCT1 = new SimilConfigPanel(numberfunctions));   
+		SLAPreempcoesCT1.weight.setValue(1);
+		
+		/*panel.add(new JLabel("SLA Preempção CT2"));
+		panel.add(SLAPreempcoesCT2 = new SimilConfigPanel(numberfunctions));   
+		SLAPreempcoesCT2.weight.setValue(1);
+		
+		
+		panel.add(new JLabel("SLA Devolução CTO"));
+		panel.add(SLADevolucoesCT0 = new SimilConfigPanel(numberfunctions));   
+		SLADevolucoesCT0.weight.setValue(1);*/
+		
+		panel.add(new JLabel("SLA Devolução CT1"));
+		panel.add(SLADevolucoesCT1 = new SimilConfigPanel(numberfunctions));   
+		SLADevolucoesCT1.weight.setValue(1);
+		
+		panel.add(new JLabel("SLA Devolução CT2"));
+		panel.add(SLADevolucoesCT2 = new SimilConfigPanel(numberfunctions));   
+		SLADevolucoesCT2.weight.setValue(1);
 		
 		
 		panel.add(new JLabel("Largura de Banda em BC0"));
@@ -285,14 +321,14 @@ public class SimilarityDialog extends JDialog {
 		panel.add(numeroDePreempcoesCT1 = new SimilConfigPanel(numberfunctions));
 		numeroDePreempcoesCT1.weight.setValue(1);
 		
-		panel.add(new JLabel("Number de Preempções em CT2"));
+		/*panel.add(new JLabel("Number de Preempções em CT2"));
 		panel.add(numeroDePreempcoesCT2 = new SimilConfigPanel(numberfunctions));
 		numeroDePreempcoesCT2.weight.setValue(1);
 		
 		
 		panel.add(new JLabel("Number de Devoluções em CT0"));
 		panel.add(numeroDeDevolucoesCT0 = new SimilConfigPanel(numberfunctions));
-		numeroDeDevolucoesCT0.weight.setValue(1);
+		numeroDeDevolucoesCT0.weight.setValue(1);*/
 		
 		panel.add(new JLabel("Number de Devoluções em CT1"));
 		panel.add(numeroDeDevolucoesCT1 = new SimilConfigPanel(numberfunctions));
@@ -311,7 +347,7 @@ public class SimilarityDialog extends JDialog {
 
 //		Lay out the panel.
 		Utils.makeCompactGrid(panel,
-		                29, 2, //rows, cols   ///   <===========add mais linhas
+		                29,4, //rows, cols   ///   <===========add mais linhas
 		                10, 10,        //initX, initY
 		                5, 5);       //xPad, yPad
 		
@@ -352,8 +388,8 @@ public class SimilarityDialog extends JDialog {
 		
 		this.pack();
 		
-		this.setSize(this.getWidth(), this.getHeight());
-		this.setResizable(false);
+		//this.setSize(this.getWidth(), this.getHeight());
+		//this.setResizable(false);
 		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds((screenSize.width - this.getWidth()) / 2,
 			(screenSize.height - this.getHeight()) / 2, 
@@ -379,66 +415,86 @@ public class SimilarityDialog extends JDialog {
 		config.addMapping(attribute, function);
 		config.setWeight(attribute, similConfig.getWeight());
 
-		similConfig = this.problema;
+		/*similConfig = this.problema;
 		attribute = new Attribute("problema",BAMDescription.class);
 		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
 		config.addMapping(attribute, function);
-		config.setWeight(attribute, similConfig.getWeight());
+		config.setWeight(attribute, similConfig.getWeight());*/
 		
 		
 		
-		similConfig = this.toleranciaBloqueiosCT0;
-		attribute = new Attribute("toleranciaBloqueiosCT0",BAMDescription.class);
+		similConfig = this.SLAUtilizacaoCT0;
+		attribute = new Attribute("SLAUtilizacaoCT0",BAMDescription.class);
 		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
 		config.addMapping(attribute, function);
 		config.setWeight(attribute, similConfig.getWeight());
 		
-		similConfig = this.toleranciaBloqueiosCT1;
-		attribute = new Attribute("toleranciaBloqueiosCT1",BAMDescription.class);
+		similConfig = this.SLAUtilizacaoCT1;
+		attribute = new Attribute("SLAUtilizacaoCT1",BAMDescription.class);
 		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
 		config.addMapping(attribute, function);
 		config.setWeight(attribute, similConfig.getWeight());
 		
-		similConfig = this.toleranciaBloqueiosCT2;
-		attribute = new Attribute("toleranciaBloqueiosCT2",BAMDescription.class);
-		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
-		config.addMapping(attribute, function);
-		config.setWeight(attribute, similConfig.getWeight());
-		
-		
-		similConfig = this.toleranciaPreempcoesCT0;
-		attribute = new Attribute("toleranciaPreempcoesCT0",BAMDescription.class);
-		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
-		config.addMapping(attribute, function);
-		config.setWeight(attribute, similConfig.getWeight());
-		
-		similConfig = this.toleranciaPreempcoesCT1;
-		attribute = new Attribute("toleranciaPreempcoesCT1",BAMDescription.class);
-		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
-		config.addMapping(attribute, function);
-		config.setWeight(attribute, similConfig.getWeight());
-		
-		similConfig = this.toleranciaPreempcoesCT2;
-		attribute = new Attribute("toleranciaPreempcoesCT2",BAMDescription.class);
+		similConfig = this.SLAUtilizacaoCT2;
+		attribute = new Attribute("SLAUtilizacaoCT2",BAMDescription.class);
 		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
 		config.addMapping(attribute, function);
 		config.setWeight(attribute, similConfig.getWeight());
 		
 		
-		similConfig = this.toleranciaDevolucoesCT0;
-		attribute = new Attribute("toleranciaDevolucoesCT0",BAMDescription.class);
+		
+		similConfig = this.SLABloqueiosCT0;
+		attribute = new Attribute("SLABloqueiosCT0",BAMDescription.class);
 		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
 		config.addMapping(attribute, function);
 		config.setWeight(attribute, similConfig.getWeight());
 		
-		similConfig = this.toleranciaDevolucoesCT1;
-		attribute = new Attribute("toleranciaDevolucoesCT1",BAMDescription.class);
+		similConfig = this.SLABloqueiosCT1;
+		attribute = new Attribute("SLABloqueiosCT1",BAMDescription.class);
 		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
 		config.addMapping(attribute, function);
 		config.setWeight(attribute, similConfig.getWeight());
 		
-		similConfig = this.toleranciaDevolucoesCT2;
-		attribute = new Attribute("toleranciaDevolucoesCT2",BAMDescription.class);
+		similConfig = this.SLABloqueiosCT2;
+		attribute = new Attribute("SLABloqueiosCT2",BAMDescription.class);
+		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
+		config.addMapping(attribute, function);
+		config.setWeight(attribute, similConfig.getWeight());
+		
+		
+		similConfig = this.SLAPreempcoesCT0;
+		attribute = new Attribute("SLAPreempcoesCT0",BAMDescription.class);
+		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
+		config.addMapping(attribute, function);
+		config.setWeight(attribute, similConfig.getWeight());
+		
+		similConfig = this.SLAPreempcoesCT1;
+		attribute = new Attribute("SLAPreempcoesCT1",BAMDescription.class);
+		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
+		config.addMapping(attribute, function);
+		config.setWeight(attribute, similConfig.getWeight());
+		
+		/*similConfig = this.SLAPreempcoesCT2;
+		attribute = new Attribute("SLAPreempcoesCT2",BAMDescription.class);
+		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
+		config.addMapping(attribute, function);
+		config.setWeight(attribute, similConfig.getWeight());
+		
+		
+		similConfig = this.SLADevolucoesCT0;
+		attribute = new Attribute("SLADevolucoesCT0",BAMDescription.class);
+		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
+		config.addMapping(attribute, function);
+		config.setWeight(attribute, similConfig.getWeight());*/
+		
+		similConfig = this.SLADevolucoesCT1;
+		attribute = new Attribute("SLADevolucoesCT1",BAMDescription.class);
+		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
+		config.addMapping(attribute, function);
+		config.setWeight(attribute, similConfig.getWeight());
+		
+		similConfig = this.SLADevolucoesCT2;
+		attribute = new Attribute("SLADevolucoesCT2",BAMDescription.class);
 		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
 		config.addMapping(attribute, function);
 		config.setWeight(attribute, similConfig.getWeight());
@@ -514,7 +570,7 @@ public class SimilarityDialog extends JDialog {
 		config.addMapping(attribute, function);
 		config.setWeight(attribute, similConfig.getWeight());
 		
-		similConfig = this.numeroDePreempcoesCT2;
+		/*similConfig = this.numeroDePreempcoesCT2;
 		attribute = new Attribute("numeroDePreempcoesCT2",BAMDescription.class);
 		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
 		config.addMapping(attribute, function);
@@ -525,7 +581,7 @@ public class SimilarityDialog extends JDialog {
 		attribute = new Attribute("numeroDeDevolucoesCT0",BAMDescription.class);
 		function = localSimilFactory(similConfig.getSimilFuntion(), similConfig.getParam()); 
 		config.addMapping(attribute, function);
-		config.setWeight(attribute, similConfig.getWeight());
+		config.setWeight(attribute, similConfig.getWeight());*/
 		
 		similConfig = this.numeroDeDevolucoesCT1;
 		attribute = new Attribute("numeroDeDevolucoesCT1",BAMDescription.class);
@@ -591,9 +647,9 @@ public class SimilarityDialog extends JDialog {
 			
 			this.setLayout(new GridLayout(1,4));
 			//this.setLayout(new FlowLayout(FlowLayout.CENTER));
-			int largura = 5;
-			int altura = 30;
-			this.setPreferredSize( new Dimension(largura,altura) );
+			///int largura = 5;
+			//int altura = 32;
+			//this.setPreferredSize( new Dimension(largura,altura) );
 
 			
 			

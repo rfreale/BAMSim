@@ -31,10 +31,17 @@ public class ParametrosDSTE {
 	public static final long Janela = 600;
 	
 	//SLAs em Percentual
-	public static final long SLAPreempcoes = 10;
+	
+	public static final long []toleranciaBloqueiosCT   = new long [] {80, 70, 80} ;  // ou SLA
+	public static final long []toleranciaPreempcoesCT  = new long [] {80, 80, 00} ;  // ou SLA
+	public static final long []toleranciaDevolucoesCT  = new long [] {00, 80, 80} ;  // ou SLA
+	
+	
+	
+	/*public static final long SLAPreempcoes = 10;
 	public static final long SLADevolucoes = 5;
 	public static final long SLABloqueios = 10;
-	public static final long SLAUtilizacao = 80;
+	public static final long SLAUtilizacao = 80;*/
 	public static final boolean RecomendacaoCBRSwitchBAM = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.65;
 	public static final long TempoSimulacao = 3600*5;//86400
@@ -411,7 +418,7 @@ public class ParametrosDSTE {
 		
 	}
 	
-	public static NNConfig getSimilarityConfig()
+	public static NNConfig getSimilarityConfig()   ////////////criar a função de similaridade  colocar novos campos.
 	{
 		NNConfig config = new NNConfig();
 		Attribute attribute;
@@ -423,9 +430,9 @@ public class ParametrosDSTE {
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 100.0);
 
-		attribute = new Attribute("problema",BAMDescription.class); 
+		/*attribute = new Attribute("problema",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 100.0);
+		config.setWeight(attribute, 100.0);*/
 		
 		attribute = new Attribute("utilizacaoDoEnlaceCT0",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));

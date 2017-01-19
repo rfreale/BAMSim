@@ -189,11 +189,22 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		
 		for(RetrievalResult rr: eval)
 		{
-			sol = ((BAMSolution) rr.get_case().getSolution()).clone();
-			novocase.setSolution(sol);
-
-			if((!this.equal(novocase, _caseBaseDB2))&&rr.getEval()>=ParametrosDSTE.RecomendacaoCBRLimiarDeCorte)
-				return rr.get_case();
+			
+			
+			if (rr.getEval()>=ParametrosDSTE.RecomendacaoCBRLimiarDeCorte){
+				
+				sol = ((BAMSolution) rr.get_case().getSolution()).clone();
+				novocase.setSolution(sol);
+				
+				if((!this.equal(novocase, _caseBaseDB2)))
+					return rr.get_case();
+			}
+			else{
+				return null;
+				
+			}
+			
+			
 			
 		}
 			

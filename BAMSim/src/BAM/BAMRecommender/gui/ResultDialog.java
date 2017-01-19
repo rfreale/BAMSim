@@ -52,19 +52,24 @@ public class ResultDialog extends JDialog {
 	
 	JLabel gestor;
 	JLabel BAMAtual;
-	JLabel problema;
+	//JLabel problema;
 	
-	JLabel  toleranciaBloqueiosCT0;
-	JLabel  toleranciaBloqueiosCT1;
-	JLabel  toleranciaBloqueiosCT2;
+	JLabel SLAUtilizacaoCT0;
+	JLabel SLAUtilizacaoCT1;
+	JLabel SLAUtilizacaoCT2;
 	
-	JLabel  toleranciaPreempcoesCT0;
-	JLabel  toleranciaPreempcoesCT1;
-	JLabel  toleranciaPreempcoesCT2;
 	
-	JLabel  toleranciaDevolucoesCT0;
-	JLabel  toleranciaDevolucoesCT1;
-	JLabel  toleranciaDevolucoesCT2;
+	JLabel  SLABloqueiosCT0;
+	JLabel  SLABloqueiosCT1;
+	JLabel  SLABloqueiosCT2;
+	
+	JLabel  SLAPreempcoesCT0;
+	JLabel  SLAPreempcoesCT1;
+	/*JLabel  SLAPreempcoesCT2;
+	
+	JLabel  SLADevolucoesCT0;*/
+	JLabel  SLADevolucoesCT1;
+	JLabel  SLADevolucoesCT2;
 	
 	JLabel  BC0;
 	JLabel  BC1;
@@ -80,9 +85,9 @@ public class ResultDialog extends JDialog {
 	
 	JLabel  numeroDePreempcoesCT0;
 	JLabel  numeroDePreempcoesCT1;
-	JLabel  numeroDePreempcoesCT2;	
+	/*JLabel  numeroDePreempcoesCT2;	
 	
-	JLabel  numeroDeDevolucoesCT0;
+	JLabel  numeroDeDevolucoesCT0;*/
 	JLabel  numeroDeDevolucoesCT1;
 	JLabel  numeroDeDevolucoesCT2;
 	
@@ -135,40 +140,50 @@ public class ResultDialog extends JDialog {
 		panel.add(new JLabel("BAMAtual"));
 		panel.add(this.BAMAtual = new JLabel());
 		
-		panel.add(new JLabel("Problema"));
-		panel.add(this.problema = new JLabel());
+		/*panel.add(new JLabel("Problema"));
+		panel.add(this.problema = new JLabel());*/
+		
+		
+		panel.add(new JLabel("SLA Utilização CTO"));
+		panel.add(this.SLAUtilizacaoCT0= new JLabel());
+		
+		panel.add(new JLabel("SLA Utilização CT1"));
+		panel.add(this.SLAUtilizacaoCT1= new JLabel());
+		
+		panel.add(new JLabel("SLA Utilização CT2"));
+		panel.add(this.SLAUtilizacaoCT2= new JLabel());
 		
 		
 		
-		panel.add(new JLabel("Limite Bloqueio CTO"));
-		panel.add(this.toleranciaBloqueiosCT0= new JLabel());
+		panel.add(new JLabel("SLA Bloqueio CTO"));
+		panel.add(this.SLABloqueiosCT0= new JLabel());
 		
-		panel.add(new JLabel("Limite Bloqueio CT1"));
-		panel.add(this.toleranciaBloqueiosCT1= new JLabel());
+		panel.add(new JLabel("SLA Bloqueio CT1"));
+		panel.add(this.SLABloqueiosCT1= new JLabel());
 		
-		panel.add(new JLabel("Limite Bloqueio CT2"));
-		panel.add(this.toleranciaBloqueiosCT2= new JLabel());
+		panel.add(new JLabel("SLA Bloqueio CT2"));
+		panel.add(this.SLABloqueiosCT2= new JLabel());
 		
 
 
-		panel.add(new JLabel("Limite Preempção CTO"));
-		panel.add(this.toleranciaPreempcoesCT0= new JLabel());
+		panel.add(new JLabel("SLA Preempção CTO"));
+		panel.add(this.SLAPreempcoesCT0= new JLabel());
 		
-		panel.add(new JLabel("Limite Preempção CT1"));
-		panel.add(this.toleranciaPreempcoesCT1= new JLabel());
+		panel.add(new JLabel("SLA Preempção CT1"));
+		panel.add(this.SLAPreempcoesCT1= new JLabel());
 		
-		panel.add(new JLabel("Limite Preempção CT2"));
-		panel.add(this.toleranciaPreempcoesCT2= new JLabel());
+		/*panel.add(new JLabel("SLA Preempção CT2"));
+		panel.add(this.SLAPreempcoesCT2= new JLabel());
 		
 		
-		panel.add(new JLabel("Limite Devolução CTO"));
-		panel.add(this.toleranciaDevolucoesCT0= new JLabel());
+		panel.add(new JLabel("SLA Devolução CTO"));
+		panel.add(this.SLADevolucoesCT0= new JLabel());*/
 		
-		panel.add(new JLabel("Limite Devolução CT1"));
-		panel.add(this.toleranciaDevolucoesCT1= new JLabel());
+		panel.add(new JLabel("SLA Devolução CT1"));
+		panel.add(this.SLADevolucoesCT1= new JLabel());
 		
-		panel.add(new JLabel("Limite Devolução CT2"));
-		panel.add(this.toleranciaDevolucoesCT2= new JLabel());
+		panel.add(new JLabel("SLA Devolução CT2"));
+		panel.add(this.SLADevolucoesCT2= new JLabel());
 		
 		
 		panel.add(new JLabel("Largura de Banda em BC0"));
@@ -207,12 +222,12 @@ public class ResultDialog extends JDialog {
 		panel.add(new JLabel("Number de Preempções em CT1"));
 		panel.add(this.numeroDePreempcoesCT1= new JLabel());
 		
-		panel.add(new JLabel("Number de Preempções em CT2"));
+		/*panel.add(new JLabel("Number de Preempções em CT2"));
 		panel.add(this.numeroDePreempcoesCT2= new JLabel());
 		
 		
 		panel.add(new JLabel("Number de Devoluções em CT0"));
-		panel.add(this.numeroDeDevolucoesCT0= new JLabel());
+		panel.add(this.numeroDeDevolucoesCT0= new JLabel());*/
 		
 		panel.add(new JLabel("Number de Devoluções em CT1"));
 		panel.add(this.numeroDeDevolucoesCT1= new JLabel());
@@ -234,7 +249,7 @@ public class ResultDialog extends JDialog {
 		
 //		Lay out the panel.
 		Utils.makeCompactGrid(panel,
-		                31, 2, //rows, cols
+		                29, 2, //rows, cols
 		                6, 6,        //initX, initY
 		                30, 10);       //xPad, yPad
 		
@@ -343,19 +358,24 @@ public class ResultDialog extends JDialog {
 		
 		this.gestor.setText(valueOf(desc.getGestor()));
 		this.BAMAtual.setText(valueOf(desc.getBAMAtual()));
-		this.problema.setText(valueOf(desc.getProblema()));
+		//this.problema.setText(valueOf(desc.getProblema()));
 		
-		this.toleranciaBloqueiosCT0.setText(valueOf(desc.getToleranciaBloqueiosCT0()));
-		this.toleranciaBloqueiosCT1.setText(valueOf(desc.getToleranciaBloqueiosCT1()));
-		this.toleranciaBloqueiosCT2.setText(valueOf(desc.getToleranciaBloqueiosCT2()));
+		this.SLAUtilizacaoCT0.setText(valueOf(desc.getSLAUtilizacaoCT0()));
+		this.SLAUtilizacaoCT1.setText(valueOf(desc.getSLAUtilizacaoCT1()));
+		this.SLAUtilizacaoCT2.setText(valueOf(desc.getSLAUtilizacaoCT2()));
+		
+		
+		this.SLABloqueiosCT0.setText(valueOf(desc.getSLABloqueiosCT0()));
+		this.SLABloqueiosCT1.setText(valueOf(desc.getSLABloqueiosCT1()));
+		this.SLABloqueiosCT2.setText(valueOf(desc.getSLABloqueiosCT2()));
 
-		this.toleranciaPreempcoesCT0.setText(valueOf(desc.getToleranciaPreempcoesCT0()));
-		this.toleranciaPreempcoesCT1.setText(valueOf(desc.getToleranciaPreempcoesCT1()));
-		this.toleranciaPreempcoesCT2.setText(valueOf(desc.getToleranciaPreempcoesCT2()));
+		this.SLAPreempcoesCT0.setText(valueOf(desc.getSLAPreempcoesCT0()));
+		this.SLAPreempcoesCT1.setText(valueOf(desc.getSLAPreempcoesCT1()));
+		/*this.SLAPreempcoesCT2.setText(valueOf(desc.getSLAPreempcoesCT2()));
 
-		this.toleranciaDevolucoesCT0.setText(valueOf(desc.getToleranciaDevolucoesCT0()));
-		this.toleranciaDevolucoesCT1.setText(valueOf(desc.getToleranciaDevolucoesCT1()));
-		this.toleranciaDevolucoesCT2.setText(valueOf(desc.getToleranciaDevolucoesCT2()));
+		this.SLADevolucoesCT0.setText(valueOf(desc.getSLADevolucoesCT0()));*/
+		this.SLADevolucoesCT1.setText(valueOf(desc.getSLADevolucoesCT1()));
+		this.SLADevolucoesCT2.setText(valueOf(desc.getSLADevolucoesCT2()));
 
 		this.BC0.setText(valueOf(desc.getBC0()));
 		this.BC1.setText(valueOf(desc.getBC1()));
@@ -371,9 +391,9 @@ public class ResultDialog extends JDialog {
 		
 		this.numeroDePreempcoesCT0.setText(valueOf(desc.getNumeroDePreempcoesCT0()));
 		this.numeroDePreempcoesCT1.setText(valueOf(desc.getNumeroDePreempcoesCT1()));
-		this.numeroDePreempcoesCT2.setText(valueOf(desc.getNumeroDePreempcoesCT2()));
+		/*this.numeroDePreempcoesCT2.setText(valueOf(desc.getNumeroDePreempcoesCT2()));
 		
-		this.numeroDeDevolucoesCT0.setText(valueOf(desc.getNumeroDeDevolucoesCT0()));
+		this.numeroDeDevolucoesCT0.setText(valueOf(desc.getNumeroDeDevolucoesCT0()));*/
 		this.numeroDeDevolucoesCT1.setText(valueOf(desc.getNumeroDeDevolucoesCT1()));
 		this.numeroDeDevolucoesCT2.setText(valueOf(desc.getNumeroDeDevolucoesCT2()));
 			

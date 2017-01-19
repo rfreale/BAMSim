@@ -198,7 +198,7 @@ public class TesteSimulacao {
 				((Lsp) dados.item).status = LspStatus.finalizada;
 
 				break;
-			case 3:
+			case 3:// geracao de trafego
 				Debug.setMensagem("Tipo 3 - Agenda/Cria LSP ");
 				ParametrosDSTE.trafegoManual(rodada, to, dados);
 
@@ -218,21 +218,25 @@ public class TesteSimulacao {
 
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
-				if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
+				
+			/*	if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
 					query = rodada.estatistica.getQuery(to.link[0],
 							Problemas.AltaDevolucao, to.link[0].bamType);
 					cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
 
-				} else if (rodada.estatistica.preempcoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLAPreempcoes) {
+				} else 
+					if (rodada.estatistica.preempcoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLAPreempcoes) {
 					query = rodada.estatistica.getQuery(to.link[0],
 							Problemas.AltaPreempcao, to.link[0].bamType);
 					cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
 
-				} else if ((rodada.estatistica.bloqueios(ParametrosDSTE.Janela)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) >= ParametrosDSTE.SLABloqueios)&&((to.link[0].getCargaEnlaceAtual() * 100 / to.link[0].CargaEnlace) <= ParametrosDSTE.SLAUtilizacao)) {
+				} else 
+					if ((rodada.estatistica.bloqueios(ParametrosDSTE.Janela)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) >= ParametrosDSTE.toleranciaBloqueiosCT[0])&&((to.link[0].getCargaEnlaceAtual() * 100 / to.link[0].CargaEnlace) <= ParametrosDSTE.SLAUtilizacao)) {
 					query = rodada.estatistica.getQuery(to.link[0],
 							Problemas.BaixaUtilizacao, to.link[0].bamType);
 					cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
-				}
+				}*/
+				
 				if (cbrCase != null) {
 					
 					BAMSolution solution = (BAMSolution) cbrCase.getSolution();
@@ -308,7 +312,8 @@ public class TesteSimulacao {
 				//Avalia rentenção
 				CBRQuery queryRetain = null;
 				CBRCase novocase = ((CBRCase)dados.item);
-				if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
+				
+				/*if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
 					queryRetain = rodada.estatistica.getQuery(to.link[0],
 							Problemas.AltaDevolucao, to.link[0].bamType);
 					
@@ -322,7 +327,7 @@ public class TesteSimulacao {
 					queryRetain = rodada.estatistica.getQuery(to.link[0],
 							Problemas.BaixaUtilizacao, to.link[0].bamType);
 					
-				}
+				}*/
 
 				if (queryRetain!=null)
 				{

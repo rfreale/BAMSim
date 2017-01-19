@@ -1,5 +1,5 @@
-/**
- * Travel Recommender example for the jCOLIBRI2 framework. 
+/**Primeira
+/// * Travel Recommender example for the jCOLIBRI2 framework. 
  * @author Juan A. Recio-García.
  * GAIA - Group for Artificial Intelligence Applications
  * http://gaia.fdi.ucm.es
@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -46,19 +47,23 @@ public class QueryDialog extends JDialog {
 	JLabel image;
 	JTextField gestor;
 	JComboBox BAMAtual;
-	JComboBox problema;
+	//JComboBox problema;
 	
-	SpinnerNumberModel  toleranciaBloqueiosCT0;
-	SpinnerNumberModel  toleranciaBloqueiosCT1;
-	SpinnerNumberModel  toleranciaBloqueiosCT2;
+	SpinnerNumberModel  SLAUtilizacaoCT0;
+	SpinnerNumberModel  SLAUtilizacaoCT1;
+	SpinnerNumberModel  SLAUtilizacaoCT2;
 	
-	SpinnerNumberModel  toleranciaPreempcoesCT0;
-	SpinnerNumberModel  toleranciaPreempcoesCT1;
-	SpinnerNumberModel  toleranciaPreempcoesCT2;
+	SpinnerNumberModel  SLABloqueiosCT0;
+	SpinnerNumberModel  SLABloqueiosCT1;
+	SpinnerNumberModel  SLABloqueiosCT2;
 	
-	SpinnerNumberModel  toleranciaDevolucoesCT0;
-	SpinnerNumberModel  toleranciaDevolucoesCT1;
-	SpinnerNumberModel  toleranciaDevolucoesCT2;
+	SpinnerNumberModel  SLAPreempcoesCT0;
+	SpinnerNumberModel  SLAPreempcoesCT1;
+	//SpinnerNumberModel  SLAPreempcoesCT2;
+	
+	//SpinnerNumberModel  SLADevolucoesCT0;
+	SpinnerNumberModel  SLADevolucoesCT1;
+	SpinnerNumberModel  SLADevolucoesCT2;
 	
 	SpinnerNumberModel  BC0;
 	SpinnerNumberModel  BC1;
@@ -74,9 +79,9 @@ public class QueryDialog extends JDialog {
 	
 	SpinnerNumberModel  numeroDePreempcoesCT0;
 	SpinnerNumberModel  numeroDePreempcoesCT1;
-	SpinnerNumberModel  numeroDePreempcoesCT2;
+	/*SpinnerNumberModel  numeroDePreempcoesCT2;
 	
-	SpinnerNumberModel  numeroDeDevolucoesCT0;
+	SpinnerNumberModel  numeroDeDevolucoesCT0;*/
 	SpinnerNumberModel  numeroDeDevolucoesCT1;
 	SpinnerNumberModel  numeroDeDevolucoesCT2;
 	
@@ -108,14 +113,24 @@ public class QueryDialog extends JDialog {
 		
 		/**********************************************************/
 		JPanel panel = new JPanel();
-		//panel.setLayout(new GridLayout(8,2));
+		//panel.setLayout(new GridLayout(16,2));
 		panel.setLayout(new SpringLayout());
+		//panel.setPreferredSize(new Dimension(1024, 800));
+		
 		
 		JLabel label;
 		panel.add(label = new JLabel("Descrição"));
 		label.setFont(label.getFont().deriveFont(Font.BOLD));
 		panel.add(label = new JLabel("Valor (%)"));
 		label.setFont(label.getFont().deriveFont(Font.BOLD));
+		
+		/*JLabel label2;
+		panel.add(label2 = new JLabel("Descrição"));
+		label2.setFont(label2.getFont().deriveFont(Font.BOLD));
+		panel.add(label2 = new JLabel("Valor (%)"));
+		label2.setFont(label2.getFont().deriveFont(Font.BOLD));*/
+		
+		
 		
 		panel.add(new JLabel("Nome do gestor"));
 		panel.add(gestor = new JTextField());
@@ -125,52 +140,65 @@ public class QueryDialog extends JDialog {
 		String[] _BAMAtual = {"NoPreemptionMAM", "NoPreemptionRDM", "NoPreemptionAllocCTSharing","PreemptionMAM", "PreemptionRDM", "PreemptionAllocCTSharing","PreemptionGBAM"};
 		panel.add(BAMAtual = new JComboBox(_BAMAtual));
 		
-		panel.add(new JLabel("Problema"));
+		/*panel.add(new JLabel("Problema"));
 		String[] _problema = {
 				"AltaPreempcao", "AltoBloqueio", "AltaDevolucao", "BaixaUtilizacao",
 				"AltaPreempcaoCT0", "AltoBloqueioCT0", "AltaDevolucaoCT0",
 				"AltaPreempcaoCT1", "AltoBloqueioCT1", "AltaDevolucaoCT1",
 				"AltaPreempcaoCT2", "AltoBloqueioCT2", "AltaDevolucaoCT2"};
-		panel.add(problema = new JComboBox(_problema));
+		panel.add(problema = new JComboBox(_problema));*/
 		
 		
-		panel.add(new JLabel("Limite Bloqueio CTO"));
-		toleranciaBloqueiosCT0 = new SpinnerNumberModel(80,0,100,1); 
-		panel.add(new JSpinner(toleranciaBloqueiosCT0));
+		panel.add(new JLabel("SLA para Utilização CTO"));
+		SLAUtilizacaoCT0 = new SpinnerNumberModel(35,0,100,1); 
+		panel.add(new JSpinner(SLAUtilizacaoCT0));
 		
-		panel.add(new JLabel("Limite Bloqueio CT1"));
-		toleranciaBloqueiosCT1 = new SpinnerNumberModel(70,0,100,1); 
-		panel.add(new JSpinner(toleranciaBloqueiosCT1));
+		panel.add(new JLabel("SLA para Utilização CT1"));
+		SLAUtilizacaoCT1 = new SpinnerNumberModel(40,0,100,1); 
+		panel.add(new JSpinner(SLAUtilizacaoCT1));
 		
-		panel.add(new JLabel("Limite Bloqueio CT2"));
-		toleranciaBloqueiosCT2 = new SpinnerNumberModel(80,0,100,1); 
-		panel.add(new JSpinner(toleranciaBloqueiosCT2));
+		panel.add(new JLabel("SLA para Utilização CT2"));
+		SLAUtilizacaoCT2 = new SpinnerNumberModel(45,0,100,1); 
+		panel.add(new JSpinner(SLAUtilizacaoCT2));
+		
+		
+		panel.add(new JLabel("SLA para Bloqueio CTO"));
+		SLABloqueiosCT0 = new SpinnerNumberModel(80,0,100,1); 
+		panel.add(new JSpinner(SLABloqueiosCT0));
+		
+		panel.add(new JLabel("SLA para Bloqueio CT1"));
+		SLABloqueiosCT1 = new SpinnerNumberModel(70,0,100,1); 
+		panel.add(new JSpinner(SLABloqueiosCT1));
+		
+		panel.add(new JLabel("SLA para Bloqueio CT2"));
+		SLABloqueiosCT2 = new SpinnerNumberModel(80,0,100,1); 
+		panel.add(new JSpinner(SLABloqueiosCT2));
 
 		
-		panel.add(new JLabel("Limite Preempção CTO"));
-		toleranciaPreempcoesCT0 = new SpinnerNumberModel(80,0,100,1); 
-		panel.add(new JSpinner(toleranciaPreempcoesCT0));
+		panel.add(new JLabel("SLA para Preempção CTO"));
+		SLAPreempcoesCT0 = new SpinnerNumberModel(80,0,100,1); 
+		panel.add(new JSpinner(SLAPreempcoesCT0));
 		
-		panel.add(new JLabel("Limite Preempção CT1"));
-		toleranciaPreempcoesCT1 = new SpinnerNumberModel(80,0,100,1); 
-		panel.add(new JSpinner(toleranciaPreempcoesCT1));
+		panel.add(new JLabel("SLA para Preempção CT1"));
+		SLAPreempcoesCT1 = new SpinnerNumberModel(80,0,100,1); 
+		panel.add(new JSpinner(SLAPreempcoesCT1));
 		
-		panel.add(new JLabel("Limite Preempção CT2"));
-		toleranciaPreempcoesCT2 = new SpinnerNumberModel(0,0,100,1); 
-		panel.add(new JSpinner(toleranciaPreempcoesCT2));
+		/*panel.add(new JLabel("SLA para Preempção CT2"));
+		SLAPreempcoesCT2 = new SpinnerNumberModel(0,0,100,1); 
+		panel.add(new JSpinner(SLAPreempcoesCT2));
 		
 		
-		panel.add(new JLabel("Limite Devolução CTO"));
-		toleranciaDevolucoesCT0 = new SpinnerNumberModel(0,0,100,1); 
-		panel.add(new JSpinner(toleranciaDevolucoesCT0));
+		panel.add(new JLabel("SLA para Devolução CTO"));
+		SLADevolucoesCT0 = new SpinnerNumberModel(0,0,100,1); 
+		panel.add(new JSpinner(SLADevolucoesCT0));*/
 		
-		panel.add(new JLabel("Limite Devolução CT1"));
-		toleranciaDevolucoesCT1 = new SpinnerNumberModel(80,0,100,1); 
-		panel.add(new JSpinner(toleranciaDevolucoesCT1));
+		panel.add(new JLabel("SLA para Devolução CT1"));
+		SLADevolucoesCT1 = new SpinnerNumberModel(80,0,100,1); 
+		panel.add(new JSpinner(SLADevolucoesCT1));
 		
-		panel.add(new JLabel("Limite Devolução CT2"));
-		toleranciaDevolucoesCT2 = new SpinnerNumberModel(80,0,100,1); 
-		panel.add(new JSpinner(toleranciaDevolucoesCT2));
+		panel.add(new JLabel("SLA para Devolução CT2"));
+		SLADevolucoesCT2 = new SpinnerNumberModel(80,0,100,1); 
+		panel.add(new JSpinner(SLADevolucoesCT2));
 				
 		
 		panel.add(new JLabel("Largura de Banda em BC0"));
@@ -178,7 +206,7 @@ public class QueryDialog extends JDialog {
 		panel.add(new JSpinner(BC0));
 		
 		panel.add(new JLabel("Largura de Banda em BC1"));
-		BC1 = new SpinnerNumberModel(200,0,10000,1); 
+		BC1 = new SpinnerNumberModel(600,0,10000,1); 
 		panel.add(new JSpinner(BC1));
 		
 		panel.add(new JLabel("Largura de Banda em BC2"));
@@ -200,15 +228,15 @@ public class QueryDialog extends JDialog {
 		
 		
 		panel.add(new JLabel("Number de Bloqueios em CT0"));
-		numeroDeBloqueiosCT0 = new SpinnerNumberModel(0,0,100,1); 
+		numeroDeBloqueiosCT0 = new SpinnerNumberModel(5,0,100,1); 
 		panel.add(new JSpinner(numeroDeBloqueiosCT0));
 		
 		panel.add(new JLabel("Number de Bloqueios em CT1"));
-		numeroDeBloqueiosCT1 = new SpinnerNumberModel(0,0,100,1); 
+		numeroDeBloqueiosCT1 = new SpinnerNumberModel(6,0,100,1); 
 		panel.add(new JSpinner(numeroDeBloqueiosCT1));
 		
 		panel.add(new JLabel("Number de Bloqueios em CT2"));
-		numeroDeBloqueiosCT2 = new SpinnerNumberModel(0,0,100,1); 
+		numeroDeBloqueiosCT2 = new SpinnerNumberModel(8,0,100,1); 
 		panel.add(new JSpinner(numeroDeBloqueiosCT2));
 		
 		
@@ -220,14 +248,14 @@ public class QueryDialog extends JDialog {
 		numeroDePreempcoesCT1 = new SpinnerNumberModel(0,0,100,1); 
 		panel.add(new JSpinner(numeroDePreempcoesCT1));
 		
-		panel.add(new JLabel("Number de Preempções em CT2"));
+		/*panel.add(new JLabel("Number de Preempções em CT2"));
 		numeroDePreempcoesCT2 = new SpinnerNumberModel(0,0,100,1); 
 		panel.add(new JSpinner(numeroDePreempcoesCT2));
 		
 		
 		panel.add(new JLabel("Number de Devoluções em CT0"));
 		numeroDeDevolucoesCT0 = new SpinnerNumberModel(0,0,100,1); 
-		panel.add(new JSpinner(numeroDeDevolucoesCT0));
+		panel.add(new JSpinner(numeroDeDevolucoesCT0));*/
 		
 		panel.add(new JLabel("Number de Devoluções em CT1"));
 		numeroDeDevolucoesCT1 = new SpinnerNumberModel(0,0,100,1); 
@@ -240,7 +268,7 @@ public class QueryDialog extends JDialog {
 		
 //		Lay out the panel.
 		Utils.makeCompactGrid(panel,
-		                28, 2, //rows, cols  ///aumentar o numero de linhas
+		                26, 2, //rows, cols  ///aumentar o numero de linhas
 		                1, 1,        //initX, initY
 		                1, 1);       //xPad, yPad
 		
@@ -280,7 +308,7 @@ public class QueryDialog extends JDialog {
 		
 		
 		this.pack();
-		this.setSize(600, this.getHeight());
+		//this.setSize(600, this.getHeight());
 		this.setResizable(false);
 		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds((screenSize.width - this.getWidth()) / 2,
@@ -300,19 +328,24 @@ public class QueryDialog extends JDialog {
 		
 		desc.setGestor(this.gestor.getText());
 		desc.setBAMAtual(BAMTypes.valueOf((String)this.BAMAtual.getSelectedItem()));
-		desc.setProblema(Problemas.valueOf((String)this.problema.getSelectedItem()));
+		//desc.setProblema(Problemas.valueOf((String)this.problema.getSelectedItem()));
 		
-		desc.setToleranciaBloqueiosCT0(this.toleranciaBloqueiosCT0.getNumber().intValue());
-		desc.setToleranciaBloqueiosCT1(this.toleranciaBloqueiosCT1.getNumber().intValue());
-		desc.setToleranciaBloqueiosCT2(this.toleranciaBloqueiosCT2.getNumber().intValue());
+		desc.setSLAUtilizacaoCT0(this.SLAUtilizacaoCT0.getNumber().intValue());
+		desc.setSLAUtilizacaoCT1(this.SLAUtilizacaoCT1.getNumber().intValue());
+		desc.setSLAUtilizacaoCT2(this.SLAUtilizacaoCT0.getNumber().intValue());
 		
-		desc.setToleranciaDevolucoesCT0(this.toleranciaDevolucoesCT0.getNumber().intValue());
-		desc.setToleranciaDevolucoesCT1(this.toleranciaDevolucoesCT1.getNumber().intValue());
-		desc.setToleranciaDevolucoesCT2(this.toleranciaDevolucoesCT2.getNumber().intValue());
+		desc.setSLABloqueiosCT0(this.SLABloqueiosCT0.getNumber().intValue());
+		desc.setSLABloqueiosCT1(this.SLABloqueiosCT1.getNumber().intValue());
+		desc.setSLABloqueiosCT2(this.SLABloqueiosCT2.getNumber().intValue());
 		
-		desc.setToleranciaPreempcoesCT0(this.toleranciaPreempcoesCT0.getNumber().intValue());
-		desc.setToleranciaPreempcoesCT1(this.toleranciaPreempcoesCT1.getNumber().intValue());
-		desc.setToleranciaPreempcoesCT2(this.toleranciaPreempcoesCT2.getNumber().intValue());
+		
+		desc.setSLAPreempcoesCT0(this.SLAPreempcoesCT0.getNumber().intValue());
+		desc.setSLAPreempcoesCT1(this.SLAPreempcoesCT1.getNumber().intValue());
+		/*desc.setSLAPreempcoesCT2(this.SLAPreempcoesCT2.getNumber().intValue());
+		
+		desc.setSLADevolucoesCT0(this.SLADevolucoesCT0.getNumber().intValue());*/
+		desc.setSLADevolucoesCT1(this.SLADevolucoesCT1.getNumber().intValue());
+		desc.setSLADevolucoesCT2(this.SLADevolucoesCT2.getNumber().intValue());
 		
 		
 		desc.setBC0(this.BC0.getNumber().intValue());
@@ -331,9 +364,9 @@ public class QueryDialog extends JDialog {
 
 		desc.setNumeroDePreempcoesCT0(this.numeroDePreempcoesCT0.getNumber().intValue());
 		desc.setNumeroDePreempcoesCT1(this.numeroDePreempcoesCT1.getNumber().intValue());
-		desc.setNumeroDePreempcoesCT2(this.numeroDePreempcoesCT2.getNumber().intValue());
+		/*desc.setNumeroDePreempcoesCT2(this.numeroDePreempcoesCT2.getNumber().intValue());
 		
-		desc.setNumeroDeDevolucoesCT0(this.numeroDeDevolucoesCT0.getNumber().intValue());
+		desc.setNumeroDeDevolucoesCT0(this.numeroDeDevolucoesCT0.getNumber().intValue());*/
 		desc.setNumeroDeDevolucoesCT1(this.numeroDeDevolucoesCT1.getNumber().intValue());
 		desc.setNumeroDeDevolucoesCT2(this.numeroDeDevolucoesCT2.getNumber().intValue());
 		

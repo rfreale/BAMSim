@@ -1155,37 +1155,21 @@ public class EstatisticasDSTE {
 		return retorno;
 		
 	}
-	public CBRQuery getQuery(Link link, Problemas problema, BAMType BAMAtual)
+	
+	public CBRQuery getQuery(Link link, 
+							String  gestor, 
+							BAMType BAMAtual, 
+							Problemas problema, 
+							long []toleranciaBloqueiosCT,
+							long []toleranciaPreempcoesCT, 
+							long []toleranciaDevolucoesCT
+			)   
 	{
 		BAMDescription desc = new BAMDescription();
-		desc.setUtilizacaoDoEnlaceCT0(link.CargaCTAtual[0]*100/link.CargaEnlace);
-		desc.setUtilizacaoDoEnlaceCT1(link.CargaCTAtual[1]*100/link.CargaEnlace);
-		desc.setUtilizacaoDoEnlaceCT2(link.CargaCTAtual[2]*100/link.CargaEnlace);
+		
 		try {
-			if (lspRequested(ParametrosDSTE.Janela)!=0)
-			{
-				desc.setNumeroDeBloqueiosCT0(this.bloqueiosCT(ParametrosDSTE.Janela,0)*100/lspRequested(ParametrosDSTE.Janela));
-				desc.setNumeroDeBloqueiosCT1(this.bloqueiosCT(ParametrosDSTE.Janela,1)*100/lspRequested(ParametrosDSTE.Janela));
-				desc.setNumeroDeBloqueiosCT2(this.bloqueiosCT(ParametrosDSTE.Janela,2)*100/lspRequested(ParametrosDSTE.Janela));
-				desc.setNumeroDeDevolucoesCT0(this.devolucoesCT(ParametrosDSTE.Janela,0)*100/lspEstablished(ParametrosDSTE.Janela));
-				desc.setNumeroDeDevolucoesCT1(this.devolucoesCT(ParametrosDSTE.Janela,1)*100/lspEstablished(ParametrosDSTE.Janela));
-				desc.setNumeroDeDevolucoesCT2(this.devolucoesCT(ParametrosDSTE.Janela,2)*100/lspEstablished(ParametrosDSTE.Janela));
-				desc.setNumeroDePreempcoesCT0(this.preempcoesCT(ParametrosDSTE.Janela,0)*100/lspEstablished(ParametrosDSTE.Janela));
-				desc.setNumeroDePreempcoesCT1(this.preempcoesCT(ParametrosDSTE.Janela,1)*100/lspEstablished(ParametrosDSTE.Janela));
-				desc.setNumeroDePreempcoesCT2(this.preempcoesCT(ParametrosDSTE.Janela,2)*100/lspEstablished(ParametrosDSTE.Janela));
-			}else
-			{
-				desc.setNumeroDeBloqueiosCT0(0);
-				desc.setNumeroDeBloqueiosCT1(0);
-				desc.setNumeroDeBloqueiosCT2(0);
-				desc.setNumeroDeDevolucoesCT0(0);
-				desc.setNumeroDeDevolucoesCT1(0);
-				desc.setNumeroDeDevolucoesCT2(0);
-				desc.setNumeroDePreempcoesCT0(0);
-				desc.setNumeroDePreempcoesCT1(0);
-				desc.setNumeroDePreempcoesCT2(0);
-			}
 			
+			desc.setGestor(gestor);
 			//Compatibilidade com G-BAM apenas refeltindo MAM, RDM e Alloc
 			if(BAMAtual!=BAMType.PreemptionGBAM)
 			{
@@ -1203,7 +1187,63 @@ public class EstatisticasDSTE {
 					desc.setBAMAtual(BAMTypes.NoPreemptionMAM);
 			}
 			desc.setProblema(Problemas.valueOf(problema.toString()));
-
+			
+			/*desc.setToleranciaBloqueiosCT0( (int) toleranciaBloqueiosCT[0]); ///////////////////========================<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+			desc.setToleranciaBloqueiosCT1( (int) toleranciaBloqueiosCT[1]);
+			desc.setToleranciaBloqueiosCT2( (int) toleranciaBloqueiosCT[2]);
+			
+			desc.setToleranciaPreempcoesCT0( (int) toleranciaPreempcoesCT[0]);
+			desc.setToleranciaPreempcoesCT1( (int) toleranciaPreempcoesCT[1]);
+			desc.setToleranciaPreempcoesCT2( (int) toleranciaPreempcoesCT[2]);
+			
+			desc.setToleranciaDevolucoesCT0( (int) toleranciaDevolucoesCT[0]);
+			desc.setToleranciaDevolucoesCT1( (int) toleranciaDevolucoesCT[1]);
+			desc.setToleranciaDevolucoesCT2( (int) toleranciaDevolucoesCT[2]);
+			
+						
+			desc.setBC0( (int) (link.BC[0] * link.CargaEnlace) );
+			desc.setBC0( (int) (link.BC[1] * link.CargaEnlace) );
+			desc.setBC0( (int) (link.BC[2] * link.CargaEnlace) );*/
+			
+			desc.setUtilizacaoDoEnlaceCT0(link.CargaCTAtual[0]*100/link.CargaEnlace);
+			desc.setUtilizacaoDoEnlaceCT1(link.CargaCTAtual[1]*100/link.CargaEnlace);
+			desc.setUtilizacaoDoEnlaceCT2(link.CargaCTAtual[2]*100/link.CargaEnlace);
+			
+						
+			if (lspRequested(ParametrosDSTE.Janela)!=0)
+			{
+				desc.setNumeroDeBloqueiosCT0(this.bloqueiosCT(ParametrosDSTE.Janela,0)*100/lspRequested(ParametrosDSTE.Janela));
+				desc.setNumeroDeBloqueiosCT1(this.bloqueiosCT(ParametrosDSTE.Janela,1)*100/lspRequested(ParametrosDSTE.Janela));
+				desc.setNumeroDeBloqueiosCT2(this.bloqueiosCT(ParametrosDSTE.Janela,2)*100/lspRequested(ParametrosDSTE.Janela));
+				
+				desc.setNumeroDePreempcoesCT0(this.preempcoesCT(ParametrosDSTE.Janela,0)*100/lspEstablished(ParametrosDSTE.Janela));
+				desc.setNumeroDePreempcoesCT1(this.preempcoesCT(ParametrosDSTE.Janela,1)*100/lspEstablished(ParametrosDSTE.Janela));
+				desc.setNumeroDePreempcoesCT2(this.preempcoesCT(ParametrosDSTE.Janela,2)*100/lspEstablished(ParametrosDSTE.Janela));
+				
+				desc.setNumeroDeDevolucoesCT0(this.devolucoesCT(ParametrosDSTE.Janela,0)*100/lspEstablished(ParametrosDSTE.Janela));
+				desc.setNumeroDeDevolucoesCT1(this.devolucoesCT(ParametrosDSTE.Janela,1)*100/lspEstablished(ParametrosDSTE.Janela));
+				desc.setNumeroDeDevolucoesCT2(this.devolucoesCT(ParametrosDSTE.Janela,2)*100/lspEstablished(ParametrosDSTE.Janela));
+				
+				
+				
+			}else
+			{
+				desc.setNumeroDeBloqueiosCT0(0);
+				desc.setNumeroDeBloqueiosCT1(0);
+				desc.setNumeroDeBloqueiosCT2(0);
+				
+				desc.setNumeroDePreempcoesCT0(0);
+				desc.setNumeroDePreempcoesCT1(0);
+				desc.setNumeroDePreempcoesCT2(0);
+				
+				desc.setNumeroDeDevolucoesCT0(0);
+				desc.setNumeroDeDevolucoesCT1(0);
+				desc.setNumeroDeDevolucoesCT2(0);
+				
+				
+			}
+			
+			
 		
 		CBRQuery query = new CBRQuery();
 		query.setDescription(desc);

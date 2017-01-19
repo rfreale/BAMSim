@@ -7,43 +7,56 @@
 
 	</id>
 	<property name="gestor" column="gestor"/>
-	<property name="BC0" column="BC0"/>
-	<property name="BC1" column="BC1"/>
-	<property name="BC2" column="BC2"/>
-	<property name="numeroDeBloqueiosCT0" column="numeroDeBloqueiosCT0"/>
-	<property name="numeroDeBloqueiosCT1" column="numeroDeBloqueiosCT1"/>
-	<property name="numeroDeBloqueiosCT2" column="numeroDeBloqueiosCT2"/>
-	<property name="numeroDeDevolucoesCT0" column="numeroDeDevolucoesCT0"/>
-	<property name="numeroDeDevolucoesCT1" column="numeroDeDevolucoesCT1"/>
-	<property name="numeroDeDevolucoesCT2" column="numeroDeDevolucoesCT2"/>	
-	<property name="numeroDePreempcoesCT0" column="numeroDePreempcoesCT0"/>
-	<property name="numeroDePreempcoesCT1" column="numeroDePreempcoesCT1"/>
-	<property name="numeroDePreempcoesCT2" column="numeroDePreempcoesCT2"/>
-	<property name="utilizacaoDoEnlaceCT0" column="utilizacaoDoEnlaceCT0"/>
-	<property name="utilizacaoDoEnlaceCT1" column="utilizacaoDoEnlaceCT1"/>
-	<property name="utilizacaoDoEnlaceCT2" column="utilizacaoDoEnlaceCT2"/>
-	<property name="toleranciaBloqueiosCT0" column="toleranciaBloqueiosCT0"/>
-	<property name="toleranciaBloqueiosCT1" column="toleranciaBloqueiosCT1"/>
-	<property name="toleranciaBloqueiosCT2" column="toleranciaBloqueiosCT2"/>
-	<property name="toleranciaDevolucoesCT0" column="toleranciaDevolucoesCT0"/>
-	<property name="toleranciaDevolucoesCT1" column="toleranciaDevolucoesCT1"/>
-	<property name="toleranciaDevolucoesCT2" column="toleranciaDevolucoesCT2"/>	
-	<property name="toleranciaPreempcoesCT0" column="toleranciaPreempcoesCT0"/>
-	<property name="toleranciaPreempcoesCT1" column="toleranciaPreempcoesCT1"/>
-	<property name="toleranciaPreempcoesCT2" column="toleranciaPreempcoesCT2"/>
-
-
-
+	
 	<property name="BAMAtual" column="BAMAtual">
 		<type name="jcolibri.connector.databaseutils.EnumUserType">
 			<param name="enumClassName">BAM.BAMRecommender.BAMDescription$BAMTypes</param>
     	</type>
   	</property>
-  		<property name="problema" column="problema">
+  	
+	<property name="problema" column="problema">
 		<type name="jcolibri.connector.databaseutils.EnumUserType">
 			<param name="enumClassName">BAM.BAMRecommender.BAMDescription$Problemas</param>
     	</type>
   	</property>
+  	
+	<property name="SLAUtilizacaoCT0" column="SLAUtilizacaoCT0"/>
+	<property name="SLAUtilizacaoCT1" column="SLAUtilizacaoCT1"/>
+	<property name="SLAUtilizacaoCT2" column="SLAUtilizacaoCT2"/>
+	
+	<property name="SLABloqueiosCT0" column="SLABloqueiosCT0"/>
+	<property name="SLABloqueiosCT1" column="SLABloqueiosCT1"/>
+	<property name="SLABloqueiosCT2" column="SLABloqueiosCT2"/>
+	
+	<property name="SLAPreempcoesCT0" column="SLAPreempcoesCT0"/>
+	<property name="SLAPreempcoesCT1" column="SLAPreempcoesCT1"/>
+	<property name="SLAPreempcoesCT2" column="SLAPreempcoesCT2"/>
+			
+	<property name="SLADevolucoesCT0" column="SLADevolucoesCT0"/>
+	<property name="SLADevolucoesCT1" column="SLADevolucoesCT1"/>
+	<property name="SLADevolucoesCT2" column="SLADevolucoesCT2"/>	
+	
+	<property name="BC0" column="BC0"/>
+	<property name="BC1" column="BC1"/>
+	<property name="BC2" column="BC2"/>
+	
+	<property name="utilizacaoDoEnlaceCT0" column="utilizacaoDoEnlaceCT0"/>
+	<property name="utilizacaoDoEnlaceCT1" column="utilizacaoDoEnlaceCT1"/>
+	<property name="utilizacaoDoEnlaceCT2" column="utilizacaoDoEnlaceCT2"/>
+	
+	<property name="numeroDeBloqueiosCT0" column="numeroDeBloqueiosCT0"/>
+	<property name="numeroDeBloqueiosCT1" column="numeroDeBloqueiosCT1"/>
+	<property name="numeroDeBloqueiosCT2" column="numeroDeBloqueiosCT2"/>
+	
+	<property name="numeroDePreempcoesCT0" column="numeroDePreempcoesCT0"/>
+	<property name="numeroDePreempcoesCT1" column="numeroDePreempcoesCT1"/>
+	<property name="numeroDePreempcoesCT2" column="numeroDePreempcoesCT2"/>
+	
+	<property name="numeroDeDevolucoesCT0" column="numeroDeDevolucoesCT0"/>
+	<property name="numeroDeDevolucoesCT1" column="numeroDeDevolucoesCT1"/>
+	<property name="numeroDeDevolucoesCT2" column="numeroDeDevolucoesCT2"/>	
+  	
+  	
 
 </class>
 </hibernate-mapping>
