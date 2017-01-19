@@ -332,7 +332,7 @@ public class QueryDialog extends JDialog {
 		
 		desc.setSLAUtilizacaoCT0(this.SLAUtilizacaoCT0.getNumber().intValue());
 		desc.setSLAUtilizacaoCT1(this.SLAUtilizacaoCT1.getNumber().intValue());
-		desc.setSLAUtilizacaoCT2(this.SLAUtilizacaoCT0.getNumber().intValue());
+		desc.setSLAUtilizacaoCT2(this.SLAUtilizacaoCT2.getNumber().intValue());
 		
 		desc.setSLABloqueiosCT0(this.SLABloqueiosCT0.getNumber().intValue());
 		desc.setSLABloqueiosCT1(this.SLABloqueiosCT1.getNumber().intValue());

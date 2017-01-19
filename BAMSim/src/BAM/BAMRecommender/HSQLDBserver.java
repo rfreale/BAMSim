@@ -195,17 +195,9 @@ public class HSQLDBserver
 		  conn.prepareStatement("insert into bam values('52','Carlos','PreemptionAllocCTSharing','AltaDevolucao'  , 44 , 50 , 55 , 60 , 55 , 50 , 60 , 55 , null , null , 55 , 50 , 128 , 256 , 512  , 95 , 90 , 99 , 0  , 0  , 0  , 0  , 0  , null , null , 90 , 80 ,'PreemptionRDM'           , true);").execute();
 		  conn.prepareStatement("insert into bam values('53','Marcos','PreemptionAllocCTSharing','AltaDevolucao'  , 30 , 35 , 40 , 75 , 70 , 65 , 75 , 70 , null , null , 70 , 65 , 128 , 256 , 512  , 95 , 90 , 99 , 0  , 0  , 0  , 0  , 0  , null , null , 90 , 80 ,'PreemptionRDM'           , true);").execute();
 		  conn.prepareStatement("insert into bam values('54','Lucas' ,'PreemptionAllocCTSharing','AltaDevolucao'  , 15 , 20 , 25 , 90 , 85 , 80 , 90 , 85 , null , null , 85 , 80 , 128 , 256 , 512  , 95 , 90 , 99 , 0  , 0  , 0  , 0  , 0  , null , null , 90 , 80 ,'PreemptionRDM'           , true);").execute();
-		   
+		  conn.prepareStatement("insert into bam values('55','Fred'  ,'NoPreemptionMAM'         ,'BaixaUtilizacao', 35 , 40 , 45 , 80 , 70 , 80 , 80 , 80 , null , null , 80 , 80 , 250 , 600 , 1000 , 10 , 20 , 30 , 5  , 6  , 8  , 0  , 0  , null , null , 0  , 0  ,'PreemptionAllocCTSharing', true);").execute();
+
 		
-		
-		
-		
-		
-		
-		
-		
-		                     
-	    
 	    
         //Alto Bloqueio
 	    //conn.prepareStatement("insert into bam values('bam3','PreemptionAllocCTSharing','AltoBloqueio',100,0,0,0,100,100,100,0,0,0,'NoPreemptionMAM',true);").execute();
