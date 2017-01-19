@@ -215,7 +215,7 @@ public class TesteSimulacao {
 				break;
 			case 5:
 				//Avalia BAM via CBR
-
+/*
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
 				
@@ -306,10 +306,10 @@ public class TesteSimulacao {
 				{
 					//Agenda avaliar BAM via CBR
 					rodada.schedulep(5, ParametrosDSTE.Janela, null);
-				}
+				}*/
 				break;
 			case 6:
-				//Avalia rentenção
+				/*//Avalia rentenção
 				CBRQuery queryRetain = null;
 				CBRCase novocase = ((CBRCase)dados.item);
 				
@@ -355,7 +355,7 @@ public class TesteSimulacao {
 					}
 					
 					rodada.schedulep(5, ParametrosDSTE.Janela, null);
-				}
+				}*/
 			break;
 			
 			

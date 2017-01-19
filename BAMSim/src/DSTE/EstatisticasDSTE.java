@@ -1160,7 +1160,7 @@ public class EstatisticasDSTE {
 							String  gestor, 
 							BAMType BAMAtual, 
 							Problemas problema,
-							long []SLAUtilizacao,
+							long []SLAUtilizacaoCT,
 							long []SLABloqueiosCT,
 							long []SLAPreempcoesCT, 
 							long []SLADevolucoesCT )   
@@ -1189,9 +1189,9 @@ public class EstatisticasDSTE {
 			}
 			//desc.setProblema(Problemas.valueOf(problema.toString()));
 			
-			desc.setSLAUtilizacaoCT0((int)SLAUtilizacao[0]);
-			desc.setSLAUtilizacaoCT1((int)SLAUtilizacao[1]);
-			desc.setSLAUtilizacaoCT2((int)SLAUtilizacao[2]);
+			desc.setSLAUtilizacaoCT0((int)SLAUtilizacaoCT[0]);
+			desc.setSLAUtilizacaoCT1((int)SLAUtilizacaoCT[1]);
+			desc.setSLAUtilizacaoCT2((int)SLAUtilizacaoCT[2]);
 								
 			desc.setSLABloqueiosCT0( (int) SLABloqueiosCT[0]); 
 			desc.setSLABloqueiosCT1( (int) SLABloqueiosCT[1]);
@@ -1207,8 +1207,8 @@ public class EstatisticasDSTE {
 			
 						
 			desc.setBC0( (int) (link.BC[0] * link.CargaEnlace) );
-			desc.setBC0( (int) (link.BC[1] * link.CargaEnlace) );
-			desc.setBC0( (int) (link.BC[2] * link.CargaEnlace) );
+			desc.setBC1( (int) (link.BC[1] * link.CargaEnlace) );
+			desc.setBC2( (int) (link.BC[2] * link.CargaEnlace) );
 			
 			desc.setUtilizacaoDoEnlaceCT0(link.CargaCTAtual[0]*100/link.CargaEnlace);
 			desc.setUtilizacaoDoEnlaceCT1(link.CargaCTAtual[1]*100/link.CargaEnlace);

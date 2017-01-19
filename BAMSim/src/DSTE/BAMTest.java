@@ -14,10 +14,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -40,18 +38,105 @@ import org.rosuda.JRI.Rengine;
 //import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.REXPMismatchException;
 import org.rosuda.REngine.REngineException;
-import org.rosuda.REngine.RList;
-import org.rosuda.REngine.Rserve.RConnection;
 import org.rosuda.REngine.Rserve.RserveException;
 
+import BAM.BAMRecommender.BAMDescription;
+import BAM.BAMRecommender.BAMRecommenderNoGUI;
+import BAM.BAMRecommender.BAMDescription.BAMTypes;
 import Simulador.Debug;
 import Simulador.Estatisticas;
 import Simulador.GeradorDeNumerosAleatorios;
 import Simulador.No;
 import Simulador.ParametrosDoSimulador;
 import Simulador.RodadaDeSimulacao;
+import jcolibri.cbrcore.CBRCase;
+import jcolibri.cbrcore.CBRQuery;
+import jcolibri.exception.ExecutionException;
 
 public class BAMTest {
+	
+	@Test
+	public void cbrSimilarityConfigTest()
+	{
+		BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
+		try
+		{
+			recommender.configure();
+			recommender.preCycle();
+			recommender.setSimConfig(ParametrosDSTE.getSimilarityConfig());
+		}catch(Exception e)
+		{
+			org.apache.commons.logging.LogFactory.getLog(BAMRecommenderNoGUI.class).error(e);
+			//javax.swing.JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+		CBRCase cbrCase = null;
+		CBRQuery query = new CBRQuery();
+
+		BAMDescription desc = new BAMDescription();
+		
+		desc.setGestor("Rafael");
+		
+		
+		desc.setBAMAtual(BAMTypes.NoPreemptionMAM);
+		//desc.setProblema(Problemas.valueOf(problema.toString()));
+		
+		desc.setSLAUtilizacaoCT0(ParametrosDSTE.SLAUtilizacaoCT[0]);
+		desc.setSLAUtilizacaoCT1(ParametrosDSTE.SLAUtilizacaoCT[1]);
+		desc.setSLAUtilizacaoCT2(ParametrosDSTE.SLAUtilizacaoCT[2]);
+							
+		desc.setSLABloqueiosCT0( ParametrosDSTE.SLABloqueiosCT[0]); 
+		desc.setSLABloqueiosCT1( ParametrosDSTE.SLABloqueiosCT[1]);
+		desc.setSLABloqueiosCT2( ParametrosDSTE.SLABloqueiosCT[2]);
+		
+		desc.setSLAPreempcoesCT0( ParametrosDSTE.SLAPreempcoesCT[0]);
+		desc.setSLAPreempcoesCT1( ParametrosDSTE.SLAPreempcoesCT[1]);
+		//desc.setSLAPreempcoesCT2( ParametrosDSTE.SLAPreempcoesCT[2]);
+		
+		//desc.setSLADevolucoesCT0( ParametrosDSTE.SLADevolucoesCT[0]);
+		desc.setSLADevolucoesCT1( ParametrosDSTE.SLADevolucoesCT[1]);
+		desc.setSLADevolucoesCT2( ParametrosDSTE.SLADevolucoesCT[2]);
+		
+					
+		desc.setBC0( 250 );
+		desc.setBC1( 600 );
+		desc.setBC2( 1000 );
+		
+		desc.setUtilizacaoDoEnlaceCT0(10.0);
+		desc.setUtilizacaoDoEnlaceCT1(20.0);
+		desc.setUtilizacaoDoEnlaceCT2(30.0);
+		
+					
+		desc.setNumeroDeBloqueiosCT0(5);
+		desc.setNumeroDeBloqueiosCT1(6);
+		desc.setNumeroDeBloqueiosCT2(8);
+		
+		desc.setNumeroDePreempcoesCT0(0);
+		desc.setNumeroDePreempcoesCT1(0);
+		//desc.setNumeroDePreempcoesCT2(0);
+		
+		//desc.setNumeroDeDevolucoesCT0(0);
+		desc.setNumeroDeDevolucoesCT1(0);
+		desc.setNumeroDeDevolucoesCT2(0);
+
+		query.setDescription(desc);
+		try {
+			cbrCase = recommender.cycle(query);
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		
+		System.out.println(cbrCase.toString());
+		
+			
+	
+		
+		
+		
+	
+		
+	}
 	
 	@Test
 	public void scalaX()

@@ -32,10 +32,10 @@ public class ParametrosDSTE {
 	
 	//SLAs em Percentual
 	
-	public static final long []SLAUtilizacaoCT   = new long [] {32, 40, 45} ;  // ou SLA
-	public static final long []SLABloqueiosCT    = new long [] {80, 70, 80} ;  // ou SLA
-	public static final long []SLAPreempcoesCT   = new long [] {80, 80, 00} ;  // ou SLA
-	public static final long []SLADevolucoesCT   = new long [] {00, 80, 80} ;  // ou SLA
+	public static final int []SLAUtilizacaoCT   = new int [] {35, 40, 45} ;  // ou SLA
+	public static final int []SLABloqueiosCT    = new int [] {80, 70, 80} ;  // ou SLA
+	public static final int []SLAPreempcoesCT   = new int [] {80, 80, 00} ;  // ou SLA
+	public static final int []SLADevolucoesCT   = new int [] {00, 80, 80} ;  // ou SLA
 	
 	
 	
