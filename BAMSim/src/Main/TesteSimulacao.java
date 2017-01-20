@@ -340,9 +340,39 @@ public class TesteSimulacao {
 			case 6:
 				//Avalia rentenção
 				CBRQuery queryRetain  = null;
+				CBRCase atualCase = null;
 				CBRCase novocase = ((CBRCase)dados.item);
 				
-				Boolean UCT0, UCT1, UCT2, BCT0, BCT1, BCT2, PCT0, PCT1, PCT2, DCT0, DCT1, DCT2  = null;
+				
+								
+				queryRetain = rodada.estatistica.getQuery(to.link[0], ParametrosDSTE.Gestor, ParametrosDSTE.SLAUtilizacaoCT, ParametrosDSTE.SLABloqueiosCT,ParametrosDSTE.SLAPreempcoesCT,ParametrosDSTE.SLADevolucoesCT);
+				
+				
+				atualCase = BAMRecommenderNoGUI.getInstance().cycle(queryRetain);
+				
+				
+				
+				
+				if(atualCase!= null){
+				
+					if(atualCase.getSolution().toString() == novocase.getSolution().toString()){
+						BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
+						jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
+					}else{
+						BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
+						jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), novocase);
+						
+					}
+				
+				
+				}
+					
+				
+				rodada.schedulep(5, ParametrosDSTE.Janela, null);
+				
+				
+				
+				/*Boolean UCT0, UCT1, UCT2, BCT0, BCT1, BCT2, PCT0, PCT1, PCT2, DCT0, DCT1, DCT2  = null;
 				
 				
 				if ( to.link[0].CargaCTAtual[0]*100/to.link[0].CargaEnlace >=  ParametrosDSTE.SLAUtilizacaoCT[0] ){
@@ -432,8 +462,10 @@ public class TesteSimulacao {
 				if (UCT0 && UCT1 && UCT2 && BCT0 && BCT1 && BCT2 && PCT0 && PCT1 && PCT2 && DCT0 && DCT1 && DCT2){
 					BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
 					jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
-				}
-				rodada.schedulep(5, ParametrosDSTE.Janela, null);
+				}*/
+				
+				
+				
 				
 			break;
 			
