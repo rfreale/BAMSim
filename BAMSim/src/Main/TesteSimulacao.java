@@ -219,7 +219,7 @@ public class TesteSimulacao {
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
 				
-				query = rodada.estatistica.getQuery(to.link[0], ParametrosDSTE.Gestor,  ParametrosDSTE.SLAUtilizacaoCT, ParametrosDSTE.SLABloqueiosCT,ParametrosDSTE.SLAPreempcoesCT,ParametrosDSTE.SLADevolucoesCT);
+				query = rodada.estatistica.getQuery(to.link[0], ParametrosDSTE.Gestor, ParametrosDSTE.SLAUtilizacaoCT, ParametrosDSTE.SLABloqueiosCT,ParametrosDSTE.SLAPreempcoesCT,ParametrosDSTE.SLADevolucoesCT);
 				
 				
 				cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
@@ -274,7 +274,7 @@ public class TesteSimulacao {
 								000, //BC1
 								0  //BC2 Nunca mudar
 							};
-							//BAM.forcePreemption(to.link[0]);
+							BAM.forcePreemption(to.link[0]);
 							break;
 						case PreemptionRDM:
 							to.link[0].bamType = BAMType.PreemptionGBAM;
@@ -289,7 +289,7 @@ public class TesteSimulacao {
 								000, //BC1
 								0  //BC2 Nunca mudar
 							};
-							//BAM.forcePreemption(to.link[0]);
+							BAM.forcePreemption(to.link[0]);
 							break;
 						case PreemptionAllocCTSharing:
 							to.link[0].bamType = BAMType.PreemptionGBAM;
@@ -309,7 +309,7 @@ public class TesteSimulacao {
 						
 						
 
-						BancoDeDados.setXML(rodada.simtime()+" SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+" - Problema:"+((BAMDescription) query.getDescription()).getProblema()+"->Recomenda BAM"+solution.getBAMNovo()+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
+						BancoDeDados.setXML(rodada.simtime()+" SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+"->Recomenda BAM"+solution.getBAMNovo()+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
 						BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
 						CBRCase novocase = new CBRCase();
@@ -325,69 +325,116 @@ public class TesteSimulacao {
 						
 					}else{
 						System.out.println("Nada a fazer = mesmo BAM");
+						
+						//Agenda avaliar BAM via CBR
+						rodada.schedulep(5, ParametrosDSTE.Janela, null );
 					}
 					
-					
-					
-					
-					
-				}
-				else
-				{
+				}else {
 					//Agenda avaliar BAM via CBR
-					rodada.schedulep(5, ParametrosDSTE.Janela, null);
+					rodada.schedulep(5, ParametrosDSTE.Janela, null );
 				}
-
+					
 				
 				break;
 			case 6:
-				/*//Avalia rentenção
-				CBRQuery queryRetain = null;
+				//Avalia rentenção
+				CBRQuery queryRetain  = null;
 				CBRCase novocase = ((CBRCase)dados.item);
 				
-				if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
-					queryRetain = rodada.estatistica.getQuery(to.link[0],
-							Problemas.AltaDevolucao, to.link[0].bamType);
-					
-
-				} else if (rodada.estatistica.preempcoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLAPreempcoes) {
-					queryRetain = rodada.estatistica.getQuery(to.link[0],
-							Problemas.AltaPreempcao, to.link[0].bamType);
-					
-
-				} else if ((rodada.estatistica.bloqueios(ParametrosDSTE.Janela)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) >= ParametrosDSTE.SLABloqueios)&&((to.link[0].getCargaEnlaceAtual() * 100 / to.link[0].CargaEnlace) <= ParametrosDSTE.SLAUtilizacao)) {
-					queryRetain = rodada.estatistica.getQuery(to.link[0],
-							Problemas.BaixaUtilizacao, to.link[0].bamType);
-					
+				Boolean UCT0, UCT1, UCT2, BCT0, BCT1, BCT2, PCT0, PCT1, PCT2, DCT0, DCT1, DCT2  = null;
+				
+				
+				if ( to.link[0].CargaCTAtual[0]*100/to.link[0].CargaEnlace >=  ParametrosDSTE.SLAUtilizacaoCT[0] ){
+					System.out.println("UtilizaçãoCT0 Okay");
+					UCT0 = true;
+				}else{
+					UCT0 = false;
 				}
-
-				if (queryRetain!=null)
-				{
-					BancoDeDados.setXML(rodada.simtime()+"  - Não reteve - Problema:"+((BAMDescription) queryRetain.getDescription()).getProblema()+":"+((BAMDescription) queryRetain.getDescription()).toString(), rodada.filename);
+				if ( to.link[0].CargaCTAtual[1]*100/to.link[0].CargaEnlace >=  ParametrosDSTE.SLAUtilizacaoCT[1] ){
+					System.out.println("UtilizaçãoCT1 Okay");
+					UCT1 = true;
+				}else{
+					UCT1 = false;
+				}
+				if ( to.link[0].CargaCTAtual[2]*100/to.link[0].CargaEnlace >=  ParametrosDSTE.SLAUtilizacaoCT[2] ){
+					System.out.println("UtilizaçãoCT2 Okay");
+					UCT2 = true;
+				}else{
+					UCT2 = false;
+				}
+				
+				
+				
+				if ( rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLABloqueiosCT[0] ){
+					System.out.println("BloqueiosCT0 Okay");
+					BCT0 = true;
+				}else{
+					BCT0 = false;
+				}
+				if ( rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLABloqueiosCT[1] ){
+					System.out.println("BloqueiosCT1 Okay");
+					BCT1 = true;
+				}else{
+					BCT1 = false;
+				}
+				if ( rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLABloqueiosCT[2] ){
+					System.out.println("BloqueiosCT2 Okay");
+					BCT2 = true;
+				}else{
+					BCT2 = false;
+				}
+				
+				
+				
+				if ( rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLAPreempcoesCT[0] ){
+					System.out.println("PreempcoesCT0 Okay");
+					PCT0 = true;
+				}else{
+					PCT0 = false;
+				}
+				if ( rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLAPreempcoesCT[1] ){
+					System.out.println("PreempcoesCT1 Okay");
+					PCT1 = true;
+				}else{
+					PCT1 = false;
+				}
+				if ( rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLAPreempcoesCT[2] ){
+					System.out.println("PreempcoesCT2 Okay");
+					PCT2 = true;
+				}else{
+					PCT2 = false;
+				}
+				
+				
+				
+				if ( rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLADevolucoesCT[0] ){
+					System.out.println("DevolucoesCT0  Okay");
+					DCT0 = true;
+				}else{
+					DCT0 = false;
+				}
+				if ( rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLADevolucoesCT[1] ){
+					System.out.println("DevolucoesCT1  Okay");
+					DCT1 = true;
+				}else{
+					DCT1 = false;
+				}
+				if ( rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLADevolucoesCT[2] ){
+					System.out.println("DevolucoesCT2  Okay");
+					DCT2 = true;
+				}else{
+					DCT2 = false;
+				}
+				
+				
+				
+				if (UCT0 && UCT1 && UCT2 && BCT0 && BCT1 && BCT2 && PCT0 && PCT1 && PCT2 && DCT0 && DCT1 && DCT2){
 					BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
-					if(!recommender.equal(novocase, recommender.getCaseBaseDB2()))
-					{
-						((BAMDescription)novocase.getDescription()).setCaseId("bam"+(recommender.getCaseBaseDB2().getCases().size()+1));
-						((BAMSolution)novocase.getSolution()).setId("bam"+(recommender.getCaseBaseDB2().getCases().size()+1));
-						jcolibri.method.retain.StoreCasesMethod.storeCase(recommender.getCaseBaseDB2(), novocase);
-					}
-					
-					rodada.schedulep(5, ParametrosDSTE.Janela, null);
-				 }
-				else
-				{
-					
-					BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
-					if(!recommender.equal(novocase, recommender.getCaseBase()))
-					{
-						((BAMDescription)novocase.getDescription()).setCaseId("bam"+(recommender.getCaseBase().getCases().size()+1));
-						((BAMSolution)novocase.getSolution()).setId("bam"+(recommender.getCaseBase().getCases().size()+1));
-						jcolibri.method.retain.StoreCasesMethod.storeCase(recommender.getCaseBase(), novocase);
-					
-					}
-					
-					rodada.schedulep(5, ParametrosDSTE.Janela, null);
-				}*/
+					jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
+				}
+				rodada.schedulep(5, ParametrosDSTE.Janela, null);
+				
 			break;
 			
 			
