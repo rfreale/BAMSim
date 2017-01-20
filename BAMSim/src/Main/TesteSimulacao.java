@@ -357,9 +357,13 @@ public class TesteSimulacao {
 				
 					if(atualCase.getSolution().toString() == novocase.getSolution().toString()){
 						BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
+						((BAMDescription)novocase.getDescription()).setCaseId("bam"+(recommender.getCaseBase().getCases().size()+1));
+						((BAMSolution)novocase.getSolution()).setId("bam"+(recommender.getCaseBase().getCases().size()+1));
 						jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
 					}else{
 						BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
+						((BAMDescription)novocase.getDescription()).setCaseId("bam"+(recommender.getCaseBase().getCases().size()+1));
+						((BAMSolution)novocase.getSolution()).setId("bam"+(recommender.getCaseBase().getCases().size()+1));
 						jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), novocase);
 						
 					}
@@ -370,6 +374,7 @@ public class TesteSimulacao {
 				
 				rodada.schedulep(5, ParametrosDSTE.Janela, null);
 				
+
 				
 				
 				/*Boolean UCT0, UCT1, UCT2, BCT0, BCT1, BCT2, PCT0, PCT1, PCT2, DCT0, DCT1, DCT2  = null;
