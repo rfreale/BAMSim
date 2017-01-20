@@ -1158,7 +1158,6 @@ public class EstatisticasDSTE {
 	
 	public CBRQuery getQuery(Link link, 
 							String  gestor, 
-							BAMType BAMAtual, 
 							int []SLAUtilizacaoCT,
 							int []SLABloqueiosCT,
 							int []SLAPreempcoesCT, 
@@ -1166,14 +1165,16 @@ public class EstatisticasDSTE {
 	{
 		BAMDescription desc = new BAMDescription();
 		
+		
 		try {
 			
 			desc.setGestor(gestor);
 			
 			//Compatibilidade com G-BAM apenas refeltindo MAM, RDM e Alloc
-			if(BAMAtual!=BAMType.PreemptionGBAM)
+			
+			if(link.bamType!=BAMType.PreemptionGBAM)
 			{
-				desc.setBAMAtual(BAMTypes.valueOf(BAMAtual.toString()));
+				desc.setBAMAtual(BAMTypes.valueOf(link.bamType.toString()));
 			}else
 			{
 				//Se BCLTH diferente de 0 é pq reflete Alloc
@@ -1198,9 +1199,9 @@ public class EstatisticasDSTE {
 			
 			desc.setSLAPreempcoesCT0(  SLAPreempcoesCT[0]);
 			desc.setSLAPreempcoesCT1(  SLAPreempcoesCT[1]);
-			//desc.setSLAPreempcoesCT2(  SLAPreempcoesCT[2]);
+			desc.setSLAPreempcoesCT2(  SLAPreempcoesCT[2]);
 			
-			//desc.setSLADevolucoesCT0(  SLADevolucoesCT[0]);
+			desc.setSLADevolucoesCT0(  SLADevolucoesCT[0]);
 			desc.setSLADevolucoesCT1(  SLADevolucoesCT[1]);
 			desc.setSLADevolucoesCT2(  SLADevolucoesCT[2]);
 			
@@ -1222,9 +1223,9 @@ public class EstatisticasDSTE {
 				
 				desc.setNumeroDePreempcoesCT0(this.preempcoesCT(ParametrosDSTE.Janela,0)*100/lspEstablished(ParametrosDSTE.Janela));
 				desc.setNumeroDePreempcoesCT1(this.preempcoesCT(ParametrosDSTE.Janela,1)*100/lspEstablished(ParametrosDSTE.Janela));
-				//desc.setNumeroDePreempcoesCT2(this.preempcoesCT(ParametrosDSTE.Janela,2)*100/lspEstablished(ParametrosDSTE.Janela));
+				desc.setNumeroDePreempcoesCT2(this.preempcoesCT(ParametrosDSTE.Janela,2)*100/lspEstablished(ParametrosDSTE.Janela));
 				
-				//desc.setNumeroDeDevolucoesCT0(this.devolucoesCT(ParametrosDSTE.Janela,0)*100/lspEstablished(ParametrosDSTE.Janela));
+				desc.setNumeroDeDevolucoesCT0(this.devolucoesCT(ParametrosDSTE.Janela,0)*100/lspEstablished(ParametrosDSTE.Janela));
 				desc.setNumeroDeDevolucoesCT1(this.devolucoesCT(ParametrosDSTE.Janela,1)*100/lspEstablished(ParametrosDSTE.Janela));
 				desc.setNumeroDeDevolucoesCT2(this.devolucoesCT(ParametrosDSTE.Janela,2)*100/lspEstablished(ParametrosDSTE.Janela));
 				
@@ -1238,9 +1239,9 @@ public class EstatisticasDSTE {
 				
 				desc.setNumeroDePreempcoesCT0(0);
 				desc.setNumeroDePreempcoesCT1(0);
-				//desc.setNumeroDePreempcoesCT2(0);
+				desc.setNumeroDePreempcoesCT2(0);
 				
-				//desc.setNumeroDeDevolucoesCT0(0);
+				desc.setNumeroDeDevolucoesCT0(0);
 				desc.setNumeroDeDevolucoesCT1(0);
 				desc.setNumeroDeDevolucoesCT2(0);
 				

@@ -30,6 +30,8 @@ public class ParametrosDSTE {
 	public static BAMType BAMTypePadrao = BAMType.PreemptionGBAM;  //NoPreemptionMAM  //PreemptionAllocCTSharing  //PreemptionRDM
 	public static final long Janela = 600;
 	
+	
+	public static final String Gestor = "Eliseu";
 	//SLAs em Percentual
 	
 	public static final int []SLAUtilizacaoCT   = new int [] {35, 40, 45} ;  // ou SLA
