@@ -1148,7 +1148,7 @@ public class EstatisticasDSTE {
 		} 
 
 		
-		retorno+="============================ Fim dos Estatï¿œsticas DSTE ============================";
+		retorno+="============================ Fim dos Estatísticas DSTE ============================";
 
 		
 		

@@ -153,7 +153,8 @@ public class TesteSimulacao {
 				rodada.estatistica.bandaRequestedCT[((Lsp) dados.item).CT] += ((Lsp) dados.item).Carga;
 				Debug.setMensagem("Tipo 1 - Tentar estabelecer LSP "
 						+ ((Lsp) dados.item).ID + " com "
-						+ ((Lsp) dados.item).Carga + " Mbps");
+						+ ((Lsp) dados.item).Carga + " Mbps CT="
+						+ ((Lsp) dados.item).CT  + "");
 				
 				Long tempoInicial=System.nanoTime();
 				Link[] menorCaminho = Roteamento.TryPath_CSPF(
@@ -170,15 +171,13 @@ public class TesteSimulacao {
 					rodada.estatistica.bandaEstabelecida += ((Lsp) dados.item).Carga;
 					rodada.estatistica.bandaEstabelecidaCT[((Lsp) dados.item).CT] += ((Lsp) dados.item).Carga;
 					
-					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID
-							+ " Estabelecida ========");
+					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID + " Estabelecida ========"  + " Em CT=" + ((Lsp) dados.item).CT);
 
 					// agenda desestabelecimento
 					rodada.schedulep(2, ((Lsp) dados.item).tempoDeVida, dados);
 
 				} else {
-					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID
-							+ " Bloqueada ========");
+					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID + " Bloqueada ========" + " Em CT=" + ((Lsp) dados.item).CT );
 					((Lsp) dados.item).status = LspStatus.bloqueada;
 					rodada.estatistica.bloqueios++;
 					rodada.estatistica.bloqueiosCT[((Lsp) dados.item).CT]++;
@@ -189,7 +188,9 @@ public class TesteSimulacao {
 				// Desestabelece LSP: Liberacao da Banda Ocupada
 				Debug.setMensagem("Tipo 2 - Desestabelece LSP "
 						+ ((Lsp) dados.item).ID + " com "
-						+ ((Lsp) dados.item).Carga + " Mbps");
+						+ ((Lsp) dados.item).Carga + " Mbps  CT="
+						+ ((Lsp) dados.item).CT 
+						);
 				((Lsp) dados.item).desestabeleceLSP();
 				rodada.estatistica.lspUnbroken++;
 				rodada.estatistica.lspUnbrokenCT[((Lsp) dados.item).CT]++;
@@ -517,9 +518,9 @@ public class TesteSimulacao {
 			
 
 			}
-			//Debug.setMensagem(" ==== Status dos Links  ====");
-			//Debug.setMensagem(to.statusLinks());
-			//Debug.setMensagem(rodada.imprime_evchain(), 0, 0);
+			Debug.setMensagem(" ==== Status dos Links  ====");
+			Debug.setMensagem(to.statusLinks());
+			Debug.setMensagem(rodada.imprime_evchain(), 0, 0);
 
 		}
 		Debug.setMensagem("\r\n\r\n ==== Status dos Links  ====");
