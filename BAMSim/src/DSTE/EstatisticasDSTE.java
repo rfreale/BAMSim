@@ -246,6 +246,7 @@ public class EstatisticasDSTE {
 			
 
 			rrdDef.addArchive("LAST", ParametrosDSTE.RRDXff, ParametrosDSTE.RRDSteps, ParametrosDSTE.RRDLinhas);
+			rrdDef.addArchive("AVERAGE", ParametrosDSTE.RRDXff, ParametrosDSTE.RRDSteps, ParametrosDSTE.RRDLinhas);
 			RrdDb rrdDb = new RrdDb(rrdDef);
 			rrdDb.close();
 
@@ -309,6 +310,21 @@ public class EstatisticasDSTE {
 			this.bloqueiosCTAUX[i]=this.bloqueiosCT[i];
 		}
 
+	}
+	
+	public double utilizacaoDoEnlaceCT(long time, Link link, int ct) throws IOException, RrdException
+	{
+		
+		//Aponta para o arquivo da base
+		//graphDef.datasource(link.ID+"_CT"+i, "saida/"+filename+"/"+filename+"_links.rrd",link.ID+"_CT"+i, "LAST");
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("AVERAGE", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime-ParametrosDSTE.RRDAmostra);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		double utilizacao= fetchData.getAggregate(link.ID+"_CT"+ct, "AVERAGE");
+		
+		rrdDb.close();
+		return utilizacao;
 	}
 	public int preempcoes(long time) throws IOException, RrdException
 	{
@@ -1210,9 +1226,9 @@ public class EstatisticasDSTE {
 			desc.setBC1( (int) (link.BC[1] * link.CargaEnlace) /100);
 			desc.setBC2( (int) (link.BC[2] * link.CargaEnlace) /100);
 			
-			desc.setUtilizacaoDoEnlaceCT0(link.CargaCTAtual[0]);
-			desc.setUtilizacaoDoEnlaceCT1(link.CargaCTAtual[1]);
-			desc.setUtilizacaoDoEnlaceCT2(link.CargaCTAtual[2]);
+			desc.setUtilizacaoDoEnlaceCT0(this.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,0));
+			desc.setUtilizacaoDoEnlaceCT1(this.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,1));
+			desc.setUtilizacaoDoEnlaceCT2(this.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,2));
 			
 						
 			if (lspRequested(ParametrosDSTE.Janela)!=0)
