@@ -185,6 +185,8 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		BancoDeDados.setXML(query.toString(), "Debug");
 		BancoDeDados.setXML("====+Similar===", "Debug");
 		BancoDeDados.setXML(eval.toArray()[0].toString(), "Debug");
+		BancoDeDados.setXML("", "Debug");
+		
 		BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 		BAMSolution sol = null;
 		CBRCase novocase = new CBRCase();

@@ -216,6 +216,67 @@ public class TesteSimulacao {
 			case 5:
 				//Avalia BAM via CBR
 
+				//BancoDeDados.setXML("UCT0" + "\t" + "UCT1" + "\t" + "UCT2" + "\t" + "BCT0" + "\t" + "BCT1" + "\t" + "BCT2" + "\t" + "PCT0" + "\t" + "PCT1" + "\t" + "PCT2"+ "\t" + "DCT0" + "\t" + "DCT1" + "\t" + "DCT2", "Gerar_base");
+				
+				String nomeBAMAtual = null;
+				
+				if(to.link[0].bamType!=BAMType.PreemptionGBAM)
+				{
+					nomeBAMAtual = to.link[0].bamType.toString();
+				}else
+				{
+					//Se BCLTH diferente de 0 é pq reflete Alloc
+					if (to.link[0].BCLTH[0]!=0)
+						
+						nomeBAMAtual = "PreemptionAllocCTSharing";
+					
+					//Se BCLTH diferente é igual a 0 e BCHTL diferente de 0 é pq reflete RDM
+					else if (to.link[0].BCHTL[2]!=0)
+						
+						nomeBAMAtual = "PreemptionRDM";
+					
+					//Se BCLTH e BCHTL igual a 0 é pq reflete MAM
+					else
+						
+						nomeBAMAtual = "NoPreemptionMAM";
+				}
+				
+				
+				
+				
+				BancoDeDados.setXML( rodada.simtime() + "\t"
+									+ nomeBAMAtual + "\t"
+									+ ParametrosDSTE.Janela + "\t"
+									
+									+ to.link[0].CargaEnlace * to.link[0].BC[0] / 100 + "\t"
+									+ to.link[0].CargaEnlace * to.link[0].BC[1] / 100 + "\t"
+									+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
+									
+									
+									+ to.link[0].CargaCTAtual[0] + "\t"
+									+ to.link[0].CargaCTAtual[1] + "\t"
+									+ to.link[0].CargaCTAtual[2] + "\t"
+									
+				
+									+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) + "\t"
+									+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) + "\t"
+									+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) + "\t"
+									
+									+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
+									+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
+									+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
+									
+									+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
+									+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
+									+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
+
+									
+						
+						, "to_base");
+				
+				
+				
+				
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
 				
@@ -228,28 +289,7 @@ public class TesteSimulacao {
 				
 				if (cbrCase != null) {
 					
-					String nomeBAMAtual = null;
 					
-					if(to.link[0].bamType!=BAMType.PreemptionGBAM)
-					{
-						nomeBAMAtual = to.link[0].bamType.toString();
-					}else
-					{
-						//Se BCLTH diferente de 0 é pq reflete Alloc
-						if (to.link[0].BCLTH[0]!=0)
-							
-							nomeBAMAtual = "PreemptionAllocCTSharing";
-						
-						//Se BCLTH diferente é igual a 0 e BCHTL diferente de 0 é pq reflete RDM
-						else if (to.link[0].BCHTL[2]!=0)
-							
-							nomeBAMAtual = "PreemptionRDM";
-						
-						//Se BCLTH e BCHTL igual a 0 é pq reflete MAM
-						else
-							
-							nomeBAMAtual = "NoPreemptionMAM";
-					}
 					
 					
 					

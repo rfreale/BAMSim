@@ -1247,9 +1247,15 @@ public class EstatisticasDSTE {
 				
 				
 			}
+			/*//BancoDeDados.setXML("UCT0" + "\t" + "UCT1" + "\t" + "UCT2" + "\t" + "BCT0" + "\t" + "BCT1" + "\t" + "BCT2" + "\t" + "PCT0" + "\t" + "PCT1" + "\t" + "PCT2"+ "\t" + "DCT0" + "\t" + "DCT1" + "\t" + "DCT2", "Gerar_base");
 			
-			
-		
+			BancoDeDados.setXML(
+								desc.getUtilizacaoDoEnlaceCT0().toString() + "\t" + desc.getUtilizacaoDoEnlaceCT1().toString() + "\t" + desc.getUtilizacaoDoEnlaceCT2()            + "\t"
+							 +  desc.getNumeroDeBloqueiosCT0().toString()  + "\t" + desc.getNumeroDeBloqueiosCT1().toString()  + "\t" + desc.getNumeroDeBloqueiosCT2().toString()  + "\t"
+							 +  desc.getNumeroDePreempcoesCT0().toString() + "\t" + desc.getNumeroDePreempcoesCT1().toString() + "\t" + desc.getNumeroDePreempcoesCT2().toString() + "\t" 
+							 +  desc.getNumeroDeDevolucoesCT0().toString() + "\t" + desc.getNumeroDeDevolucoesCT1().toString() + "\t" + desc.getNumeroDeDevolucoesCT2().toString() + "\t" 
+							 , "Gerar_base");
+		*/
 		CBRQuery query = new CBRQuery();
 		query.setDescription(desc);
 		
