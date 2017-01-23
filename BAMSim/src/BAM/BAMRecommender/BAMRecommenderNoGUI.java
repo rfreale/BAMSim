@@ -29,6 +29,7 @@ import BAM.BAMRecommender.gui.ResultDialog;
 import BAM.BAMRecommender.gui.RetainDialog;
 import BAM.BAMRecommender.gui.RevisionDialog;
 import BAM.BAMRecommender.gui.SimilarityDialog;
+import DSTE.BancoDeDados;
 import DSTE.ParametrosDSTE;
 import jcolibri.exception.ExecutionException;
 import jcolibri.method.retrieve.RetrievalResult;
@@ -180,7 +181,10 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
 		// Select k cases
 		//Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval,3);
-		
+		BancoDeDados.setXML("====Query===", "Debug");
+		BancoDeDados.setXML(query.toString(), "Debug");
+		BancoDeDados.setXML("====+Similar===", "Debug");
+		BancoDeDados.setXML(eval.toArray()[0].toString(), "Debug");
 		BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 		BAMSolution sol = null;
 		CBRCase novocase = new CBRCase();

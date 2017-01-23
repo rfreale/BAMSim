@@ -1206,13 +1206,13 @@ public class EstatisticasDSTE {
 			desc.setSLADevolucoesCT2(  SLADevolucoesCT[2]);
 			
 						
-			desc.setBC0( (int) (link.BC[0] * link.CargaEnlace) );
-			desc.setBC1( (int) (link.BC[1] * link.CargaEnlace) );
-			desc.setBC2( (int) (link.BC[2] * link.CargaEnlace) );
+			desc.setBC0( (int) (link.BC[0] * link.CargaEnlace) /100);
+			desc.setBC1( (int) (link.BC[1] * link.CargaEnlace) /100);
+			desc.setBC2( (int) (link.BC[2] * link.CargaEnlace) /100);
 			
-			desc.setUtilizacaoDoEnlaceCT0(link.CargaCTAtual[0]*100/link.CargaEnlace);
-			desc.setUtilizacaoDoEnlaceCT1(link.CargaCTAtual[1]*100/link.CargaEnlace);
-			desc.setUtilizacaoDoEnlaceCT2(link.CargaCTAtual[2]*100/link.CargaEnlace);
+			desc.setUtilizacaoDoEnlaceCT0(link.CargaCTAtual[0]);
+			desc.setUtilizacaoDoEnlaceCT1(link.CargaCTAtual[1]);
+			desc.setUtilizacaoDoEnlaceCT2(link.CargaCTAtual[2]);
 			
 						
 			if (lspRequested(ParametrosDSTE.Janela)!=0)

@@ -324,7 +324,7 @@ public class TesteSimulacao {
 						
 						
 					}else{
-						System.out.println("Nada a fazer = mesmo BAM");
+						Debug.setMensagem("Nada a fazer = mesmo BAM");
 						
 						//Agenda avaliar BAM via CBR
 						rodada.schedulep(5, ParametrosDSTE.Janela, null );

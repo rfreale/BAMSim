@@ -47,7 +47,7 @@ public class ParametrosDSTE {
 	public static final long SLABloqueios = 10;
 	public static final long SLAUtilizacao = 80;
 	public static final boolean RecomendacaoCBRSwitchBAM = true;
-	public static final double RecomendacaoCBRLimiarDeCorte = 0.65;
+	public static final double RecomendacaoCBRLimiarDeCorte = 0.85;
 	public static final long TempoSimulacao = 3600*5;//86400
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
