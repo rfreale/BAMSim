@@ -357,7 +357,7 @@ public class BAM {
 		No aux;
 		
 		//verifica se alguém inferior a nova LSP estourará  -> preempcao
-		for(int c=lsp.CT-1; c>=0; c--)
+		for(int c=0 ; c<= lsp.CT-1; c++)
 		{
 			
 			aux = link.ListaLSPsPorCT[c].ultimo; 
