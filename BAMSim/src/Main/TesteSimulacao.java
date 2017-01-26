@@ -107,6 +107,8 @@ public class TesteSimulacao {
 		{
 			rodada.schedulep (5, ParametrosDSTE.Janela+2*ParametrosDSTE.RRDAmostra, null);
 		}
+		rodada.schedulep(7, 0.0, null);
+		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
 		} catch (IOException e) {
@@ -217,87 +219,39 @@ public class TesteSimulacao {
 			case 5:
 				//Avalia BAM via CBR
 
-				//BancoDeDados.setXML("UCT0" + "\t" + "UCT1" + "\t" + "UCT2" + "\t" + "BCT0" + "\t" + "BCT1" + "\t" + "BCT2" + "\t" + "PCT0" + "\t" + "PCT1" + "\t" + "PCT2"+ "\t" + "DCT0" + "\t" + "DCT1" + "\t" + "DCT2", "Gerar_base");
-				
-				String nomeBAMAtual = null;
-				
-				if(to.link[0].bamType!=BAMType.PreemptionGBAM)
-				{
-					nomeBAMAtual = to.link[0].bamType.toString();
-				}else
-				{
-					//Se BCLTH diferente de 0 é pq reflete Alloc
-					if (to.link[0].BCLTH[0]!=0)
-						
-						nomeBAMAtual = "PreemptionAllocCTSharing";
-					
-					//Se BCLTH diferente é igual a 0 e BCHTL diferente de 0 é pq reflete RDM
-					else if (to.link[0].BCHTL[2]!=0)
-						
-						nomeBAMAtual = "PreemptionRDM";
-					
-					//Se BCLTH e BCHTL igual a 0 é pq reflete MAM
-					else
-						
-						nomeBAMAtual = "NoPreemptionMAM";
-				}
-				
-				
-				
-				
-				BancoDeDados.setXML( rodada.simtime() + "\t"
-									+ nomeBAMAtual + "\t"
-									+ ParametrosDSTE.Janela + "\t"
-									
-									+ to.link[0].CargaEnlace * to.link[0].BC[0] / 100 + "\t"
-									+ to.link[0].CargaEnlace * to.link[0].BC[1] / 100 + "\t"
-									+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
-									
-									
-									+ to.link[0].CargaCTAtual[0] + "\t"
-									+ to.link[0].CargaCTAtual[1] + "\t"
-									+ to.link[0].CargaCTAtual[2] + "\t"
-									
-				
-									+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) + "\t"
-									+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) + "\t"
-									+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) + "\t"
-									
-									+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
-									+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
-									+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
-									
-									+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
-									+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
-									+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
-
-									
-						
-						, "to_base");
-				
-				
-				
-				
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
 				
 				query = rodada.estatistica.getQuery(to.link[0], ParametrosDSTE.Gestor, ParametrosDSTE.SLAUtilizacaoCT, ParametrosDSTE.SLABloqueiosCT,ParametrosDSTE.SLAPreempcoesCT,ParametrosDSTE.SLADevolucoesCT);
-				
-				
 				cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
-				
-								
+							
 				
 				if (cbrCase != null) {
 					
+					String nomeBAMAtual = null;
 					
-					
-					
+					if(to.link[0].bamType!=BAMType.PreemptionGBAM)
+					{
+						nomeBAMAtual = to.link[0].bamType.toString();
+					}else
+					{
+						//Se BCLTH diferente de 0 é pq reflete Alloc
+						if (to.link[0].BCLTH[0]!=0)
+							
+							nomeBAMAtual = "PreemptionAllocCTSharing";
+						
+						//Se BCLTH diferente é igual a 0 e BCHTL diferente de 0 é pq reflete RDM
+						else if (to.link[0].BCHTL[2]!=0)
+							
+							nomeBAMAtual = "PreemptionRDM";
+						
+						//Se BCLTH e BCHTL igual a 0 é pq reflete MAM
+						else
+							nomeBAMAtual = "NoPreemptionMAM";
+					}
 					
 					
 					if (!cbrCase.getSolution().equals(nomeBAMAtual) ){
-						
-						
 						
 						BAMSolution solution = (BAMSolution) cbrCase.getSolution();
 						
@@ -514,6 +468,151 @@ public class TesteSimulacao {
 				
 				
 			break;
+			
+			
+			case 7:
+				//Gerar base log debug,etc
+				
+				
+
+				String nomeBAMAtual = null;
+				
+				if(to.link[0].bamType!=BAMType.PreemptionGBAM)
+				{
+					nomeBAMAtual = to.link[0].bamType.toString();
+				}else
+				{
+					//Se BCLTH diferente de 0 é pq reflete Alloc
+					if (to.link[0].BCLTH[0]!=0)
+						
+						nomeBAMAtual = "PreemptionAllocCTSharing";
+					
+					//Se BCLTH diferente é igual a 0 e BCHTL diferente de 0 é pq reflete RDM
+					else if (to.link[0].BCHTL[2]!=0)
+						
+						nomeBAMAtual = "PreemptionRDM";
+					
+					//Se BCLTH e BCHTL igual a 0 é pq reflete MAM
+					else
+						
+						nomeBAMAtual = "NoPreemptionMAM";
+				}
+				
+				
+					
+					if(rodada.simtime() <= 3600*1){
+						BancoDeDados.setXML( ""
+								+ "1ª hora", "to_base");
+												
+					}else if (rodada.simtime() <= 3600*2){// 7.200
+						BancoDeDados.setXML( "2ª hora", "to_base");
+						
+					}else if (rodada.simtime() <= 3600*3){//  10.800
+						BancoDeDados.setXML( "3ª hora", "to_base");
+						
+					}else if (rodada.simtime() <= 3600*4){ //  14.400	
+						BancoDeDados.setXML( "4ª hora", "to_base");
+						
+					}else if (rodada.simtime() <= 3600*5){
+						BancoDeDados.setXML( "5ª hora", "to_base");
+						
+					}else if (rodada.simtime() >= 16800)
+					{
+						BancoDeDados.setXML( "Entrou aqui", "to_base");
+						to.link[0].bamType = BAMType.PreemptionGBAM;
+						to.link[0].BCHTL= new double[]
+						{	0, //BC0 Nunca mudar
+							0, //BC1
+							0 //BC2
+						};
+				
+						to.link[0].BCLTH= new double[]
+						{	0, //BC0 
+							0, //BC1
+							0  //BC2 Nunca mudar
+						};
+						BAM.forcePreemption(to.link[0]);
+					}
+					
+					
+					
+					
+					
+						
+					if (rodada.estatistica.lspRequested(ParametrosDSTE.Janela)!=0){
+					
+					BancoDeDados.setXML( (int) rodada.simtime() + "\t"
+							+ nomeBAMAtual + "\t"
+							+ ParametrosDSTE.Janela + "\t"
+							
+							+ to.link[0].CargaEnlace * to.link[0].BC[0] / 100 + "\t"
+							+ to.link[0].CargaEnlace * to.link[0].BC[1] / 100 + "\t"
+							+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
+							
+							
+							/*+ to.link[0].CargaCTAtual[0] + "\t"
+							+ to.link[0].CargaCTAtual[1] + "\t"
+							+ to.link[0].CargaCTAtual[2] + "\t"*/
+							
+							+ (int)rodada.estatistica.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
+							+ (int)rodada.estatistica.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
+							+ (int)rodada.estatistica.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace + "\t"
+							
+							
+
+							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) + "\t"
+							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) + "\t"
+							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) + "\t"
+							
+							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
+							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
+							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
+							
+							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
+							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
+							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
+							, "to_base");
+					
+					}else {
+						
+						BancoDeDados.setXML( (int) rodada.simtime() + "\t"
+								+ nomeBAMAtual + "\t"
+								+ ParametrosDSTE.Janela + "\t"
+								
+								+ to.link[0].CargaEnlace * to.link[0].BC[0] / 100 + "\t"
+								+ to.link[0].CargaEnlace * to.link[0].BC[1] / 100 + "\t"
+								+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
+								
+								
+								/*+ to.link[0].CargaCTAtual[0] + "\t"
+								+ to.link[0].CargaCTAtual[1] + "\t"
+								+ to.link[0].CargaCTAtual[2] + "\t"*/
+								
+								+ (int)rodada.estatistica.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
+								+ (int)rodada.estatistica.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
+								+ (int)rodada.estatistica.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace + "\t"
+								
+								
+	
+								+ 0 + "\t"
+								+ 0 + "\t"
+								+ 0 + "\t"
+								
+								+ 0 + "\t"
+								+ 0 + "\t"
+								+ 0 + "\t"
+								
+								+ 0 + "\t"
+								+ 0 + "\t"
+								+ 0 + "\t"
+								, "to_base");
+						
+					}
+				
+				
+				rodada.schedulep(7, ParametrosDSTE.RRDAmostra*20, null);
+				
+				break;
 			
 			
 

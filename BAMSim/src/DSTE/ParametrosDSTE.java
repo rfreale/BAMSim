@@ -28,7 +28,7 @@ public class ParametrosDSTE {
 	public static int LINKS = 6; // Número de LINKS (Simplex) do Modelo
 	public static int ROTEADORES = 5; // Número de roteadores DSTE
 	public static BAMType BAMTypePadrao = BAMType.PreemptionGBAM;  //NoPreemptionMAM  //PreemptionAllocCTSharing  //PreemptionRDM
-	public static final long Janela = 600;
+	public static final long Janela = 900;
 	
 	
 	public static final String Gestor = "Eliseu";
@@ -46,9 +46,9 @@ public class ParametrosDSTE {
 	public static final long SLADevolucoes = 5;
 	public static final long SLABloqueios = 10;
 	public static final long SLAUtilizacao = 80;
-	public static final boolean RecomendacaoCBRSwitchBAM = true;
+	public static final boolean RecomendacaoCBRSwitchBAM = false;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.85;
-	public static final long TempoSimulacao = 3600*20;//86400
+	public static final long TempoSimulacao = 3600*6;//86400
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -117,98 +117,125 @@ public class ParametrosDSTE {
 			
 			double tempoDeVida=250;
 			Debug.setMensagem("Cria LSP "+((Lsp)dados.item).ID+" - R0 -->R4");
-			if(rodada.simtime() <= 3600*1)
+			if(rodada.simtime() <= 3600/2) //////////////Primiros 30 min.
 			{
-				if (((Lsp)dados.item).CT==0)
+				if (((Lsp)dados.item).CT==0)    
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
+					lsp.Carga = 0;  ////porque não consigo sincronizar isso
+					((Lsp)dados.item).tempoDeVida=30;
+					rodada.schedulep (3, 30.0, dados);// geracao de trafego
 				}
 				if (((Lsp)dados.item).CT==1)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
+					lsp.Carga = 0;
+					((Lsp)dados.item).tempoDeVida=30;
+					rodada.schedulep (3, 30.0, dados);// geracao de trafego
 				}
 				if (((Lsp)dados.item).CT==2)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
+					lsp.Carga = 0;
+					((Lsp)dados.item).tempoDeVida=30;
+					rodada.schedulep (3, 30.0, dados);// geracao de trafego
 				}
-			}else if (rodada.simtime() <= 3600*2)
+			}else if (rodada.simtime() <= 3600*1)   // Uma hora
 			{
-				if (((Lsp)dados.item).CT==0)
+				if (((Lsp)dados.item).CT==0)    
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
+					lsp.Carga = 0;  ////porque não consigo sincronizar isso
+					((Lsp)dados.item).tempoDeVida=30;
+					rodada.schedulep (3, 30.0, dados);// geracao de trafego
 				}
 				if (((Lsp)dados.item).CT==1)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
-				}
-				if (((Lsp)dados.item).CT==2)
-				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
-				} 
-				// 10.800
-			}else if (rodada.simtime() <= 3600*3)
-			{
-				if (((Lsp)dados.item).CT==0)
-				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
-				}
-				if (((Lsp)dados.item).CT==1)
-				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
+					lsp.Carga = 0;
+					((Lsp)dados.item).tempoDeVida=30;
+					rodada.schedulep (3, 30.0, dados);// geracao de trafego
 				}
 				if (((Lsp)dados.item).CT==2)
 				{
 					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
 					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
 				} 
-			}
-			else if (rodada.simtime() <= 3600*4)// 14.400
+				
+			}else if (rodada.simtime() <= 3600*2)  //   7200 Duas horas
 			{
-				if (((Lsp)dados.item).CT==0)
+				if (((Lsp)dados.item).CT==0)    
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
+					lsp.Carga = 0;  ////porque não consigo sincronizar isso
+					((Lsp)dados.item).tempoDeVida=30;
+					rodada.schedulep (3, 30.0, dados);// geracao de trafego
 				}
 				if (((Lsp)dados.item).CT==1)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
+					lsp.Carga = 0;
+					((Lsp)dados.item).tempoDeVida=30;
+					rodada.schedulep (3, 30.0, dados);// geracao de trafego
 				}
 				if (((Lsp)dados.item).CT==2)
 				{
 					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
-				}
-			}else // 14.400
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(2), dados);
+				} 
+			}
+			else if (rodada.simtime() <= 3600*3)  //  10800  Três horas
 			{
 				if (((Lsp)dados.item).CT==0)
 				{
 					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
 				}
 				if (((Lsp)dados.item).CT==1)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
+					lsp.Carga = 0;
+					((Lsp)dados.item).tempoDeVida=30;
+					rodada.schedulep (3, 30.0, dados);// geracao de trafego
 				}
 				if (((Lsp)dados.item).CT==2)
 				{
 					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(2), dados);
 				}
+			}else if (rodada.simtime() <= 3600*4)// 14.400
+			{
+				if (((Lsp)dados.item).CT==0)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(2), dados);
+				}
+				if (((Lsp)dados.item).CT==1)
+				{
+					lsp.Carga = 0;
+					((Lsp)dados.item).tempoDeVida=30;
+					rodada.schedulep (3, 30.0, dados);// geracao de trafego
+				}
+				if (((Lsp)dados.item).CT==2)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(2), dados);
+				}			
+			}else  /*if (rodada.simtime() <= 3600*5)*/// 18000
+			{
+				if (((Lsp)dados.item).CT==0)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(1), dados);
+				}
+				if (((Lsp)dados.item).CT==1)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(1), dados);
+				}
+				if (((Lsp)dados.item).CT==2)
+				{
+					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(1), dados);
+				}			
 			}
-
-		}
 			
 		
+			
+
+		}
 		
 	}
 	//Aleatório
@@ -379,13 +406,13 @@ public class ParametrosDSTE {
 	
 	public static double [] BCHTLPadrao= new double[]
 			{	0, //BC0 Nunca mudar
-				0, //BC1
-				0 //BC2
+				100, //BC1
+				100 //BC2
 			};
 	
 	public static double [] BCLTHPadrao= new double[]
-			{	0, //BC0 
-				0, //BC1
+			{	100, //BC0 
+				100, //BC1
 				0  //BC2 Nunca mudar
 			};
 		
