@@ -610,7 +610,7 @@ public class TesteSimulacao {
 					}
 				
 				
-				rodada.schedulep(7, ParametrosDSTE.RRDAmostra*20, null);
+				rodada.schedulep(7, 1, null);
 				
 				break;
 			

@@ -56,6 +56,36 @@ import jcolibri.exception.ExecutionException;
 public class BAMTest {
 	
 	@Test
+	public void rrdTest() throws IOException, RrdException
+	{
+		EstatisticasDSTE estatistica = new EstatisticasDSTE("rrdTest");
+		estatistica.inserirDadosRRD(30);
+		estatistica.inserirDadosAbsolutoRRD(30);
+		
+		for (int i=0;i<20;i++)
+		{
+			estatistica.preempcoes=i*10;
+			estatistica.devolucoes=i*20;
+			estatistica.bloqueios=i*30;
+			estatistica.lspEstablished=i*100;
+			estatistica.lspRequested=i*200;
+			
+			
+			estatistica.inserirDadosRRD(30*(i+2));
+			estatistica.inserirDadosAbsolutoRRD(30*(i+2));
+			
+		}
+		
+		
+		//estatistica.gerarRRDPNGlspRequested();
+		//estatistica.gerarRRDPNGlspEstablished();
+		//estatistica.gerarRRDPNGlspUnbroken();
+		//estatistica.gerarRRDPNGpreempcao();
+		//estatistica.gerarRRDPNGbloqueio();
+		//estatistica.gerarRRDPNGdevolucao();
+		estatistica.gerarRRDXML();
+	}
+	@Test
 	public void cbrSimilarityConfigTest()
 	{
 		BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
