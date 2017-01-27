@@ -246,7 +246,7 @@ public class EstatisticasDSTE {
 			
 
 			rrdDef.addArchive("LAST", ParametrosDSTE.RRDXff, ParametrosDSTE.RRDSteps, ParametrosDSTE.RRDLinhas);
-			rrdDef.addArchive("AVERAGE", ParametrosDSTE.RRDXff, ParametrosDSTE.RRDSteps, ParametrosDSTE.RRDLinhas);
+			rrdDef.addArchive("MAX", ParametrosDSTE.RRDXff, ParametrosDSTE.RRDSteps, ParametrosDSTE.RRDLinhas);
 			RrdDb rrdDb = new RrdDb(rrdDef);
 			rrdDb.close();
 
@@ -311,17 +311,30 @@ public class EstatisticasDSTE {
 		}
 
 	}
-	
+	public double utilizacaoDoEnlace(long time, Link link) throws IOException, RrdException
+	{
+		
+		//Aponta para o arquivo da base
+		//graphDef.datasource(link.ID+"_CT"+i, "saida/"+filename+"/"+filename+"_links.rrd",link.ID+"_CT"+i, "LAST");
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime-ParametrosDSTE.RRDAmostra);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		double utilizacao= fetchData.getAggregate(link.ID+"_total", "MAX");
+		
+		rrdDb.close();
+		return utilizacao;
+	}
 	public double utilizacaoDoEnlaceCT(long time, Link link, int ct) throws IOException, RrdException
 	{
 		
 		//Aponta para o arquivo da base
 		//graphDef.datasource(link.ID+"_CT"+i, "saida/"+filename+"/"+filename+"_links.rrd",link.ID+"_CT"+i, "LAST");
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
-		FetchRequest fetchRequest = rrdDb.createFetchRequest("AVERAGE", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime-ParametrosDSTE.RRDAmostra);
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime-ParametrosDSTE.RRDAmostra);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
-		double utilizacao= fetchData.getAggregate(link.ID+"_CT"+ct, "AVERAGE");
+		double utilizacao= fetchData.getAggregate(link.ID+"_CT"+ct, "MAX");
 		
 		rrdDb.close();
 		return utilizacao;
