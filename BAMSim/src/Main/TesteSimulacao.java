@@ -107,7 +107,7 @@ public class TesteSimulacao {
 		{
 			rodada.schedulep (5, ParametrosDSTE.Janela, null);
 		}
-		//rodada.schedulep(7, 0.0, null);
+		rodada.schedulep(7, 0.0, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -500,7 +500,7 @@ public class TesteSimulacao {
 				
 				
 					
-					if(rodada.simtime() <= 3600*1){
+					/*if(rodada.simtime() <= 3600*1){
 						BancoDeDados.setXML( ""
 								+ "1ª hora", "to_base");
 												
@@ -532,7 +532,7 @@ public class TesteSimulacao {
 							0  //BC2 Nunca mudar
 						};
 						BAM.forcePreemption(to.link[0]);
-					}
+					}*/
 					
 					
 					
@@ -550,9 +550,30 @@ public class TesteSimulacao {
 							+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
 							
 							
-							/*+ to.link[0].CargaCTAtual[0] + "\t"
+							+ to.link[0].CargaCTAtual[0] + "\t"
 							+ to.link[0].CargaCTAtual[1] + "\t"
-							+ to.link[0].CargaCTAtual[2] + "\t"*/
+							+ to.link[0].CargaCTAtual[2] + "\t"
+							
+														
+							
+							+ rodada.estatistica.preempcoes + "\t"
+							+ rodada.estatistica.devolucoes + "\t"
+							+ rodada.estatistica.bloqueios + "\t"
+							+ rodada.estatistica.lspRequested + "\t"
+							
+							+ rodada.estatistica.preempcoesCT[0] + "\t"
+							+ rodada.estatistica.preempcoesCT[1] + "\t"
+							+ rodada.estatistica.preempcoesCT[2] + "\t"
+
+							+ rodada.estatistica.devolucoesCT[0] + "\t"
+							+ rodada.estatistica.devolucoesCT[1] + "\t"
+							+ rodada.estatistica.devolucoesCT[2] + "\t"
+							
+							+ rodada.estatistica.bloqueiosCT[0] + "\t"
+							+ rodada.estatistica.bloqueiosCT[1] + "\t"
+							+ rodada.estatistica.bloqueiosCT[2] + "\t"
+											
+
 							
 							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
 							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
@@ -584,9 +605,27 @@ public class TesteSimulacao {
 								+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
 								
 								
-								/*+ to.link[0].CargaCTAtual[0] + "\t"
+								+ to.link[0].CargaCTAtual[0] + "\t"
 								+ to.link[0].CargaCTAtual[1] + "\t"
-								+ to.link[0].CargaCTAtual[2] + "\t"*/
+								+ to.link[0].CargaCTAtual[2] + "\t"
+								
+								
+								+ rodada.estatistica.preempcoes + "\t"
+								+ rodada.estatistica.devolucoes + "\t"
+								+ rodada.estatistica.bloqueios + "\t"
+								+ rodada.estatistica.lspRequested + "\t"
+								
+								+ rodada.estatistica.preempcoesCT[0] + "\t"
+								+ rodada.estatistica.preempcoesCT[1] + "\t"
+								+ rodada.estatistica.preempcoesCT[2] + "\t"
+
+								+ rodada.estatistica.devolucoesCT[0] + "\t"
+								+ rodada.estatistica.devolucoesCT[1] + "\t"
+								+ rodada.estatistica.devolucoesCT[2] + "\t"
+								
+								+ rodada.estatistica.bloqueiosCT[0] + "\t"
+								+ rodada.estatistica.bloqueiosCT[1] + "\t"
+								+ rodada.estatistica.bloqueiosCT[2] + "\t"
 								
 								+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
 								+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
