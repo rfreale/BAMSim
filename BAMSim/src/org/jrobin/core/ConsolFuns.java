@@ -51,4 +51,9 @@ public interface ConsolFuns {
 	 * Constant to represent TOTAL consolidation function
 	 */
 	public static final String CF_TOTAL = "TOTAL";
+	
+	/**
+	 * Constant to represent SUM consolidation function
+	 */
+	public static final String CF_SUM = "SUM";
 }

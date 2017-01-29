@@ -53,14 +53,14 @@ public class ParametrosDSTE {
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
 	 */
-	public static final long RRDStarTime = 1451617200;  //start /// date +"%s"
-	public static final long RRDAmostra = 30;  //step
-	public static final long RRDBatida =RRDAmostra*2 ; //heartbeat
+	public static final long RRDStarTime = 1483239600;  //start /// date +"%s"
+	//public static final long RRDAmostra = 30;  //step
+	public static final long RRDBatida =60 ; //heartbeat
 	public static final double RRDMin =Double.NaN;    //valor mínimo fora dos quais não deve ser considerada a leitura.
 	public static final double RRDMax = Double.NaN;   //valor máximo fora dos quais não deve ser considerada a leitura.
 	public static final double RRDXff = 0.5;   //percentagem de pontos primÃ¡rios que podem ser 'desconhecidos'
-	public static final int RRDSteps = 2;  //Número de 'steps' que devemos esperar até armazenarmos no arquivo o valor da leitura
-	public static final int RRDLinhas= (int) (TempoSimulacao/(RRDSteps*RRDAmostra));  //rows  quantas leituras vamos armazenar.
+	public static final int RRDSteps = 1;  //Número de 'steps' que devemos esperar até armazenarmos no arquivo o valor da leitura
+	public static final int RRDLinhas= (int) (TempoSimulacao/(RRDSteps*RRDBatida));  //rows  quantas leituras vamos armazenar.
 	
 	public static final Boolean topologiaManual= false;
 	public static final Boolean matrizCaminhosManual= false;

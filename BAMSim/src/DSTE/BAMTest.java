@@ -58,32 +58,103 @@ public class BAMTest {
 	@Test
 	public void rrdTest() throws IOException, RrdException
 	{
-		EstatisticasDSTE estatistica = new EstatisticasDSTE("rrdTest");
-		estatistica.inserirDadosRRD(30);
-		estatistica.inserirDadosAbsolutoRRD(30);
+		RodadaDeSimulacao r = new RodadaDeSimulacao();
+		EstatisticasDSTE estatistica = r.estatistica;
+		Debug.filename=r.filename;
 		
-		for (int i=0;i<20;i++)
+		/*
+		//Inicia Base zerada
+		estatistica.inserirDadosAbsolutoRRD(-ParametrosDSTE.RRDBatida*2+1);
+		//Inicia Base zerada
+		estatistica.inserirDadosRRD(-ParametrosDSTE.RRDBatida*2+1);
+		*/
+
+		
+		
+		int i=0;
+		estatistica.lspUnbroken=30;
+		estatistica.preempcoes=10;
+		estatistica.devolucoes=20;
+		estatistica.lspEstablished=60;
+		estatistica.bloqueios=40;
+		estatistica.lspRequested=100;
+		estatistica.inserirDadosRRD(0);
+		estatistica.inserirDadosAbsolutoRRD(0);
+		
+		for (i=2;i<=20;i++)
 		{
-			estatistica.preempcoes=i*10;
-			estatistica.devolucoes=i*20;
-			estatistica.bloqueios=i*30;
-			estatistica.lspEstablished=i*100;
-			estatistica.lspRequested=i*200;
+			estatistica.lspUnbroken=30*i;
+			estatistica.preempcoes=10*i;
+			estatistica.devolucoes=20*i;
+			estatistica.lspEstablished=60*i;
+			estatistica.bloqueios=40*i;
+			estatistica.lspRequested=100*i;
 			
 			
-			estatistica.inserirDadosRRD(30*(i+2));
-			estatistica.inserirDadosAbsolutoRRD(30*(i+2));
+			estatistica.inserirDadosRRD(ParametrosDSTE.RRDBatida*(i-1));
+			estatistica.inserirDadosAbsolutoRRD(ParametrosDSTE.RRDBatida*(i-1));
+			System.out.println("preempções-base="+estatistica.preempcoesAUX);
+			System.out.println("preempções="+estatistica.preempcoes(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
+			System.out.println("preempções="+estatistica.preempcoesAbsoluto(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
 			
 		}
-		
-		
-		//estatistica.gerarRRDPNGlspRequested();
-		//estatistica.gerarRRDPNGlspEstablished();
-		//estatistica.gerarRRDPNGlspUnbroken();
-		//estatistica.gerarRRDPNGpreempcao();
-		//estatistica.gerarRRDPNGbloqueio();
-		//estatistica.gerarRRDPNGdevolucao();
 		estatistica.gerarRRDXML();
+
+		
+		Topologia to = new Topologia();
+		to.carregarTopologiaArquivo();
+		
+		estatistica.iniciarRRDLinks(to);
+		
+		estatistica.statusLinks(to, -60);
+		
+		
+		Lsp lsp = new Lsp(r);
+		lsp.CargaReduzida = 0;
+		lsp.src = 0; //id do router fonte
+		lsp.dest = 1; // id do router destino
+		lsp.CT =0;
+		lsp.Carga = 10;
+		
+		to.link[0].insereLsp(lsp);
+
+		estatistica.statusLinks(to, 0);
+		
+		
+		for (i=2;i<=20;i++)
+		{
+			lsp = new Lsp(r);
+			lsp.CargaReduzida = 0;
+			lsp.src = 0; //id do router fonte
+			lsp.dest = 1; // id do router destino
+			lsp.CT =(i-1)%3;
+			lsp.Carga = (((i-1)%3)+1) * 10;
+			
+			to.link[0].insereLsp(lsp);
+
+			estatistica.statusLinks(to, ParametrosDSTE.RRDBatida*(i-1));
+			System.out.println("utilização="+estatistica.picoDeUtilizacaoDoEnlace(ParametrosDSTE.RRDBatida*5, to.link[0]));
+			
+			if (i%5==4)
+			{
+				to.link[0].removeLsp((Lsp)to.link[0].ListaLSPs.primeiro.prox.item);
+				to.link[0].removeLsp((Lsp)to.link[0].ListaLSPs.primeiro.prox.item);
+				to.link[0].removeLsp((Lsp)to.link[0].ListaLSPs.primeiro.prox.item);
+			}
+			
+
+		}
+		estatistica.gerarLinksRRDXML();
+		
+		
+		
+		estatistica.gerarRRDPNGlspRequested();
+		estatistica.gerarRRDPNGlspEstablished();
+		estatistica.gerarRRDPNGlspUnbroken();
+		estatistica.gerarRRDPNGpreempcao();
+		estatistica.gerarRRDPNGbloqueio();
+		estatistica.gerarRRDPNGdevolucao();
+		estatistica.gerarLinkRRDPNG(to);
 	}
 	@Test
 	public void cbrSimilarityConfigTest()
@@ -704,14 +775,14 @@ public class BAMTest {
 	{
 		//Criar base
 		RrdDef rrdDef = new RrdDef("BAMSim.rrd");
-		rrdDef.setStep(ParametrosDSTE.RRDAmostra);
+		rrdDef.setStep(ParametrosDSTE.RRDBatida);
 		long starTime = ParametrosDSTE.RRDStarTime;
 		System.out.println(starTime);
 		rrdDef.setStartTime(starTime);
-		rrdDef.addDatasource("preempcao", "GAUGE", ParametrosDSTE.RRDAmostra, Double.NaN, Double.NaN);
-		rrdDef.addDatasource("bloqueio", "GAUGE", ParametrosDSTE.RRDAmostra, Double.NaN, Double.NaN);
-		rrdDef.addDatasource("devolucao", "GAUGE", ParametrosDSTE.RRDAmostra, Double.NaN, Double.NaN);
-		rrdDef.addDatasource("utilizacao", "GAUGE", ParametrosDSTE.RRDAmostra, Double.NaN, Double.NaN);
+		rrdDef.addDatasource("preempcao", "GAUGE", ParametrosDSTE.RRDBatida, Double.NaN, Double.NaN);
+		rrdDef.addDatasource("bloqueio", "GAUGE", ParametrosDSTE.RRDBatida, Double.NaN, Double.NaN);
+		rrdDef.addDatasource("devolucao", "GAUGE", ParametrosDSTE.RRDBatida, Double.NaN, Double.NaN);
+		rrdDef.addDatasource("utilizacao", "GAUGE", ParametrosDSTE.RRDBatida, Double.NaN, Double.NaN);
 		rrdDef.addArchive("MIN", 0.5, 12, 1440);
 		rrdDef.addArchive("MAX", 0.5, 12, 1440);
 		rrdDef.addArchive("AVERAGE", 0.5, 1, 1440);

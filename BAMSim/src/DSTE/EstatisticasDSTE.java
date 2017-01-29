@@ -97,11 +97,11 @@ public class EstatisticasDSTE {
 	public Font graphLargeFont=new Font("Arial", Font.BOLD, 70);
 	public Font graphSmallFont=new Font("Arial", Font.BOLD, 40);
 	public int graphMinorUnit=RrdGraphConstants.MINUTE;
-	public	int graphMinorUnitCount= 5;
-	public	int graphMajorUnit=RrdGraphConstants.HOUR;
-	public	int graphMajorUnitCount=1;
-	public	int graphLabelUnit=RrdGraphConstants.HOUR;
-	public	int graphLabelUnitCount=1;
+	public	int graphMinorUnitCount= 1;
+	public	int graphMajorUnit=RrdGraphConstants.MINUTE;
+	public	int graphMajorUnitCount=10;
+	public	int graphLabelUnit=RrdGraphConstants.MINUTE;
+	public	int graphLabelUnitCount=5;
 	public	int graphLabelSpan= 0;
 	public	String graphSimpleDateFormat="HH:mm";
     
@@ -148,8 +148,9 @@ public class EstatisticasDSTE {
 		    
 			rrdDef = new RrdDef(outputfile.getPath());
 	
-			rrdDef.setStep(ParametrosDSTE.RRDAmostra);
-			rrdDef.setStartTime(starTime);
+			rrdDef.setStep(ParametrosDSTE.RRDBatida);
+			//Inicia um pouco antes para iniciar a base com zeros
+			rrdDef.setStartTime(starTime-ParametrosDSTE.RRDBatida*2);
 			rrdDef.addDatasource("preempcao", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax );
 			for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 			{
@@ -175,9 +176,7 @@ public class EstatisticasDSTE {
 			RrdDb rrdDb = new RrdDb(rrdDef);
 			rrdDb.close();
 			
-			
-			
-			
+
 			//Criar base com valores absolutos da amostra
 			this.filename=filename;
 			curretTime=starTime;
@@ -186,8 +185,9 @@ public class EstatisticasDSTE {
 		    
 			rrdDef = new RrdDef(outputfile.getPath());
 	
-			rrdDef.setStep(ParametrosDSTE.RRDAmostra);
-			rrdDef.setStartTime(starTime);
+			rrdDef.setStep(ParametrosDSTE.RRDBatida);
+			//Inicia um pouco antes para iniciar a base com zeros
+			rrdDef.setStartTime(starTime-ParametrosDSTE.RRDBatida*2);
 			rrdDef.addDatasource("preempcao", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax );
 			for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 			{
@@ -209,9 +209,14 @@ public class EstatisticasDSTE {
 			rrdDef.addDatasource("bandaUnbroken", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			rrdDef.addDatasource("bandaRequested", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			
-			rrdDef.addArchive("LAST", ParametrosDSTE.RRDXff, ParametrosDSTE.RRDSteps, ParametrosDSTE.RRDLinhas);
+			rrdDef.addArchive("SUM", ParametrosDSTE.RRDXff, ParametrosDSTE.RRDSteps, ParametrosDSTE.RRDLinhas);
 			rrdDb = new RrdDb(rrdDef);
 			rrdDb.close();
+			
+			//Insere valores zerados para iniciar corretamente as bases
+			this.inserirDadosRRD(-60);
+			this.inserirDadosAbsolutoRRD(-60);
+			
 		} catch ( IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -233,8 +238,8 @@ public class EstatisticasDSTE {
 			rrdDef = new RrdDef(outputfile.getPath());
 		
 	
-			rrdDef.setStep(ParametrosDSTE.RRDAmostra);
-			rrdDef.setStartTime(starTime);
+			rrdDef.setStep(ParametrosDSTE.RRDBatida);
+			rrdDef.setStartTime(starTime-2*ParametrosDSTE.RRDBatida);
 			for(Link aux : to.link)
 			{
 				for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
@@ -311,13 +316,13 @@ public class EstatisticasDSTE {
 		}
 
 	}
-	public double utilizacaoDoEnlace(long time, Link link) throws IOException, RrdException
+	public double picoDeUtilizacaoDoEnlace(long time, Link link) throws IOException, RrdException
 	{
 		
 		//Aponta para o arquivo da base
 		//graphDef.datasource(link.ID+"_CT"+i, "saida/"+filename+"/"+filename+"_links.rrd",link.ID+"_CT"+i, "LAST");
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
-		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime-ParametrosDSTE.RRDAmostra);
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		double utilizacao= fetchData.getAggregate(link.ID+"_total", "MAX");
@@ -325,13 +330,13 @@ public class EstatisticasDSTE {
 		rrdDb.close();
 		return utilizacao;
 	}
-	public double utilizacaoDoEnlaceCT(long time, Link link, int ct) throws IOException, RrdException
+	public double picoDeUtilizacaoDoEnlaceCT(long time, Link link, int ct) throws IOException, RrdException
 	{
 		
 		//Aponta para o arquivo da base
 		//graphDef.datasource(link.ID+"_CT"+i, "saida/"+filename+"/"+filename+"_links.rrd",link.ID+"_CT"+i, "LAST");
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
-		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime-ParametrosDSTE.RRDAmostra);
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		double utilizacao= fetchData.getAggregate(link.ID+"_CT"+ct, "MAX");
@@ -343,10 +348,22 @@ public class EstatisticasDSTE {
 	{
 		//Aponta para o arquivo da base
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
-		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		int prempcoes=(int) (fetchData.getAggregate("preempcao", "MAX")-fetchData.getAggregate("preempcao", "MIN"));
+		
+		rrdDb.close();
+		return prempcoes;
+	}
+	public int preempcoesAbsoluto(long time) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_absoluto.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("SUM", curretTime-time,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int prempcoes=(int) (fetchData.getAggregate("preempcao", "SUM"));
 		
 		rrdDb.close();
 		return prempcoes;
@@ -355,7 +372,7 @@ public class EstatisticasDSTE {
 	{
 		//Aponta para o arquivo da base
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
-		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		int prempcoes=(int) (fetchData.getAggregate("preempcao_CT"+ct, "MAX")-fetchData.getAggregate("preempcao_CT"+ct, "MIN"));
@@ -367,7 +384,7 @@ public class EstatisticasDSTE {
 	{
 		//Aponta para o arquivo da base
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
-		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		int lspRequested=(int) (fetchData.getAggregate("lspRequested", "MAX")-fetchData.getAggregate("lspRequested", "MIN"));
@@ -380,7 +397,7 @@ public class EstatisticasDSTE {
 	{
 		//Aponta para o arquivo da base
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
-		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		int lspEstablished=(int) (fetchData.getAggregate("lspEstablished", "MAX")-fetchData.getAggregate("lspEstablished", "MIN"));
@@ -392,7 +409,7 @@ public class EstatisticasDSTE {
 	{
 		//Aponta para o arquivo da base
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
-		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		int bloqueios=(int) (fetchData.getAggregate("bloqueio", "MAX")-fetchData.getAggregate("bloqueio", "MIN"));
@@ -404,7 +421,7 @@ public class EstatisticasDSTE {
 	{
 		//Aponta para o arquivo da base
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
-		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		int bloqueios=(int) (fetchData.getAggregate("bloqueio_CT"+ct, "MAX")-fetchData.getAggregate("bloqueio_CT"+ct, "MIN"));
@@ -416,7 +433,7 @@ public class EstatisticasDSTE {
 	{
 		//Aponta para o arquivo da base
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
-		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		int devolucoes=(int) (fetchData.getAggregate("devolucao", "MAX")-fetchData.getAggregate("devolucao", "MIN"));
@@ -427,7 +444,7 @@ public class EstatisticasDSTE {
 	{
 		//Aponta para o arquivo da base
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
-		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDAmostra,curretTime);
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		int devolucoes=(int) (fetchData.getAggregate("devolucao_CT"+ct, "MAX")-fetchData.getAggregate("devolucao_CT"+ct, "MIN"));
@@ -470,7 +487,7 @@ public class EstatisticasDSTE {
 		//graphDef.setMinValue(0);
 		//graphDef2.setStep(3600);
 		graphDef2.setTitle("LSPs Requested");
-		graphDef2.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "LAST");
+		graphDef2.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "SUM");
 		
 		graphDef2.area("lspRequested", Color.gray, "LSPs Requested");
 		graphDef2.setWidth(this.graphWidth);
@@ -542,7 +559,7 @@ public class EstatisticasDSTE {
 		//graphDef.setMinValue(0);
 		//graphDef2.setStep(3600);
 		graphDef2.setTitle("LSPs Unbroken");
-		graphDef2.datasource("lspUnbroken", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspUnbroken", "LAST");
+		graphDef2.datasource("lspUnbroken", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspUnbroken", "SUM");
 		
 		graphDef2.area("lspUnbroken", Color.gray, "LSPs Unbroken");
 		graphDef2.setWidth(this.graphWidth);
@@ -614,7 +631,7 @@ public class EstatisticasDSTE {
 		//graphDef.setMinValue(0);
 		//graphDef2.setStep(3600);
 		graphDef2.setTitle("LSPs Established");
-		graphDef2.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "LAST");
+		graphDef2.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "SUM");
 		
 		graphDef2.area("lspEstablished", Color.gray, "LSPs Established");
 		graphDef2.setWidth(this.graphWidth);
@@ -634,8 +651,8 @@ public class EstatisticasDSTE {
   		graphDef3.setVerticalLabel("Percent");
   		//graphDef.setMinValue(0);
   		graphDef3.setTitle("LSPs Established x LSPs Requested (Percent)");
-  		graphDef3.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "LAST");
-  		graphDef3.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "LAST");
+  		graphDef3.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "SUM");
+  		graphDef3.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "SUM");
   		graphDef3.datasource("lspEstablisheds", "lspEstablished,lspRequested,/,100,*");
   		graphDef3.area("lspEstablisheds", Color.gray, "% Established");
   		graphDef3.setWidth(this.graphWidth);
@@ -713,13 +730,13 @@ public class EstatisticasDSTE {
 		graphDef2.setVerticalLabel("Number");
 		//graphDef.setMinValue(0);
 		graphDef2.setTitle("Preemptions x LSPs Established");
-		graphDef2.datasource("preempcao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao", "LAST");
-		graphDef2.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "LAST");
+		graphDef2.datasource("preempcao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao", "SUM");
+		graphDef2.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "SUM");
 		graphDef2.area("lspEstablished", Color.GREEN, "LSPs Established");
 		graphDef2.area("preempcao", Color.RED, "Preemptions");
 		for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 		{
-			graphDef2.datasource("preempcao_CT"+i, "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao_CT"+i, "LAST");
+			graphDef2.datasource("preempcao_CT"+i, "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao_CT"+i, "SUM");
 			graphDef2.line("preempcao_CT"+i, cores[i], "Preemptions in TC"+i, graphWidthLine);
 			
 		}
@@ -741,8 +758,8 @@ public class EstatisticasDSTE {
 		//graphDef.setMinValue(0);
 		graphDef3.setTitle("Preemptions X LSPs Established (Percent)");
 
-		graphDef3.datasource("preempcao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao", "LAST");
-		graphDef3.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "LAST");
+		graphDef3.datasource("preempcao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao", "SUM");
+		graphDef3.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "SUM");
 		graphDef3.datasource("prempcoes", "preempcao,lspEstablished,/,100,*");
 		graphDef3.area("prempcoes", Color.gray, "% Preemptions");
 		
@@ -826,14 +843,14 @@ public class EstatisticasDSTE {
 		graphDef2.setVerticalLabel("Number");
 		//graphDef.setMinValue(0);
 		graphDef2.setTitle("Blocking x LSPs Requested");
-		graphDef2.datasource("bloqueio", "saida/"+filename+"/"+filename+"_absoluto.rrd", "bloqueio", "LAST");
-		graphDef2.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "LAST");
+		graphDef2.datasource("bloqueio", "saida/"+filename+"/"+filename+"_absoluto.rrd", "bloqueio", "SUM");
+		graphDef2.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "SUM");
 		graphDef2.area("lspRequested", Color.GREEN, "LSPs Requested");
 		graphDef2.area("bloqueio", Color.RED, "Blocking");
 		
 		for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 		{
-			graphDef2.datasource("bloqueio_CT"+i, "saida/"+filename+"/"+filename+"_absoluto.rrd", "bloqueio_CT"+i, "LAST");
+			graphDef2.datasource("bloqueio_CT"+i, "saida/"+filename+"/"+filename+"_absoluto.rrd", "bloqueio_CT"+i, "SUM");
 			graphDef2.line("bloqueio_CT"+i, cores[i], "Blocking in TC"+i, graphWidthLine);
 			
 		}
@@ -855,8 +872,8 @@ public class EstatisticasDSTE {
 		graphDef3.setVerticalLabel("Percent");
 		//graphDef.setMinValue(0);
 		graphDef3.setTitle("Blocking x LSPs Requested (Percent)");
-		graphDef3.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "LAST");
-		graphDef3.datasource("bloqueio", "saida/"+filename+"/"+filename+"_absoluto.rrd", "bloqueio", "LAST");
+		graphDef3.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "SUM");
+		graphDef3.datasource("bloqueio", "saida/"+filename+"/"+filename+"_absoluto.rrd", "bloqueio", "SUM");
 		graphDef3.datasource("bloqueios", "bloqueio,lspRequested,/,100,*");
 		graphDef3.area("bloqueios", Color.gray, "% Blocking");
 		graphDef3.setWidth(this.graphWidth);
@@ -935,13 +952,13 @@ public class EstatisticasDSTE {
 		graphDef2.setVerticalLabel("Number");
 		//graphDef.setMinValue(0);
 		graphDef2.setTitle("Devolutions x LSPs Established");
-		graphDef2.datasource("devolucao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "devolucao", "LAST");
-		graphDef2.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "LAST");
+		graphDef2.datasource("devolucao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "devolucao", "SUM");
+		graphDef2.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "SUM");
 		graphDef2.area("lspEstablished", Color.GREEN, "LSPs Established");
 		graphDef2.area("devolucao", Color.RED, "Devolutions");
 		for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 		{
-			graphDef2.datasource("devolucao_CT"+i, "saida/"+filename+"/"+filename+"_absoluto.rrd", "devolucao_CT"+i, "LAST");
+			graphDef2.datasource("devolucao_CT"+i, "saida/"+filename+"/"+filename+"_absoluto.rrd", "devolucao_CT"+i, "SUM");
 			graphDef2.line("devolucao_CT"+i, cores[i], "Devolutions in  TC"+i, graphWidthLine);
 			
 		}
@@ -961,8 +978,8 @@ public class EstatisticasDSTE {
 		graphDef3.setVerticalLabel("Percent");
 		//graphDef.setMinValue(0);
 		graphDef3.setTitle("Devolutions x LSP Established (Percent)");
-		graphDef3.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "LAST");
-		graphDef3.datasource("devolucao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "devolucao", "LAST");
+		graphDef3.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "SUM");
+		graphDef3.datasource("devolucao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "devolucao", "SUM");
 		graphDef3.datasource("devolucoes", "devolucao,lspEstablished,/,100,*");
 		graphDef3.area("devolucoes", Color.gray, "% Devolutions");
 		graphDef3.setWidth(this.graphWidth);
@@ -973,7 +990,26 @@ public class EstatisticasDSTE {
         		this.graphMajorUnit, this.graphLabelUnitCount,
         		this.graphLabelUnit, this.graphLabelUnitCount,
         		this.graphLabelSpan, this.graphSimpleDateFormat);
+      /*  
+      //Janela
 		
+  		RrdGraphDef graphDef4 = new RrdGraphDef();
+  		graphDef4.setTimeSpan(starTime,curretTime);
+  		graphDef4.setMaxValue(100);
+  		graphDef4.setVerticalLabel("Percent");
+  		//graphDef4.setMinValue(0);
+  		graphDef4.setTitle("Devolutions (Janela)");
+  		graphDef4.datasource("devolucao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "devolucao", "TOTAL");
+  		graphDef4.area("devolucao", Color.gray, "% Devolutions");
+  		graphDef4.setWidth(this.graphWidth);
+  		graphDef4.setHeight(this.graphHeight);
+  		graphDef4.setLargeFont(this.graphLargeFont);
+  		graphDef4.setSmallFont(this.graphSmallFont);
+  		graphDef4.setTimeAxis(this.graphMinorUnit, this.graphMinorUnitCount,
+          		this.graphMajorUnit, this.graphLabelUnitCount,
+          		this.graphLabelUnit, this.graphLabelUnitCount,
+          		this.graphLabelSpan, this.graphSimpleDateFormat);
+		*/
 		
 		//acumulado
 		RrdGraph graph = new RrdGraph(graphDef);
@@ -1007,6 +1043,18 @@ public class EstatisticasDSTE {
   	    outputfile = new File("saida/"+filename+"/"+filename+"_devolucao_percent.png");
   	    outputfile.mkdirs();
   	    ImageIO.write(img,"png",outputfile);
+  	    
+  	    /*
+  	    //Por Janela
+		graph = new RrdGraph(graphDef4);
+		totalWidth=graph.getRrdGraphInfo().getWidth();
+	    totalHeight=graph.getRrdGraphInfo().getHeight();
+	    img=new BufferedImage(totalWidth,totalHeight,BufferedImage.TYPE_USHORT_565_RGB);
+	    gfx=img.getGraphics();
+	    graph.render(gfx);
+	    outputfile = new File("saida/"+filename+"/"+filename+"_devolucao_janela.png");
+	    outputfile.mkdirs();
+	    ImageIO.write(img,"png",outputfile);*/
 
   	    
 
@@ -1239,9 +1287,9 @@ public class EstatisticasDSTE {
 			desc.setBC1( (int) (link.BC[1] * link.CargaEnlace) /100);
 			desc.setBC2( (int) (link.BC[2] * link.CargaEnlace) /100);
 			
-			desc.setUtilizacaoDoEnlaceCT0(this.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,0));
-			desc.setUtilizacaoDoEnlaceCT1(this.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,1));
-			desc.setUtilizacaoDoEnlaceCT2(this.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,2));
+			desc.setUtilizacaoDoEnlaceCT0(this.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,0));
+			desc.setUtilizacaoDoEnlaceCT1(this.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,1));
+			desc.setUtilizacaoDoEnlaceCT2(this.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,2));
 			
 						
 			if (lspRequested(ParametrosDSTE.Janela)!=0)

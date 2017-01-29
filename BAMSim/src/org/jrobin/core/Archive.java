@@ -168,6 +168,12 @@ public class Archive implements RrdUpdater, ConsolFuns {
 			else if (consolFunString.equals(CF_AVERAGE)) {
 				state.setAccumValue(Util.sum(accumValue, value));
 			}
+			else if (consolFunString.equals(CF_TOTAL)) {
+				state.setAccumValue(Util.sum(accumValue, value));
+			}
+			else if (consolFunString.equals(CF_SUM)) {
+				state.setAccumValue(Util.sum(accumValue, value));
+			}
 		}
 	}
 

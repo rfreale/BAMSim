@@ -100,14 +100,14 @@ public class TesteSimulacao {
 		rodada.schedulep (3, 0.0, null);	
 
 		// agenda estatísticas
-		rodada.schedulep(4, ParametrosDSTE.RRDAmostra, null);
+		rodada.schedulep(4, ParametrosDSTE.RRDBatida, null);
 
 		// agenda avaliação CBR
 		if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
 		{
-			rodada.schedulep (5, ParametrosDSTE.Janela+2*ParametrosDSTE.RRDAmostra, null);
+			rodada.schedulep (5, ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida, null);
 		}
-		rodada.schedulep(7, 0.0, null);
+		//rodada.schedulep(7, 0.0, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -214,7 +214,7 @@ public class TesteSimulacao {
 				rodada.estatistica.inserirDadosAbsolutoRRD((long) rodada.simtime());
 				rodada.estatistica.statusLinks(to, (long) rodada.simtime());
 
-				rodada.schedulep(4, ParametrosDSTE.RRDAmostra, null);
+				rodada.schedulep(4, ParametrosDSTE.RRDBatida, null);
 				break;
 			case 5:
 				//Avalia BAM via CBR
@@ -554,9 +554,9 @@ public class TesteSimulacao {
 							+ to.link[0].CargaCTAtual[1] + "\t"
 							+ to.link[0].CargaCTAtual[2] + "\t"*/
 							
-							+ (int)rodada.estatistica.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
-							+ (int)rodada.estatistica.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
-							+ (int)rodada.estatistica.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace + "\t"
+							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
+							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
+							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace + "\t"
 							
 							
 
@@ -588,9 +588,9 @@ public class TesteSimulacao {
 								+ to.link[0].CargaCTAtual[1] + "\t"
 								+ to.link[0].CargaCTAtual[2] + "\t"*/
 								
-								+ (int)rodada.estatistica.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
-								+ (int)rodada.estatistica.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
-								+ (int)rodada.estatistica.utilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace + "\t"
+								+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
+								+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
+								+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace + "\t"
 								
 								
 	
