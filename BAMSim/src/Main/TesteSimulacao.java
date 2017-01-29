@@ -105,7 +105,7 @@ public class TesteSimulacao {
 		// agenda avaliação CBR
 		if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
 		{
-			rodada.schedulep (5, ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida, null);
+			rodada.schedulep (5, ParametrosDSTE.Janela, null);
 		}
 		//rodada.schedulep(7, 0.0, null);
 		
@@ -210,9 +210,9 @@ public class TesteSimulacao {
 			
 			case 4:
 				//Insere estatísticas RDD
-				rodada.estatistica.inserirDadosRRD((long) rodada.simtime());
-				rodada.estatistica.inserirDadosAbsolutoRRD((long) rodada.simtime());
-				rodada.estatistica.statusLinks(to, (long) rodada.simtime());
+				rodada.estatistica.inserirDadosRRD((long) rodada.simtime()-ParametrosDSTE.RRDBatida);
+				rodada.estatistica.inserirDadosAbsolutoRRD((long) rodada.simtime()-ParametrosDSTE.RRDBatida);
+				rodada.estatistica.statusLinks(to, (long) rodada.simtime()-ParametrosDSTE.RRDBatida);
 
 				rodada.schedulep(4, ParametrosDSTE.RRDBatida, null);
 				break;
