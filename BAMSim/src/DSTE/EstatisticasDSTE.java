@@ -1342,39 +1342,21 @@ public class EstatisticasDSTE {
 			desc.setUtilizacaoDoEnlaceCT1(this.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,1));
 			desc.setUtilizacaoDoEnlaceCT2(this.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,2));
 			
-						
-			if (lspRequested(ParametrosDSTE.Janela)!=0)
-			{
-				desc.setNumeroDeBloqueiosCT0(this.bloqueiosCT(ParametrosDSTE.Janela,0)*100/lspRequestedCT(ParametrosDSTE.Janela, 0));
-				desc.setNumeroDeBloqueiosCT1(this.bloqueiosCT(ParametrosDSTE.Janela,1)*100/lspRequestedCT(ParametrosDSTE.Janela, 1));
-				desc.setNumeroDeBloqueiosCT2(this.bloqueiosCT(ParametrosDSTE.Janela,2)*100/lspRequestedCT(ParametrosDSTE.Janela, 2));
+			// operador ternário de if - a = condicao ? 1 : 2			
+			//lspRequestedCT(ParametrosDSTE.Janela, 0) > 0 ? valor verdadeiro : valor falso
+			desc.setNumeroDeBloqueiosCT0(lspRequestedCT(ParametrosDSTE.Janela, 0) > 0 ? this.bloqueiosCT(ParametrosDSTE.Janela,0)*100/lspRequestedCT(ParametrosDSTE.Janela, 0):0);
+			desc.setNumeroDeBloqueiosCT1(lspRequestedCT(ParametrosDSTE.Janela, 1) > 0 ? this.bloqueiosCT(ParametrosDSTE.Janela,1)*100/lspRequestedCT(ParametrosDSTE.Janela, 1):0);
+			desc.setNumeroDeBloqueiosCT2(lspRequestedCT(ParametrosDSTE.Janela, 2) > 0 ? this.bloqueiosCT(ParametrosDSTE.Janela,2)*100/lspRequestedCT(ParametrosDSTE.Janela, 2):0);
+			
+			desc.setNumeroDePreempcoesCT0(lspEstablishedCT(ParametrosDSTE.Janela, 0) > 0 ?this.preempcoesCT(ParametrosDSTE.Janela,0)*100/lspEstablishedCT(ParametrosDSTE.Janela, 0):0);
+			desc.setNumeroDePreempcoesCT1(lspEstablishedCT(ParametrosDSTE.Janela, 1) > 0 ?this.preempcoesCT(ParametrosDSTE.Janela,1)*100/lspEstablishedCT(ParametrosDSTE.Janela, 1):0);
+			desc.setNumeroDePreempcoesCT2(lspEstablishedCT(ParametrosDSTE.Janela, 2) > 0 ?this.preempcoesCT(ParametrosDSTE.Janela,2)*100/lspEstablishedCT(ParametrosDSTE.Janela, 2):0);
+			
+			desc.setNumeroDeDevolucoesCT0(lspEstablishedCT(ParametrosDSTE.Janela, 0) > 0 ?this.devolucoesCT(ParametrosDSTE.Janela,0)*100/lspEstablishedCT(ParametrosDSTE.Janela, 0):0);
+			desc.setNumeroDeDevolucoesCT1(lspEstablishedCT(ParametrosDSTE.Janela, 1) > 0 ?this.devolucoesCT(ParametrosDSTE.Janela,1)*100/lspEstablishedCT(ParametrosDSTE.Janela, 1):0);
+			desc.setNumeroDeDevolucoesCT2(lspEstablishedCT(ParametrosDSTE.Janela, 2) > 0 ?this.devolucoesCT(ParametrosDSTE.Janela,2)*100/lspEstablishedCT(ParametrosDSTE.Janela, 2):0);
 				
-				desc.setNumeroDePreempcoesCT0(this.preempcoesCT(ParametrosDSTE.Janela,0)*100/lspEstablishedCT(ParametrosDSTE.Janela, 0));
-				desc.setNumeroDePreempcoesCT1(this.preempcoesCT(ParametrosDSTE.Janela,1)*100/lspEstablishedCT(ParametrosDSTE.Janela, 1));
-				desc.setNumeroDePreempcoesCT2(this.preempcoesCT(ParametrosDSTE.Janela,2)*100/lspEstablishedCT(ParametrosDSTE.Janela, 2));
-				
-				desc.setNumeroDeDevolucoesCT0(this.devolucoesCT(ParametrosDSTE.Janela,0)*100/lspEstablishedCT(ParametrosDSTE.Janela, 0));
-				desc.setNumeroDeDevolucoesCT1(this.devolucoesCT(ParametrosDSTE.Janela,1)*100/lspEstablishedCT(ParametrosDSTE.Janela, 1));
-				desc.setNumeroDeDevolucoesCT2(this.devolucoesCT(ParametrosDSTE.Janela,2)*100/lspEstablishedCT(ParametrosDSTE.Janela, 2));
-				
-				
-				
-			}else
-			{
-				desc.setNumeroDeBloqueiosCT0(0);
-				desc.setNumeroDeBloqueiosCT1(0);
-				desc.setNumeroDeBloqueiosCT2(0);
-				
-				desc.setNumeroDePreempcoesCT0(0);
-				desc.setNumeroDePreempcoesCT1(0);
-				desc.setNumeroDePreempcoesCT2(0);
-				
-				desc.setNumeroDeDevolucoesCT0(0);
-				desc.setNumeroDeDevolucoesCT1(0);
-				desc.setNumeroDeDevolucoesCT2(0);
-				
-				
-			}
+
 			/*//BancoDeDados.setXML("UCT0" + "\t" + "UCT1" + "\t" + "UCT2" + "\t" + "BCT0" + "\t" + "BCT1" + "\t" + "BCT2" + "\t" + "PCT0" + "\t" + "PCT1" + "\t" + "PCT2"+ "\t" + "DCT0" + "\t" + "DCT1" + "\t" + "DCT2", "Gerar_base");
 			
 			BancoDeDados.setXML(

@@ -135,13 +135,15 @@ public class HSQLDBserver
 	    //conn.prepareStatement("insert into bam values('bam2', 'marcos', 'NoPreemptionMAM','BaixaUtilizacao'			,null,null,null,	0,0,0,			null,null,null,	null,null,null,	null,null,null,		null,null,null,null,null,null,null,null,null,'PreemptionAllocCTSharing',true);").execute();
 	    //conn.prepareStatement("insert into bam values('bam3', 'marcos', 'PreemptionRDM','BaixaUtilizacao'			,null,null,null,	0,0,0,			null,null,null,	null,null,null,	null,null,null,		null,null,null,null,null,null,null,null,null,'PreemptionAllocCTSharing',true);").execute();
 	    
-	    
-	    
+	    /////////************************************** ID  Gerente  BAMAtual          		  	Problema         Utilização     Bloqueio    Preempção   Devolução   Largura de banda    Utilização     		Bloqueio    Preempção   Devolução    Solução
+	    conn.prepareStatement("insert into bam values('1','Eliseu','PreemptionAllocCTSharing','BaixaUtilizacao',80,80,80,		7,7,7,		5,5,5,		3,3,3,		200,300,500,		0.0,0.0,336.0,		0,0,0,		0,0,0,		0,0,0,		'PreemptionAllocCTSharing', true);").execute();
+	    conn.prepareStatement("insert into bam values('2','Eliseu','PreemptionAllocCTSharing','BaixaUtilizacao',80,80,80,		7,7,7,		5,5,5,		3,3,3,		200,300,500,		0.0,0.0,999.0,		0,0,27,		0,0,0,		0,0,0, 		'PreemptionAllocCTSharing', true);").execute();
+	    conn.prepareStatement("insert into bam values('3','Eliseu','PreemptionAllocCTSharing','BaixaUtilizacao',80,80,80,		7,7,7,		5,5,5,		3,3,3,		200,300,500,		215.0,0.0,812.0,	63,0,50,	44,0,0,		0,0,13,		'PreemptionRDM', true);").execute();
 
 		
 		
 		 /////////************************************** ID    Nome Gerente    BAMAtual           Problema          Utilização     Bloqueio       Preempção        Devolução        Largura de banda   Utilização     Bloqueio       Preempção        Devolução         Solução      
-		  conn.prepareStatement("insert into bam values('1' ,'Carlos','NoPreemptionMAM'         ,'BaixaUtilizacao', 44 , 50 , 55 , 60 , 55 , 50 , 60 , 55 , null , null , 55 , 50 , 256 , 768 , 1024 , 10 , 15 , 20 , 2  , 5  , 3  , 0  , 0  , null , null , 0  , 0  ,'PreemptionAllocCTSharing', true);").execute();
+		 /* conn.prepareStatement("insert into bam values('1' ,'Carlos','NoPreemptionMAM'         ,'BaixaUtilizacao', 44 , 50 , 55 , 60 , 55 , 50 , 60 , 55 , null , null , 55 , 50 , 256 , 768 , 1024 , 10 , 15 , 20 , 2  , 5  , 3  , 0  , 0  , null , null , 0  , 0  ,'PreemptionAllocCTSharing', true);").execute();
 		  conn.prepareStatement("insert into bam values('2' ,'Marcos','NoPreemptionMAM'         ,'BaixaUtilizacao', 30 , 35 , 40 , 75 , 70 , 65 , 75 , 70 , null , null , 70 , 65 , 256 , 768 , 1024 , 10 , 15 , 20 , 5  , 4  , 2  , 0  , 0  , null , null , 0  , 0  ,'PreemptionAllocCTSharing', true);").execute();
 		  conn.prepareStatement("insert into bam values('3' ,'Lucas' ,'NoPreemptionMAM'         ,'BaixaUtilizacao', 15 , 20 , 25 , 90 , 85 , 80 , 90 , 85 , null , null , 85 , 80 , 256 , 768 , 1024 , 10 , 15 , 20 , 7  , 4  , 5  , 0  , 0  , null , null , 0  , 0  ,'PreemptionAllocCTSharing', true);").execute();
 		  conn.prepareStatement("insert into bam values('4' ,'Carlos','NoPreemptionMAM'         ,'BaixaUtilizacao', 44 , 50 , 55 , 60 , 55 , 50 , 60 , 55 , null , null , 55 , 50 , 128 , 256 , 512  , 10 , 15 , 20 , 4  , 2  , 1  , 0  , 0  , null , null , 0  , 0  ,'PreemptionAllocCTSharing', true);").execute();
@@ -196,7 +198,7 @@ public class HSQLDBserver
 		  conn.prepareStatement("insert into bam values('53','Marcos','PreemptionAllocCTSharing','AltaDevolucao'  , 30 , 35 , 40 , 75 , 70 , 65 , 75 , 70 , null , null , 70 , 65 , 128 , 256 , 512  , 95 , 90 , 99 , 0  , 0  , 0  , 0  , 0  , null , null , 90 , 80 ,'PreemptionRDM'           , true);").execute();
 		  conn.prepareStatement("insert into bam values('54','Lucas' ,'PreemptionAllocCTSharing','AltaDevolucao'  , 15 , 20 , 25 , 90 , 85 , 80 , 90 , 85 , null , null , 85 , 80 , 128 , 256 , 512  , 95 , 90 , 99 , 0  , 0  , 0  , 0  , 0  , null , null , 90 , 80 ,'PreemptionRDM'           , true);").execute();
 		  conn.prepareStatement("insert into bam values('55','Fred'  ,'NoPreemptionMAM'         ,'BaixaUtilizacao', 35 , 40 , 45 , 80 , 70 , 80 , 80 , 80 , null , null , 80 , 80 , 250 , 600 , 1000 , 10 , 20 , 30 , 5  , 6  , 8  , 0  , 0  , null , null , 0  , 0  ,'PreemptionAllocCTSharing', true);").execute();
-
+*/
 		
 	    
         //Alto Bloqueio

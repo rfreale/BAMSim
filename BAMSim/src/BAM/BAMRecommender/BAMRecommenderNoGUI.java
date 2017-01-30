@@ -183,6 +183,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		//Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval,3);
 		BancoDeDados.setXML("====Query===", "Debug");
 		BancoDeDados.setXML(query.toString(), "Debug");
+		BancoDeDados.setXML(((BAMDescription)query.getDescription()).getInsertDB(), "Debug");
 		BancoDeDados.setXML("====+Similar===", "Debug");
 		BancoDeDados.setXML(eval.toArray()[0].toString(), "Debug");
 		BancoDeDados.setXML("", "Debug");

@@ -104,9 +104,9 @@ public class TesteSimulacao {
 		// agenda avaliação CBR
 		if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
 		{
-			rodada.schedulep (5, ParametrosDSTE.Janela, null);
+			rodada.schedulep (5, ParametrosDSTE.Janela+0.30, null);
 		}
-		rodada.schedulep(7, 0.20, null);
+		//rodada.schedulep(7, 0.20, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -303,7 +303,7 @@ public class TesteSimulacao {
 						
 						
 
-						//BancoDeDados.setXML(rodada.simtime()+" SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+"->Recomenda BAM"+solution.getBAMNovo()+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
+						BancoDeDados.setXML(rodada.simtime()+" SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+"->Recomenda BAM"+solution.getBAMNovo()+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
 						BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
 						CBRCase novocase = new CBRCase();
@@ -537,9 +537,9 @@ public class TesteSimulacao {
 					
 					
 						
-					if (rodada.estatistica.lspRequested(ParametrosDSTE.Janela)!=0){
+				/*	if (rodada.estatistica.lspRequested(ParametrosDSTE.Janela)!=0){*/
 					
-					BancoDeDados.setXML( (int) rodada.simtime() + "\t"
+					BancoDeDados.setXML(  rodada.simtime() + "\t"
 							+ nomeBAMAtual + "\t"
 							+ ParametrosDSTE.Janela + "\t"
 							
@@ -552,12 +552,22 @@ public class TesteSimulacao {
 							+ to.link[0].CargaCTAtual[1] + "\t"
 							+ to.link[0].CargaCTAtual[2] + "\t"
 							
-														
 							
+							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /*/to.link[0].CargaEnlace*/ + "\t"
+							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /*/to.link[0].CargaEnlace*/ + "\t"
+							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /*/to.link[0].CargaEnlace*/ + "\t"
+
+							
+							+ rodada.estatistica.lspRequested + "\t"
+							+ rodada.estatistica.bloqueios + "\t"
 							+ rodada.estatistica.preempcoes + "\t"
 							+ rodada.estatistica.devolucoes + "\t"
-							+ rodada.estatistica.bloqueios + "\t"
-							+ rodada.estatistica.lspRequested + "\t"
+							
+							
+							
+							+ rodada.estatistica.bloqueiosCT[0] + "\t"
+							+ rodada.estatistica.bloqueiosCT[1] + "\t"
+							+ rodada.estatistica.bloqueiosCT[2] + "\t"
 							
 							+ rodada.estatistica.preempcoesCT[0] + "\t"
 							+ rodada.estatistica.preempcoesCT[1] + "\t"
@@ -567,32 +577,21 @@ public class TesteSimulacao {
 							+ rodada.estatistica.devolucoesCT[1] + "\t"
 							+ rodada.estatistica.devolucoesCT[2] + "\t"
 							
-							+ rodada.estatistica.bloqueiosCT[0] + "\t"
-							+ rodada.estatistica.bloqueiosCT[1] + "\t"
-							+ rodada.estatistica.bloqueiosCT[2] + "\t"
 											
-
+							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,0)/* *100/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 0)*/ + "\t"
+							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,1)/* *100/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 1)*/ + "\t"
+							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,2)/* *100/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 2)*/ + "\t"
 							
-							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
-							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
-							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace + "\t"
+							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,0)/* *100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0)*/ + "\t"
+							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,1)/* *100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1)*/ + "\t"
+							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,2)/* *100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2)*/ + "\t"
 							
-							
-
-							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 0) + "\t"
-							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 1) + "\t"
-							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 2) + "\t"
-							
-							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0) + "\t"
-							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1) + "\t"
-							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2) + "\t"
-							
-							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0) + "\t"
-							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1) + "\t"
-							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2) + "\t"
-							, "to_base");
+							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,0)/* *100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0)*/ + "\t"
+							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,1)/* *100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1)*/ + "\t"
+							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,2)/* *100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2)*/ + "\t"
+							, rodada.filename);
 					
-					}else {
+					/*}else {
 						
 						BancoDeDados.setXML( (int) rodada.simtime() + "\t"
 								+ nomeBAMAtual + "\t"
@@ -644,11 +643,13 @@ public class TesteSimulacao {
 								+ 0 + "\t"
 								, rodada.filename);
 						
-					}
+					}*/
 				
 				
-				rodada.schedulep(7, 1, null);
-				
+					
+					rodada.schedulep(7, 1, null);
+					
+					
 				break;
 			
 			
