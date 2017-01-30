@@ -48,7 +48,7 @@ public class ParametrosDSTE {
 	public static final long SLAUtilizacao = 80;
 	public static final boolean RecomendacaoCBRSwitchBAM = false;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.85;
-	public static final long TempoSimulacao = 3600*3;//86400
+	public static final long TempoSimulacao = 3600*5;//86400
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -90,21 +90,31 @@ public class ParametrosDSTE {
 						+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
 						+" -->"
 						+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
-				rodada.schedulep (3, 0.0, dados);
+				if (((Lsp)dados.item).CT==2)    
+				{
+					rodada.schedulep (3, 0, dados);
+				} else if (((Lsp)dados.item).CT==1)    
+				{
+					rodada.schedulep (3, 3600*5, dados);
+				} else
+				{
+					rodada.schedulep (3, 3600*3, dados);
+				}
 			}
 		}
 		else
 		{
+			Debug.setMensagem("Cria LSP "+((Lsp)dados.item).ID+" - "
+					+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
+					+" -->"
+					+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
+			rodada.schedulep (1, 0, dados);
+			
 			//Repetição do tráfego
 			Debug.setMensagem("Agenda estabelecimento da LSP "+((Lsp)dados.item).ID+" - "
 					+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
 					+" -->"
 					+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
-			rodada.schedulep (1, 0.0, dados);
-	
-			
-	
-			
 			int auxCT=((Lsp)dados.item).CT;
 			dados = new No();
 			Lsp lsp = new Lsp(rodada);
@@ -112,123 +122,71 @@ public class ParametrosDSTE {
 			lsp.src = 0; //id do router fonte
 			lsp.dest = 1; // id do router destino
 			lsp.CT =auxCT;
-			lsp.Carga = (int)GeradorDeNumerosAleatorios.uniform(5,15);
+			lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5,15);
 			dados.item = lsp;
 			
 			double tempoDeVida=250;
-			Debug.setMensagem("Cria LSP "+((Lsp)dados.item).ID+" - R0 -->R4");
-			if(rodada.simtime() <= 3600/2) //////////////Primiros 30 min.
+			
+			
+			
+			
+			if (rodada.simtime() <= 3600*1)   // Uma hora
 			{
-				if (((Lsp)dados.item).CT==0)    
-				{
-					lsp.Carga = 0;  ////porque não consigo sincronizar isso
-					((Lsp)dados.item).tempoDeVida=30;
-					rodada.schedulep (3, 30.0, dados);// geracao de trafego
-				}
-				if (((Lsp)dados.item).CT==1)
-				{
-					lsp.Carga = 0;
-					((Lsp)dados.item).tempoDeVida=30;
-					rodada.schedulep (3, 30.0, dados);// geracao de trafego
-				}
-				if (((Lsp)dados.item).CT==2)
-				{
-					lsp.Carga = 0;
-					((Lsp)dados.item).tempoDeVida=30;
-					rodada.schedulep (3, 30.0, dados);// geracao de trafego
-				}
-			}else if (rodada.simtime() <= 3600*1)   // Uma hora
-			{
-				if (((Lsp)dados.item).CT==0)    
-				{
-					lsp.Carga = 0;  ////porque não consigo sincronizar isso
-					((Lsp)dados.item).tempoDeVida=30;
-					rodada.schedulep (3, 30.0, dados);// geracao de trafego
-				}
-				if (((Lsp)dados.item).CT==1)
-				{
-					lsp.Carga = 0;
-					((Lsp)dados.item).tempoDeVida=30;
-					rodada.schedulep (3, 30.0, dados);// geracao de trafego
-				}
-				if (((Lsp)dados.item).CT==2)
-				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
-				} 
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(10), dados);
 				
 			}else if (rodada.simtime() <= 3600*2)  //   7200 Duas horas
 			{
-				if (((Lsp)dados.item).CT==0)    
-				{
-					lsp.Carga = 0;  ////porque não consigo sincronizar isso
-					((Lsp)dados.item).tempoDeVida=30;
-					rodada.schedulep (3, 30.0, dados);// geracao de trafego
-				}
-				if (((Lsp)dados.item).CT==1)
-				{
-					lsp.Carga = 0;
-					((Lsp)dados.item).tempoDeVida=30;
-					rodada.schedulep (3, 30.0, dados);// geracao de trafego
-				}
-				if (((Lsp)dados.item).CT==2)
-				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(2), dados);
-				} 
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
 			}
 			else if (rodada.simtime() <= 3600*3)  //  10800  Três horas
 			{
 				if (((Lsp)dados.item).CT==0)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(10), dados);
 				}
-				if (((Lsp)dados.item).CT==1)
+				else if (((Lsp)dados.item).CT==1)
 				{
 					lsp.Carga = 0;
 					((Lsp)dados.item).tempoDeVida=30;
 					rodada.schedulep (3, 30.0, dados);// geracao de trafego
-				}
-				if (((Lsp)dados.item).CT==2)
+				}else if (((Lsp)dados.item).CT==2)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(2), dados);
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
 				}
 			}else if (rodada.simtime() <= 3600*4)// 14.400
 			{
 				if (((Lsp)dados.item).CT==0)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(2), dados);
-				}
-				if (((Lsp)dados.item).CT==1)
+					((Lsp)dados.item).tempoDeVida=(int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				}else if (((Lsp)dados.item).CT==1)
 				{
 					lsp.Carga = 0;
 					((Lsp)dados.item).tempoDeVida=30;
 					rodada.schedulep (3, 30.0, dados);// geracao de trafego
-				}
-				if (((Lsp)dados.item).CT==2)
+				}else if (((Lsp)dados.item).CT==2)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(2), dados);
+					((Lsp)dados.item).tempoDeVida= (int)GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
 				}			
 			}else  /*if (rodada.simtime() <= 3600*5)*/// 18000
 			{
 				if (((Lsp)dados.item).CT==0)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(1), dados);
-				}
-				if (((Lsp)dados.item).CT==1)
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(1), dados);
+				}else if (((Lsp)dados.item).CT==1)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(1), dados);
-				}
-				if (((Lsp)dados.item).CT==2)
+					((Lsp)dados.item).tempoDeVida= (int)GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(1), dados);
+				}else if (((Lsp)dados.item).CT==2)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(1), dados);
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(1), dados);
 				}			
 			}
 			

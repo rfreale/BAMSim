@@ -100,8 +100,8 @@ public class EstatisticasDSTE {
 	public	int graphMinorUnitCount= 1;
 	public	int graphMajorUnit=RrdGraphConstants.MINUTE;
 	public	int graphMajorUnitCount=10;
-	public	int graphLabelUnit=RrdGraphConstants.MINUTE;
-	public	int graphLabelUnitCount=5;
+	public	int graphLabelUnit=RrdGraphConstants.HOUR;
+	public	int graphLabelUnitCount=1;
 	public	int graphLabelSpan= 0;
 	public	String graphSimpleDateFormat="HH:mm";
     
@@ -336,7 +336,7 @@ public class EstatisticasDSTE {
 		//Aponta para o arquivo da base
 		//graphDef.datasource(link.ID+"_CT"+i, "saida/"+filename+"/"+filename+"_links.rrd",link.ID+"_CT"+i, "LAST");
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
-		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida,curretTime);
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		double utilizacao= fetchData.getAggregate(link.ID+"_CT"+ct, "MAX");

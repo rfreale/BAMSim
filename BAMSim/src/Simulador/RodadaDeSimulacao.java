@@ -135,10 +135,10 @@ public class RodadaDeSimulacao
 	/* void schedule(int ev, double te, int tkn)           MUDANCA 01/02 */
 	{
 		EvChain evc, evc_aux;
-		
+		//ID
 		long tkn = ++tkn_count;
+		//Tempo para execução do novo evento
 		double st;														/* simulation time tempo de ococrrencia do evento */ 
-
 		st = this.clock + te;
 
 		if ( tkn == 0 )

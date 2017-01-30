@@ -81,6 +81,11 @@ public class BAMTest {
 		estatistica.inserirDadosRRD(0);
 		estatistica.inserirDadosAbsolutoRRD(0);
 		
+		System.out.println("preempções="+estatistica.preempcoes);
+		System.out.println("preempções-base="+estatistica.preempcoesAUX);
+		System.out.println("preempções-janela="+estatistica.preempcoes(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
+		System.out.println("preempções-janelaAbs="+estatistica.preempcoesAbsoluto(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
+		
 		for (i=2;i<=20;i++)
 		{
 			estatistica.lspUnbroken=30*i;
@@ -93,14 +98,15 @@ public class BAMTest {
 			
 			estatistica.inserirDadosRRD(ParametrosDSTE.RRDBatida*(i-1));
 			estatistica.inserirDadosAbsolutoRRD(ParametrosDSTE.RRDBatida*(i-1));
+			System.out.println("preempções="+estatistica.preempcoes);
 			System.out.println("preempções-base="+estatistica.preempcoesAUX);
-			System.out.println("preempções="+estatistica.preempcoes(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
-			System.out.println("preempções="+estatistica.preempcoesAbsoluto(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
+			System.out.println("preempções-janela="+estatistica.preempcoes(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
+			System.out.println("preempções-janelaAbs="+estatistica.preempcoesAbsoluto(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
 			
 		}
 		estatistica.gerarRRDXML();
 
-		
+		/*
 		Topologia to = new Topologia();
 		to.carregarTopologiaArquivo();
 		
@@ -145,7 +151,7 @@ public class BAMTest {
 
 		}
 		estatistica.gerarLinksRRDXML();
-		
+		*/
 		
 		
 		estatistica.gerarRRDPNGlspRequested();
@@ -154,7 +160,7 @@ public class BAMTest {
 		estatistica.gerarRRDPNGpreempcao();
 		estatistica.gerarRRDPNGbloqueio();
 		estatistica.gerarRRDPNGdevolucao();
-		estatistica.gerarLinkRRDPNG(to);
+		//estatistica.gerarLinkRRDPNG(to);
 	}
 	@Test
 	public void cbrSimilarityConfigTest()
