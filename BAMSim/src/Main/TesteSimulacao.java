@@ -104,9 +104,9 @@ public class TesteSimulacao {
 		// agenda avaliação CBR
 		if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
 		{
-			rodada.schedulep (5, ParametrosDSTE.Janela, null);
+			rodada.schedulep (5, ParametrosDSTE.Janela+0.30, null);
 		}
-		rodada.schedulep(7, 0.20, null);
+		//rodada.schedulep(7, 0.20, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -303,7 +303,7 @@ public class TesteSimulacao {
 						
 						
 
-						//BancoDeDados.setXML(rodada.simtime()+" SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+"->Recomenda BAM"+solution.getBAMNovo()+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
+						BancoDeDados.setXML(rodada.simtime()+" SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+"->Recomenda BAM"+solution.getBAMNovo()+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
 						BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
 						CBRCase novocase = new CBRCase();

@@ -34,21 +34,21 @@ public class ParametrosDSTE {
 	public static final String Gestor = "Eliseu";
 	//SLAs em Percentual
 	
-	public static final int []SLAUtilizacaoCT   = new int [] {35, 40, 45} ;  // ou SLA
-	public static final int []SLABloqueiosCT    = new int [] {80, 70, 80} ;  // ou SLA
-	public static final int []SLAPreempcoesCT   = new int [] {80, 80, 00} ;  // ou SLA
-	public static final int []SLADevolucoesCT   = new int [] {00, 80, 80} ;  // ou SLA
+	public static final int []SLAUtilizacaoCT   = new int [] {80, 80, 80} ;  // ou SLA
+	public static final int []SLABloqueiosCT    = new int [] {7, 7, 7} ;  // ou SLA
+	public static final int []SLAPreempcoesCT   = new int [] {5, 5, 5} ;  // ou SLA
+	public static final int []SLADevolucoesCT   = new int [] {3, 3, 3} ;  // ou SLA
 	
 	
 	
 	public static final int  Escada = 128; //limite da função de similaridade Threshold
-	public static final long SLAPreempcoes = 10;
-	public static final long SLADevolucoes = 5;
-	public static final long SLABloqueios = 10;
-	public static final long SLAUtilizacao = 80;
-	public static final boolean RecomendacaoCBRSwitchBAM = false;
-	public static final double RecomendacaoCBRLimiarDeCorte = 0.85;
-	public static final long TempoSimulacao = 3600*5;//86400
+	//public static final long SLAPreempcoes = 5;
+	//public static final long SLADevolucoes = 3;
+	//public static final long SLABloqueios = 7;
+	//public static final long SLAUtilizacao = 80;
+	public static final boolean RecomendacaoCBRSwitchBAM = true;
+	public static final double RecomendacaoCBRLimiarDeCorte = 0.0;
+	public static final long TempoSimulacao = 3600*6;//86400
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows

@@ -512,12 +512,12 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 				+ ", SLAUtilizacaoCT0=" + SLAUtilizacaoCT0
 				+ ", SLAUtilizacaoCT1=" + SLAUtilizacaoCT1
 				+ ", SLAUtilizacaoCT2=" + SLAUtilizacaoCT2
-				+ ", SLAPreempcoesCT0=" + SLAPreempcoesCT0
-				+ ", SLAPreempcoesCT1=" + SLAPreempcoesCT1
-				+ ", SLAPreempcoesCT2=" + SLAPreempcoesCT2
 				+ ", SLABloqueiosCT0=" + SLABloqueiosCT0
 				+ ", SLABloqueiosCT1=" + SLABloqueiosCT1
 				+ ", SLABloqueiosCT2=" + SLABloqueiosCT2
+				+ ", SLAPreempcoesCT0=" + SLAPreempcoesCT0
+				+ ", SLAPreempcoesCT1=" + SLAPreempcoesCT1
+				+ ", SLAPreempcoesCT2=" + SLAPreempcoesCT2
 				+ ", SLADevolucoesCT0=" + SLADevolucoesCT0
 				+ ", SLADevolucoesCT1=" + SLADevolucoesCT1
 				+ ", SLADevolucoesCT2=" + SLADevolucoesCT2
@@ -527,15 +527,50 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 				+ ", utilizacaoDoEnlaceCT0=" + utilizacaoDoEnlaceCT0
 				+ ", utilizacaoDoEnlaceCT1=" + utilizacaoDoEnlaceCT1
 				+ ", utilizacaoDoEnlaceCT2=" + utilizacaoDoEnlaceCT2
-				+ ", numeroDePreempcoesCT0=" + numeroDePreempcoesCT0
-				+ ", numeroDePreempcoesCT1=" + numeroDePreempcoesCT1
-				+ ", numeroDePreempcoesCT2=" + numeroDePreempcoesCT2
 				+ ", numeroDeBloqueiosCT0=" + numeroDeBloqueiosCT0
 				+ ", numeroDeBloqueiosCT1=" + numeroDeBloqueiosCT1
 				+ ", numeroDeBloqueiosCT2=" + numeroDeBloqueiosCT2
+				+ ", numeroDePreempcoesCT0=" + numeroDePreempcoesCT0
+				+ ", numeroDePreempcoesCT1=" + numeroDePreempcoesCT1
+				+ ", numeroDePreempcoesCT2=" + numeroDePreempcoesCT2
 				+ ", numeroDeDevolucoesCT0=" + numeroDeDevolucoesCT0
 				+ ", numeroDeDevolucoesCT1=" + numeroDeDevolucoesCT1
 				+ ", numeroDeDevolucoesCT2=" + numeroDeDevolucoesCT2 + ")";
+	}
+	public String getInsertDB() {
+		String aux="insert into bam values(''";
+		aux+=",'"+gestor+"'";
+		aux+=",'"+BAMAtual+"'";
+		aux+=",'"+problema+"'";
+		aux+="," + SLAUtilizacaoCT0;
+		aux+="," + SLAUtilizacaoCT1;
+		aux+="," + SLAUtilizacaoCT2;
+		aux+="," + SLABloqueiosCT0;
+		aux+="," + SLABloqueiosCT1;
+		aux+="," + SLABloqueiosCT2;
+		aux+="," + SLAPreempcoesCT0;
+		aux+="," + SLAPreempcoesCT1;
+		aux+="," + SLAPreempcoesCT2;
+		aux+="," + SLADevolucoesCT0;
+		aux+="," + SLADevolucoesCT1;
+		aux+="," + SLADevolucoesCT2;
+		aux+="," + BC0;
+		aux+="," + BC1;
+		aux+="," + BC2;
+		aux+="," + utilizacaoDoEnlaceCT0;
+		aux+="," + utilizacaoDoEnlaceCT1;
+		aux+="," + utilizacaoDoEnlaceCT2;
+		aux+="," + numeroDeBloqueiosCT0;
+		aux+="," + numeroDeBloqueiosCT1;
+		aux+="," + numeroDeBloqueiosCT2;
+		aux+="," + numeroDePreempcoesCT0;
+		aux+="," + numeroDePreempcoesCT1;
+		aux+="," + numeroDePreempcoesCT2;
+		aux+="," + numeroDeDevolucoesCT0;
+		aux+="," + numeroDeDevolucoesCT1;
+		aux+="," + numeroDeDevolucoesCT2;
+				
+		return aux;
 	}
 /*	public String toString()
  * 
