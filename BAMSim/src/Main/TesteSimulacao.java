@@ -27,8 +27,7 @@ public class TesteSimulacao {
 	public TesteSimulacao(RodadaDeSimulacao rodada) throws IOException,
 			RrdException {
 
-		BancoDeDados.setXML("<?xml version='1.0'?>\r\n", rodada.filename);
-		BancoDeDados.setXML("<simulacao>\r\n", rodada.filename);
+
 		Debug.setMensagem("============================ Início da Primeira Rodada ============================");
 
 		Topologia to = new Topologia();
@@ -100,14 +99,14 @@ public class TesteSimulacao {
 		rodada.schedulep (3, 0.0, null);	
 
 		// agenda estatísticas
-		rodada.schedulep(4, ParametrosDSTE.RRDBatida, null);
+		rodada.schedulep(4, ParametrosDSTE.RRDBatida+0.10, null);
 
 		// agenda avaliação CBR
 		if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
 		{
 			rodada.schedulep (5, ParametrosDSTE.Janela, null);
 		}
-		rodada.schedulep(7, 0.0, null);
+		rodada.schedulep(7, 0.20, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -126,7 +125,7 @@ public class TesteSimulacao {
 			e.printStackTrace();
 		}
 		Debug.setMensagem("\r\n\r\n ==== Fim da simulação  ====");
-		BancoDeDados.setXML("</simulacao>\r\n", rodada.filename);
+
 		Debug.setMensagem("============================ Fim da Primeira Rodada ============================");
 
 	}
@@ -304,7 +303,7 @@ public class TesteSimulacao {
 						
 						
 
-						BancoDeDados.setXML(rodada.simtime()+" SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+"->Recomenda BAM"+solution.getBAMNovo()+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
+						//BancoDeDados.setXML(rodada.simtime()+" SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+"->Recomenda BAM"+solution.getBAMNovo()+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
 						BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
 						CBRCase novocase = new CBRCase();
@@ -537,7 +536,6 @@ public class TesteSimulacao {
 					
 					
 					
-					
 						
 					if (rodada.estatistica.lspRequested(ParametrosDSTE.Janela)!=0){
 					
@@ -644,7 +642,7 @@ public class TesteSimulacao {
 								+ 0 + "\t"
 								+ 0 + "\t"
 								+ 0 + "\t"
-								, "to_base");
+								, rodada.filename);
 						
 					}
 				
