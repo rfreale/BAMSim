@@ -167,8 +167,20 @@ public class EstatisticasDSTE {
 				rrdDef.addDatasource("devolucao_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			}
 			rrdDef.addDatasource("lspRequested", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
+			{
+				rrdDef.addDatasource("lspRequested_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			}
 			rrdDef.addDatasource("lspUnbroken", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
+			{
+				rrdDef.addDatasource("lspUnbroken_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			}
 			rrdDef.addDatasource("lspEstablished", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
+			{
+				rrdDef.addDatasource("lspEstablished_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			}
 			rrdDef.addDatasource("bandaUnbroken", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			rrdDef.addDatasource("bandaRequested", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			
@@ -204,8 +216,20 @@ public class EstatisticasDSTE {
 				rrdDef.addDatasource("devolucao_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			}
 			rrdDef.addDatasource("lspRequested", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
+			{
+				rrdDef.addDatasource("lspRequested_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			}
 			rrdDef.addDatasource("lspUnbroken", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
+			{
+				rrdDef.addDatasource("lspUnbroken_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			}
 			rrdDef.addDatasource("lspEstablished", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
+			{
+				rrdDef.addDatasource("lspEstablished_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			}
 			rrdDef.addDatasource("bandaUnbroken", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			rrdDef.addDatasource("bandaRequested", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			
@@ -263,7 +287,7 @@ public class EstatisticasDSTE {
 			curretTime=(long) (starTime+time);
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
 		Sample sample = rrdDb.createSample();
-		sample.setAndUpdate(starTime+time+":"+preempcoes+":"+preempcoesCT[0]+":"+preempcoesCT[1]+":"+preempcoesCT[2]+":"+bloqueios+":"+bloqueiosCT[0]+":"+bloqueiosCT[1]+":"+bloqueiosCT[2]+":"+devolucoes+":"+devolucoesCT[0]+":"+devolucoesCT[1]+":"+devolucoesCT[2]+":"+lspRequested+":"+lspUnbroken+":"+lspEstablished+":"+bandaUnbroken+":"+bandaRequested);
+		sample.setAndUpdate(starTime+time+":"+preempcoes+":"+preempcoesCT[0]+":"+preempcoesCT[1]+":"+preempcoesCT[2]+":"+bloqueios+":"+bloqueiosCT[0]+":"+bloqueiosCT[1]+":"+bloqueiosCT[2]+":"+devolucoes+":"+devolucoesCT[0]+":"+devolucoesCT[1]+":"+devolucoesCT[2]+":"+lspRequested+":"+lspRequestedCT[0]+":"+lspRequestedCT[1]+":"+lspRequestedCT[2]+":"+lspUnbroken+":"+lspUnbrokenCT[0]+":"+lspUnbrokenCT[1]+":"+lspUnbrokenCT[2]+":"+lspEstablished+":"+lspEstablishedCT[0]+":"+lspEstablishedCT[1]+":"+lspEstablishedCT[2]+":"+bandaUnbroken+":"+bandaRequested);
 
 		rrdDb.close();
 
@@ -295,7 +319,7 @@ public class EstatisticasDSTE {
 			curretTime=(long) (starTime+time);
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_absoluto.rrd");
 		Sample sample = rrdDb.createSample();
-		sample.setAndUpdate(starTime+time+":"+preempcoes+":"+preempcoesCT[0]+":"+preempcoesCT[1]+":"+preempcoesCT[2]+":"+bloqueios+":"+bloqueiosCT[0]+":"+bloqueiosCT[1]+":"+bloqueiosCT[2]+":"+devolucoes+":"+devolucoesCT[0]+":"+devolucoesCT[1]+":"+devolucoesCT[2]+":"+lspRequested+":"+lspUnbroken+":"+lspEstablished+":"+bandaUnbroken+":"+bandaRequested);
+		sample.setAndUpdate(starTime+time+":"+preempcoes+":"+preempcoesCT[0]+":"+preempcoesCT[1]+":"+preempcoesCT[2]+":"+bloqueios+":"+bloqueiosCT[0]+":"+bloqueiosCT[1]+":"+bloqueiosCT[2]+":"+devolucoes+":"+devolucoesCT[0]+":"+devolucoesCT[1]+":"+devolucoesCT[2]+":"+lspRequested+":"+lspRequestedCT[0]+":"+lspRequestedCT[1]+":"+lspRequestedCT[2]+":"+lspUnbroken+":"+lspUnbrokenCT[0]+":"+lspUnbrokenCT[1]+":"+lspUnbrokenCT[2]+":"+lspEstablished+":"+lspEstablishedCT[0]+":"+lspEstablishedCT[1]+":"+lspEstablishedCT[2]+":"+bandaUnbroken+":"+bandaRequested);
 
 		rrdDb.close();
 		
@@ -393,6 +417,19 @@ public class EstatisticasDSTE {
 		return lspRequested;
 	}
 	
+	public int lspRequestedCT(long time, int ct) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int lspRequested=(int) (fetchData.getAggregate("lspRequested_CT"+ct, "MAX")-fetchData.getAggregate("lspRequested_CT"+ct, "MIN"));
+		
+		rrdDb.close();
+		return lspRequested;
+	}
+	
 	public int lspEstablished(long time) throws IOException, RrdException
 	{
 		//Aponta para o arquivo da base
@@ -405,6 +442,20 @@ public class EstatisticasDSTE {
 		rrdDb.close();
 		return lspEstablished;
 	}
+	
+	public int lspEstablishedCT(long time, int ct) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int lspEstablished=(int) (fetchData.getAggregate("lspEstablished_CT"+ct, "MAX")-fetchData.getAggregate("lspEstablished_CT"+ct, "MIN"));
+		
+		rrdDb.close();
+		return lspEstablished;
+	}
+	
 	public int bloqueios(long time) throws IOException, RrdException
 	{
 		//Aponta para o arquivo da base
@@ -1294,17 +1345,17 @@ public class EstatisticasDSTE {
 						
 			if (lspRequested(ParametrosDSTE.Janela)!=0)
 			{
-				desc.setNumeroDeBloqueiosCT0(this.bloqueiosCT(ParametrosDSTE.Janela,0)*100/lspRequested(ParametrosDSTE.Janela));
-				desc.setNumeroDeBloqueiosCT1(this.bloqueiosCT(ParametrosDSTE.Janela,1)*100/lspRequested(ParametrosDSTE.Janela));
-				desc.setNumeroDeBloqueiosCT2(this.bloqueiosCT(ParametrosDSTE.Janela,2)*100/lspRequested(ParametrosDSTE.Janela));
+				desc.setNumeroDeBloqueiosCT0(this.bloqueiosCT(ParametrosDSTE.Janela,0)*100/lspRequestedCT(ParametrosDSTE.Janela, 0));
+				desc.setNumeroDeBloqueiosCT1(this.bloqueiosCT(ParametrosDSTE.Janela,1)*100/lspRequestedCT(ParametrosDSTE.Janela, 1));
+				desc.setNumeroDeBloqueiosCT2(this.bloqueiosCT(ParametrosDSTE.Janela,2)*100/lspRequestedCT(ParametrosDSTE.Janela, 2));
 				
-				desc.setNumeroDePreempcoesCT0(this.preempcoesCT(ParametrosDSTE.Janela,0)*100/lspEstablished(ParametrosDSTE.Janela));
-				desc.setNumeroDePreempcoesCT1(this.preempcoesCT(ParametrosDSTE.Janela,1)*100/lspEstablished(ParametrosDSTE.Janela));
-				desc.setNumeroDePreempcoesCT2(this.preempcoesCT(ParametrosDSTE.Janela,2)*100/lspEstablished(ParametrosDSTE.Janela));
+				desc.setNumeroDePreempcoesCT0(this.preempcoesCT(ParametrosDSTE.Janela,0)*100/lspEstablishedCT(ParametrosDSTE.Janela, 0));
+				desc.setNumeroDePreempcoesCT1(this.preempcoesCT(ParametrosDSTE.Janela,1)*100/lspEstablishedCT(ParametrosDSTE.Janela, 1));
+				desc.setNumeroDePreempcoesCT2(this.preempcoesCT(ParametrosDSTE.Janela,2)*100/lspEstablishedCT(ParametrosDSTE.Janela, 2));
 				
-				desc.setNumeroDeDevolucoesCT0(this.devolucoesCT(ParametrosDSTE.Janela,0)*100/lspEstablished(ParametrosDSTE.Janela));
-				desc.setNumeroDeDevolucoesCT1(this.devolucoesCT(ParametrosDSTE.Janela,1)*100/lspEstablished(ParametrosDSTE.Janela));
-				desc.setNumeroDeDevolucoesCT2(this.devolucoesCT(ParametrosDSTE.Janela,2)*100/lspEstablished(ParametrosDSTE.Janela));
+				desc.setNumeroDeDevolucoesCT0(this.devolucoesCT(ParametrosDSTE.Janela,0)*100/lspEstablishedCT(ParametrosDSTE.Janela, 0));
+				desc.setNumeroDeDevolucoesCT1(this.devolucoesCT(ParametrosDSTE.Janela,1)*100/lspEstablishedCT(ParametrosDSTE.Janela, 1));
+				desc.setNumeroDeDevolucoesCT2(this.devolucoesCT(ParametrosDSTE.Janela,2)*100/lspEstablishedCT(ParametrosDSTE.Janela, 2));
 				
 				
 				

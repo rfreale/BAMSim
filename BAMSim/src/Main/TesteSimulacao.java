@@ -579,17 +579,17 @@ public class TesteSimulacao {
 							
 							
 
-							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) + "\t"
-							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) + "\t"
-							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) + "\t"
+							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 0) + "\t"
+							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 1) + "\t"
+							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 2) + "\t"
 							
-							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
-							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
-							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
+							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0) + "\t"
+							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1) + "\t"
+							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2) + "\t"
 							
-							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
-							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
-							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) + "\t"
+							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0) + "\t"
+							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1) + "\t"
+							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2) + "\t"
 							, "to_base");
 					
 					}else {
