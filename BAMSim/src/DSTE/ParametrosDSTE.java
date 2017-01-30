@@ -48,7 +48,7 @@ public class ParametrosDSTE {
 	public static final long SLAUtilizacao = 80;
 	public static final boolean RecomendacaoCBRSwitchBAM = false;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.85;
-	public static final long TempoSimulacao = 3600*2;//86400
+	public static final long TempoSimulacao = 3600*5;//86400
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -84,23 +84,21 @@ public class ParametrosDSTE {
 				lsp.src = 0; //id do router fonte
 				lsp.dest = 1; // id do router destino
 				lsp.CT =auxCT;
-				lsp.Carga = (int)GeradorDeNumerosAleatorios.uniform(10,15);
+				lsp.Carga = (int)GeradorDeNumerosAleatorios.uniform(5,15);
 				dados.item = lsp;
 				Debug.setMensagem("Agenda estabelecimento da LSP "+((Lsp)dados.item).ID+" - "
 						+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
 						+" -->"
 						+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
-				if (((Lsp)dados.item).CT==2){
-					
-					rodada.schedulep (3, 3600*0, dados);
-					
-				} else if (((Lsp)dados.item).CT==1){
-					
-					rodada.schedulep (3, 3600*0, dados);
-					
+				if (((Lsp)dados.item).CT==2)    
+				{
+					rodada.schedulep (3, 0, dados);
+				} else if (((Lsp)dados.item).CT==1)    
+				{
+					rodada.schedulep (3, 3600*5, dados);
 				} else
 				{
-					rodada.schedulep (3, 3600*0, dados);
+					rodada.schedulep (3, 3600*3, dados);
 				}
 			}
 		}
@@ -135,14 +133,12 @@ public class ParametrosDSTE {
 			if (rodada.simtime() <= 3600*1)   // Uma hora
 			{
 					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
-							
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(10), dados);
 				
 			}else if (rodada.simtime() <= 3600*2)  //   7200 Duas horas
 			{
 					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
 					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
-				
 			}
 			else if (rodada.simtime() <= 3600*3)  //  10800  Três horas
 			{
@@ -151,7 +147,12 @@ public class ParametrosDSTE {
 					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
 					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(10), dados);
 				}
-				else if (((Lsp)dados.item).CT==2)
+				else if (((Lsp)dados.item).CT==1)
+				{
+					lsp.Carga = 0;
+					((Lsp)dados.item).tempoDeVida=30;
+					rodada.schedulep (3, 30.0, dados);// geracao de trafego
+				}else if (((Lsp)dados.item).CT==2)
 				{
 					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
 					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
@@ -162,6 +163,11 @@ public class ParametrosDSTE {
 				{
 					((Lsp)dados.item).tempoDeVida=(int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
 					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				}else if (((Lsp)dados.item).CT==1)
+				{
+					lsp.Carga = 0;
+					((Lsp)dados.item).tempoDeVida=30;
+					rodada.schedulep (3, 30.0, dados);// geracao de trafego
 				}else if (((Lsp)dados.item).CT==2)
 				{
 					((Lsp)dados.item).tempoDeVida= (int)GeradorDeNumerosAleatorios.expntl(tempoDeVida);
@@ -172,15 +178,15 @@ public class ParametrosDSTE {
 				if (((Lsp)dados.item).CT==0)
 				{
 					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(1), dados);
 				}else if (((Lsp)dados.item).CT==1)
 				{
 					((Lsp)dados.item).tempoDeVida= (int)GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(1), dados);
 				}else if (((Lsp)dados.item).CT==2)
 				{
 					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(1), dados);
 				}			
 			}
 			
