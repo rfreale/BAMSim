@@ -106,7 +106,7 @@ public class TesteSimulacao {
 		{
 			rodada.schedulep (5, ParametrosDSTE.Janela+0.30, null);
 		}
-		//rodada.schedulep(7, 0.20, null);
+		rodada.schedulep(7, ParametrosDSTE.Janela + 0.20, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -504,25 +504,36 @@ public class TesteSimulacao {
 				
 				
 					
-					/*if(rodada.simtime() <= 3600*1){
-						BancoDeDados.setXML( ""
-								+ "1ª hora", "to_base");
+					if(rodada.simtime() <= 3600*1){
+						
 												
 					}else if (rodada.simtime() <= 3600*2){// 7.200
-						BancoDeDados.setXML( "2ª hora", "to_base");
 						
+
 					}else if (rodada.simtime() <= 3600*3){//  10.800
-						BancoDeDados.setXML( "3ª hora", "to_base");
+						to.link[0].bamType = BAMType.PreemptionGBAM;
+						to.link[0].BCHTL= new double[]
+						{	0, //BC0 Nunca mudar
+							100, //BC1
+							100 //BC2
+						};
+				
+						to.link[0].BCLTH= new double[]
+						{	000, //BC0 
+							000, //BC1
+							0  //BC2 Nunca mudar
+						};
+						BAM.forcePreemption(to.link[0]);
 						
 					}else if (rodada.simtime() <= 3600*4){ //  14.400	
-						BancoDeDados.setXML( "4ª hora", "to_base");
+						
 						
 					}else if (rodada.simtime() <= 3600*5){
-						BancoDeDados.setXML( "5ª hora", "to_base");
+						
 						
 					}else if (rodada.simtime() >= 16800)
 					{
-						BancoDeDados.setXML( "Entrou aqui", "to_base");
+						
 						to.link[0].bamType = BAMType.PreemptionGBAM;
 						to.link[0].BCHTL= new double[]
 						{	0, //BC0 Nunca mudar
@@ -536,13 +547,54 @@ public class TesteSimulacao {
 							0  //BC2 Nunca mudar
 						};
 						BAM.forcePreemption(to.link[0]);
-					}*/
+					}
+					
+					
+				/*	
+					to.link[0].bamType = BAMType.PreemptionGBAM;
+					to.link[0].BCHTL= new double[]
+					{	0, //BC0 Nunca mudar
+						100, //BC1
+						100 //BC2
+					};
+			
+					to.link[0].BCLTH= new double[]
+					{	000, //BC0 
+						000, //BC1
+						0  //BC2 Nunca mudar
+					};
+					BAM.forcePreemption(to.link[0]);*/
 					
 					
 					
 					
-						
-				/*	if (rodada.estatistica.lspRequested(ParametrosDSTE.Janela)!=0){*/
+					
+					
+					
+					
+					
+					
+					
+					
+				double []bloqueiosCTJanela   	= new double [] {0, 0, 0} ;  
+				double []preempcoesCTJanela  	= new double [] {0, 0, 0} ;  
+				double []devolucoesCTJanela   	= new double [] {0, 0, 0} ;  
+			 	
+				 	
+				bloqueiosCTJanela[0] = rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 0) > 0 ? rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,0) *100 /rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 0):0;
+				bloqueiosCTJanela[1] = rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 1) > 0 ? rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,1) *100 /rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 1):0;
+				bloqueiosCTJanela[2] = rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 2) > 0 ? rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,2) *100 /rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 2):0;
+
+				preempcoesCTJanela[0] = rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0) > 0 ? rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,0) *100 /rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0):0;
+				preempcoesCTJanela[1] = rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1) > 0 ? rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,1) *100 /rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1):0;
+				preempcoesCTJanela[2] = rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2) > 0 ? rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,2) *100 /rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2):0;
+
+				devolucoesCTJanela[0] = rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0) > 0 ? rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,0) *100 /rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0):0;
+				devolucoesCTJanela[1] = rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1) > 0 ? rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,1) *100 /rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1):0;
+				devolucoesCTJanela[2] = rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2) > 0 ? rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,2) *100 /rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2):0;
+
+				
+
 					
 					BancoDeDados.setXML(  rodada.simtime() + "\t"
 							+ nomeBAMAtual + "\t"
@@ -553,16 +605,16 @@ public class TesteSimulacao {
 							+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
 							
 							
-							+ to.link[0].CargaCTAtual[0] + "\t"
+							/*+ to.link[0].CargaCTAtual[0] + "\t"
 							+ to.link[0].CargaCTAtual[1] + "\t"
-							+ to.link[0].CargaCTAtual[2] + "\t"
+							+ to.link[0].CargaCTAtual[2] + "\t"*/
 							
 							
-							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /*/to.link[0].CargaEnlace*/ + "\t"
-							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /*/to.link[0].CargaEnlace*/ + "\t"
-							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /*/to.link[0].CargaEnlace*/ + "\t"
+							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0)*100 /to.link[0].CargaEnlace + "\t"
+							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1)*100 /to.link[0].CargaEnlace + "\t"
+							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2)*100 /to.link[0].CargaEnlace + "\t"
 
-							
+							/*
 							+ rodada.estatistica.lspRequested + "\t"
 							+ rodada.estatistica.bloqueios + "\t"
 							+ rodada.estatistica.preempcoes + "\t"
@@ -581,78 +633,27 @@ public class TesteSimulacao {
 							+ rodada.estatistica.devolucoesCT[0] + "\t"
 							+ rodada.estatistica.devolucoesCT[1] + "\t"
 							+ rodada.estatistica.devolucoesCT[2] + "\t"
-							
+							*/
 											
-							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,0)/* *100/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 0)*/ + "\t"
-							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,1)/* *100/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 1)*/ + "\t"
-							+ rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,2)/* *100/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 2)*/ + "\t"
+							+ bloqueiosCTJanela[0] + "\t"
+							+ bloqueiosCTJanela[1] + "\t"
+							+ bloqueiosCTJanela[2] + "\t"
 							
-							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,0)/* *100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0)*/ + "\t"
-							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,1)/* *100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1)*/ + "\t"
-							+ rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,2)/* *100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2)*/ + "\t"
+							+ preempcoesCTJanela[0] + "\t"
+							+ preempcoesCTJanela[1] + "\t"
+							+ preempcoesCTJanela[2] + "\t"
 							
-							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,0)/* *100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0)*/ + "\t"
-							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,1)/* *100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1)*/ + "\t"
-							+ rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,2)/* *100/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2)*/ + "\t"
-							, rodada.filename);
-					
-					/*}else {
-						
-						BancoDeDados.setXML( (int) rodada.simtime() + "\t"
-								+ nomeBAMAtual + "\t"
-								+ ParametrosDSTE.Janela + "\t"
-								
-								+ to.link[0].CargaEnlace * to.link[0].BC[0] / 100 + "\t"
-								+ to.link[0].CargaEnlace * to.link[0].BC[1] / 100 + "\t"
-								+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
-								
-								
-								+ to.link[0].CargaCTAtual[0] + "\t"
-								+ to.link[0].CargaCTAtual[1] + "\t"
-								+ to.link[0].CargaCTAtual[2] + "\t"
-								
-								
-								+ rodada.estatistica.preempcoes + "\t"
-								+ rodada.estatistica.devolucoes + "\t"
-								+ rodada.estatistica.bloqueios + "\t"
-								+ rodada.estatistica.lspRequested + "\t"
-								
-								+ rodada.estatistica.preempcoesCT[0] + "\t"
-								+ rodada.estatistica.preempcoesCT[1] + "\t"
-								+ rodada.estatistica.preempcoesCT[2] + "\t"
+							+ devolucoesCTJanela[0] + "\t"
+							+ devolucoesCTJanela[1] + "\t"
+							+ devolucoesCTJanela[2] + "\t"
 
-								+ rodada.estatistica.devolucoesCT[0] + "\t"
-								+ rodada.estatistica.devolucoesCT[1] + "\t"
-								+ rodada.estatistica.devolucoesCT[2] + "\t"
-								
-								+ rodada.estatistica.bloqueiosCT[0] + "\t"
-								+ rodada.estatistica.bloqueiosCT[1] + "\t"
-								+ rodada.estatistica.bloqueiosCT[2] + "\t"
-								
-								+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
-								+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
-								+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace + "\t"
-								
-								
-	
-								+ 0 + "\t"
-								+ 0 + "\t"
-								+ 0 + "\t"
-								
-								+ 0 + "\t"
-								+ 0 + "\t"
-								+ 0 + "\t"
-								
-								+ 0 + "\t"
-								+ 0 + "\t"
-								+ 0 + "\t"
-								, rodada.filename);
-						
-					}*/
+							, "saida");
+
+							/*, rodada.filename);*/
 				
 				
 					
-					rodada.schedulep(7, 1, null);
+					rodada.schedulep(7, ParametrosDSTE.RRDBatida * 20 , null);
 					
 					
 				break;

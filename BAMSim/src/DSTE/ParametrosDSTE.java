@@ -48,7 +48,7 @@ public class ParametrosDSTE {
 	public static final long SLAUtilizacao = 80;
 	public static final boolean RecomendacaoCBRSwitchBAM = false;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.85;
-	public static final long TempoSimulacao = 3600*5;//86400
+	public static final long TempoSimulacao = 3600*6;//86400
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -90,15 +90,17 @@ public class ParametrosDSTE {
 						+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
 						+" -->"
 						+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
-				if (((Lsp)dados.item).CT==2)    
-				{
-					rodada.schedulep (3, 0, dados);
-				} else if (((Lsp)dados.item).CT==1)    
-				{
-					rodada.schedulep (3, 3600*5, dados);
+				if (((Lsp)dados.item).CT==2){
+					
+					rodada.schedulep (3, 3600*0, dados);
+					
+				} else if (((Lsp)dados.item).CT==1){
+					
+					rodada.schedulep (3, 3600*4, dados);
+					
 				} else
 				{
-					rodada.schedulep (3, 3600*3, dados);
+					rodada.schedulep (3, 3600*2, dados);
 				}
 			}
 		}
@@ -130,66 +132,99 @@ public class ParametrosDSTE {
 			
 			
 			
-			if (rodada.simtime() <= 3600*1)   // Uma hora
+			if (rodada.simtime() < 3600*1)   // Uma hora    de 0 a 1 hora
 			{
 					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
 					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(10), dados);
+							
 				
-			}else if (rodada.simtime() <= 3600*2)  //   7200 Duas horas
+			}else if (rodada.simtime() < 3600*2)  //   7200 Duas horas de 1 a 2 horas
 			{
+				
 					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
 					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+								
 			}
-			else if (rodada.simtime() <= 3600*3)  //  10800  Três horas
+			else if (rodada.simtime() < 3600*3)  //  10800  Três horas de 2 a 3 horas
 			{
 				if (((Lsp)dados.item).CT==0)
 				{
 					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(15), dados);
+					
+				}else if (((Lsp)dados.item).CT==2)
+				{
+					lsp.Carga = 0;
+					((Lsp)dados.item).tempoDeVida=30;
+					rodada.schedulep (3, 30.0, dados);// geracao de trafego
+				}else if (((Lsp)dados.item).CT==2)
+				{
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				}		
+			}else if (rodada.simtime() < 3600*4)// 14.400  de 3 a 4 horas
+			{
+				if (((Lsp)dados.item).CT==0)
+				{
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+					
+				}else if (((Lsp)dados.item).CT==2)
+				{
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				}			
+			}else  if (rodada.simtime() < 3600*5)  // 18000 de 4 a 5 horas
+			{
+				if (((Lsp)dados.item).CT==0)
+				{
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+					
+				}else if (((Lsp)dados.item).CT==1)
+				{
+					((Lsp)dados.item).tempoDeVida= (int)GeradorDeNumerosAleatorios.expntl(tempoDeVida);
 					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(10), dados);
-				}
-				else if (((Lsp)dados.item).CT==1)
-				{
-					lsp.Carga = 0;
-					((Lsp)dados.item).tempoDeVida=30;
-					rodada.schedulep (3, 30.0, dados);// geracao de trafego
+					
 				}else if (((Lsp)dados.item).CT==2)
 				{
 					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
 					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
-				}
-			}else if (rodada.simtime() <= 3600*4)// 14.400
-			{
-				if (((Lsp)dados.item).CT==0)
-				{
-					((Lsp)dados.item).tempoDeVida=(int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
-				}else if (((Lsp)dados.item).CT==1)
-				{
-					lsp.Carga = 0;
-					((Lsp)dados.item).tempoDeVida=30;
-					rodada.schedulep (3, 30.0, dados);// geracao de trafego
-				}else if (((Lsp)dados.item).CT==2)
-				{
-					((Lsp)dados.item).tempoDeVida= (int)GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
 				}			
-			}else  /*if (rodada.simtime() <= 3600*5)*/// 18000
+			}else  if (rodada.simtime() < 3600*6)  // de 5 a 6 horas
 			{
+
 				if (((Lsp)dados.item).CT==0)
 				{
 					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(1), dados);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+					
 				}else if (((Lsp)dados.item).CT==1)
 				{
 					((Lsp)dados.item).tempoDeVida= (int)GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(1), dados);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+					
 				}else if (((Lsp)dados.item).CT==2)
 				{
 					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(1), dados);
-				}			
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				}		
+			}else 
+			{
+				if (((Lsp)dados.item).CT==0)
+				{
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				}else if (((Lsp)dados.item).CT==1)
+				{
+					((Lsp)dados.item).tempoDeVida= (int)GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				}else if (((Lsp)dados.item).CT==2)
+				{
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(15), dados);
+				}
 			}
-			
 		
 			
 
@@ -356,7 +391,7 @@ public class ParametrosDSTE {
 	
 	
 */	
-	public static double [] BCPadrao= new double[]           //para MAN
+	public static double [] BCPadrao= new double[]           //para MAN 
 			{	20, // BC[0] =CT0 (Valor do Enlace)
 				30, // BC[1] = CT1
 				50 // BC[2] =  CT2
