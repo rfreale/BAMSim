@@ -514,13 +514,13 @@ public class TesteSimulacao {
 						to.link[0].bamType = BAMType.PreemptionGBAM;
 						to.link[0].BCHTL= new double[]
 						{	0, //BC0 Nunca mudar
-							100, //BC1
-							100 //BC2
+							0,//100, //BC1
+							0//100 //BC2
 						};
 				
 						to.link[0].BCLTH= new double[]
-						{	000, //BC0 
-							000, //BC1
+						{	0, //BC0 
+							0, //BC1
 							0  //BC2 Nunca mudar
 						};
 						BAM.forcePreemption(to.link[0]);

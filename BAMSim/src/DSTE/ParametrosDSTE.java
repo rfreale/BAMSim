@@ -154,11 +154,6 @@ public class ParametrosDSTE {
 					
 				}else if (((Lsp)dados.item).CT==2)
 				{
-					lsp.Carga = 0;
-					((Lsp)dados.item).tempoDeVida=30;
-					rodada.schedulep (3, 30.0, dados);// geracao de trafego
-				}else if (((Lsp)dados.item).CT==2)
-				{
 					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
 					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
 				}		
