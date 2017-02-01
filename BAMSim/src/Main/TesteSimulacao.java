@@ -473,6 +473,34 @@ public class TesteSimulacao {
 				//Gerar base log debug,etc
 				
 				
+				
+				
+				if (rodada.simtime()== 3600.2){
+					Lsp LSPaux= new Lsp(rodada); 
+            		LSPaux.Carga=0; 
+					to.link[0].bamType = BAMType.PreemptionGBAM;
+					
+			
+					to.link[0].BCLTH= new double[]
+					{	0, //BC0 
+						0, //BC1
+						0  //BC2 Nunca mudar
+					};
+					LSPaux.CT=0; 
+              		BAM.devolutionG(to.link[0],LSPaux);
+					
+					
+					to.link[0].BCHTL= new double[]
+					{	0, //BC0 Nunca mudar
+						0, //BC1
+						0 //BC2
+					};
+					
+					LSPaux.CT=2; 
+              		BAM.preemptionG(to.link[0],LSPaux); 
+				} 
+				
+				
 
 				String nomeBAMAtual = null;
 				
@@ -499,14 +527,14 @@ public class TesteSimulacao {
 				
 				
 					
-					if(rodada.simtime() <= 3600*1){
+					/*if(rodada.simtime() <= 3600*1){
 						
 												
 					}else if (rodada.simtime() <= 3600*2){// 7.200
 						
 
 					}else if (rodada.simtime() <= 3600*3){//  10.800
-						/**/
+						
 						
 					}else if (rodada.simtime() <= 3600*4){ //  14.400	
 						
@@ -518,7 +546,7 @@ public class TesteSimulacao {
 					{
 						
 						
-					}
+					}*/
 					
 					
 				/*	
@@ -578,9 +606,9 @@ public class TesteSimulacao {
 							+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
 							
 							
-							/*+ to.link[0].CargaCTAtual[0] + "\t"
+							+ to.link[0].CargaCTAtual[0] + "\t"
 							+ to.link[0].CargaCTAtual[1] + "\t"
-							+ to.link[0].CargaCTAtual[2] + "\t"*/
+							+ to.link[0].CargaCTAtual[2] + "\t"
 							
 							
 							+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
@@ -589,7 +617,7 @@ public class TesteSimulacao {
 
 							
 							//+ rodada.estatistica.lspRequested + "\t"
-							/*
+							
 							+ rodada.estatistica.lspEstablishedCT[0] + "\t"
 							+ rodada.estatistica.lspEstablishedCT[1] + "\t"
 							+ rodada.estatistica.lspEstablishedCT[2] + "\t"
@@ -610,7 +638,7 @@ public class TesteSimulacao {
 
 							+ rodada.estatistica.devolucoesCT[0] + "\t"
 							+ rodada.estatistica.devolucoesCT[1] + "\t"
-							+ rodada.estatistica.devolucoesCT[2] + "\t"*/
+							+ rodada.estatistica.devolucoesCT[2] + "\t"
 							
 											
 							+ bloqueiosCTJanela[0] + "\t"
