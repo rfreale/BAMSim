@@ -96,11 +96,11 @@ public class ParametrosDSTE {
 					
 				} else if (((Lsp)dados.item).CT==1){
 					
-					rodada.schedulep (3, 3600*0, dados);
+					rodada.schedulep (3, 3600*1, dados);
 					
 				} else
 				{
-					rodada.schedulep (3, 3600*0, dados);
+					rodada.schedulep (3, 3600*1, dados);
 				}
 			}
 		}

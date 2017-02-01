@@ -506,19 +506,7 @@ public class TesteSimulacao {
 						
 
 					}else if (rodada.simtime() <= 3600*3){//  10.800
-						to.link[0].bamType = BAMType.PreemptionGBAM;
-						to.link[0].BCHTL= new double[]
-						{	0, //BC0 Nunca mudar
-							0,//100, //BC1
-							0//100 //BC2
-						};
-				
-						to.link[0].BCLTH= new double[]
-						{	0, //BC0 
-							0, //BC1
-							0  //BC2 Nunca mudar
-						};
-						BAM.forcePreemption(to.link[0]);
+						/**/
 						
 					}else if (rodada.simtime() <= 3600*4){ //  14.400	
 						
