@@ -238,8 +238,8 @@ public class EstatisticasDSTE {
 			rrdDb.close();
 			
 			//Insere valores zerados para iniciar corretamente as bases
-			this.inserirDadosRRD(-60);
-			this.inserirDadosAbsolutoRRD(-60);
+			this.inserirDadosRRD(-ParametrosDSTE.RRDBatida);
+			this.inserirDadosAbsolutoRRD(-ParametrosDSTE.RRDBatida);
 			
 		} catch ( IOException e) {
 			// TODO Auto-generated catch block
@@ -278,7 +278,7 @@ public class EstatisticasDSTE {
 			rrdDef.addArchive("MAX", ParametrosDSTE.RRDXff, ParametrosDSTE.RRDSteps, ParametrosDSTE.RRDLinhas);
 			RrdDb rrdDb = new RrdDb(rrdDef);
 			rrdDb.close();
-
+			this.statusLinks(to, -ParametrosDSTE.RRDBatida);
 	}
 	public void inserirDadosRRD(long time) throws IOException, RrdException
 	{
