@@ -522,28 +522,30 @@ public class TesteSimulacao {
 					
 					
 				/*	
+				 * Lsp LSPaux= new Lsp(rodada); 
+            		LSPaux.Carga=0; 
 					to.link[0].bamType = BAMType.PreemptionGBAM;
-					to.link[0].BCHTL= new double[]
-					{	0, //BC0 Nunca mudar
-						100, //BC1
-						100 //BC2
-					};
+					
 			
 					to.link[0].BCLTH= new double[]
 					{	000, //BC0 
 						000, //BC1
 						0  //BC2 Nunca mudar
 					};
-					BAM.forcePreemption(to.link[0]);*/
+					LSPaux.CT=0; 
+              		BAM.devolutionG(to.link[0],LSPaux);
 					
 					
+					to.link[0].BCHTL= new double[]
+					{	0, //BC0 Nunca mudar
+						100, //BC1
+						100 //BC2
+					};
 					
-					
-					
-					
-					
-					
-					
+					LSPaux.CT=2; 
+              		BAM.preemptionG(to.link[0],LSPaux); 
+					*
+					*/
 					
 					
 					
@@ -576,18 +578,18 @@ public class TesteSimulacao {
 							+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
 							
 							
-							+ to.link[0].CargaCTAtual[0] + "\t"
+							/*+ to.link[0].CargaCTAtual[0] + "\t"
 							+ to.link[0].CargaCTAtual[1] + "\t"
-							+ to.link[0].CargaCTAtual[2] + "\t"
+							+ to.link[0].CargaCTAtual[2] + "\t"*/
 							
 							
-							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0)*100 /to.link[0].CargaEnlace + "\t"
-							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1)*100 /to.link[0].CargaEnlace + "\t"
-							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2)*100 /to.link[0].CargaEnlace + "\t"
+							+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
+							+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
+							+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace + "\t"
 
 							
 							//+ rodada.estatistica.lspRequested + "\t"
-							
+							/*
 							+ rodada.estatistica.lspEstablishedCT[0] + "\t"
 							+ rodada.estatistica.lspEstablishedCT[1] + "\t"
 							+ rodada.estatistica.lspEstablishedCT[2] + "\t"
@@ -608,7 +610,7 @@ public class TesteSimulacao {
 
 							+ rodada.estatistica.devolucoesCT[0] + "\t"
 							+ rodada.estatistica.devolucoesCT[1] + "\t"
-							+ rodada.estatistica.devolucoesCT[2] + "\t"
+							+ rodada.estatistica.devolucoesCT[2] + "\t"*/
 							
 											
 							+ bloqueiosCTJanela[0] + "\t"
