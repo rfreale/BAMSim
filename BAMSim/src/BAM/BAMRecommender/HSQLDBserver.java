@@ -138,9 +138,8 @@ public class HSQLDBserver
 	    /////////************************************** ID  Gerente  BAMAtual          		  	Problema         Utilização     Bloqueio    Preempção   Devolução   Largura de banda    Utilização     		Bloqueio    Preempção   Devolução    Solução
 	    conn.prepareStatement("insert into bam values('1','Eliseu','PreemptionAllocCTSharing','BaixaUtilizacao',80,80,80,		7,7,7,		5,5,5,		3,3,3,		200,300,500,		0.0,0.0,336.0,		0,0,0,		0,0,0,		0,0,0,		'PreemptionAllocCTSharing', true);").execute();
 	    conn.prepareStatement("insert into bam values('2','Eliseu','PreemptionAllocCTSharing','BaixaUtilizacao',80,80,80,		7,7,7,		5,5,5,		3,3,3,		200,300,500,		0.0,0.0,999.0,		0,0,27,		0,0,0,		0,0,0, 		'PreemptionAllocCTSharing', true);").execute();
-	    conn.prepareStatement("insert into bam values('3','Eliseu','PreemptionAllocCTSharing','BaixaUtilizacao',80,80,80,		7,7,7,		5,5,5,		3,3,3,		200,300,500,		215.0,0.0,812.0,	63,0,50,	44,0,0,		0,0,13,		'NoPreemptionMAM', true);").execute();
-	    //conn.prepareStatement("insert into bam values('4','Eliseu','NoPreemptionMAM',		  'BaixaUtilizacao',80,80,80,		7,7,7,		5,5,5,		3,3,3,		200,300,500,		200.0,0.0,500.0,	83,0,64,	0,0,0,		0,0,14
-	    
+	    conn.prepareStatement("insert into bam values('3','Eliseu','PreemptionAllocCTSharing','BaixaUtilizacao',80,80,80,		7,7,7,		5,5,5,		3,3,3,		200,300,500,		215.0,0.0,812.0,	63,0,50,	44,0,0,		0,0,13,		'PreemptionRDM', true);").execute();
+
 		
 		
 		 /////////************************************** ID    Nome Gerente    BAMAtual           Problema          Utilização     Bloqueio       Preempção        Devolução        Largura de banda   Utilização     Bloqueio       Preempção        Devolução         Solução      

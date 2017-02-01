@@ -248,46 +248,42 @@ public class TesteSimulacao {
 						else
 							nomeBAMAtual = "NoPreemptionMAM";
 					}
-					BAMSolution solution = (BAMSolution) cbrCase.getSolution();
 					
-					if (!solution.getBAMNovo().toString().equals(nomeBAMAtual) ){
+					
+					if (!cbrCase.getSolution().equals(nomeBAMAtual) ){
 						
-						Lsp LSPaux= new Lsp(rodada);
-						LSPaux.Carga=0;
+						BAMSolution solution = (BAMSolution) cbrCase.getSolution();
+						
 						switch (solution.getBAMNovo()) {
 						case NoPreemptionMAM:
 							to.link[0].bamType = BAMType.PreemptionGBAM;
-							to.link[0].BCLTH= new double[]
-									{	000, //BC0 
-										000, //BC1
-										0  //BC2 Nunca mudar
-									};
-							LSPaux.CT=0;
-							BAM.devolutionG(to.link[0],LSPaux);
-							
 							to.link[0].BCHTL= new double[]
 									{	0, //BC0 Nunca mudar
 								000, //BC1
 								000 //BC2
 							};
-							LSPaux.CT=2;
-							BAM.preemptionG(to.link[0],LSPaux);
-						
+					
+							to.link[0].BCLTH= new double[]
+							{	000, //BC0 
+								000, //BC1
+								0  //BC2 Nunca mudar
+							};
+							BAM.forcePreemption(to.link[0]);
 							break;
 						case PreemptionRDM:
 							to.link[0].bamType = BAMType.PreemptionGBAM;
-							to.link[0].BCLTH= new double[]
-									{	000, //BC0 
-										000, //BC1
-										0  //BC2 Nunca mudar
-									};
-							LSPaux.CT=0;
-							BAM.devolutionG(to.link[0],LSPaux);
 							to.link[0].BCHTL= new double[]
 							{	0, //BC0 Nunca mudar
 								100, //BC1
 								100 //BC2
 							};
+					
+							to.link[0].BCLTH= new double[]
+							{	000, //BC0 
+								000, //BC1
+								0  //BC2 Nunca mudar
+							};
+							BAM.forcePreemption(to.link[0]);
 							break;
 						case PreemptionAllocCTSharing:
 							to.link[0].bamType = BAMType.PreemptionGBAM;
@@ -307,7 +303,7 @@ public class TesteSimulacao {
 						
 						
 
-						
+						BancoDeDados.setXML(rodada.simtime()+" SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+"->Recomenda BAM"+solution.getBAMNovo()+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
 						BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
 						CBRCase novocase = new CBRCase();
@@ -318,7 +314,7 @@ public class TesteSimulacao {
 						
 						
 						//Agenda avaliar rentenção 
-						rodada.schedulep(5, ParametrosDSTE.Janela, no);
+						rodada.schedulep(6, ParametrosDSTE.Janela, no);
 						
 						
 					}else{
@@ -327,7 +323,6 @@ public class TesteSimulacao {
 						//Agenda avaliar BAM via CBR
 						rodada.schedulep(5, ParametrosDSTE.Janela, null );
 					}
-					BancoDeDados.setXML(rodada.simtime()+" SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+"->Recomenda BAM"+solution.getBAMNovo()+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
 					
 				}else {
 					//Agenda avaliar BAM via CBR
