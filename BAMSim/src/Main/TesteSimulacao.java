@@ -106,7 +106,7 @@ public class TesteSimulacao {
 		{
 			rodada.schedulep (5, ParametrosDSTE.Janela+0.30, null);
 		}
-		rodada.schedulep(7, ParametrosDSTE.Janela + 0.20, null);
+		rodada.schedulep(7, 0 + 0.20, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -529,19 +529,7 @@ public class TesteSimulacao {
 					}else if (rodada.simtime() >= 16800)
 					{
 						
-						to.link[0].bamType = BAMType.PreemptionGBAM;
-						to.link[0].BCHTL= new double[]
-						{	0, //BC0 Nunca mudar
-							0, //BC1
-							0 //BC2
-						};
-				
-						to.link[0].BCLTH= new double[]
-						{	0, //BC0 
-							0, //BC1
-							0  //BC2 Nunca mudar
-						};
-						BAM.forcePreemption(to.link[0]);
+						
 					}
 					
 					
@@ -600,17 +588,22 @@ public class TesteSimulacao {
 							+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
 							
 							
-							/*+ to.link[0].CargaCTAtual[0] + "\t"
+							+ to.link[0].CargaCTAtual[0] + "\t"
 							+ to.link[0].CargaCTAtual[1] + "\t"
-							+ to.link[0].CargaCTAtual[2] + "\t"*/
+							+ to.link[0].CargaCTAtual[2] + "\t"
 							
 							
 							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0)*100 /to.link[0].CargaEnlace + "\t"
 							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1)*100 /to.link[0].CargaEnlace + "\t"
 							+ (int)rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2)*100 /to.link[0].CargaEnlace + "\t"
 
-							/*
-							+ rodada.estatistica.lspRequested + "\t"
+							
+							//+ rodada.estatistica.lspRequested + "\t"
+							
+							+ rodada.estatistica.lspEstablishedCT[0] + "\t"
+							+ rodada.estatistica.lspEstablishedCT[1] + "\t"
+							+ rodada.estatistica.lspEstablishedCT[2] + "\t"
+				
 							+ rodada.estatistica.bloqueios + "\t"
 							+ rodada.estatistica.preempcoes + "\t"
 							+ rodada.estatistica.devolucoes + "\t"
@@ -628,7 +621,7 @@ public class TesteSimulacao {
 							+ rodada.estatistica.devolucoesCT[0] + "\t"
 							+ rodada.estatistica.devolucoesCT[1] + "\t"
 							+ rodada.estatistica.devolucoesCT[2] + "\t"
-							*/
+							
 											
 							+ bloqueiosCTJanela[0] + "\t"
 							+ bloqueiosCTJanela[1] + "\t"
@@ -642,13 +635,13 @@ public class TesteSimulacao {
 							+ devolucoesCTJanela[1] + "\t"
 							+ devolucoesCTJanela[2] + "\t"
 
-							, "saida");
+							//, "saida");
 
-							/*, rodada.filename);*/
+							, rodada.filename);
 				
 				
 					
-					rodada.schedulep(7, ParametrosDSTE.RRDBatida * 20 , null);
+					rodada.schedulep(7, 1 , null);
 					
 					
 				break;

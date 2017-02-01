@@ -48,7 +48,7 @@ public class ParametrosDSTE {
 	public static final long SLAUtilizacao = 80;
 	public static final boolean RecomendacaoCBRSwitchBAM = false;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.85;
-	public static final long TempoSimulacao = 3600*6;//86400
+	public static final long TempoSimulacao = 3600*4;//86400
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -96,11 +96,11 @@ public class ParametrosDSTE {
 					
 				} else if (((Lsp)dados.item).CT==1){
 					
-					rodada.schedulep (3, 3600*4, dados);
+					rodada.schedulep (3, 3600*0, dados);
 					
 				} else
 				{
-					rodada.schedulep (3, 3600*2, dados);
+					rodada.schedulep (3, 3600*0, dados);
 				}
 			}
 		}
@@ -134,8 +134,8 @@ public class ParametrosDSTE {
 			
 			if (rodada.simtime() < 3600*1)   // Uma hora    de 0 a 1 hora
 			{
-					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(10), dados);
+				((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+				rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
 							
 				
 			}else if (rodada.simtime() < 3600*2)  //   7200 Duas horas de 1 a 2 horas
@@ -147,16 +147,10 @@ public class ParametrosDSTE {
 			}
 			else if (rodada.simtime() < 3600*3)  //  10800  Três horas de 2 a 3 horas
 			{
-				if (((Lsp)dados.item).CT==0)
-				{
-					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(15), dados);
-					
-				}else if (((Lsp)dados.item).CT==2)
-				{
-					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
-				}		
+				
+				((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+				rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				
 			}else if (rodada.simtime() < 3600*4)// 14.400  de 3 a 4 horas
 			{
 				if (((Lsp)dados.item).CT==0)
