@@ -43,6 +43,7 @@ public class EstatisticasDSTE {
 	public int lspRequested = 0;
 	public int lspUnbroken = 0;
 	public int lspEstablished = 0;
+	public int lspEstablishedTotal = 0;
 	public double bandaUnbroken = 0;
 	public double bandaRequested = 0;
 	public double bandaEstabelecida = 0;
@@ -50,6 +51,7 @@ public class EstatisticasDSTE {
 	public int [] lspRequestedCT = new int [ParametrosDSTE.MaxClassType];
 	public double [] bandaRequestedCT = new double [ParametrosDSTE.MaxClassType];
 	public int [] lspEstablishedCT = new int [ParametrosDSTE.MaxClassType];
+	public int [] lspEstablishedTotalCT = new int [ParametrosDSTE.MaxClassType];
 	public double [] bandaEstabelecidaCT = new double [ParametrosDSTE.MaxClassType];
 	public int [] lspUnbrokenCT = new int [ParametrosDSTE.MaxClassType];
 	public double [] bandaUnbrokenCT = new double [ParametrosDSTE.MaxClassType];
@@ -1238,7 +1240,7 @@ public class EstatisticasDSTE {
 		retorno+=String.format("Average of Establishment (ns) = %d\r\n", tempoAcumuladoEstabelecimento/lspRequested);
 		retorno+=String.format("Average of Establishment (ms) = %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoEstabelecimento/lspRequested));
 		retorno+=String.format("LSPs Requested = %d\r\n", lspRequested);
-		retorno+=String.format("LSPs Established = %d\r\n", lspEstablished);
+		retorno+=String.format("LSPs Established Total = %d\r\n", lspEstablishedTotal);
 		retorno+=String.format("LSPs Unbroken = %d\r\n", lspUnbroken);
 		retorno+=String.format("LSPs Preemptions = %d\r\n", preempcoes);
 		retorno+=String.format("LSPs Devolutions = %d\r\n", devolucoes); 
