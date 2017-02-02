@@ -73,12 +73,20 @@ public class Lsp {
 			caminho[j].insereLsp(this);
 			caminho[j].lspEstabelecidas++;
 			caminho[j].lspEstabelecidasCT[this.CT]++;
+			caminho[j].lspEstabelecidasTotal++;
+			caminho[j].lspEstabelecidasTotalCT[this.CT]++;
 			if(caminho[j].lsrDest.ID==this.dest)
 			{
 				break;
 			}
 			
 		}
+		rodada.estatistica.lspEstablished++;
+		rodada.estatistica.lspEstablishedCT[this.CT]++;
+		rodada.estatistica.lspEstablishedTotal++;
+		rodada.estatistica.lspEstablishedTotalCT[this.CT]++;
+		rodada.estatistica.bandaEstabelecida += this.Carga;
+		rodada.estatistica.bandaEstabelecidaCT[this.CT] += this.Carga;
 	}
 	public String imprimeLsp()
 	{
@@ -103,6 +111,8 @@ public class Lsp {
 				}
 				
 			}
+			rodada.estatistica.lspEstablished--;
+			rodada.estatistica.lspEstablishedCT[this.CT]--;
 
 				
 			
@@ -128,6 +138,8 @@ public class Lsp {
 			
 			rodada.estatistica.preempcoes++;
 			rodada.estatistica.preempcoesCT[this.CT]++;
+			rodada.estatistica.lspEstablished--;
+			rodada.estatistica.lspEstablishedCT[this.CT]--;
 			
 			//Se apenas para unitTest
 			if(this.rodada!=null)
@@ -156,6 +168,8 @@ public class Lsp {
 			
 			rodada.estatistica.devolucoes++;
 			rodada.estatistica.devolucoesCT[this.CT]++;
+			rodada.estatistica.lspEstablished--;
+			rodada.estatistica.lspEstablishedCT[this.CT]--;
 			
 			//Se apenas para unitTest
 			if(this.rodada!=null)

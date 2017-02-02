@@ -167,10 +167,7 @@ public class TesteSimulacao {
 					Debug.setMensagem(to.imprimirCaminho(menorCaminho));
 					((Lsp) dados.item).estabelecerLSP(menorCaminho);
 					((Lsp) dados.item).status = LspStatus.estabelecida;
-					rodada.estatistica.lspEstablished++;
-					rodada.estatistica.lspEstablishedCT[((Lsp) dados.item).CT]++;
-					rodada.estatistica.bandaEstabelecida += ((Lsp) dados.item).Carga;
-					rodada.estatistica.bandaEstabelecidaCT[((Lsp) dados.item).CT] += ((Lsp) dados.item).Carga;
+
 					
 					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID + " Estabelecida ========"  + " Em CT=" + ((Lsp) dados.item).CT);
 
