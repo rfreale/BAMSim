@@ -436,10 +436,10 @@ public class EstatisticasDSTE {
 	{
 		//Aponta para o arquivo da base
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
-		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
-		int lspEstablished=(int) (fetchData.getAggregate("lspEstablished", "MAX")-fetchData.getAggregate("lspEstablished", "MIN"));
+		int lspEstablished=(int) (fetchData.getAggregate("lspEstablished", "AVERAGE"));
 		
 		rrdDb.close();
 		return lspEstablished;
@@ -449,10 +449,10 @@ public class EstatisticasDSTE {
 	{
 		//Aponta para o arquivo da base
 		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
-		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
-		int lspEstablished=(int) (fetchData.getAggregate("lspEstablished_CT"+ct, "MAX")-fetchData.getAggregate("lspEstablished_CT"+ct, "MIN"));
+		int lspEstablished=(int) (fetchData.getAggregate("lspEstablished_CT"+ct, "AVERAGE"));
 		
 		rrdDb.close();
 		return lspEstablished;
