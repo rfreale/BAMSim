@@ -603,9 +603,9 @@ public class TesteSimulacao {
 							+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
 							
 							
-							+ to.link[0].CargaCTAtual[0] + "\t"
+							/*+ to.link[0].CargaCTAtual[0] + "\t"
 							+ to.link[0].CargaCTAtual[1] + "\t"
-							+ to.link[0].CargaCTAtual[2] + "\t"
+							+ to.link[0].CargaCTAtual[2] + "\t"*/
 							
 							
 							+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
@@ -615,10 +615,31 @@ public class TesteSimulacao {
 							
 							//+ rodada.estatistica.lspRequested + "\t"
 							
+														
+							+ rodada.estatistica.lspRequestedCT[0] + "\t"
+							+ rodada.estatistica.lspRequestedCT[1] + "\t"
+							+ rodada.estatistica.lspRequestedCT[2] + "\t"
+							
+														
 							+ rodada.estatistica.lspEstablishedCT[0] + "\t"
 							+ rodada.estatistica.lspEstablishedCT[1] + "\t"
 							+ rodada.estatistica.lspEstablishedCT[2] + "\t"
-				
+
+							
+							+ rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 0) + "\t"
+							+ rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 1) + "\t"
+							+ rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 2) + "\t"
+
+							
+							+ rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0) + "\t"
+							+ rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1) + "\t"
+							+ rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2) + "\t"
+											
+
+							
+						
+							
+						
 							+ rodada.estatistica.bloqueios + "\t"
 							+ rodada.estatistica.preempcoes + "\t"
 							+ rodada.estatistica.devolucoes + "\t"

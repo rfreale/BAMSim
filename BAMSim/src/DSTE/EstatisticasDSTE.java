@@ -439,7 +439,7 @@ public class EstatisticasDSTE {
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
-		int lspEstablished=(int) (fetchData.getAggregate("lspEstablished", "AVERAGE"));
+		int lspEstablished=(int) (fetchData.getAggregate("lspEstablished", "AVERAGE"));//////////////////////////////<<<<----- porque média??????????
 		
 		rrdDb.close();
 		return lspEstablished;
@@ -452,7 +452,7 @@ public class EstatisticasDSTE {
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
-		int lspEstablished=(int) (fetchData.getAggregate("lspEstablished_CT"+ct, "AVERAGE"));
+		int lspEstablished=(int) (fetchData.getAggregate("lspEstablished_CT"+ct, "AVERAGE"));  //////////////////////////////<<<<----- porque média??????????
 		
 		rrdDb.close();
 		return lspEstablished;

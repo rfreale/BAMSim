@@ -28,7 +28,7 @@ public class ParametrosDSTE {
 	public static int LINKS = 6; // Número de LINKS (Simplex) do Modelo
 	public static int ROTEADORES = 5; // Número de roteadores DSTE
 	public static BAMType BAMTypePadrao = BAMType.PreemptionGBAM;  //NoPreemptionMAM  //PreemptionAllocCTSharing  //PreemptionRDM
-	public static final long Janela = 900;
+	public static final long Janela = 60 *5 ;
 	
 	
 	public static final String Gestor = "Eliseu";
@@ -96,11 +96,11 @@ public class ParametrosDSTE {
 					
 				} else if (((Lsp)dados.item).CT==1){
 					
-					rodada.schedulep (3, 3600*1, dados);
+					rodada.schedulep (3, 3600*0, dados);
 					
 				} else
 				{
-					rodada.schedulep (3, 3600*1, dados);
+					rodada.schedulep (3, 3600*0, dados);
 				}
 			}
 		}
@@ -142,7 +142,7 @@ public class ParametrosDSTE {
 			{
 				
 					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(15), dados);
 								
 			}
 			else if (rodada.simtime() < 3600*3)  //  10800  Três horas de 2 a 3 horas
