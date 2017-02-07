@@ -28,7 +28,7 @@ public class ParametrosDSTE {
 	public static int LINKS = 6; // Número de LINKS (Simplex) do Modelo
 	public static int ROTEADORES = 5; // Número de roteadores DSTE
 	public static BAMType BAMTypePadrao = BAMType.PreemptionGBAM;  //NoPreemptionMAM  //PreemptionAllocCTSharing  //PreemptionRDM
-	public static final long Janela = 60 *5 ;
+	
 	
 	
 	public static final String Gestor = "Eliseu";
@@ -48,7 +48,7 @@ public class ParametrosDSTE {
 	public static final long SLAUtilizacao = 80;
 	public static final boolean RecomendacaoCBRSwitchBAM = false;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.85;
-	public static final long TempoSimulacao = 3600*3;//86400
+	public static final long TempoSimulacao = 3600*7;//86400
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -61,6 +61,14 @@ public class ParametrosDSTE {
 	public static final double RRDXff = 0.5;   //percentagem de pontos primÃ¡rios que podem ser 'desconhecidos'
 	public static final int RRDSteps = 1;  //Número de 'steps' que devemos esperar até armazenarmos no arquivo o valor da leitura
 	public static final int RRDLinhas= (int) (TempoSimulacao/(RRDSteps*RRDBatida));  //rows  quantas leituras vamos armazenar.
+	
+	
+	
+	
+	public static final long Janela = RRDBatida *7 ;
+	
+	
+	
 	
 	public static final Boolean topologiaManual= false;
 	public static final Boolean matrizCaminhosManual= false;
@@ -92,15 +100,15 @@ public class ParametrosDSTE {
 						+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
 				if (((Lsp)dados.item).CT==2){
 					
-					rodada.schedulep (3, 3600*0, dados);
+					rodada.schedulep (3, 3600*0, dados);   ////CT2
 					
 				} else if (((Lsp)dados.item).CT==1){
 					
-					rodada.schedulep (3, 3600*0, dados);
+					rodada.schedulep (3, 3600*4, dados); //CT1
 					
 				} else
 				{
-					rodada.schedulep (3, 3600*0, dados);
+					rodada.schedulep (3, 3600*2, dados);  ////CT0
 				}
 			}
 		}
@@ -135,21 +143,29 @@ public class ParametrosDSTE {
 			if (rodada.simtime() < 3600*1)   // Uma hora    de 0 a 1 hora
 			{
 				((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-				rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(10), dados);
 							
 				
 			}else if (rodada.simtime() < 3600*2)  //   7200 Duas horas de 1 a 2 horas
 			{
 				
 					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(15), dados);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
 								
 			}
 			else if (rodada.simtime() < 3600*3)  //  10800  Três horas de 2 a 3 horas
 			{
 				
-				((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-				rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				if (((Lsp)dados.item).CT==0)
+				{
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(10), dados);
+					
+				}else if (((Lsp)dados.item).CT==2)
+				{
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				}	
 				
 			}else if (rodada.simtime() < 3600*4)// 14.400  de 3 a 4 horas
 			{

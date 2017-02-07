@@ -106,7 +106,7 @@ public class TesteSimulacao {
 		{
 			rodada.schedulep (5, ParametrosDSTE.Janela+0.30, null);
 		}
-		rodada.schedulep(7, 0 + 0.20, null);
+		rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -615,7 +615,7 @@ public class TesteSimulacao {
 							
 							//+ rodada.estatistica.lspRequested + "\t"
 							
-														
+						/*								
 							+ rodada.estatistica.lspRequestedCT[0] + "\t"
 							+ rodada.estatistica.lspRequestedCT[1] + "\t"
 							+ rodada.estatistica.lspRequestedCT[2] + "\t"
@@ -634,12 +634,12 @@ public class TesteSimulacao {
 							+ rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0) + "\t"
 							+ rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1) + "\t"
 							+ rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2) + "\t"
-											
+											*/
 
 							
 						
 							
-						
+						/*
 							+ rodada.estatistica.bloqueios + "\t"
 							+ rodada.estatistica.preempcoes + "\t"
 							+ rodada.estatistica.devolucoes + "\t"
@@ -657,7 +657,7 @@ public class TesteSimulacao {
 							+ rodada.estatistica.devolucoesCT[0] + "\t"
 							+ rodada.estatistica.devolucoesCT[1] + "\t"
 							+ rodada.estatistica.devolucoesCT[2] + "\t"
-							
+							*/
 											
 							+ bloqueiosCTJanela[0] + "\t"
 							+ bloqueiosCTJanela[1] + "\t"
@@ -677,7 +677,7 @@ public class TesteSimulacao {
 				
 				
 					
-					rodada.schedulep(7, 1 , null);
+					rodada.schedulep(7, ParametrosDSTE.Janela , null);
 					
 					
 				break;
