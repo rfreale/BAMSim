@@ -73,6 +73,7 @@ class Aggregator implements ConsolFuns {
 				}
 				if (!Double.isNaN(value)) {
 					agg.total = Util.sum(agg.total, delta * value);
+					agg.sum = Util.sum(agg.sum, value);
 					totalSeconds += delta;
 				}
 			}

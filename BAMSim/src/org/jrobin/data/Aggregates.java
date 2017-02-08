@@ -33,7 +33,7 @@ import org.jrobin.core.Util;
 public class Aggregates implements ConsolFuns {
 	double min = Double.NaN, max = Double.NaN;
 	double first = Double.NaN, last = Double.NaN;
-	double average = Double.NaN, total = Double.NaN;
+	double average = Double.NaN, total = Double.NaN, sum = Double.NaN;
 
 	Aggregates() {
 		// NOP;
@@ -92,6 +92,15 @@ public class Aggregates implements ConsolFuns {
 	public double getTotal() {
 		return total;
 	}
+	
+	/**
+	 * Returns sum value
+	 *
+	 * @return Sum value
+	 */
+	public double getSum() {
+		return sum;
+	}
 
 	/**
 	 * Returns single aggregated value for the give consolidation function
@@ -119,6 +128,9 @@ public class Aggregates implements ConsolFuns {
 		}
 		else if (consolFun.equals(CF_TOTAL)) {
 			return total;
+		}
+		else if (consolFun.equals(CF_SUM)) {
+			return sum;
 		}
 		else {
 			throw new RrdException("Unknown consolidation function: " + consolFun);

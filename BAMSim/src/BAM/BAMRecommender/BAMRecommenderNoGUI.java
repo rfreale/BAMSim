@@ -29,6 +29,7 @@ import BAM.BAMRecommender.gui.ResultDialog;
 import BAM.BAMRecommender.gui.RetainDialog;
 import BAM.BAMRecommender.gui.RevisionDialog;
 import BAM.BAMRecommender.gui.SimilarityDialog;
+import DSTE.BancoDeDados;
 import DSTE.ParametrosDSTE;
 import jcolibri.exception.ExecutionException;
 import jcolibri.method.retrieve.RetrievalResult;
@@ -180,6 +181,12 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
 		// Select k cases
 		//Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval,3);
+		BancoDeDados.setXML("====Query===", "Debug");
+		BancoDeDados.setXML(query.toString(), "Debug");
+		BancoDeDados.setXML(((BAMDescription)query.getDescription()).getInsertDB(), "Debug");
+		BancoDeDados.setXML("====+Similar===", "Debug");
+		BancoDeDados.setXML(eval.toArray()[0].toString(), "Debug");
+		BancoDeDados.setXML("", "Debug");
 		
 		BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 		BAMSolution sol = null;
@@ -189,11 +196,22 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		
 		for(RetrievalResult rr: eval)
 		{
-			sol = ((BAMSolution) rr.get_case().getSolution()).clone();
-			novocase.setSolution(sol);
-
-			if((!this.equal(novocase, _caseBaseDB2))&&rr.getEval()>=ParametrosDSTE.RecomendacaoCBRLimiarDeCorte)
-				return rr.get_case();
+			
+			
+			if (rr.getEval()>=ParametrosDSTE.RecomendacaoCBRLimiarDeCorte){
+				
+				sol = ((BAMSolution) rr.get_case().getSolution()).clone();
+				novocase.setSolution(sol);
+				
+				if((!this.equal(novocase, _caseBaseDB2)))
+					return rr.get_case();
+			}
+			else{
+				return null;
+				
+			}
+			
+			
 			
 		}
 			

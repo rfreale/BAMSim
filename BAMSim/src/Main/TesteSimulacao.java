@@ -27,13 +27,12 @@ public class TesteSimulacao {
 	public TesteSimulacao(RodadaDeSimulacao rodada) throws IOException,
 			RrdException {
 
-		BancoDeDados.setXML("<?xml version='1.0'?>\r\n", rodada.filename);
-		BancoDeDados.setXML("<simulacao>\r\n", rodada.filename);
-		Debug.setMensagem("============================ In�cio da Primeira Rodada ============================");
+
+		Debug.setMensagem("============================ Início da Primeira Rodada ============================");
 
 		Topologia to = new Topologia();
 
-		// Mostra par�metros padr�es
+		// Mostra parámetros padrões
 		Debug.setMensagem(ParametrosDSTE.getParametros(), 7, 7);
 
 		/*
@@ -95,18 +94,20 @@ public class TesteSimulacao {
 		Debug.setMensagem("\r\n\r\n ==== Status dos Links  ====");
 		Debug.setMensagem(to.statusLinks());
 
-		// Inicializa tr�fego
-		Debug.setMensagem("\r\n\r\n ==== Inicializa o tr�fego  ====");
+		// Inicializa tráfego
+		Debug.setMensagem("\r\n\r\n ==== Inicializa o tráfego  ====");
 		rodada.schedulep (3, 0.0, null);	
 
-		// agenda estat�sticas
-		rodada.schedulep(4, ParametrosDSTE.RRDAmostra, null);
+		// agenda estatísticas
+		rodada.schedulep(4, ParametrosDSTE.RRDBatida+0.10, null);
 
-		// agenda avalia��o CBR
+		// agenda avaliação CBR
 		if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
 		{
-			rodada.schedulep (5, ParametrosDSTE.Janela+2*ParametrosDSTE.RRDAmostra, null);
+			rodada.schedulep (5, ParametrosDSTE.Janela+0.30, null);
 		}
+		rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
+		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
 		} catch (IOException e) {
@@ -116,15 +117,15 @@ public class TesteSimulacao {
 		// inciatrafego2(rodada);
 
 		// Inicializa a cadeia de eventos
-		Debug.setMensagem("\r\n\r\n ==== Inicio da simula��o  ====");
+		Debug.setMensagem("\r\n\r\n ==== Inicio da simulação  ====");
 		try {
 			cadeiaDeEventos(rodada, to);
 		} catch (ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Debug.setMensagem("\r\n\r\n ==== Fim da si				mula��o  ====");
-		BancoDeDados.setXML("</simulacao>\r\n", rodada.filename);
+		Debug.setMensagem("\r\n\r\n ==== Fim da simulação  ====");
+
 		Debug.setMensagem("============================ Fim da Primeira Rodada ============================");
 
 	}
@@ -153,7 +154,8 @@ public class TesteSimulacao {
 				rodada.estatistica.bandaRequestedCT[((Lsp) dados.item).CT] += ((Lsp) dados.item).Carga;
 				Debug.setMensagem("Tipo 1 - Tentar estabelecer LSP "
 						+ ((Lsp) dados.item).ID + " com "
-						+ ((Lsp) dados.item).Carga + " Mbps");
+						+ ((Lsp) dados.item).Carga + " Mbps CT="
+						+ ((Lsp) dados.item).CT  + "");
 				
 				Long tempoInicial=System.nanoTime();
 				Link[] menorCaminho = Roteamento.TryPath_CSPF(
@@ -165,20 +167,15 @@ public class TesteSimulacao {
 					Debug.setMensagem(to.imprimirCaminho(menorCaminho));
 					((Lsp) dados.item).estabelecerLSP(menorCaminho);
 					((Lsp) dados.item).status = LspStatus.estabelecida;
-					rodada.estatistica.lspEstablished++;
-					rodada.estatistica.lspEstablishedCT[((Lsp) dados.item).CT]++;
-					rodada.estatistica.bandaEstabelecida += ((Lsp) dados.item).Carga;
-					rodada.estatistica.bandaEstabelecidaCT[((Lsp) dados.item).CT] += ((Lsp) dados.item).Carga;
+
 					
-					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID
-							+ " Estabelecida ========");
+					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID + " Estabelecida ========"  + " Em CT=" + ((Lsp) dados.item).CT);
 
 					// agenda desestabelecimento
 					rodada.schedulep(2, ((Lsp) dados.item).tempoDeVida, dados);
 
 				} else {
-					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID
-							+ " Bloqueada ========");
+					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID + " Bloqueada ========" + " Em CT=" + ((Lsp) dados.item).CT );
 					((Lsp) dados.item).status = LspStatus.bloqueada;
 					rodada.estatistica.bloqueios++;
 					rodada.estatistica.bloqueiosCT[((Lsp) dados.item).CT]++;
@@ -189,7 +186,9 @@ public class TesteSimulacao {
 				// Desestabelece LSP: Liberacao da Banda Ocupada
 				Debug.setMensagem("Tipo 2 - Desestabelece LSP "
 						+ ((Lsp) dados.item).ID + " com "
-						+ ((Lsp) dados.item).Carga + " Mbps");
+						+ ((Lsp) dados.item).Carga + " Mbps  CT="
+						+ ((Lsp) dados.item).CT 
+						);
 				((Lsp) dados.item).desestabeleceLSP();
 				rodada.estatistica.lspUnbroken++;
 				rodada.estatistica.lspUnbrokenCT[((Lsp) dados.item).CT]++;
@@ -198,7 +197,7 @@ public class TesteSimulacao {
 				((Lsp) dados.item).status = LspStatus.finalizada;
 
 				break;
-			case 3:
+			case 3:// geracao de trafego
 				Debug.setMensagem("Tipo 3 - Agenda/Cria LSP ");
 				ParametrosDSTE.trafegoManual(rodada, to, dados);
 
@@ -206,159 +205,489 @@ public class TesteSimulacao {
 
 			
 			case 4:
-				//Insere estat�sticas RDD
-				rodada.estatistica.inserirDadosRRD((long) rodada.simtime());
-				rodada.estatistica.inserirDadosAbsolutoRRD((long) rodada.simtime());
-				rodada.estatistica.statusLinks(to, (long) rodada.simtime());
+				//Insere estatísticas RDD
+				rodada.estatistica.inserirDadosRRD((long) rodada.simtime()-ParametrosDSTE.RRDBatida);
+				rodada.estatistica.inserirDadosAbsolutoRRD((long) rodada.simtime()-ParametrosDSTE.RRDBatida);
+				rodada.estatistica.statusLinks(to, (long) rodada.simtime()-ParametrosDSTE.RRDBatida);
 
-				rodada.schedulep(4, ParametrosDSTE.RRDAmostra, null);
+				rodada.schedulep(4, ParametrosDSTE.RRDBatida, null);
 				break;
 			case 5:
 				//Avalia BAM via CBR
 
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
-				if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
-					query = rodada.estatistica.getQuery(to.link[0],
-							Problemas.AltaDevolucao, to.link[0].bamType);
-					cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
-
-				} else if (rodada.estatistica.preempcoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLAPreempcoes) {
-					query = rodada.estatistica.getQuery(to.link[0],
-							Problemas.AltaPreempcao, to.link[0].bamType);
-					cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
-
-				} else if ((rodada.estatistica.bloqueios(ParametrosDSTE.Janela)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) >= ParametrosDSTE.SLABloqueios)&&((to.link[0].getCargaEnlaceAtual() * 100 / to.link[0].CargaEnlace) <= ParametrosDSTE.SLAUtilizacao)) {
-					query = rodada.estatistica.getQuery(to.link[0],
-							Problemas.BaixaUtilizacao, to.link[0].bamType);
-					cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
-				}
+				
+				query = rodada.estatistica.getQuery(to.link[0], ParametrosDSTE.Gestor, ParametrosDSTE.SLAUtilizacaoCT, ParametrosDSTE.SLABloqueiosCT,ParametrosDSTE.SLAPreempcoesCT,ParametrosDSTE.SLADevolucoesCT);
+				cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
+							
+				
 				if (cbrCase != null) {
 					
-					BAMSolution solution = (BAMSolution) cbrCase.getSolution();
-					switch (solution.getBAMNovo()) {
-					case NoPreemptionMAM:
-						to.link[0].bamType = BAMType.PreemptionGBAM;
-						to.link[0].BCHTL= new double[]
-								{	0, //BC0 Nunca mudar
-							000, //BC1
-							000 //BC2
-						};
-				
-						to.link[0].BCLTH= new double[]
-						{	000, //BC0 
-							000, //BC1
-							0  //BC2 Nunca mudar
-						};
-						//BAM.forcePreemption(to.link[0]);
-						break;
-					case PreemptionRDM:
-						to.link[0].bamType = BAMType.PreemptionGBAM;
-						to.link[0].BCHTL= new double[]
-						{	0, //BC0 Nunca mudar
-							100, //BC1
-							100 //BC2
-						};
-				
-						to.link[0].BCLTH= new double[]
-						{	000, //BC0 
-							000, //BC1
-							0  //BC2 Nunca mudar
-						};
-						//BAM.forcePreemption(to.link[0]);
-						break;
-					case PreemptionAllocCTSharing:
-						to.link[0].bamType = BAMType.PreemptionGBAM;
-						to.link[0].BCHTL= new double[]
-						{	0, //BC0 Nunca mudar
-							100, //BC1
-							100 //BC2
-						};
-				
-						to.link[0].BCLTH= new double[]
-						{	100, //BC0 
-							100, //BC1
-							0  //BC2 Nunca mudar
-						};
-						break;
+					String nomeBAMAtual = null;
+					
+					if(to.link[0].bamType!=BAMType.PreemptionGBAM)
+					{
+						nomeBAMAtual = to.link[0].bamType.toString();
+					}else
+					{
+						//Se BCLTH diferente de 0 é pq reflete Alloc
+						if (to.link[0].BCLTH[0]!=0)
+							
+							nomeBAMAtual = "PreemptionAllocCTSharing";
+						
+						//Se BCLTH diferente é igual a 0 e BCHTL diferente de 0 é pq reflete RDM
+						else if (to.link[0].BCHTL[2]!=0)
+							
+							nomeBAMAtual = "PreemptionRDM";
+						
+						//Se BCLTH e BCHTL igual a 0 é pq reflete MAM
+						else
+							nomeBAMAtual = "NoPreemptionMAM";
 					}
 					
-					BancoDeDados.setXML(rodada.simtime()+" SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+" - Problema:"+((BAMDescription) query.getDescription()).getProblema()+"->Recomenda BAM"+solution.getBAMNovo()+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
-					BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
-					BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
-					CBRCase novocase = new CBRCase();
-					novocase.setDescription(desc);
-					novocase.setSolution(sol);
-					No no = new No();
-					no.item=novocase;
 					
+					if (!cbrCase.getSolution().equals(nomeBAMAtual) ){
+						
+						BAMSolution solution = (BAMSolution) cbrCase.getSolution();
+						
+						switch (solution.getBAMNovo()) {
+						case NoPreemptionMAM:
+							to.link[0].bamType = BAMType.PreemptionGBAM;
+							to.link[0].BCHTL= new double[]
+									{	0, //BC0 Nunca mudar
+								000, //BC1
+								000 //BC2
+							};
 					
-					//Agenda avaliar renten��o 
-					rodada.schedulep(6, ParametrosDSTE.Janela, no);
+							to.link[0].BCLTH= new double[]
+							{	000, //BC0 
+								000, //BC1
+								0  //BC2 Nunca mudar
+							};
+							BAM.forcePreemption(to.link[0]);
+							break;
+						case PreemptionRDM:
+							to.link[0].bamType = BAMType.PreemptionGBAM;
+							to.link[0].BCHTL= new double[]
+							{	0, //BC0 Nunca mudar
+								100, //BC1
+								100 //BC2
+							};
 					
+							to.link[0].BCLTH= new double[]
+							{	000, //BC0 
+								000, //BC1
+								0  //BC2 Nunca mudar
+							};
+							BAM.forcePreemption(to.link[0]);
+							break;
+						case PreemptionAllocCTSharing:
+							to.link[0].bamType = BAMType.PreemptionGBAM;
+							to.link[0].BCHTL= new double[]
+							{	0, //BC0 Nunca mudar
+								100, //BC1
+								100 //BC2
+							};
 					
-				}
-				else
-				{
+							to.link[0].BCLTH= new double[]
+							{	100, //BC0 
+								100, //BC1
+								0  //BC2 Nunca mudar
+							};
+							break;
+						}
+						
+						
+
+						BancoDeDados.setXML(rodada.simtime()+" SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+"->Recomenda BAM"+solution.getBAMNovo()+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
+						BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
+						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
+						CBRCase novocase = new CBRCase();
+						novocase.setDescription(desc);
+						novocase.setSolution(sol);
+						No no = new No();
+						no.item=novocase;
+						
+						
+						//Agenda avaliar rentenção 
+						rodada.schedulep(6, ParametrosDSTE.Janela, no);
+						
+						
+					}else{
+						Debug.setMensagem("Nada a fazer = mesmo BAM");
+						
+						//Agenda avaliar BAM via CBR
+						rodada.schedulep(5, ParametrosDSTE.Janela, null );
+					}
+					
+				}else {
 					//Agenda avaliar BAM via CBR
-					rodada.schedulep(5, ParametrosDSTE.Janela, null);
+					rodada.schedulep(5, ParametrosDSTE.Janela, null );
 				}
+					
+				
 				break;
 			case 6:
-				//Avalia renten��o
-				CBRQuery queryRetain = null;
+				//Avalia rentenção
+				CBRQuery queryRetain  = null;
+				CBRCase atualCase = null;
 				CBRCase novocase = ((CBRCase)dados.item);
-				if (rodada.estatistica.devolucoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLADevolucoes) {
-					queryRetain = rodada.estatistica.getQuery(to.link[0],
-							Problemas.AltaDevolucao, to.link[0].bamType);
-					
-
-				} else if (rodada.estatistica.preempcoes(ParametrosDSTE.Janela)*100/rodada.estatistica.lspEstablished(ParametrosDSTE.Janela) >= ParametrosDSTE.SLAPreempcoes) {
-					queryRetain = rodada.estatistica.getQuery(to.link[0],
-							Problemas.AltaPreempcao, to.link[0].bamType);
-					
-
-				} else if ((rodada.estatistica.bloqueios(ParametrosDSTE.Janela)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) >= ParametrosDSTE.SLABloqueios)&&((to.link[0].getCargaEnlaceAtual() * 100 / to.link[0].CargaEnlace) <= ParametrosDSTE.SLAUtilizacao)) {
-					queryRetain = rodada.estatistica.getQuery(to.link[0],
-							Problemas.BaixaUtilizacao, to.link[0].bamType);
-					
-				}
-
-				if (queryRetain!=null)
-				{
-					BancoDeDados.setXML(rodada.simtime()+"  - N�o reteve - Problema:"+((BAMDescription) queryRetain.getDescription()).getProblema()+":"+((BAMDescription) queryRetain.getDescription()).toString(), rodada.filename);
-					BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
-					if(!recommender.equal(novocase, recommender.getCaseBaseDB2()))
-					{
-						((BAMDescription)novocase.getDescription()).setCaseId("bam"+(recommender.getCaseBaseDB2().getCases().size()+1));
-						((BAMSolution)novocase.getSolution()).setId("bam"+(recommender.getCaseBaseDB2().getCases().size()+1));
-						jcolibri.method.retain.StoreCasesMethod.storeCase(recommender.getCaseBaseDB2(), novocase);
-					}
-					
-					rodada.schedulep(5, ParametrosDSTE.Janela, null);
-				 }
-				else
-				{
-					
-					BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
-					if(!recommender.equal(novocase, recommender.getCaseBase()))
-					{
+				
+				
+								
+				queryRetain = rodada.estatistica.getQuery(to.link[0], ParametrosDSTE.Gestor, ParametrosDSTE.SLAUtilizacaoCT, ParametrosDSTE.SLABloqueiosCT,ParametrosDSTE.SLAPreempcoesCT,ParametrosDSTE.SLADevolucoesCT);
+				
+				
+				atualCase = BAMRecommenderNoGUI.getInstance().cycle(queryRetain);
+				
+				
+				
+				
+				if(atualCase!= null){
+				
+					if(atualCase.getSolution().toString() == novocase.getSolution().toString()){
+						BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
 						((BAMDescription)novocase.getDescription()).setCaseId("bam"+(recommender.getCaseBase().getCases().size()+1));
 						((BAMSolution)novocase.getSolution()).setId("bam"+(recommender.getCaseBase().getCases().size()+1));
-						jcolibri.method.retain.StoreCasesMethod.storeCase(recommender.getCaseBase(), novocase);
-					
+						jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
+					}else{
+						BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
+						((BAMDescription)novocase.getDescription()).setCaseId("bam"+(recommender.getCaseBase().getCases().size()+1));
+						((BAMSolution)novocase.getSolution()).setId("bam"+(recommender.getCaseBase().getCases().size()+1));
+						jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), novocase);
+						
 					}
-					
-					rodada.schedulep(5, ParametrosDSTE.Janela, null);
+				
+				
 				}
+					
+				
+				rodada.schedulep(5, ParametrosDSTE.Janela, null);
+				
+
+				
+				
+				/*Boolean UCT0, UCT1, UCT2, BCT0, BCT1, BCT2, PCT0, PCT1, PCT2, DCT0, DCT1, DCT2  = null;
+				
+				
+				if ( to.link[0].CargaCTAtual[0]*100/to.link[0].CargaEnlace >=  ParametrosDSTE.SLAUtilizacaoCT[0] ){
+					System.out.println("UtilizaçãoCT0 Okay");
+					UCT0 = true;
+				}else{
+					UCT0 = false;
+				}
+				if ( to.link[0].CargaCTAtual[1]*100/to.link[0].CargaEnlace >=  ParametrosDSTE.SLAUtilizacaoCT[1] ){
+					System.out.println("UtilizaçãoCT1 Okay");
+					UCT1 = true;
+				}else{
+					UCT1 = false;
+				}
+				if ( to.link[0].CargaCTAtual[2]*100/to.link[0].CargaEnlace >=  ParametrosDSTE.SLAUtilizacaoCT[2] ){
+					System.out.println("UtilizaçãoCT2 Okay");
+					UCT2 = true;
+				}else{
+					UCT2 = false;
+				}
+				
+				
+				
+				if ( rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLABloqueiosCT[0] ){
+					System.out.println("BloqueiosCT0 Okay");
+					BCT0 = true;
+				}else{
+					BCT0 = false;
+				}
+				if ( rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLABloqueiosCT[1] ){
+					System.out.println("BloqueiosCT1 Okay");
+					BCT1 = true;
+				}else{
+					BCT1 = false;
+				}
+				if ( rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLABloqueiosCT[2] ){
+					System.out.println("BloqueiosCT2 Okay");
+					BCT2 = true;
+				}else{
+					BCT2 = false;
+				}
+				
+				
+				
+				if ( rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLAPreempcoesCT[0] ){
+					System.out.println("PreempcoesCT0 Okay");
+					PCT0 = true;
+				}else{
+					PCT0 = false;
+				}
+				if ( rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLAPreempcoesCT[1] ){
+					System.out.println("PreempcoesCT1 Okay");
+					PCT1 = true;
+				}else{
+					PCT1 = false;
+				}
+				if ( rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLAPreempcoesCT[2] ){
+					System.out.println("PreempcoesCT2 Okay");
+					PCT2 = true;
+				}else{
+					PCT2 = false;
+				}
+				
+				
+				
+				if ( rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLADevolucoesCT[0] ){
+					System.out.println("DevolucoesCT0  Okay");
+					DCT0 = true;
+				}else{
+					DCT0 = false;
+				}
+				if ( rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLADevolucoesCT[1] ){
+					System.out.println("DevolucoesCT1  Okay");
+					DCT1 = true;
+				}else{
+					DCT1 = false;
+				}
+				if ( rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLADevolucoesCT[2] ){
+					System.out.println("DevolucoesCT2  Okay");
+					DCT2 = true;
+				}else{
+					DCT2 = false;
+				}
+				
+				
+				
+				if (UCT0 && UCT1 && UCT2 && BCT0 && BCT1 && BCT2 && PCT0 && PCT1 && PCT2 && DCT0 && DCT1 && DCT2){
+					BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
+					jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
+				}*/
+				
+				
+				
+				
 			break;
+			
+			
+			case 7:
+				//Gerar base log debug,etc
+				
+				
+				
+				
+				if (rodada.simtime()== 3600.2){
+					Lsp LSPaux= new Lsp(rodada); 
+            		LSPaux.Carga=0; 
+					to.link[0].bamType = BAMType.PreemptionGBAM;
+					
+			
+					to.link[0].BCLTH= new double[]
+					{	0, //BC0 
+						0, //BC1
+						0  //BC2 Nunca mudar
+					};
+					LSPaux.CT=0; 
+              		BAM.devolutionG(to.link[0],LSPaux);
+					
+					
+					to.link[0].BCHTL= new double[]
+					{	0, //BC0 Nunca mudar
+						0, //BC1
+						0 //BC2
+					};
+					
+					LSPaux.CT=2; 
+              		BAM.preemptionG(to.link[0],LSPaux); 
+				} 
+				
+				
+
+				String nomeBAMAtual = null;
+				
+				if(to.link[0].bamType!=BAMType.PreemptionGBAM)
+				{
+					nomeBAMAtual = to.link[0].bamType.toString();
+				}else
+				{
+					//Se BCLTH diferente de 0 é pq reflete Alloc
+					if (to.link[0].BCLTH[0]!=0)
+						
+						nomeBAMAtual = "PreemptionAllocCTSharing";
+					
+					//Se BCLTH diferente é igual a 0 e BCHTL diferente de 0 é pq reflete RDM
+					else if (to.link[0].BCHTL[2]!=0)
+						
+						nomeBAMAtual = "PreemptionRDM";
+					
+					//Se BCLTH e BCHTL igual a 0 é pq reflete MAM
+					else
+						
+						nomeBAMAtual = "NoPreemptionMAM";
+				}
+				
+				
+					
+					/*if(rodada.simtime() <= 3600*1){
+						
+												
+					}else if (rodada.simtime() <= 3600*2){// 7.200
+						
+
+					}else if (rodada.simtime() <= 3600*3){//  10.800
+						
+						
+					}else if (rodada.simtime() <= 3600*4){ //  14.400	
+						
+						
+					}else if (rodada.simtime() <= 3600*5){
+						
+						
+					}else if (rodada.simtime() >= 16800)
+					{
+						
+						
+					}*/
+					
+					
+				/*	
+				 * Lsp LSPaux= new Lsp(rodada); 
+            		LSPaux.Carga=0; 
+					to.link[0].bamType = BAMType.PreemptionGBAM;
+					
+			
+					to.link[0].BCLTH= new double[]
+					{	000, //BC0 
+						000, //BC1
+						0  //BC2 Nunca mudar
+					};
+					LSPaux.CT=0; 
+              		BAM.devolutionG(to.link[0],LSPaux);
+					
+					
+					to.link[0].BCHTL= new double[]
+					{	0, //BC0 Nunca mudar
+						100, //BC1
+						100 //BC2
+					};
+					
+					LSPaux.CT=2; 
+              		BAM.preemptionG(to.link[0],LSPaux); 
+					*
+					*/
+					
+					
+					
+				double []bloqueiosCTJanela   	= new double [] {0, 0, 0} ;  
+				double []preempcoesCTJanela  	= new double [] {0, 0, 0} ;  
+				double []devolucoesCTJanela   	= new double [] {0, 0, 0} ;  
+			 	
+				 	
+				bloqueiosCTJanela[0] = rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 0) > 0 ? (double)rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,0)/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 0):0;
+				bloqueiosCTJanela[1] = rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 1) > 0 ? (double)rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,1)/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 1):0;
+				bloqueiosCTJanela[2] = rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 2) > 0 ? (double)rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,2)/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 2):0;
+
+				preempcoesCTJanela[0] = rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0) > 0 ? (double)rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,0)/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0):0;
+				preempcoesCTJanela[1] = rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1) > 0 ? (double)rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,1)/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1):0;
+				preempcoesCTJanela[2] = rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2) > 0 ? (double)rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,2)/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2):0;
+
+				devolucoesCTJanela[0] = rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0) > 0 ? (double)rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,0)/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0):0;
+				devolucoesCTJanela[1] = rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1) > 0 ? (double)rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,1)/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1):0;
+				devolucoesCTJanela[2] = rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2) > 0 ? (double)rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,2)/rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2):0;
+
+				
+
+					
+					BancoDeDados.setXML(  rodada.simtime() + "\t"
+							+ nomeBAMAtual + "\t"
+							+ ParametrosDSTE.Janela + "\t"
+							
+							+ to.link[0].CargaEnlace * to.link[0].BC[0] / 100 + "\t"
+							+ to.link[0].CargaEnlace * to.link[0].BC[1] / 100 + "\t"
+							+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
+							
+							
+							/*+ to.link[0].CargaCTAtual[0] + "\t"
+							+ to.link[0].CargaCTAtual[1] + "\t"
+							+ to.link[0].CargaCTAtual[2] + "\t"*/
+							
+							
+							+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
+							+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
+							+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace + "\t"
+
+							
+							//+ rodada.estatistica.lspRequested + "\t"
+							
+						/*								
+							+ rodada.estatistica.lspRequestedCT[0] + "\t"
+							+ rodada.estatistica.lspRequestedCT[1] + "\t"
+							+ rodada.estatistica.lspRequestedCT[2] + "\t"
+							
+														
+							+ rodada.estatistica.lspEstablishedCT[0] + "\t"
+							+ rodada.estatistica.lspEstablishedCT[1] + "\t"
+							+ rodada.estatistica.lspEstablishedCT[2] + "\t"
+
+							
+							+ rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 0) + "\t"
+							+ rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 1) + "\t"
+							+ rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 2) + "\t"
+
+							
+							+ rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0) + "\t"
+							+ rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1) + "\t"
+							+ rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2) + "\t"
+											*/
+
+							
+						
+							
+						/*
+							+ rodada.estatistica.bloqueios + "\t"
+							+ rodada.estatistica.preempcoes + "\t"
+							+ rodada.estatistica.devolucoes + "\t"
+							
+							
+							
+							+ rodada.estatistica.bloqueiosCT[0] + "\t"
+							+ rodada.estatistica.bloqueiosCT[1] + "\t"
+							+ rodada.estatistica.bloqueiosCT[2] + "\t"
+							
+							+ rodada.estatistica.preempcoesCT[0] + "\t"
+							+ rodada.estatistica.preempcoesCT[1] + "\t"
+							+ rodada.estatistica.preempcoesCT[2] + "\t"
+
+							+ rodada.estatistica.devolucoesCT[0] + "\t"
+							+ rodada.estatistica.devolucoesCT[1] + "\t"
+							+ rodada.estatistica.devolucoesCT[2] + "\t"
+							*/
+											
+							+ bloqueiosCTJanela[0] + "\t"
+							+ bloqueiosCTJanela[1] + "\t"
+							+ bloqueiosCTJanela[2] + "\t"
+							
+							+ preempcoesCTJanela[0] + "\t"
+							+ preempcoesCTJanela[1] + "\t"
+							+ preempcoesCTJanela[2] + "\t"
+							
+							+ devolucoesCTJanela[0] + "\t"
+							+ devolucoesCTJanela[1] + "\t"
+							+ devolucoesCTJanela[2] + "\t"
+
+							//, "saida");
+
+							, rodada.filename);
+				
+				
+					
+					rodada.schedulep(7, ParametrosDSTE.Janela , null);
+					
+					
+				break;
 			
 			
 
 			}
-			//Debug.setMensagem(" ==== Status dos Links  ====");
-			//Debug.setMensagem(to.statusLinks());
-			//Debug.setMensagem(rodada.imprime_evchain(), 0, 0);
+			Debug.setMensagem(" ==== Status dos Links  ====");
+			Debug.setMensagem(to.statusLinks());
+			Debug.setMensagem(rodada.imprime_evchain(), 0, 0);
 
 		}
 		Debug.setMensagem("\r\n\r\n ==== Status dos Links  ====");

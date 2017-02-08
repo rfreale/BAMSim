@@ -25,31 +25,50 @@ public class ParametrosDSTE {
 	//public static final int NumEnlacesFullDuplex = 12;
 	public static final int MaxH = 0;
 	public static final int MaxClassType = 3;
-	public static int LINKS = 6; // N�mero de LINKS (Simplex) do Modelo
-	public static int ROTEADORES = 5; // N�mero de roteadores DSTE
+	public static int LINKS = 6; // Número de LINKS (Simplex) do Modelo
+	public static int ROTEADORES = 5; // Número de roteadores DSTE
 	public static BAMType BAMTypePadrao = BAMType.PreemptionGBAM;  //NoPreemptionMAM  //PreemptionAllocCTSharing  //PreemptionRDM
-	public static final long Janela = 600;
 	
+	
+	
+	public static final String Gestor = "Eliseu";
 	//SLAs em Percentual
+	
+	public static final int []SLAUtilizacaoCT   = new int [] {35, 40, 45} ;  // ou SLA
+	public static final int []SLABloqueiosCT    = new int [] {80, 70, 80} ;  // ou SLA
+	public static final int []SLAPreempcoesCT   = new int [] {80, 80, 00} ;  // ou SLA
+	public static final int []SLADevolucoesCT   = new int [] {00, 80, 80} ;  // ou SLA
+	
+	
+	
+	public static final int  Escada = 128; //limite da função de similaridade Threshold
 	public static final long SLAPreempcoes = 10;
 	public static final long SLADevolucoes = 5;
 	public static final long SLABloqueios = 10;
 	public static final long SLAUtilizacao = 80;
-	public static final boolean RecomendacaoCBRSwitchBAM = true;
-	public static final double RecomendacaoCBRLimiarDeCorte = 0.65;
-	public static final long TempoSimulacao = 3600*5;//86400
+	public static final boolean RecomendacaoCBRSwitchBAM = false;
+	public static final double RecomendacaoCBRLimiarDeCorte = 0.85;
+	public static final long TempoSimulacao = 3600*7;//86400
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
 	 */
-	public static final long RRDStarTime = 1451617200;  //start /// date +"%s"
-	public static final long RRDAmostra = 30;  //step
-	public static final long RRDBatida =RRDAmostra*2 ; //heartbeat
+	public static final long RRDStarTime = 1483239600;  //start /// date +"%s"
+	//public static final long RRDAmostra = 30;  //step
+	public static final long RRDBatida =60 ; //heartbeat
 	public static final double RRDMin =Double.NaN;    //valor mínimo fora dos quais não deve ser considerada a leitura.
 	public static final double RRDMax = Double.NaN;   //valor máximo fora dos quais não deve ser considerada a leitura.
-	public static final double RRDXff = 0.5;   //percentagem de pontos primários que podem ser 'desconhecidos'
-	public static final int RRDSteps = 2;  //Número de 'steps' que devemos esperar até armazenarmos no arquivo o valor da leitura
-	public static final int RRDLinhas= (int) (TempoSimulacao/(RRDSteps*RRDAmostra));  //rows  quantas leituras vamos armazenar.
+	public static final double RRDXff = 0.5;   //percentagem de pontos primÃ¡rios que podem ser 'desconhecidos'
+	public static final int RRDSteps = 1;  //Número de 'steps' que devemos esperar até armazenarmos no arquivo o valor da leitura
+	public static final int RRDLinhas= (int) (TempoSimulacao/(RRDSteps*RRDBatida));  //rows  quantas leituras vamos armazenar.
+	
+	
+	
+	
+	public static final long Janela = RRDBatida *7 ;
+	
+	
+	
 	
 	public static final Boolean topologiaManual= false;
 	public static final Boolean matrizCaminhosManual= false;
@@ -61,7 +80,7 @@ public class ParametrosDSTE {
 	public static void trafegoManual(RodadaDeSimulacao rodada,Topologia to, No dados)
 	{
 		
-		//Inicializar Tr�fego
+		//Inicializar Tráfego
 		if(dados==null)
 		{
 			for(int i=0; i<ParametrosDSTE.MaxClassType;i++)
@@ -79,21 +98,33 @@ public class ParametrosDSTE {
 						+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
 						+" -->"
 						+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
-				rodada.schedulep (3, 0.0, dados);
+				if (((Lsp)dados.item).CT==2){
+					
+					rodada.schedulep (3, 3600*0, dados);   ////CT2
+					
+				} else if (((Lsp)dados.item).CT==1){
+					
+					rodada.schedulep (3, 3600*4, dados); //CT1
+					
+				} else
+				{
+					rodada.schedulep (3, 3600*2, dados);  ////CT0
+				}
 			}
 		}
 		else
 		{
-			//Repeti��o do tr�fego
+			Debug.setMensagem("Cria LSP "+((Lsp)dados.item).ID+" - "
+					+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
+					+" -->"
+					+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
+			rodada.schedulep (1, 0, dados);
+			
+			//Repetição do tráfego
 			Debug.setMensagem("Agenda estabelecimento da LSP "+((Lsp)dados.item).ID+" - "
 					+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
 					+" -->"
 					+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
-			rodada.schedulep (1, 0.0, dados);
-	
-			
-	
-			
 			int auxCT=((Lsp)dados.item).CT;
 			dados = new No();
 			Lsp lsp = new Lsp(rodada);
@@ -101,106 +132,111 @@ public class ParametrosDSTE {
 			lsp.src = 0; //id do router fonte
 			lsp.dest = 1; // id do router destino
 			lsp.CT =auxCT;
-			lsp.Carga = (int)GeradorDeNumerosAleatorios.uniform(5,15);
+			lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5,15);
 			dados.item = lsp;
 			
 			double tempoDeVida=250;
-			Debug.setMensagem("Cria LSP "+((Lsp)dados.item).ID+" - R0 -->R4");
-			if(rodada.simtime() <= 3600*1)
+			
+			
+			
+			
+			if (rodada.simtime() < 3600*1)   // Uma hora    de 0 a 1 hora
 			{
-				if (((Lsp)dados.item).CT==0)
-				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
-				}
-				if (((Lsp)dados.item).CT==1)
-				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
-				}
-				if (((Lsp)dados.item).CT==2)
-				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
-				}
-			}else if (rodada.simtime() <= 3600*2)
+				((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+				rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(10), dados);
+							
+				
+			}else if (rodada.simtime() < 3600*2)  //   7200 Duas horas de 1 a 2 horas
 			{
-				if (((Lsp)dados.item).CT==0)
-				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
-				}
-				if (((Lsp)dados.item).CT==1)
-				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
-				}
-				if (((Lsp)dados.item).CT==2)
-				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
-				} 
-				// 10.800
-			}else if (rodada.simtime() <= 3600*3)
-			{
-				if (((Lsp)dados.item).CT==0)
-				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
-				}
-				if (((Lsp)dados.item).CT==1)
-				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
-				}
-				if (((Lsp)dados.item).CT==2)
-				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
-				} 
+				
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+								
 			}
-			else if (rodada.simtime() <= 3600*4)// 14.400
+			else if (rodada.simtime() < 3600*3)  //  10800  Três horas de 2 a 3 horas
+			{
+				
+				if (((Lsp)dados.item).CT==0)
+				{
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(10), dados);
+					
+				}else if (((Lsp)dados.item).CT==2)
+				{
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				}	
+				
+			}else if (rodada.simtime() < 3600*4)// 14.400  de 3 a 4 horas
 			{
 				if (((Lsp)dados.item).CT==0)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
-				}
-				if (((Lsp)dados.item).CT==1)
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+					
+				}else if (((Lsp)dados.item).CT==2)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
-				}
-				if (((Lsp)dados.item).CT==2)
-				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(10), dados);
-				}
-			}else // 14.400
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				}			
+			}else  if (rodada.simtime() < 3600*5)  // 18000 de 4 a 5 horas
 			{
 				if (((Lsp)dados.item).CT==0)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
-				}
-				if (((Lsp)dados.item).CT==1)
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+					
+				}else if (((Lsp)dados.item).CT==1)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
-				}
-				if (((Lsp)dados.item).CT==2)
+					((Lsp)dados.item).tempoDeVida= (int)GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(10), dados);
+					
+				}else if (((Lsp)dados.item).CT==2)
 				{
-					((Lsp)dados.item).tempoDeVida=GeradorDeNumerosAleatorios.expntl(tempoDeVida);
-					rodada.schedulep (3, GeradorDeNumerosAleatorios.expntl(3), dados);
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				}			
+			}else  if (rodada.simtime() < 3600*6)  // de 5 a 6 horas
+			{
+
+				if (((Lsp)dados.item).CT==0)
+				{
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+					
+				}else if (((Lsp)dados.item).CT==1)
+				{
+					((Lsp)dados.item).tempoDeVida= (int)GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+					
+				}else if (((Lsp)dados.item).CT==2)
+				{
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				}		
+			}else 
+			{
+				if (((Lsp)dados.item).CT==0)
+				{
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				}else if (((Lsp)dados.item).CT==1)
+				{
+					((Lsp)dados.item).tempoDeVida= (int)GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(2), dados);
+				}else if (((Lsp)dados.item).CT==2)
+				{
+					((Lsp)dados.item).tempoDeVida= (int) GeradorDeNumerosAleatorios.expntl(tempoDeVida);
+					rodada.schedulep (3, (int) GeradorDeNumerosAleatorios.expntl(15), dados);
 				}
 			}
+		
+			
 
 		}
-			
-		
 		
 	}
-	//Aleat�rio
+	//Aleatório
 	public static void trafegoManual2(RodadaDeSimulacao rodada,Topologia to, No dados)
 	{
 		
@@ -360,10 +396,10 @@ public class ParametrosDSTE {
 	
 	
 */	
-	public static double [] BCPadrao= new double[]           //para MAN
-			{	25, // BC[0] =CT0 (Valor do Enlace)
-				35, // BC[1] = CT1
-				40 // BC[2] =  CT2
+	public static double [] BCPadrao= new double[]           //para MAN 
+			{	20, // BC[0] =CT0 (Valor do Enlace)
+				30, // BC[1] = CT1
+				50 // BC[2] =  CT2
 			};
 	
 	public static double [] BCHTLPadrao= new double[]
@@ -389,7 +425,7 @@ public class ParametrosDSTE {
 	}
 	public static String getParametros()
 	{
-		String retorno="============================ In�cio dos Par�mtros DSTE ============================\r\n";
+		String retorno="============================ Início dos Parâmetros DSTE ============================\r\n";
 		retorno+="MaxCaminhos:"+MaxCaminhos+"\r\n";
 		retorno+="MaxSaltos:"+MaxSaltos+"\r\n";
 		retorno+="MaxH:"+MaxH+"\r\n";
@@ -403,7 +439,7 @@ public class ParametrosDSTE {
 			
 		}   
 		
-		retorno+="============================ Fim dos Par�mtros DSTE ============================";
+		retorno+="============================ Fim dos Parâmetros DSTE ============================";
 
 		
 		
@@ -411,7 +447,7 @@ public class ParametrosDSTE {
 		
 	}
 	
-	public static NNConfig getSimilarityConfig()
+	public static NNConfig getSimilarityConfig()   ////////////criar a função de similaridade  colocar novos campos.
 	{
 		NNConfig config = new NNConfig();
 		Attribute attribute;
@@ -421,51 +457,118 @@ public class ParametrosDSTE {
 
 		attribute = new Attribute("BAMAtual",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 100.0);
+		config.setWeight(attribute, 1.0);
 
-		attribute = new Attribute("problema",BAMDescription.class); 
+		/*attribute = new Attribute("problema",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 100.0);
+		config.setWeight(attribute, 100.0);*/
 		
+		attribute = new Attribute("SLAUtilizacaoCT0",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("SLAUtilizacaoCT1",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("SLAUtilizacaoCT2",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+				
+		attribute = new Attribute("SLABloqueiosCT0",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("SLABloqueiosCT1",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("SLABloqueiosCT2",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+				
+		attribute = new Attribute("SLAPreempcoesCT0",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("SLAPreempcoesCT1",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+		/*attribute = new Attribute("SLAPreempcoesCT2",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);*/
+		
+		
+		/*attribute = new Attribute("SLADevolucoesCT0",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);*/
+				
+		attribute = new Attribute("SLADevolucoesCT1",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("SLADevolucoesCT2",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+				
+		attribute = new Attribute("BC0",BAMDescription.class); 
+		config.addMapping(attribute, new Threshold(Escada));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("BC1",BAMDescription.class); 
+		config.addMapping(attribute, new Threshold(Escada));
+		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("BC2",BAMDescription.class); 
+		config.addMapping(attribute, new Threshold(Escada));
+		config.setWeight(attribute, 1.0);
+		
+				
 		attribute = new Attribute("utilizacaoDoEnlaceCT0",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 1.0);
+		
 		attribute = new Attribute("utilizacaoDoEnlaceCT1",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 1.0);
+		
 		attribute = new Attribute("utilizacaoDoEnlaceCT2",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 1.0);
+		
 
+		attribute = new Attribute("numeroDeBloqueiosCT0",BAMDescription.class);
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
 
+		attribute = new Attribute("numeroDeBloqueiosCT1",BAMDescription.class);
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+
+		attribute = new Attribute("numeroDeBloqueiosCT2",BAMDescription.class);
+		config.addMapping(attribute, new Interval(100));
+		config.setWeight(attribute, 1.0);
+		
+				
 		attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
-
+		config.setWeight(attribute, 1.0);
 
 		attribute = new Attribute("numeroDePreempcoesCT1",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 1.0);
 		
 		/*nunca existe esse valor
 		attribute = new Attribute("numeroDePreempcoesCT2",BAMDescription.class);
 		config.addMapping(attribute, new Interval(100));
 		config.setWeight(attribute, 0.0);*/
 		
-
-		attribute = new Attribute("numeroDeBloqueiosCT0",BAMDescription.class);
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
-		
-
-		attribute = new Attribute("numeroDeBloqueiosCT1",BAMDescription.class);
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
-		
-
-		attribute = new Attribute("numeroDeBloqueiosCT2",BAMDescription.class);
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
 		
 		/*nunca existe esse valor
 		attribute = new Attribute("numeroDeDevolucoesCT0",BAMDescription.class);
@@ -475,12 +578,12 @@ public class ParametrosDSTE {
 		
 		attribute = new Attribute("numeroDeDevolucoesCT1",BAMDescription.class);
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 1.0);
 		
 		
 		attribute = new Attribute("numeroDeDevolucoesCT2",BAMDescription.class);
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 1.0);
 
 		
 		return config;

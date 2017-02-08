@@ -5,17 +5,17 @@ import Simulador.No;
 
 /* o link entre dois roteadores atende de maneira uniforme os
 os pacotes que chegam a ele (uniforme em funcao da taxa de
-transmiss„o e tempo de propagaÁ„o) */
+transmiss√£o e tempo de propaga√ß√£o) */
 public class Link {
 	//Lista Enlaces
-	    public double CargaEnlace; // Valor do FÌsico do Enlace em bps
-		private double CargaEnlaceAtual=0; // Carga de Tr·fego Atual ocupada do Enlace em bps
-		public double CargaCTAtual[] = new double [ParametrosDSTE.MaxClassType]; // Carga de Tr·fego Atual ocupada do Enlace em bps
-		public String Descricao; // DescriÁ„o do Enlace. Cada enlace est· associado a uma letra do alfabeto
-		int ID; // DescriÁ„o numÈrica para o enlace
+	    public double CargaEnlace; // Valor do F√≠sico do Enlace em bps
+		private double CargaEnlaceAtual=0; // Carga de Tr√°fego Atual ocupada do Enlace em bps
+		public double CargaCTAtual[] = new double [ParametrosDSTE.MaxClassType]; // Carga de Tr√°fego Atual ocupada do Enlace em bps
+		public String Descricao; // Descri√ß√£o do Enlace. Cada enlace est√° associado a uma letra do alfabeto
+		int ID; // Descri√ß√£o num√©rica para o enlace
 		int CustoEnlace; // Custo do Enlace
-		Roteador lsrSrc; // NÛ origem do Enlace
-		Roteador lsrDest; // nÛ destino do Enlace
+		Roteador lsrSrc; // N√≥ origem do Enlace
+		Roteador lsrDest; // n√≥ destino do Enlace
 		public double [] BC = ParametrosDSTE.BCPadrao;
 		public double [] BCHTL = ParametrosDSTE.BCHTLPadrao;
 		public double [] BCLTH = ParametrosDSTE.BCLTHPadrao;
@@ -29,19 +29,21 @@ public class Link {
 		//LSPs por CTs Associadas ao link
 		public Lista ListaLSPsPorCT[] = new Lista[ParametrosDSTE.MaxClassType];
 		
-		//EstatÌsticas
-		double BandaPreemptada =0; // Vari·vel que contÈm a Banda Preemptada atual no Enlace, se preempÁ„o for necess·ria
-		double TotalBandaPreemptada = 0; // Vari·vel com o total de banda preemptada de cada enlace para computaÁ„o das estatÌsticas finais
+		//Estat√≠sticas
+		double BandaPreemptada =0; // Vari√°vel que cont√©m a Banda Preemptada atual no Enlace, se preemp√ß√£o for necess√°ria
+		double TotalBandaPreemptada = 0; // Vari√°vel com o total de banda preemptada de cada enlace para computa√ß√£o das estat√≠sticas finais
 		double BandaPreemptadaCT[] = new double[ParametrosDSTE.MaxClassType];
 		
 		public int preempcoes = 0;
 		public int devolucoes = 0;
 		public int lspEstabelecidas = 0;
+		public int lspEstabelecidasTotal = 0;
 		public int lspUnbroken = 0;
 		public double bandaUnbroken = 0;
 
 		public int [] lspUnbrokenCT = new int [ParametrosDSTE.MaxClassType];
 		public int [] lspEstabelecidasCT = new int [ParametrosDSTE.MaxClassType];
+		public int [] lspEstabelecidasTotalCT = new int [ParametrosDSTE.MaxClassType];
 		public int [] preempcoesCT = new int [ParametrosDSTE.MaxClassType];
 		public int [] devolucoesCT = new int [ParametrosDSTE.MaxClassType];
 
@@ -80,7 +82,7 @@ public class Link {
 				case PreemptionGBAM:
 					return BAM.preemptionGBAM(this, lsp);
 				default:
-	                System.out.println("BAM n„o implementado!");
+	                System.out.println("BAM n√£o implementado!");
 	                break;
 					
 			
@@ -92,7 +94,7 @@ public class Link {
 		}
 			
 		
-		public double CargaResidual() // Carga de Tr·fego n„o utilizada no Enlace (CargaEnlace - CargaEnlaceAtual)
+		public double CargaResidual() // Carga de Tr√°fego n√£o utilizada no Enlace (CargaEnlace - CargaEnlaceAtual)
 		{
 			return  CargaEnlace - CargaEnlaceAtual;
 		}
@@ -164,6 +166,10 @@ public class Link {
 				Debug.setMensagem(imprimirStatusBC(),8,8);
 			else
 				Debug.setMensagem(imprimirUtilizacaoGBAM(),8,8);
+			
+			this.lspEstabelecidas--;
+			this.lspEstabelecidasCT[lsp.CT]--;
+			
 			return(retorno);		
 			
 		}
@@ -221,11 +227,11 @@ public class Link {
 					//Soma emprestimos de menor prioridade
 					for(int r=CT-1;r>=0;r--)
 						emprestimo+=this.emprestimo(r);
-					//Efetua c·lculo do emprestimos de menor prioridade + banda livre
+					//Efetua c√°lculo do emprestimos de menor prioridade + banda livre
 					TotalFreeBandWithDebt = this.CargaEnlace - this.getCargaEnlaceAtual() + emprestimo;
 				}
 				else
-				//N„o tendo emprestimo somar todos emprestimos + banda livre
+				//N√£o tendo emprestimo somar todos emprestimos + banda livre
 				{
 					double naoUtilizadoBC=0;
 					double emprestimo=0;
@@ -233,13 +239,13 @@ public class Link {
 					//for(int r=ParametrosDSTE.MaxClassType-1;r>=0;r--)
 						//emprestimo+=this.emprestimo(r);
 					emprestimo+=this.emprestimoCTSuperiores(0);
-					//Efetua c·lculo do emprestimos + banda livre
+					//Efetua c√°lculo do emprestimos + banda livre
 					TotalFreeBandWithDebt = this.CargaEnlace - this.getCargaEnlaceAtual() + emprestimo;
 
-					//Existe a necessidade de verificar se o disponÌvel para o BC È maior que emprestimos + banda livre
-					//Essa necessidade È devido as prioridades da CT hierarquicamente mais altas
-					//Essa condiÁ„o implicar· em preempÁ„o
-					//Efetua c·lculo do emprestimo + N„o utilizado pelo BC
+					//Existe a necessidade de verificar se o dispon√≠vel para o BC √© maior que emprestimos + banda livre
+					//Essa necessidade √© devido as prioridades da CT hierarquicamente mais altas
+					//Essa condi√ß√£o implicar√° em preemp√ß√£o
+					//Efetua c√°lculo do emprestimo + N√£o utilizado pelo BC
 					naoUtilizadoBC = ((this.BC[CT]/this.BC[0])*this.CargaEnlace) - this.BCAcumulado(CT);
 					if(naoUtilizadoBC>TotalFreeBandWithDebt)
 						TotalFreeBandWithDebt=naoUtilizadoBC;
@@ -261,7 +267,7 @@ public class Link {
 		{
 			String retorno="";
 			retorno+=("=====================================================================================================\r\n");
-			retorno+=("||BC| BC%  |BC(Mbps)|| HTL% |HTL(Mbps)|| LTH% |LTH(Mbps)||M·x. Comp.||Privado||HTL Acum.||LTH Acum.||\r\n");
+			retorno+=("||BC| BC%  |BC(Mbps)|| HTL% |HTL(Mbps)|| LTH% |LTH(Mbps)||M√°x. Comp.||Privado||HTL Acum.||LTH Acum.||\r\n");
 			for (int i=0; i<this.BC.length;i++){
 				retorno+=(String.format("|| %d|%6.2f|%8.2f|",i,this.BC[i],this.BCMbps(i)));
 				retorno+=(String.format("|%6.2f|%9.2f|",this.BCHTL[i],this.HTLMbps(i)));
@@ -279,7 +285,7 @@ public class Link {
 		{
 			String retorno="";
 			retorno+=("=================================================================================================================\r\n");
-			retorno+=("||BC| BC%  |BC(Mbps)|| HTL% |HTL(Mbps)|| LTH% |LTH(Mbps)||M·x. Comp.||Privado||HTL Acum.||LTH Acum.||Exce. Sup.||\r\n");
+			retorno+=("||BC| BC%  |BC(Mbps)|| HTL% |HTL(Mbps)|| LTH% |LTH(Mbps)||M√°x. Comp.||Privado||HTL Acum.||LTH Acum.||Exce. Sup.||\r\n");
 			for (int i=0; i<this.BC.length;i++){
 				retorno+=(String.format("|| %d|%6.2f|%8.2f|",i,(this.BCAtual[i]/this.BCMbps(i)*100),this.BCAtual[i]));
 				retorno+=(String.format("|%6.2f|%9.2f|",this.HTLMbpsCompartilhavel(i)/this.HTLMbps(i)*100,this.HTLMbpsCompartilhavel(i)));
@@ -356,14 +362,14 @@ public class Link {
 		}
 		public double LTHMbpsCompartilhavel(int BC)
 		{
-			//Se n„o usou o privado È pq tem disponÌvel o compartilhado
+			//Se n√£o usou o privado √© pq tem dispon√≠vel o compartilhado
 			if(this.BCAtual[BC]<=this.privado(BC))
 			{
 				return LTHMbps(BC);
 			}
 			else
 			{
-				//se o uso retirando o privado È maior do que o compatilh·vel o retorno È zero
+				//se o uso retirando o privado √© maior do que o compatilh√°vel o retorno √© zero
 				if((this.BCAtual[BC]-this.privado(BC))>=LTHMbps(BC))
 					return 0;
 				else
@@ -375,14 +381,14 @@ public class Link {
 		public double HTLMbpsCompartilhavel(int BC)
 		{
 			
-			//Se n„o usou o privado È pq tem disponÌvel o compartilhado
+			//Se n√£o usou o privado √© pq tem dispon√≠vel o compartilhado
 			if(this.BCAtual[BC]<=this.privado(BC))
 			{
 				return HTLMbps(BC);
 			}
 			else
 			{
-				//se o uso retirando o privado È maior do que o compatilh·vel o retorno È zero
+				//se o uso retirando o privado √© maior do que o compatilh√°vel o retorno √© zero
 				if((this.BCAtual[BC]-this.privado(BC))>=HTLMbps(BC))
 					return 0;
 				else
@@ -439,14 +445,14 @@ public class Link {
 			double carga=0;
 			if(lsp.CT==BC)
 				carga=lsp.Carga;
-			//Se n„o usou o privado È pq tem disponÌvel o compartilhado
+			//Se n√£o usou o privado √© pq tem dispon√≠vel o compartilhado
 			if(this.BCAtual[BC]+carga<=this.privado(BC))
 			{
 				return LTHMbps(BC);
 			}
 			else
 			{
-				//se o uso retirando o privado È maior do que o compatilh·vel o retorno È zero
+				//se o uso retirando o privado √© maior do que o compatilh√°vel o retorno √© zero
 				if((this.BCAtual[BC]+carga-this.privado(BC))>=LTHMbps(BC))
 					return 0;
 				else
@@ -461,14 +467,14 @@ public class Link {
 			if(lsp.CT==BC)
 				carga=lsp.Carga;
 			
-			//Se n„o usou o privado È pq tem disponÌvel o compartilhado
+			//Se n√£o usou o privado √© pq tem dispon√≠vel o compartilhado
 			if(this.BCAtual[BC]+carga<=this.privado(BC))
 			{
 				return HTLMbps(BC);
 			}
 			else
 			{
-				//se o uso retirando o privado È maior do que o compatilh·vel o retorno È zero
+				//se o uso retirando o privado √© maior do que o compatilh√°vel o retorno √© zero
 				if((this.BCAtual[BC]+carga-this.privado(BC))>=HTLMbps(BC))
 					return 0;
 				else

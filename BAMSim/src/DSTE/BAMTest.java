@@ -14,10 +14,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -40,18 +38,212 @@ import org.rosuda.JRI.Rengine;
 //import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.REXPMismatchException;
 import org.rosuda.REngine.REngineException;
-import org.rosuda.REngine.RList;
-import org.rosuda.REngine.Rserve.RConnection;
 import org.rosuda.REngine.Rserve.RserveException;
 
+import BAM.BAMRecommender.BAMDescription;
+import BAM.BAMRecommender.BAMRecommenderNoGUI;
+import BAM.BAMRecommender.BAMDescription.BAMTypes;
 import Simulador.Debug;
 import Simulador.Estatisticas;
 import Simulador.GeradorDeNumerosAleatorios;
 import Simulador.No;
 import Simulador.ParametrosDoSimulador;
 import Simulador.RodadaDeSimulacao;
+import jcolibri.cbrcore.CBRCase;
+import jcolibri.cbrcore.CBRQuery;
+import jcolibri.exception.ExecutionException;
 
 public class BAMTest {
+	
+	@Test
+	public void rrdTest() throws IOException, RrdException
+	{
+		RodadaDeSimulacao r = new RodadaDeSimulacao();
+		EstatisticasDSTE estatistica = r.estatistica;
+		Debug.filename=r.filename;
+		
+		/*
+		//Inicia Base zerada
+		estatistica.inserirDadosAbsolutoRRD(-ParametrosDSTE.RRDBatida*2+1);
+		//Inicia Base zerada
+		estatistica.inserirDadosRRD(-ParametrosDSTE.RRDBatida*2+1);
+		*/
+
+		
+		
+		int i=0;
+		estatistica.lspUnbroken=30;
+		estatistica.preempcoes=10;
+		estatistica.devolucoes=20;
+		estatistica.lspEstablished=60;
+		estatistica.bloqueios=40;
+		estatistica.lspRequested=100;
+		estatistica.inserirDadosRRD(0);
+		estatistica.inserirDadosAbsolutoRRD(0);
+		
+		System.out.println("preemp√ß√µes="+estatistica.preempcoes);
+		System.out.println("preemp√ß√µes-base="+estatistica.preempcoesAUX);
+		System.out.println("preemp√ß√µes-janela="+estatistica.preempcoes(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
+		System.out.println("preemp√ß√µes-janelaAbs="+estatistica.preempcoesAbsoluto(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
+		
+		for (i=2;i<=20;i++)
+		{
+			estatistica.lspUnbroken=30*i;
+			estatistica.preempcoes=10*i;
+			estatistica.devolucoes=20*i;
+			estatistica.lspEstablished=60*i;
+			estatistica.bloqueios=40*i;
+			estatistica.lspRequested=100*i;
+			
+			
+			estatistica.inserirDadosRRD(ParametrosDSTE.RRDBatida*(i-1));
+			estatistica.inserirDadosAbsolutoRRD(ParametrosDSTE.RRDBatida*(i-1));
+			System.out.println("preemp√ß√µes="+estatistica.preempcoes);
+			System.out.println("preemp√ß√µes-base="+estatistica.preempcoesAUX);
+			System.out.println("preemp√ß√µes-janela="+estatistica.preempcoes(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
+			System.out.println("preemp√ß√µes-janelaAbs="+estatistica.preempcoesAbsoluto(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
+			
+		}
+		estatistica.gerarRRDXML();
+
+		/*
+		Topologia to = new Topologia();
+		to.carregarTopologiaArquivo();
+		
+		estatistica.iniciarRRDLinks(to);
+		
+		estatistica.statusLinks(to, -60);
+		
+		
+		Lsp lsp = new Lsp(r);
+		lsp.CargaReduzida = 0;
+		lsp.src = 0; //id do router fonte
+		lsp.dest = 1; // id do router destino
+		lsp.CT =0;
+		lsp.Carga = 10;
+		
+		to.link[0].insereLsp(lsp);
+
+		estatistica.statusLinks(to, 0);
+		
+		
+		for (i=2;i<=20;i++)
+		{
+			lsp = new Lsp(r);
+			lsp.CargaReduzida = 0;
+			lsp.src = 0; //id do router fonte
+			lsp.dest = 1; // id do router destino
+			lsp.CT =(i-1)%3;
+			lsp.Carga = (((i-1)%3)+1) * 10;
+			
+			to.link[0].insereLsp(lsp);
+
+			estatistica.statusLinks(to, ParametrosDSTE.RRDBatida*(i-1));
+			System.out.println("utiliza√ß√£o="+estatistica.picoDeUtilizacaoDoEnlace(ParametrosDSTE.RRDBatida*5, to.link[0]));
+			
+			if (i%5==4)
+			{
+				to.link[0].removeLsp((Lsp)to.link[0].ListaLSPs.primeiro.prox.item);
+				to.link[0].removeLsp((Lsp)to.link[0].ListaLSPs.primeiro.prox.item);
+				to.link[0].removeLsp((Lsp)to.link[0].ListaLSPs.primeiro.prox.item);
+			}
+			
+
+		}
+		estatistica.gerarLinksRRDXML();
+		*/
+		
+		
+		estatistica.gerarRRDPNGlspRequested();
+		estatistica.gerarRRDPNGlspEstablished();
+		estatistica.gerarRRDPNGlspUnbroken();
+		estatistica.gerarRRDPNGpreempcao();
+		estatistica.gerarRRDPNGbloqueio();
+		estatistica.gerarRRDPNGdevolucao();
+		//estatistica.gerarLinkRRDPNG(to);
+	}
+	@Test
+	public void cbrSimilarityConfigTest()
+	{
+		BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
+		try
+		{
+			recommender.configure();
+			recommender.preCycle();
+			recommender.setSimConfig(ParametrosDSTE.getSimilarityConfig());
+		}catch(Exception e)
+		{
+			org.apache.commons.logging.LogFactory.getLog(BAMRecommenderNoGUI.class).error(e);
+			//javax.swing.JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+		CBRCase cbrCase = null;
+		CBRQuery query = new CBRQuery();
+
+		BAMDescription desc = new BAMDescription();
+		
+		desc.setGestor("Rafael");
+		
+		
+		desc.setBAMAtual(BAMTypes.NoPreemptionMAM);
+		//desc.setProblema(Problemas.valueOf(problema.toString()));
+		
+		desc.setSLAUtilizacaoCT0(ParametrosDSTE.SLAUtilizacaoCT[0]);
+		desc.setSLAUtilizacaoCT1(ParametrosDSTE.SLAUtilizacaoCT[1]);
+		desc.setSLAUtilizacaoCT2(ParametrosDSTE.SLAUtilizacaoCT[2]);
+							
+		desc.setSLABloqueiosCT0( ParametrosDSTE.SLABloqueiosCT[0]); 
+		desc.setSLABloqueiosCT1( ParametrosDSTE.SLABloqueiosCT[1]);
+		desc.setSLABloqueiosCT2( ParametrosDSTE.SLABloqueiosCT[2]);
+		
+		desc.setSLAPreempcoesCT0( ParametrosDSTE.SLAPreempcoesCT[0]);
+		desc.setSLAPreempcoesCT1( ParametrosDSTE.SLAPreempcoesCT[1]);
+		//desc.setSLAPreempcoesCT2( ParametrosDSTE.SLAPreempcoesCT[2]);
+		
+		//desc.setSLADevolucoesCT0( ParametrosDSTE.SLADevolucoesCT[0]);
+		desc.setSLADevolucoesCT1( ParametrosDSTE.SLADevolucoesCT[1]);
+		desc.setSLADevolucoesCT2( ParametrosDSTE.SLADevolucoesCT[2]);
+		
+					
+		desc.setBC0( 250 );
+		desc.setBC1( 600 );
+		desc.setBC2( 1000 );
+		
+		desc.setUtilizacaoDoEnlaceCT0(10.0);
+		desc.setUtilizacaoDoEnlaceCT1(20.0);
+		desc.setUtilizacaoDoEnlaceCT2(30.0);
+		
+					
+		desc.setNumeroDeBloqueiosCT0(5);
+		desc.setNumeroDeBloqueiosCT1(6);
+		desc.setNumeroDeBloqueiosCT2(8);
+		
+		desc.setNumeroDePreempcoesCT0(0);
+		desc.setNumeroDePreempcoesCT1(0);
+		//desc.setNumeroDePreempcoesCT2(0);
+		
+		//desc.setNumeroDeDevolucoesCT0(0);
+		desc.setNumeroDeDevolucoesCT1(0);
+		desc.setNumeroDeDevolucoesCT2(0);
+
+		query.setDescription(desc);
+		try {
+			cbrCase = recommender.cycle(query);
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		
+		System.out.println(cbrCase.toString());
+		
+			
+	
+		
+		
+		
+	
+		
+	}
 	
 	@Test
 	public void scalaX()
@@ -172,7 +364,7 @@ public class BAMTest {
 	  		  }
 	  		  catch (IOException e) {
 	  			   // TODO Auto-generated catch block
-	  			   System.out.println("Erro na gravaÁ„o do arquivo:"+e.toString());
+	  			   System.out.println("Erro na grava√ß√£o do arquivo:"+e.toString());
 	  		  }
 	            
 
@@ -201,13 +393,13 @@ public class BAMTest {
             FileReader arq = new FileReader(ParametrosDSTE.filenameTopologia);
             BufferedReader lerArq = new BufferedReader(arq);
        
-            String linha = lerArq.readLine(); // lÍ a primeira linha
-      // a vari·vel "linha" recebe o valor "null" quando o processo
-      // de repetiÁ„o atingir o final do arquivo texto
+            String linha = lerArq.readLine(); // l√™ a primeira linha
+      // a vari√°vel "linha" recebe o valor "null" quando o processo
+      // de repeti√ß√£o atingir o final do arquivo texto
             while (linha != null) {
               System.out.printf("%s\n", linha);
        
-              linha = lerArq.readLine(); // lÍ da segunda atÈ a ˙ltima linha
+              linha = lerArq.readLine(); // l√™ da segunda at√© a √∫ltima linha
             }
        
             arq.close();
@@ -273,7 +465,7 @@ public class BAMTest {
 		FetchRequest fetchRequest2 = rrdDb.createFetchRequest("MAX", curretTime-60,curretTime+time);
 		FetchData fetchData = fetchRequest.fetchData();
 		FetchData fetchData2 = fetchRequest2.fetchData();
-		//Faz a subtraÁ„o dos dois valores para pegar o valor na janela
+		//Faz a subtra√ß√£o dos dois valores para pegar o valor na janela
 		int prempcoes=(int) (fetchData2.getAggregate("preempcao", "MAX")-fetchData.getAggregate("preempcao", "MAX"));
 		
 		rrdDb.close();
@@ -493,11 +685,11 @@ public class BAMTest {
 		graphDef.datasource("preempcao", "BAMSim.rrd", "preempcao", "AVERAGE");
 		graphDef.datasource("preempcao2", "BAMSim2.rrd", "preempcao", "AVERAGE");
 		graphDef.datasource("preempcao3",  "preempcao,preempcao2,30,40,50,+,+,+,+,5,/");
-		graphDef.line("preempcao3", new Color(0xFF, 0, 0), "PreempÁ„o", 2);
-		graphDef.line("preempcao2", Color.green, "PreempÁ„o", 2);
+		graphDef.line("preempcao3", new Color(0xFF, 0, 0), "Preemp√ß√£o", 2);
+		graphDef.line("preempcao2", Color.green, "Preemp√ß√£o", 2);
 
-		//graphDef.line("utilizacao", new Color(0xFF, 0, 0), "UtilizaÁ„o", 2);
-		//graphDef.area("preempcao", Color.gray, "UtilizaÁ„o");
+		//graphDef.line("utilizacao", new Color(0xFF, 0, 0), "Utiliza√ß√£o", 2);
+		//graphDef.area("preempcao", Color.gray, "Utiliza√ß√£o");
 		//graphDef.datasource("realspeed", "myspeed,1,*");
 		//graphDef.line("realspeed", new Color(0xFF, 0, 0), null, 2);
 		RrdGraph graph = new RrdGraph(graphDef);
@@ -589,14 +781,14 @@ public class BAMTest {
 	{
 		//Criar base
 		RrdDef rrdDef = new RrdDef("BAMSim.rrd");
-		rrdDef.setStep(ParametrosDSTE.RRDAmostra);
+		rrdDef.setStep(ParametrosDSTE.RRDBatida);
 		long starTime = ParametrosDSTE.RRDStarTime;
 		System.out.println(starTime);
 		rrdDef.setStartTime(starTime);
-		rrdDef.addDatasource("preempcao", "GAUGE", ParametrosDSTE.RRDAmostra, Double.NaN, Double.NaN);
-		rrdDef.addDatasource("bloqueio", "GAUGE", ParametrosDSTE.RRDAmostra, Double.NaN, Double.NaN);
-		rrdDef.addDatasource("devolucao", "GAUGE", ParametrosDSTE.RRDAmostra, Double.NaN, Double.NaN);
-		rrdDef.addDatasource("utilizacao", "GAUGE", ParametrosDSTE.RRDAmostra, Double.NaN, Double.NaN);
+		rrdDef.addDatasource("preempcao", "GAUGE", ParametrosDSTE.RRDBatida, Double.NaN, Double.NaN);
+		rrdDef.addDatasource("bloqueio", "GAUGE", ParametrosDSTE.RRDBatida, Double.NaN, Double.NaN);
+		rrdDef.addDatasource("devolucao", "GAUGE", ParametrosDSTE.RRDBatida, Double.NaN, Double.NaN);
+		rrdDef.addDatasource("utilizacao", "GAUGE", ParametrosDSTE.RRDBatida, Double.NaN, Double.NaN);
 		rrdDef.addArchive("MIN", 0.5, 12, 1440);
 		rrdDef.addArchive("MAX", 0.5, 12, 1440);
 		rrdDef.addArchive("AVERAGE", 0.5, 1, 1440);
@@ -648,11 +840,11 @@ public class BAMTest {
 		graphDef.datasource("bloqueio", "BAMSim.rrd", "bloqueio", "AVERAGE");
 		graphDef.datasource("devolucao", "BAMSim.rrd", "devolucao", "AVERAGE");
 		graphDef.datasource("utilizacao", "BAMSim.rrd", "utilizacao", "AVERAGE");
-		graphDef.line("preempcao", new Color(0xFF, 0, 0), "PreempÁ„o", 2);
+		graphDef.line("preempcao", new Color(0xFF, 0, 0), "Preemp√ß√£o", 2);
 		graphDef.line("bloqueio", new Color(0x04, 0, 0xFF), "Bloqueio", 2);
-		graphDef.line("devolucao", Color.GREEN, "DevoluÁ„o", 2);
-		//graphDef.line("utilizacao", new Color(0xFF, 0, 0), "UtilizaÁ„o", 2);
-		//graphDef.area("preempcao", Color.gray, "UtilizaÁ„o");
+		graphDef.line("devolucao", Color.GREEN, "Devolu√ß√£o", 2);
+		//graphDef.line("utilizacao", new Color(0xFF, 0, 0), "Utiliza√ß√£o", 2);
+		//graphDef.area("preempcao", Color.gray, "Utiliza√ß√£o");
 		//graphDef.datasource("realspeed", "myspeed,1,*");
 		//graphDef.line("realspeed", new Color(0xFF, 0, 0), null, 2);
 		RrdGraph graph = new RrdGraph(graphDef);
@@ -674,7 +866,7 @@ public class BAMTest {
 		//RodadaDeSimulacao sim[] = new RodadaDeSimulacao[ParametrosDoSimulador.MAX_SIMULATIONS];
 				BancoDeDados.setXML("<?xml version='1.0'?>\r\n",filename);
 				BancoDeDados.setXML("<simulacao>\r\n",filename);
-				Debug.setMensagem("============================ InÌcio da Primeira Rodada ============================");
+				Debug.setMensagem("============================ In√≠cio da Primeira Rodada ============================");
 				RodadaDeSimulacao sim = new RodadaDeSimulacao();
 				Main.TesteSimulacao t1 = new Main.TesteSimulacao(sim);
 				BancoDeDados.setXML("</simulacao>\r\n",filename);
@@ -790,7 +982,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeExtrapolarEnlaceMAM() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 		Roteador roteadorOrigem= new Roteador(); 
 		roteadorOrigem.ID = 0;
@@ -843,7 +1035,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeBCMAM() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 		Roteador roteadorOrigem= new Roteador(); 
 		roteadorOrigem.ID = 0;
@@ -905,7 +1097,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeExtrapolarEnlaceRDM() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 		Roteador roteadorOrigem= new Roteador(); 
 		roteadorOrigem.ID = 0;
@@ -949,12 +1141,12 @@ public class BAMTest {
 		lsp3.CT = 2;
 		lsp3.Carga = link.CargaEnlace+0.1;
 		
-		//RDM sem preempÁ„o
+		//RDM sem preemp√ß√£o
 		assertEquals("Extrapolar o enlace RDM - CT0", BAMStatus.bloqueada,BAM.NoPreemptionRDM(link, lsp));
 		assertEquals("Extrapolar o enlace RDM - CT1", BAMStatus.bloqueada,BAM.NoPreemptionRDM(link, lsp2));
 		assertEquals("Extrapolar o enlace RDM - CT2", BAMStatus.bloqueada,BAM.NoPreemptionRDM(link, lsp3));
 		
-		//RDM com preempÁ„o
+		//RDM com preemp√ß√£o
 		assertEquals("Extrapolar o enlace RDM - CT0", BAMStatus.bloqueada,BAM.preemptionRDM(link, lsp));
 		assertEquals("Extrapolar o enlace RDM - CT1", BAMStatus.bloqueada,BAM.preemptionRDM(link, lsp2));
 		assertEquals("Extrapolar o enlace RDM - CT2", BAMStatus.bloqueada,BAM.preemptionRDM(link, lsp3));
@@ -962,7 +1154,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeBCRDM() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 		Roteador roteadorOrigem= new Roteador(); 
 		roteadorOrigem.ID = 0;
@@ -1007,12 +1199,12 @@ public class BAMTest {
 		lsp3.CT = 2;
 		lsp3.Carga = (link.BC[2]/link.BC[0])*link.CargaEnlace;
 		
-		//LSPs no limite das BCs sem preempÁ„o
+		//LSPs no limite das BCs sem preemp√ß√£o
 		assertEquals("Limite o BC0 RDM - CT0", BAMStatus.aceita,BAM.NoPreemptionRDM(link, lsp));
 		assertEquals("Limite o BC1 RDM - CT1", BAMStatus.aceita,BAM.NoPreemptionRDM(link, lsp2));
 		assertEquals("Limite o BC2 RDM - CT2", BAMStatus.aceita,BAM.NoPreemptionRDM(link, lsp3));
 		
-		//LSPs no limite das BCs com preempÁ„o
+		//LSPs no limite das BCs com preemp√ß√£o
 		assertEquals("Limite o BC0 RDM - CT0", BAMStatus.aceita,BAM.preemptionRDM(link, lsp));
 		assertEquals("Limite o BC1 RDM - CT1", BAMStatus.aceita,BAM.preemptionRDM(link, lsp2));
 		assertEquals("Limite o BC2 RDM - CT2", BAMStatus.aceita,BAM.preemptionRDM(link, lsp3));
@@ -1022,12 +1214,12 @@ public class BAMTest {
 		lsp2.Carga+=0.1;
 		lsp3.Carga+=0.1;
 		
-		//Sem preempÁ„o
+		//Sem preemp√ß√£o
 		assertEquals("Limite o BC0 MAM - CT0", BAMStatus.bloqueada,BAM.NoPreemptionRDM(link, lsp));
 		assertEquals("Limite o BC1 MAM - CT1", BAMStatus.bloqueada,BAM.NoPreemptionRDM(link, lsp2));
 		assertEquals("Limite o BC2 MAM - CT2", BAMStatus.bloqueada,BAM.NoPreemptionRDM(link, lsp3));
 		
-		//Com preempÁ„o
+		//Com preemp√ß√£o
 		assertEquals("Limite o BC0 MAM - CT0", BAMStatus.bloqueada,BAM.preemptionRDM(link, lsp));
 		assertEquals("Limite o BC1 MAM - CT1", BAMStatus.bloqueada,BAM.preemptionRDM(link, lsp2));
 		assertEquals("Limite o BC2 MAM - CT2", BAMStatus.bloqueada,BAM.preemptionRDM(link, lsp3));
@@ -1035,7 +1227,7 @@ public class BAMTest {
 		
 	}
 	public void testeExtrapolarEnlaceAlloCTSharing() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 		Roteador roteadorOrigem= new Roteador(); 
 		roteadorOrigem.ID = 0;
@@ -1087,7 +1279,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeBCAlloCTSharing() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 		Roteador roteadorOrigem= new Roteador(); 
 		roteadorOrigem.ID = 0;
@@ -1149,7 +1341,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeBCHTLMAM() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1230,7 +1422,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeBCHTLNoPreemptionRDM() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1311,7 +1503,7 @@ public class BAMTest {
 	}
 		@Test
 	public void testeBCHTLRDM() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 			RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1392,7 +1584,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeBCHTLAllocCTSharing() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1473,7 +1665,7 @@ public class BAMTest {
 	}
 		@Test
 	public void testeBCHTLPreemptionRDM() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 			RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1554,7 +1746,7 @@ public class BAMTest {
 	}
 	@Test
 	public void testeBCLTHPreemptionAllocCTSharing() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1642,14 +1834,14 @@ public class BAMTest {
 				System.out.print("testeBCHTLPreemptionAllocCTSharing\n"+Lsp.imprime_lista(link.ListaLSPs)+"\n - Carga:"+link.getCargaEnlaceAtual()+"\n");
 				for(int w=ParametrosDSTE.MaxClassType-1;w>=0;w--)
 				{
-					System.out.print("BC["+r+"] emprÈstimo real = "+link.emprestimo(w));
+					System.out.print("BC["+r+"] empr√©stimo real = "+link.emprestimo(w));
 				}
 				System.out.print("\n");
 
 	}
 	@Test
 	public void testeBCHTLPreemptionAllocCTSharing() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1737,14 +1929,14 @@ public class BAMTest {
 				System.out.print("testeBCHTLPreemptionAllocCTSharing\n"+Lsp.imprime_lista(link.ListaLSPs)+"\n - Carga:"+link.getCargaEnlaceAtual()+"\n");
 				for(int w=ParametrosDSTE.MaxClassType-1;w>=0;w--)
 				{
-					System.out.print("BC["+w+"] emprÈstimo real = "+link.emprestimo(w));
+					System.out.print("BC["+w+"] empr√©stimo real = "+link.emprestimo(w));
 				}
 				System.out.print("\n");
 
 	}
 	@Test
 	public void testeBC_HTL_LTH_PreemptionAllocCTSharing() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 		RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1843,14 +2035,14 @@ public class BAMTest {
 				System.out.print("testeBCHTLPreemptionAllocCTSharing\n"+Lsp.imprime_lista(link.ListaLSPs)+"\n - Carga:"+link.getCargaEnlaceAtual()+"\n");
 				for(int w=ParametrosDSTE.MaxClassType-1;w>=0;w--)
 				{
-					System.out.print("BC["+w+"] emprÈstimo real = "+link.emprestimo(w));
+					System.out.print("BC["+w+"] empr√©stimo real = "+link.emprestimo(w));
 				}
 				System.out.print("\n");
 
 	}
 	@Test
 	public void testePreemption() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 				RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -1949,7 +2141,7 @@ public class BAMTest {
 
 	@Test
 	public void testeGBAM() {
-		//DefiniÁ„o da Topologia de Testes
+		//Defini√ß√£o da Topologia de Testes
 				RodadaDeSimulacao r = new RodadaDeSimulacao();
 				Roteador roteadorOrigem= new Roteador(); 
 				roteadorOrigem.ID = 0;
@@ -2059,9 +2251,9 @@ public class BAMTest {
 		graphDef.setTimeSpan(e.starTime,e.starTime+3600*24);
 		graphDef.setVerticalLabel("Number");
 		//graphDef.setMinValue(0);
-		graphDef.setTitle("PreempÁıes Acumuladas");
+		graphDef.setTitle("Preemp√ß√µes Acumuladas");
 		graphDef.datasource("preempcao", "saida/"+filename+"/"+filename+".rrd", "preempcao", "MAX");
-		graphDef.line("preempcao", new Color(0xFF, 0, 0), "PreempÁ„o Total", e.graphWidthLine);
+		graphDef.line("preempcao", new Color(0xFF, 0, 0), "Preemp√ß√£o Total", e.graphWidthLine);
 		graphDef.setWidth(e.graphWidth);
 		graphDef.setHeight(e.graphHeight);
 		graphDef.setLargeFont(e.graphLargeFont);
@@ -2077,15 +2269,15 @@ public class BAMTest {
 		graphDef2.setTimeSpan(e.starTime,e.starTime+3600*24);
 		graphDef2.setVerticalLabel("Number");
 		//graphDef.setMinValue(0);
-		graphDef2.setTitle("PreempÁıes x LSPs Geradas");
+		graphDef2.setTitle("Preemp√ß√µes x LSPs Geradas");
 		graphDef2.datasource("preempcao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao", "LAST");
 		graphDef2.datasource("lspGeradas", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspGeradas", "LAST");
 		graphDef2.area("lspGeradas", Color.GREEN, "LSPs Geradas");
-		graphDef2.area("preempcao", Color.RED, "PreempÁıes");
+		graphDef2.area("preempcao", Color.RED, "Preemp√ß√µes");
 		for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 		{
 			graphDef2.datasource("preempcao_CT"+i, "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao_CT"+i, "LAST");
-			graphDef2.line("preempcao_CT"+i, e.cores[i], "Preempcıes em CT"+i, e.graphWidthLine);
+			graphDef2.line("preempcao_CT"+i, e.cores[i], "Preempc√µes em CT"+i, e.graphWidthLine);
 			
 		}
 		graphDef2.setWidth(e.graphWidth);
@@ -2104,12 +2296,12 @@ public class BAMTest {
 		graphDef3.setMaxValue(100);
 		graphDef3.setVerticalLabel("Percent");
 		//graphDef.setMinValue(0);
-		graphDef3.setTitle("PreempÁıes");
+		graphDef3.setTitle("Preemp√ß√µes");
 
 		graphDef3.datasource("preempcao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao", "LAST");
 		graphDef3.datasource("lspGeradas", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspGeradas", "LAST");
 		graphDef3.datasource("prempcoes", "preempcao,lspGeradas,/,100,*");
-		graphDef3.area("prempcoes", Color.gray, "% PrempÁıes");
+		graphDef3.area("prempcoes", Color.gray, "% Premp√ß√µes");
 		
 		graphDef3.setWidth(e.graphWidth);
 		graphDef3.setHeight(e.graphHeight);

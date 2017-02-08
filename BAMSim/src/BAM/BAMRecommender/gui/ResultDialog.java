@@ -1,6 +1,6 @@
 /**
  * Travel Recommender example for the jCOLIBRI2 framework. 
- * @author Juan A. Recio-GarcÌa.
+ * @author Juan A. Recio-Garc√≠a.
  * GAIA - Group for Artificial Intelligence Applications
  * http://gaia.fdi.ucm.es
  * 25/07/2006
@@ -49,20 +49,48 @@ public class ResultDialog extends JDialog {
 	JLabel image;
 	
 	JLabel caseId;
+	
+	JLabel gestor;
 	JLabel BAMAtual;
-	JLabel problema;
+	//JLabel problema;
+	
+	JLabel SLAUtilizacaoCT0;
+	JLabel SLAUtilizacaoCT1;
+	JLabel SLAUtilizacaoCT2;
+	
+	
+	JLabel  SLABloqueiosCT0;
+	JLabel  SLABloqueiosCT1;
+	JLabel  SLABloqueiosCT2;
+	
+	JLabel  SLAPreempcoesCT0;
+	JLabel  SLAPreempcoesCT1;
+	/*JLabel  SLAPreempcoesCT2;
+	
+	JLabel  SLADevolucoesCT0;*/
+	JLabel  SLADevolucoesCT1;
+	JLabel  SLADevolucoesCT2;
+	
+	JLabel  BC0;
+	JLabel  BC1;
+	JLabel  BC2;
+	
 	JLabel  utilizacaoDoEnlaceCT0;
 	JLabel  utilizacaoDoEnlaceCT1;
 	JLabel  utilizacaoDoEnlaceCT2;
-	JLabel  numeroDePreempcoesCT0;
-	JLabel  numeroDePreempcoesCT1;
-	JLabel  numeroDePreempcoesCT2;
+	
 	JLabel  numeroDeBloqueiosCT0;
 	JLabel  numeroDeBloqueiosCT1;
 	JLabel  numeroDeBloqueiosCT2;
-	JLabel  numeroDeDevolucoesCT0;
+	
+	JLabel  numeroDePreempcoesCT0;
+	JLabel  numeroDePreempcoesCT1;
+	/*JLabel  numeroDePreempcoesCT2;	
+	
+	JLabel  numeroDeDevolucoesCT0;*/
 	JLabel  numeroDeDevolucoesCT1;
 	JLabel  numeroDeDevolucoesCT2;
+	
 	JLabel BAMNovo;
 	JLabel aceita;
 	
@@ -86,7 +114,7 @@ public class ResultDialog extends JDialog {
 		{
 		}
 		
-		this.setTitle("Casos recuperados");
+		this.setTitle("Result casos = Casos Recuperados");
 
 		
 		image = new JLabel();
@@ -106,30 +134,77 @@ public class ResultDialog extends JDialog {
 		label.setFont(label.getFont().deriveFont(Font.BOLD));
 		panel.add(label = new JLabel());
 
+		panel.add(new JLabel("Gestor"));
+		panel.add(this.gestor = new JLabel());
 		
 		panel.add(new JLabel("BAMAtual"));
 		panel.add(this.BAMAtual = new JLabel());
 		
-		panel.add(new JLabel("Problema"));
-		panel.add(this.problema = new JLabel());
+		/*panel.add(new JLabel("Problema"));
+		panel.add(this.problema = new JLabel());*/
 		
-		panel.add(new JLabel("UtilizaÁ„o do Enlace CT0"));
+		
+		panel.add(new JLabel("SLA Utiliza√ß√£o CTO"));
+		panel.add(this.SLAUtilizacaoCT0= new JLabel());
+		
+		panel.add(new JLabel("SLA Utiliza√ß√£o CT1"));
+		panel.add(this.SLAUtilizacaoCT1= new JLabel());
+		
+		panel.add(new JLabel("SLA Utiliza√ß√£o CT2"));
+		panel.add(this.SLAUtilizacaoCT2= new JLabel());
+		
+		
+		
+		panel.add(new JLabel("SLA Bloqueio CTO"));
+		panel.add(this.SLABloqueiosCT0= new JLabel());
+		
+		panel.add(new JLabel("SLA Bloqueio CT1"));
+		panel.add(this.SLABloqueiosCT1= new JLabel());
+		
+		panel.add(new JLabel("SLA Bloqueio CT2"));
+		panel.add(this.SLABloqueiosCT2= new JLabel());
+		
+
+
+		panel.add(new JLabel("SLA Preemp√ß√£o CTO"));
+		panel.add(this.SLAPreempcoesCT0= new JLabel());
+		
+		panel.add(new JLabel("SLA Preemp√ß√£o CT1"));
+		panel.add(this.SLAPreempcoesCT1= new JLabel());
+		
+		/*panel.add(new JLabel("SLA Preemp√ß√£o CT2"));
+		panel.add(this.SLAPreempcoesCT2= new JLabel());
+		
+		
+		panel.add(new JLabel("SLA Devolu√ß√£o CTO"));
+		panel.add(this.SLADevolucoesCT0= new JLabel());*/
+		
+		panel.add(new JLabel("SLA Devolu√ß√£o CT1"));
+		panel.add(this.SLADevolucoesCT1= new JLabel());
+		
+		panel.add(new JLabel("SLA Devolu√ß√£o CT2"));
+		panel.add(this.SLADevolucoesCT2= new JLabel());
+		
+		
+		panel.add(new JLabel("Largura de Banda em BC0"));
+		panel.add(this.BC0= new JLabel());
+		
+		panel.add(new JLabel("Largura de Banda em BC1"));
+		panel.add(this.BC1= new JLabel());
+		
+		panel.add(new JLabel("Largura de Banda em BC2"));
+		panel.add(this.BC2= new JLabel());
+		
+		
+		panel.add(new JLabel("Utiliza√ß√£o do Enlace CT0"));
 		panel.add(this.utilizacaoDoEnlaceCT0= new JLabel());
 		
-		panel.add(new JLabel("UtilizaÁ„o do Enlace CT1"));
+		panel.add(new JLabel("Utiliza√ß√£o do Enlace CT1"));
 		panel.add(this.utilizacaoDoEnlaceCT1= new JLabel());
 		
-		panel.add(new JLabel("UtilizaÁ„o do Enlace CT2"));
+		panel.add(new JLabel("Utiliza√ß√£o do Enlace CT2"));
 		panel.add(this.utilizacaoDoEnlaceCT2= new JLabel());
 		
-		panel.add(new JLabel("Number de PreempÁıes em CT0"));
-		panel.add(this.numeroDePreempcoesCT0= new JLabel());
-		
-		panel.add(new JLabel("Number de PreempÁıes em CT1"));
-		panel.add(this.numeroDePreempcoesCT1= new JLabel());
-		
-		panel.add(new JLabel("Number de PreempÁıes em CT2"));
-		panel.add(this.numeroDePreempcoesCT2= new JLabel());
 		
 		panel.add(new JLabel("Number de Bloqueios em CT0"));
 		panel.add(this.numeroDeBloqueiosCT0= new JLabel());
@@ -140,14 +215,26 @@ public class ResultDialog extends JDialog {
 		panel.add(new JLabel("Number de Bloqueios em CT2"));
 		panel.add(this.numeroDeBloqueiosCT2= new JLabel());
 		
-		panel.add(new JLabel("Number de DevoluÁıes em CT0"));
-		panel.add(this.numeroDeDevolucoesCT0= new JLabel());
 		
-		panel.add(new JLabel("Number de DevoluÁıes em CT1"));
+		panel.add(new JLabel("Number de Preemp√ß√µes em CT0"));
+		panel.add(this.numeroDePreempcoesCT0= new JLabel());
+		
+		panel.add(new JLabel("Number de Preemp√ß√µes em CT1"));
+		panel.add(this.numeroDePreempcoesCT1= new JLabel());
+		
+		/*panel.add(new JLabel("Number de Preemp√ß√µes em CT2"));
+		panel.add(this.numeroDePreempcoesCT2= new JLabel());
+		
+		
+		panel.add(new JLabel("Number de Devolu√ß√µes em CT0"));
+		panel.add(this.numeroDeDevolucoesCT0= new JLabel());*/
+		
+		panel.add(new JLabel("Number de Devolu√ß√µes em CT1"));
 		panel.add(this.numeroDeDevolucoesCT1= new JLabel());
 		
-		panel.add(new JLabel("Number de DevoluÁıes em CT2"));
+		panel.add(new JLabel("Number de Devolu√ß√µes em CT2"));
 		panel.add(this.numeroDeDevolucoesCT2= new JLabel());
+		
 		
 		panel.add(label = new JLabel("Solution"));
 		label.setFont(label.getFont().deriveFont(Font.BOLD));
@@ -162,7 +249,7 @@ public class ResultDialog extends JDialog {
 		
 //		Lay out the panel.
 		Utils.makeCompactGrid(panel,
-		                18, 2, //rows, cols
+		                29, 2, //rows, cols
 		                6, 6,        //initX, initY
 		                30, 10);       //xPad, yPad
 		
@@ -269,18 +356,44 @@ public class ResultDialog extends JDialog {
 		
 		BAMDescription desc = (BAMDescription) _case.getDescription();
 		
+		this.gestor.setText(valueOf(desc.getGestor()));
 		this.BAMAtual.setText(valueOf(desc.getBAMAtual()));
-		this.problema.setText(valueOf(desc.getProblema()));
+		//this.problema.setText(valueOf(desc.getProblema()));
+		
+		this.SLAUtilizacaoCT0.setText(valueOf(desc.getSLAUtilizacaoCT0()));
+		this.SLAUtilizacaoCT1.setText(valueOf(desc.getSLAUtilizacaoCT1()));
+		this.SLAUtilizacaoCT2.setText(valueOf(desc.getSLAUtilizacaoCT2()));
+		
+		
+		this.SLABloqueiosCT0.setText(valueOf(desc.getSLABloqueiosCT0()));
+		this.SLABloqueiosCT1.setText(valueOf(desc.getSLABloqueiosCT1()));
+		this.SLABloqueiosCT2.setText(valueOf(desc.getSLABloqueiosCT2()));
+
+		this.SLAPreempcoesCT0.setText(valueOf(desc.getSLAPreempcoesCT0()));
+		this.SLAPreempcoesCT1.setText(valueOf(desc.getSLAPreempcoesCT1()));
+		/*this.SLAPreempcoesCT2.setText(valueOf(desc.getSLAPreempcoesCT2()));
+
+		this.SLADevolucoesCT0.setText(valueOf(desc.getSLADevolucoesCT0()));*/
+		this.SLADevolucoesCT1.setText(valueOf(desc.getSLADevolucoesCT1()));
+		this.SLADevolucoesCT2.setText(valueOf(desc.getSLADevolucoesCT2()));
+
+		this.BC0.setText(valueOf(desc.getBC0()));
+		this.BC1.setText(valueOf(desc.getBC1()));
+		this.BC2.setText(valueOf(desc.getBC2()));
+		
 		this.utilizacaoDoEnlaceCT0.setText(valueOf(desc.getUtilizacaoDoEnlaceCT0()));
 		this.utilizacaoDoEnlaceCT1.setText(valueOf(desc.getUtilizacaoDoEnlaceCT1()));
 		this.utilizacaoDoEnlaceCT2.setText(valueOf(desc.getUtilizacaoDoEnlaceCT2()));
-		this.numeroDePreempcoesCT0.setText(valueOf(desc.getNumeroDePreempcoesCT0()));
-		this.numeroDePreempcoesCT1.setText(valueOf(desc.getNumeroDePreempcoesCT1()));
-		this.numeroDePreempcoesCT2.setText(valueOf(desc.getNumeroDePreempcoesCT2()));
+		
 		this.numeroDeBloqueiosCT0.setText(valueOf(desc.getNumeroDeBloqueiosCT0()));
 		this.numeroDeBloqueiosCT1.setText(valueOf(desc.getNumeroDeBloqueiosCT1()));
 		this.numeroDeBloqueiosCT2.setText(valueOf(desc.getNumeroDeBloqueiosCT2()));
-		this.numeroDeDevolucoesCT0.setText(valueOf(desc.getNumeroDeDevolucoesCT0()));
+		
+		this.numeroDePreempcoesCT0.setText(valueOf(desc.getNumeroDePreempcoesCT0()));
+		this.numeroDePreempcoesCT1.setText(valueOf(desc.getNumeroDePreempcoesCT1()));
+		/*this.numeroDePreempcoesCT2.setText(valueOf(desc.getNumeroDePreempcoesCT2()));
+		
+		this.numeroDeDevolucoesCT0.setText(valueOf(desc.getNumeroDeDevolucoesCT0()));*/
 		this.numeroDeDevolucoesCT1.setText(valueOf(desc.getNumeroDeDevolucoesCT1()));
 		this.numeroDeDevolucoesCT2.setText(valueOf(desc.getNumeroDeDevolucoesCT2()));
 			

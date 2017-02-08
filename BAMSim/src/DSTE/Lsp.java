@@ -8,21 +8,21 @@ import Simulador.RodadaDeSimulacao;
 public class Lsp {
 	
 	public Long ID = (long) 0;
-	public double Carga; // Carga de Tr·fego da LSP (Inicialmente Banda Efetiva)
-	public double CargaReduzida;//ImplementaÁ„o futura de reduÁ„o de carga da LSP
-	public int src; // NÛ Origem da LSP
-	public int dest; // NÛ Destino da LSP
+	public double Carga; // Carga de Tr√°fego da LSP (Inicialmente Banda Efetiva)
+	public double CargaReduzida;//Implementa√ß√£o futura de redu√ß√£o de carga da LSP
+	public int src; // N√≥ Origem da LSP
+	public int dest; // N√≥ Destino da LSP
 	public  int CT; // Tipo de Classe a qual o LSP pertence
 	public int setupPriority = 4; // Prioridade de estabelecimento 0 (maior prioridade) ... 7 (menor prioridade) = 4 (valor default)
-	public int holdPriority = 4; // Prioridade de manutenÁ„o 0 (maior prioridade) ... 7 (menor prioridade) = 4 (valor default)
+	public int holdPriority = 4; // Prioridade de manuten√ß√£o 0 (maior prioridade) ... 7 (menor prioridade) = 4 (valor default)
 	public RodadaDeSimulacao rodada=null;
 	public double tempoDeVida;
 	
 	Link [] caminho=null;
 	public LspStatus status= LspStatus.criada;
-	//int H; // Fator H: Par‚metro associado a escolha da LSP que ser· preemptada
-	//int OverlapFactor; // Fator Of: Par‚metro associado ao n˙mero de Enlaces coincidentes entre LSPs j· estababelecidas e a nova requisiÁ„o
-	//int PosUlt; // ????Teste para tentar salvar o enlace coicidente com as LSPs existente para a nova requisiÁ„o de LSP
+	//int H; // Fator H: Par√¢metro associado a escolha da LSP que ser√° preemptada
+	//int OverlapFactor; // Fator Of: Par√¢metro associado ao n√∫mero de Enlaces coincidentes entre LSPs j√° estababelecidas e a nova requisi√ß√£o
+	//int PosUlt; // ????Teste para tentar salvar o enlace coicidente com as LSPs existente para a nova requisi√ß√£o de LSP
 	public Lsp(RodadaDeSimulacao r)
 	{
 		this.rodada=r;
@@ -73,12 +73,20 @@ public class Lsp {
 			caminho[j].insereLsp(this);
 			caminho[j].lspEstabelecidas++;
 			caminho[j].lspEstabelecidasCT[this.CT]++;
+			caminho[j].lspEstabelecidasTotal++;
+			caminho[j].lspEstabelecidasTotalCT[this.CT]++;
 			if(caminho[j].lsrDest.ID==this.dest)
 			{
 				break;
 			}
 			
 		}
+		rodada.estatistica.lspEstablished++;
+		rodada.estatistica.lspEstablishedCT[this.CT]++;
+		rodada.estatistica.lspEstablishedTotal++;
+		rodada.estatistica.lspEstablishedTotalCT[this.CT]++;
+		rodada.estatistica.bandaEstabelecida += this.Carga;
+		rodada.estatistica.bandaEstabelecidaCT[this.CT] += this.Carga;
 	}
 	public String imprimeLsp()
 	{
@@ -103,6 +111,8 @@ public class Lsp {
 				}
 				
 			}
+			rodada.estatistica.lspEstablished--;
+			rodada.estatistica.lspEstablishedCT[this.CT]--;
 
 				
 			
@@ -128,6 +138,8 @@ public class Lsp {
 			
 			rodada.estatistica.preempcoes++;
 			rodada.estatistica.preempcoesCT[this.CT]++;
+			rodada.estatistica.lspEstablished--;
+			rodada.estatistica.lspEstablishedCT[this.CT]--;
 			
 			//Se apenas para unitTest
 			if(this.rodada!=null)
@@ -156,6 +168,8 @@ public class Lsp {
 			
 			rodada.estatistica.devolucoes++;
 			rodada.estatistica.devolucoesCT[this.CT]++;
+			rodada.estatistica.lspEstablished--;
+			rodada.estatistica.lspEstablishedCT[this.CT]--;
 			
 			//Se apenas para unitTest
 			if(this.rodada!=null)

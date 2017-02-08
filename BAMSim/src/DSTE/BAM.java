@@ -14,7 +14,7 @@ public class BAM {
 			{
 				
 				aux=BAMStatus.bloqueada;
-				//Sem espaÁo
+				//Sem espa√ßo
 			}
 			else
 				aux=BAMStatus.aceita;
@@ -24,14 +24,14 @@ public class BAM {
 	public static BAMStatus NoPreemptionRDM(Link link, Lsp lsp)
 	{
 		BAMStatus aux=BAMStatus.aceita;
-		//Por n„o permitirmos preempÁ„o precisamos verificar se o estabelecimento da LSP n„o exceder· nenhum BC
+		//Por n√£o permitirmos preemp√ß√£o precisamos verificar se o estabelecimento da LSP n√£o exceder√° nenhum BC
 		for(int w=lsp.CT; w>=0; w--)
 		{
 			if((link.BC[w]/link.BC[0])*link.CargaEnlace < link.BCAcumulado(w) + lsp.Carga)
 			{
 				
 				aux=BAMStatus.bloqueada;
-				//Sem espaÁo
+				//Sem espa√ßo
 				break; 
 			}
 			else
@@ -59,7 +59,7 @@ public class BAM {
 				{
 					
 					aux=BAMStatus.preempcao;
-					//Sem espaÁo
+					//Sem espa√ßo
 					break; 
 				}
 				else
@@ -119,7 +119,7 @@ public class BAM {
 			 		return BAMStatus.devolucao;
 			}
 			else
-			//N„o tendo emprestimo somar todos emprestimos + banda livre
+			//N√£o tendo emprestimo somar todos emprestimos + banda livre
 			{
 				if(link.emprestimoCTSuperiores(0)>= lsp.Carga)
 			 		return BAMStatus.devolucao;
@@ -134,7 +134,7 @@ public class BAM {
 					{
 						
 						aux=BAMStatus.preempcao;
-						//Sem espaÁo
+						//Sem espa√ßo
 						break; 
 					}
 					else
@@ -163,14 +163,14 @@ public class BAM {
 		
 		for(int n=lsp.CT-1;n>=0;n--) 
 			{	
-				double BandaAcimaCT = link.BCAcumulado(n)+lsp.Carga - ((link.BC[n]/link.BC[0])*link.CargaEnlace); // Se BandaAcimaCT>0 È porque o modelo RDM est· sendo desrespeitado e a preempÁ„o faz-se necess·ria nesse enlace
+				double BandaAcimaCT = link.BCAcumulado(n)+lsp.Carga - ((link.BC[n]/link.BC[0])*link.CargaEnlace); // Se BandaAcimaCT>0 √© porque o modelo RDM est√° sendo desrespeitado e a preemp√ß√£o faz-se necess√°ria nesse enlace
 				if(BandaAcimaCT>0)
 				{
 					aux = link.ListaLSPsPorCT[n].ultimo; 						
 						
-					while(aux!=null&&(BandaAcimaCT > bandaPreemptada)) //Banda que È necess·ria ser preemptada no enlace
+					while(aux!=null&&(BandaAcimaCT > bandaPreemptada)) //Banda que √© necess√°ria ser preemptada no enlace
 					{
-						Debug.setMensagem("============= PreempÁ„o =============");
+						Debug.setMensagem("============= preemp√ß√£o =============");
 						((Lsp)aux.item).preemptaLSP();
 						((Lsp)aux.item).status=LspStatus.preemptada;
 
@@ -193,14 +193,14 @@ public class BAM {
 		
 		for(int n=DSTE.ParametrosDSTE.MaxClassType-1;n>=0;n--) 
 			{	
-				double BandaAcimaCT = link.BCAcumulado(n) - ((link.BC[n]/link.BC[0])*link.CargaEnlace); // Se BandaAcimaCT>0 È porque o modelo RDM est· sendo desrespeitado e a preempÁ„o faz-se necess·ria nesse enlace
+				double BandaAcimaCT = link.BCAcumulado(n) - ((link.BC[n]/link.BC[0])*link.CargaEnlace); // Se BandaAcimaCT>0 √© porque o modelo RDM est√° sendo desrespeitado e a preemp√ß√£o faz-se necess√°ria nesse enlace
 				if(BandaAcimaCT>0)
 				{
 					aux = link.ListaLSPsPorCT[n].ultimo; 						
 						
-					while(aux!=null&&(BandaAcimaCT > bandaPreemptada)) //Banda que È necess·ria ser preemptada no enlace
+					while(aux!=null&&(BandaAcimaCT > bandaPreemptada)) //Banda que √© necess√°ria ser preemptada no enlace
 					{
-						Debug.setMensagem("============= PreempÁ„o =============");
+						Debug.setMensagem("============= preemp√ß√£o =============");
 						((Lsp)aux.item).preemptaLSP();
 						((Lsp)aux.item).status=LspStatus.preemptada;
 
@@ -230,16 +230,16 @@ public class BAM {
 			{
 				bandaDevolvida=0;
 				double BandaAcimaCT = link.emprestimo(n);
-				//ForÁa retirar somente o valor necess·rio de emprestimo para n„o extrapolar o enlace
+				//For√ßa retirar somente o valor necess√°rio de emprestimo para N√£o extrapolar o enlace
 				if(BandaAcimaCT >(link.BCAcumulado(0)+ lsp.Carga - link.CargaEnlace))
 					BandaAcimaCT=(link.BCAcumulado(0)+ lsp.Carga - link.CargaEnlace);
 				if(BandaAcimaCT>0)
 				{
 					aux = link.ListaLSPsPorCT[n].ultimo; 						
 					
-					while(aux!=null&&(BandaAcimaCT > bandaDevolvida)) //Banda que È necess·ria ser preemptada no enlace
+					while(aux!=null&&(BandaAcimaCT > bandaDevolvida)) //Banda que √© necess√°ria ser preemptada no enlace
 					{
-						Debug.setMensagem("============= DevoluÁ„o =============");
+						Debug.setMensagem("============= Devolu√ß√£o =============");
 						((Lsp)aux.item).devolveLSP();
 						((Lsp)aux.item).status=LspStatus.devolvida;
 
@@ -266,7 +266,7 @@ public class BAM {
 
 		
 		if (
-				//Tem direito a banda por ser privada do BC ou priorit·ria por estar abaixo do seu BC configurado
+				//Tem direito a banda por ser privada do BC ou priorit√°ria por estar abaixo do seu BC configurado
 				((link.BCAtual[lsp.CT]+lsp.Carga<=link.privado(lsp.CT))||(link.BCAtual[lsp.CT]+lsp.Carga<=link.BCMbps(lsp.CT)))
 				|| //ou
 				//Tem direito utilizando HTL ou LTH
@@ -274,8 +274,8 @@ public class BAM {
 							(link.BCMbps(lsp.CT)- //Limite da BC
 							link.BCAtual[lsp.CT]) //Utilizado pela BC
 							+
-							(link.LTHAcumuladoCompartilhavel(lsp.CT) //Compartilh·vel LTH
-							+link.HTLAcumuladoCompartilhavel(lsp.CT) //Compartilh·vel HTL
+							(link.LTHAcumuladoCompartilhavel(lsp.CT) //Compartilh√°vel LTH
+							+link.HTLAcumuladoCompartilhavel(lsp.CT) //Compartilh√°vel HTL
 							-link.excedenteBCSuperiores(lsp.CT))  //Excedentes superiores utilizando HTL ou LTH
 				)
 			)
@@ -283,10 +283,10 @@ public class BAM {
 			
 			
 			
-			//verifica se alguÈm inferior a nova LSP estourar·  -> preempcao
+			//verifica se algu√©m inferior a nova LSP estourar√°  -> preempcao
 			for(int c=0; c<lsp.CT; c++)
 			{
-				//n„o estrapolou sua BC
+				//N√£o estrapolou sua BC
 				if(link.BCAtual[c]<=link.BCMbps(c))
 				{
 					int i=0;
@@ -295,8 +295,8 @@ public class BAM {
 						>
 						(link.BCMbps(c)
 						+
-						(link.LTHAcumuladoCompartilhavelAUX(c,lsp) //Compartilh·vel LTH
-						+link.HTLAcumuladoCompartilhavelAUX(c,lsp) //Compartilh·vel HTL
+						(link.LTHAcumuladoCompartilhavelAUX(c,lsp) //Compartilh√°vel LTH
+						+link.HTLAcumuladoCompartilhavelAUX(c,lsp) //Compartilh√°vel HTL
 						-link.excedenteBCSuperioresAUX(c,lsp))
 						) 
 				  )
@@ -307,21 +307,21 @@ public class BAM {
 				}
 			}
 			
-			//verifica se alguÈm superior a nova LSP estourar· -> devolucao
+			//verifica se algu√©m superior a nova LSP estourar√° -> devolucao
 			for(int c=ParametrosDSTE.MaxClassType-1; c>lsp.CT; c--)
 			{
-				//n„o estrapolou sua BC
+				//N√£o estrapolou sua BC
 				if(link.BCAtual[c]<=link.BCMbps(c))
 				{
 					int i=0;
 				}else
-				//Se o que estou utilizando for maior do que o disponÌvel(AUX) apÛs a nova LSP
+				//Se o que estou utilizando for maior do que o dispon√≠vel(AUX) ap√≥s a nova LSP
 				if(		link.BCAtual[c]
 						>
 						(link.BCMbps(c)
 						+
-						(link.LTHAcumuladoCompartilhavelAUX(c,lsp) //Compartilh·vel LTH
-						+link.HTLAcumuladoCompartilhavelAUX(c,lsp) //Compartilh·vel HTL
+						(link.LTHAcumuladoCompartilhavelAUX(c,lsp) //Compartilh√°vel LTH
+						+link.HTLAcumuladoCompartilhavelAUX(c,lsp) //Compartilh√°vel HTL
 						-link.excedenteBCSuperioresAUX(c,lsp))
 						) 
 				  )
@@ -332,11 +332,11 @@ public class BAM {
 				}
 			}
 			
-			//se alguÈm superior a nova LSP estourar e  alguÈm inferior a nova LSP estourar 
+			//se algu√©m superior a nova LSP estourar e  algu√©m inferior a nova LSP estourar 
 			//-> retirar o estouro superior e depois inferior
 			//status=BAMStatus.devolucaoEpreempcao;
 			
-			//se alguÈm superior a mim estourar com a nova LSP retirar o estouro
+			//se algu√©m superior a mim estourar com a nova LSP retirar o estouro
 			//status=BAMStatus.devolucao;
 			status=status==BAMStatus.bloqueada?BAMStatus.aceita:status;
 			
@@ -356,12 +356,12 @@ public class BAM {
 		double bandaPreemptada=0;
 		No aux;
 		
-		//verifica se alguÈm inferior a nova LSP estourar·  -> preempcao
-		for(int c=lsp.CT-1; c>=0; c--)
+		//verifica se algu√©m inferior a nova LSP estourar√°  -> preempcao
+		for(int c=0 ; c<= lsp.CT-1; c++)
 		{
 			
 			aux = link.ListaLSPsPorCT[c].ultimo; 
-			//n„o estrapolou sua BC
+			//N√£o estrapolou sua BC
 			if(link.BCAtual[c]<=link.BCMbps(c))
 			{
 				int i=0;
@@ -370,13 +370,13 @@ public class BAM {
 					>
 					(link.BCMbps(c)
 					+
-					(link.LTHAcumuladoCompartilhavelAUX(c,lsp) //Compartilh·vel LTH
-					+link.HTLAcumuladoCompartilhavelAUX(c,lsp) //Compartilh·vel HTL
+					(link.LTHAcumuladoCompartilhavelAUX(c,lsp) //Compartilh√°vel LTH
+					+link.HTLAcumuladoCompartilhavelAUX(c,lsp) //Compartilh√°vel HTL
 					-link.excedenteBCSuperioresAUX(c,lsp))
 					) 
 			  ) 
 			{
-					Debug.setMensagem("============= PreempÁ„o =============");
+					Debug.setMensagem("============= preemp√ß√£o =============");
 					((Lsp)aux.item).preemptaLSP();
 					((Lsp)aux.item).status=LspStatus.preemptada;
 
@@ -396,12 +396,12 @@ public class BAM {
 	{
 		double bandaDevolvida=0;
 		No aux;
-		//verifica se alguÈm superior a nova LSP estourar· -> devolucao
+		//verifica se algu√©m superior a nova LSP estourar√° -> devolucao
 		for(int c=lsp.CT; c<=ParametrosDSTE.MaxClassType-1; c++)
 		{
 			aux = link.ListaLSPsPorCT[c].ultimo; 
-			//Se o que estou utilizando for maior do que o disponÌvel(AUX) apÛs a nova LSP
-			//n„o estrapolou sua BC
+			//Se o que estou utilizando for maior do que o dispon√≠vel(AUX) ap√≥s a nova LSP
+			//N√£o estrapolou sua BC
 		//	if(link.BCAtual[c]<=link.BCMbps(c))
 		//	{
 		//		int i=0;
@@ -412,13 +412,13 @@ public class BAM {
 					>
 					(link.BCMbps(c)
 					+
-					(link.LTHAcumuladoCompartilhavelAUX(c,lsp) //Compartilh·vel LTH
-					+link.HTLAcumuladoCompartilhavelAUX(c,lsp) //Compartilh·vel HTL
+					(link.LTHAcumuladoCompartilhavelAUX(c,lsp) //Compartilh√°vel LTH
+					+link.HTLAcumuladoCompartilhavelAUX(c,lsp) //Compartilh√°vel HTL
 					-link.excedenteBCSuperioresAUX(c,lsp))
 					)) 
 			  )
 			{
-				Debug.setMensagem("============= DevoluÁ„o =============");
+				Debug.setMensagem("============= Devolu√ß√£o =============");
 				((Lsp)aux.item).devolveLSP();
 				((Lsp)aux.item).status=LspStatus.devolvida;
 
@@ -435,16 +435,16 @@ public class BAM {
 			for(int n=0;ParametrosDSTE.MaxClassType>n;n++)
 			{
 				double BandaAcimaCT = link.emprestimo(n);
-				//ForÁa retirar somente o valor necess·rio de emprestimo para n„o extrapolar o enlace
+				//For√ßa retirar somente o valor necess√°rio de emprestimo para N√£o extrapolar o enlace
 				if(BandaAcimaCT >(link.BCAcumulado(0)+ lsp.Carga - link.CargaEnlace))
 					BandaAcimaCT=(link.BCAcumulado(0)+ lsp.Carga - link.CargaEnlace);
 				if(BandaAcimaCT>0)
 				{
 					aux = link.ListaLSPsPorCT[n].ultimo; 						
 					
-					while(aux!=null&&(BandaAcimaCT > bandaDevolvida)) //Banda que È necess·ria ser preemptada no enlace
+					while(aux!=null&&(BandaAcimaCT > bandaDevolvida)) //Banda que √© necess√°ria ser preemptada no enlace
 					{
-						Debug.setMensagem("============= DevoluÁ„o =============");
+						Debug.setMensagem("============= Devolu√ß√£o =============");
 						((Lsp)aux.item).devolveLSP();
 						((Lsp)aux.item).status=LspStatus.devolvida;
 
@@ -467,12 +467,12 @@ public class BAM {
 		double bandaPreemptada=0;
 		No aux;
 		
-		//verifica se alguÈm inferior a nova LSP estourar·  -> preempcao
+		//verifica se algu√©m inferior a nova LSP estourar√°  -> preempcao
 		for(int c=DSTE.ParametrosDSTE.MaxClassType-1; c>=0; c--)
 		{
 			
 			aux = link.ListaLSPsPorCT[c].ultimo; 
-			//n„o estrapolou sua BC
+			//N√£o estrapolou sua BC
 			if(link.BCAtual[c]<=link.BCMbps(c))
 			{
 				int i=0;
@@ -481,13 +481,13 @@ public class BAM {
 					>
 					(link.BCMbps(c)
 					+
-					(link.LTHAcumuladoCompartilhavel(c) //Compartilh·vel LTH
-					+link.HTLAcumuladoCompartilhavel(c) //Compartilh·vel HTL
+					(link.LTHAcumuladoCompartilhavel(c) //Compartilh√°vel LTH
+					+link.HTLAcumuladoCompartilhavel(c) //Compartilh√°vel HTL
 					-link.excedenteBCSuperiores(c))
 					) 
 			  ) 
 			{
-					Debug.setMensagem("============= PreempÁ„o =============");
+					Debug.setMensagem("============= preemp√ß√£o =============");
 					((Lsp)aux.item).preemptaLSP();
 					((Lsp)aux.item).status=LspStatus.preemptada;
 
@@ -504,6 +504,3 @@ public class BAM {
 	}
 
 }
-
-
-

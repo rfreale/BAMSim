@@ -10,7 +10,7 @@ import org.jrobin.core.RrdException;
 import BAM.BAMRecommender.BAMRecommenderNoGUI;
 import DSTE.*;
 import Simulador.*;
-/****************** ESTRUTURAS B�SICAS RELACIONADAS A CADEIA DE EVENTOS **********************/
+/****************** ESTRUTURAS BÁSICAS RELACIONADAS A CADEIA DE EVENTOS **********************/
 
 public class Simulador
 {
@@ -37,8 +37,8 @@ public class Simulador
 			
 			for (int j=0;j<sim.length;j++)
 			{
-				//GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente+j*100);
-				GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente);
+				GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente+j*100);
+				//GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente);
 				sim[j]=new RodadaDeSimulacao();
 				Debug.filename=sim[j].filename;
 				filenames[j]=sim[j].filename;
@@ -68,10 +68,10 @@ public class Simulador
 			 */
 			if(ParametrosDoSimulador.MAX_SIMULATIONS>1)
 			{
-				GraficosRRD.agregarRRD(filenames,"Preemp��es","preempcao");
+				GraficosRRD.agregarRRD(filenames,"Preempções","preempcao");
 				GraficosRRD.agregarRRD(filenames,"LSPs Requested","lspRequested");
 				GraficosRRD.agregarRRD(filenames,"Bloqueios","bloqueio");
-				GraficosRRD.agregarRRD(filenames,"Devolo��es","devolucao");
+				GraficosRRD.agregarRRD(filenames,"Devoloções","devolucao");
 			}
 				
 			try {

@@ -2,8 +2,8 @@ package DSTE;
 
 public class Caminho
 	{
-		int NumHops; // Número de Saltos do Caminho Escolhido dentre aqueles caminhos possíveis
-		int NumParOD; // Número do Par OD para efeitos de identificação na simulação
-		int PrioridadeOD; // Prioridade da LSP (Associada a Classe de Serviço)
-		int [] CaminhoEscolhido  = new int [ParametrosDSTE.MaxSaltos +1]; // Vetor que armazena o caminho escolhido pela LSP dentre aqueles possíveis
+		int NumHops; // NÃºmero de Saltos do Caminho Escolhido dentre aqueles caminhos possÃ­veis
+		int NumParOD; // NÃºmero do Par OD para efeitos de identificaÃ§Ã£o na simulaÃ§Ã£o
+		int PrioridadeOD; // Prioridade da LSP (Associada a Classe de ServiÃ§o)
+		int [] CaminhoEscolhido  = new int [ParametrosDSTE.MaxSaltos +1]; // Vetor que armazena o caminho escolhido pela LSP dentre aqueles possÃ­veis
 	}

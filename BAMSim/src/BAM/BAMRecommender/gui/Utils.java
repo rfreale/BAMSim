@@ -1,6 +1,6 @@
 /**
  * Travel Recommender example for the jCOLIBRI2 framework. 
- * @author Juan A. Recio-García.
+ * @author Juan A. Recio-GarcÃ­a.
  * GAIA - Group for Artificial Intelligence Applications
  * http://gaia.fdi.ucm.es
  * 25/07/2006
