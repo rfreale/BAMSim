@@ -237,10 +237,10 @@ public class EstatisticasDSTE {
 			{
 				rrdDef.addDatasource("lspEstablished_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			}
-			rrdDef.addDatasource("lspEstablishedTotal", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			rrdDef.addDatasource("lspEstabTotal", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 			{
-				rrdDef.addDatasource("lspEstablishedTotal_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				rrdDef.addDatasource("lspEstabTotal_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			}
 			rrdDef.addDatasource("bandaUnbroken", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			rrdDef.addDatasource("bandaRequested", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
