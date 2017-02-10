@@ -199,7 +199,7 @@ public class TesteSimulacao {
 				break;
 			case 3:// geracao de trafego
 				Debug.setMensagem("Tipo 3 - Agenda/Cria LSP ");
-				ParametrosDSTE.trafegoManual(rodada, to, dados);
+				ParametrosDSTE.trafegoManual2(rodada, to, dados);
 
 				break;
 
@@ -472,15 +472,15 @@ public class TesteSimulacao {
 				
 				
 				
-				if (rodada.simtime()== 3600.2){
+				/*if (rodada.simtime()== 3660.2){
 					Lsp LSPaux= new Lsp(rodada); 
             		LSPaux.Carga=0; 
 					to.link[0].bamType = BAMType.PreemptionGBAM;
 					
 			
 					to.link[0].BCLTH= new double[]
-					{	0, //BC0 
-						0, //BC1
+					{	100, //BC0 
+						100, //BC1
 						0  //BC2 Nunca mudar
 					};
 					LSPaux.CT=0; 
@@ -489,13 +489,13 @@ public class TesteSimulacao {
 					
 					to.link[0].BCHTL= new double[]
 					{	0, //BC0 Nunca mudar
-						0, //BC1
-						0 //BC2
+						100, //BC1
+						100 //BC2
 					};
 					
 					LSPaux.CT=2; 
               		BAM.preemptionG(to.link[0],LSPaux); 
-				} 
+				} */
 				
 				
 

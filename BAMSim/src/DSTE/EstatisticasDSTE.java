@@ -98,9 +98,9 @@ public class EstatisticasDSTE {
 	public int graphHeight=((3*250)-242+33+15);
 	public Font graphLargeFont=new Font("Arial", Font.BOLD, 70);
 	public Font graphSmallFont=new Font("Arial", Font.BOLD, 40);
-	public int graphMinorUnit=RrdGraphConstants.MINUTE;
+	public int graphMinorUnit=RrdGraphConstants.HOUR;
 	public	int graphMinorUnitCount= 1;
-	public	int graphMajorUnit=RrdGraphConstants.MINUTE;
+	public	int graphMajorUnit=RrdGraphConstants.HOUR;
 	public	int graphMajorUnitCount=10;
 	public	int graphLabelUnit=RrdGraphConstants.HOUR;
 	public	int graphLabelUnitCount=1;
