@@ -183,10 +183,10 @@ public class EstatisticasDSTE {
 			{
 				rrdDef.addDatasource("lspEstablished_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			}
-			rrdDef.addDatasource("lspEstablishedTotal", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+			rrdDef.addDatasource("lspEstabTotal", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 			{
-				rrdDef.addDatasource("lspEstablishedTotal_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				rrdDef.addDatasource("lspEstabTotal_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			}
 			rrdDef.addDatasource("bandaUnbroken", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			rrdDef.addDatasource("bandaRequested", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
@@ -499,7 +499,7 @@ public class EstatisticasDSTE {
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
-		int lspEstablished=(int) (fetchData.getAggregate("lspEstablishedTotal", "MAX")-fetchData.getAggregate("lspEstablishedTotal", "MIN"));
+		int lspEstablished=(int) (fetchData.getAggregate("lspEstabTotal", "MAX")-fetchData.getAggregate("lspEstabTotal", "MIN"));
 		
 		rrdDb.close();
 		return lspEstablished;
@@ -512,7 +512,7 @@ public class EstatisticasDSTE {
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
-		int lspEstablished=(int) (fetchData.getAggregate("lspEstablishedTotal_CT"+ct, "MAX")-fetchData.getAggregate("lspEstablishedTotal_CT"+ct, "MIN"));
+		int lspEstablished=(int) (fetchData.getAggregate("lspEstabTotal_CT"+ct, "MAX")-fetchData.getAggregate("lspEstabTotal_CT"+ct, "MIN"));
 		
 		rrdDb.close();
 		return lspEstablished;
