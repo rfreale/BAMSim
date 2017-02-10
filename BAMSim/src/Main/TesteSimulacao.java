@@ -106,7 +106,7 @@ public class TesteSimulacao {
 		{
 			rodada.schedulep (5, ParametrosDSTE.Janela+0.30, null);
 		}
-		rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
+		//rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -583,16 +583,19 @@ public class TesteSimulacao {
 				bloqueiosCTJanela[1] = rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 1) > 0 ? (double)rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,1)/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 1):0;
 				bloqueiosCTJanela[2] = rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 2) > 0 ? (double)rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,2)/rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 2):0;
 
+				
 				preempcoesCTJanela[0] = (rodada.estatistica.lspEstablishedTotalCT(ParametrosDSTE.Janela, 0)
 						+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 0)) > 0 
 							? (double)rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,0)/
 								(rodada.estatistica.lspEstablishedTotalCT(ParametrosDSTE.Janela, 0)
 										+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 0))		:0;
+				
 				preempcoesCTJanela[1] = (rodada.estatistica.lspEstablishedTotalCT(ParametrosDSTE.Janela, 1)
 						+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 1)) > 0 
 							? (double)rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,1)/
 								(rodada.estatistica.lspEstablishedTotalCT(ParametrosDSTE.Janela, 1)
 										+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 1))		:0;				
+				
 				preempcoesCTJanela[2] = (rodada.estatistica.lspEstablishedTotalCT(ParametrosDSTE.Janela, 2)
 						+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 2)) > 0 
 							? (double)rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,2)/
@@ -604,11 +607,13 @@ public class TesteSimulacao {
 							? (double)rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,0)/
 								(rodada.estatistica.lspEstablishedTotalCT(ParametrosDSTE.Janela, 0)
 										+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 0))		:0;
+								
 				devolucoesCTJanela[1] = (rodada.estatistica.lspEstablishedTotalCT(ParametrosDSTE.Janela, 1)
 						+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 1)) > 0 
 							? (double)rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,1)/
 								(rodada.estatistica.lspEstablishedTotalCT(ParametrosDSTE.Janela, 1)
-										+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 1))		:0;				
+										+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 1))		:0;	
+								
 				devolucoesCTJanela[2] = (rodada.estatistica.lspEstablishedTotalCT(ParametrosDSTE.Janela, 2)
 						+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 2)) > 0 
 							? (double)rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,2)/

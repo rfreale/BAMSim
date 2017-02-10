@@ -14,12 +14,14 @@
     	</type>
   	</property>
   	
-	<property name="problema" column="problema">
+	<!-- <property name="problema" column="problema">
 		<type name="jcolibri.connector.databaseutils.EnumUserType">
 			<param name="enumClassName">BAM.BAMRecommender.BAMDescription$Problemas</param>
     	</type>
-  	</property>
+  	</property> -->
   	
+	<property name="Janela" column="Janela"/>
+	
 	<property name="SLAUtilizacaoCT0" column="SLAUtilizacaoCT0"/>
 	<property name="SLAUtilizacaoCT1" column="SLAUtilizacaoCT1"/>
 	<property name="SLAUtilizacaoCT2" column="SLAUtilizacaoCT2"/>

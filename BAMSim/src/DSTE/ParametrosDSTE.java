@@ -31,7 +31,7 @@ public class ParametrosDSTE {
 	
 	
 	
-	public static final String Gestor = "Eliseu";
+	public static final String Gestor = "Conservador";
 	//SLAs em Percentual
 	
 	public static final int []SLAUtilizacaoCT   = new int [] {35, 40, 45} ;  // ou SLA
@@ -46,7 +46,7 @@ public class ParametrosDSTE {
 	public static final long SLADevolucoes = 5;
 	public static final long SLABloqueios = 10;
 	public static final long SLAUtilizacao = 80;
-	public static final boolean RecomendacaoCBRSwitchBAM = false;
+	public static final boolean RecomendacaoCBRSwitchBAM = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.85;
 	public static final long TempoSimulacao = 3600*18;
 	/*//////Dados do RRDTools
@@ -814,13 +814,13 @@ public class ParametrosDSTE {
 	
 	public static double [] BCHTLPadrao= new double[]
 			{	0, //BC0 Nunca mudar
-				100, //BC1
-				100 //BC2
+				00, //BC1
+				00 //BC2
 			};
 	
 	public static double [] BCLTHPadrao= new double[]
-			{	100, //BC0 
-				100, //BC1
+			{	0, //BC0 
+				0, //BC1
 				0  //BC2 Nunca mudar
 			};
 		
@@ -868,12 +868,20 @@ public class ParametrosDSTE {
 		attribute = new Attribute("BAMAtual",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 1.0);
+		
+		attribute = new Attribute("gestor",BAMDescription.class); 
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 1.0);
 
 		/*attribute = new Attribute("problema",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 100.0);*/
 		
-		attribute = new Attribute("SLAUtilizacaoCT0",BAMDescription.class); 
+		attribute = new Attribute("janela",BAMDescription.class); 
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 1.0);
+		
+		/*attribute = new Attribute("SLAUtilizacaoCT0",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
 		config.setWeight(attribute, 1.0);
 		
@@ -905,7 +913,7 @@ public class ParametrosDSTE {
 		
 		attribute = new Attribute("SLAPreempcoesCT1",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 1.0);
+		config.setWeight(attribute, 1.0);*/
 		
 		/*attribute = new Attribute("SLAPreempcoesCT2",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
@@ -915,14 +923,14 @@ public class ParametrosDSTE {
 		/*attribute = new Attribute("SLADevolucoesCT0",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
 		config.setWeight(attribute, 1.0);*/
-				
+	/*			
 		attribute = new Attribute("SLADevolucoesCT1",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
 		config.setWeight(attribute, 1.0);
 		
 		attribute = new Attribute("SLADevolucoesCT2",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 1.0);
+		config.setWeight(attribute, 1.0);*/
 		
 				
 		attribute = new Attribute("BC0",BAMDescription.class); 
@@ -1010,9 +1018,9 @@ public class ParametrosDSTE {
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 100.0);
 
-		attribute = new Attribute("problema",BAMDescription.class); 
+		/*attribute = new Attribute("problema",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 100.0);
+		config.setWeight(attribute, 100.0);*/
 		
 		/*attribute = new Attribute("utilizacaoDoEnlace",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(100));
