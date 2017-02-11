@@ -12,7 +12,7 @@ import org.jrobin.core.RrdException;
 
 import BAM.BAMRecommender.BAMDescription;
 import BAM.BAMRecommender.BAMDescription.BAMTypes;
-import BAM.BAMRecommender.BAMDescription.Problemas;
+//import BAM.BAMRecommender.BAMDescription.Problemas;
 import BAM.BAMRecommender.BAMRecommenderNoGUI;
 import BAM.BAMRecommender.BAMSolution;
 import DSTE.*;
@@ -310,8 +310,11 @@ public class TesteSimulacao {
 						no.item=novocase;
 						
 						
+						//Por enquanto só recomendação
+						rodada.schedulep(5, ParametrosDSTE.Janela, no);
+						
 						//Agenda avaliar rentenção 
-						rodada.schedulep(6, ParametrosDSTE.Janela, no);
+						//rodada.schedulep(6, ParametrosDSTE.Janela, no);
 						
 						
 					}else{

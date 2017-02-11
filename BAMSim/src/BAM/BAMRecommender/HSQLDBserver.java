@@ -63,7 +63,8 @@ public class HSQLDBserver
 	   // conn.prepareStatement("drop table bam;").execute();
 	    conn.prepareStatement("create table bam(caseId VARCHAR(15), "
 	    		+ "gestor VARCHAR(30), "
-	    		+ "BAMAtual VARCHAR(30), problema VARCHAR(30), "
+	    		+ "BAMAtual VARCHAR(30), "
+//	    		+ "problema VARCHAR(30), "
 	    		+ "Janela INTEGER, "
 	    		+ "SLAUtilizacaoCT0 INTEGER, "
 	    		+ "SLAUtilizacaoCT1 INTEGER, "
@@ -97,7 +98,8 @@ public class HSQLDBserver
 	    
 	    conn2.prepareStatement("create table bam(caseId VARCHAR(15), "
 	    		+ "gestor VARCHAR(30), "
-	    		+ "BAMAtual VARCHAR(30), problema VARCHAR(30), "
+	    		+ "BAMAtual VARCHAR(30), "
+//	    		+ "problema VARCHAR(30), "
 	    		+ "Janela INTEGER, "
 	    		+ "SLAUtilizacaoCT0 INTEGER, "
 	    		+ "SLAUtilizacaoCT1 INTEGER, "
@@ -387,7 +389,7 @@ public class HSQLDBserver
 	    conn.prepareStatement("insert into bam values('250','Conservador','PreemptionRDM',300,null,null,null,null,null,null,null,null,null,null,null,null,200,300,500,0.188,0,0.5,0,0,0.642857142857142,0,0,0,0,0,0,'PreemptionAllocCTSharing',true);").execute();
 	    conn.prepareStatement("insert into bam values('251','Conservador','PreemptionRDM',300,null,null,null,null,null,null,null,null,null,null,null,null,200,300,500,0.196,0,0.5,0,0,0.78695652173913,0,0,0,0,0,0,'PreemptionAllocCTSharing',true);").execute();
 	    conn.prepareStatement("insert into bam values('252','Conservador','PreemptionRDM',300,null,null,null,null,null,null,null,null,null,null,null,null,200,300,500,0.172,0,0.495,0,0,0.6318407960199,0,0,0,0,0,0,'PreemptionAllocCTSharing',true);").execute();
-	    conn.prepareStatement("insert into bam values('253','Conservador','PreemptionRDM',300,null,null,null,null,null,null,null,null,null,null,null,null,200,300,500,0.331,0,0.5,0,0,0.661538461538461,0,0,0,0,0,0,'MAM / ??? PreemptionRDM',true);").execute();
+	    conn.prepareStatement("insert into bam values('253','Conservador','PreemptionRDM',300,null,null,null,null,null,null,null,null,null,null,null,null,200,300,500,0.331,0,0.5,0,0,0.661538461538461,0,0,0,0,0,0,'NoPreemptionMAM',true);").execute();//MAM / ??? PreemptionRDM
 	    conn.prepareStatement("insert into bam values('254','Conservador','PreemptionRDM',300,null,null,null,null,null,null,null,null,null,null,null,null,200,300,500,0.532,0,0.499,0.324074074074074,0,0.34020618556701,0.10576923076923,0,0,0,0,0,'NoPreemptionMAM',true);").execute();
 	    conn.prepareStatement("insert into bam values('255','Conservador','PreemptionRDM',300,null,null,null,null,null,null,null,null,null,null,null,null,200,300,500,0.506,0,0.5,0.20754716981132,0,0.46031746031746,0.0916030534351145,0,0,0,0,0,'NoPreemptionMAM',true);").execute();
 	    conn.prepareStatement("insert into bam values('256','Conservador','PreemptionRDM',300,null,null,null,null,null,null,null,null,null,null,null,null,200,300,500,0.523,0,0.496,0.365079365079365,0,0.521367521367521,0.113636363636363,0,0,0,0,0,'NoPreemptionMAM',true);").execute();

@@ -37,7 +37,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 
 
 	}
-	public enum Problemas {
+/*	public enum Problemas {
 		AltaPreempcao(0), 		AltoBloqueio(1), 		AltaDevolucao(2), 		BaixaUtilizacao(3),
 		AltaPreempcaoCT0(4), 	AltoBloqueioCT0(5), 	AltaDevolucaoCT0(6),	BaixaUtilizacaoCT0(7),
 		AltaPreempcaoCT1(8), 	AltoBloqueioCT1(8), 	AltaDevolucaoCT1(10),	BaixaUtilizacaoCT1(11),
@@ -54,7 +54,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 		}
 
 
-	}
+	}*/
 	//Colocar sintoma
 	String  caseId;
 	//Inclusão do gestor
