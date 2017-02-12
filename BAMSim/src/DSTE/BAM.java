@@ -361,12 +361,9 @@ public class BAM {
 		{
 			
 			aux = link.ListaLSPsPorCT[c].ultimo; 
-			//Não estrapolou sua BC
-			if(link.BCAtual[c]<=link.BCMbps(c))
-			{
-				int i=0;
-			}else
-			while(		link.BCAtual[c]
+						
+			while((link.BCAtual[c]>link.BCMbps(c)) &&
+					(		link.BCAtual[c]
 					>
 					(link.BCMbps(c)
 					+
@@ -374,7 +371,7 @@ public class BAM {
 					+link.HTLAcumuladoCompartilhavelAUX(c,lsp) //Compartilhável HTL
 					-link.excedenteBCSuperioresAUX(c,lsp))
 					) 
-			  ) 
+			  ) )
 			{
 					Debug.setMensagem("============= preempção =============");
 					((Lsp)aux.item).preemptaLSP();

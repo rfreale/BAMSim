@@ -250,50 +250,62 @@ public class TesteSimulacao {
 					if (!cbrCase.getSolution().equals(nomeBAMAtual) ){
 						
 						BAMSolution solution = (BAMSolution) cbrCase.getSolution();
+						//Temporário para forçar devolução
+						Lsp LSPaux= new Lsp(); 
+	            		LSPaux.Carga=0; 
+						
 						
 						switch (solution.getBAMNovo()) {
 						case NoPreemptionMAM:
 							to.link[0].bamType = BAMType.PreemptionGBAM;
+							to.link[0].BCLTH= new double[]
+							{	000, //BC0 
+								000, //BC1
+								0  //BC2 Nunca mudar
+							};
+							LSPaux.CT=0; 
+		              		BAM.devolutionG(to.link[0],LSPaux);
+							
+							
 							to.link[0].BCHTL= new double[]
-									{	0, //BC0 Nunca mudar
+							{	0, //BC0 Nunca mudar
 								000, //BC1
 								000 //BC2
 							};
-					
-							to.link[0].BCLTH= new double[]
-							{	000, //BC0 
-								000, //BC1
-								0  //BC2 Nunca mudar
-							};
-							BAM.forcePreemption(to.link[0]);
+							
+							LSPaux.CT=2; 
+		              		BAM.preemptionG(to.link[0],LSPaux); 
 							break;
 						case PreemptionRDM:
 							to.link[0].bamType = BAMType.PreemptionGBAM;
-							to.link[0].BCHTL= new double[]
-							{	0, //BC0 Nunca mudar
-								100, //BC1
-								100 //BC2
-							};
-					
-							to.link[0].BCLTH= new double[]
-							{	000, //BC0 
-								000, //BC1
-								0  //BC2 Nunca mudar
-							};
-							BAM.forcePreemption(to.link[0]);
-							break;
-						case PreemptionAllocCTSharing:
-							to.link[0].bamType = BAMType.PreemptionGBAM;
-							to.link[0].BCHTL= new double[]
-							{	0, //BC0 Nunca mudar
-								100, //BC1
-								100 //BC2
-							};
-					
 							to.link[0].BCLTH= new double[]
 							{	100, //BC0 
 								100, //BC1
 								0  //BC2 Nunca mudar
+							};
+							LSPaux.CT=0; 
+		              		BAM.devolutionG(to.link[0],LSPaux);
+							
+							
+							to.link[0].BCHTL= new double[]
+							{	0, //BC0 Nunca mudar
+								000, //BC1
+								000 //BC2
+							};
+							
+							break;
+						case PreemptionAllocCTSharing:
+							to.link[0].bamType = BAMType.PreemptionGBAM;
+							to.link[0].BCLTH= new double[]
+							{	100, //BC0 
+								100, //BC1
+								0  //BC2 Nunca mudar
+							};
+							
+							to.link[0].BCHTL= new double[]
+							{	0, //BC0 Nunca mudar
+								100, //BC1
+								100 //BC2
 							};
 							break;
 						}
@@ -311,10 +323,10 @@ public class TesteSimulacao {
 						
 						
 						//Por enquanto só recomendação
-						rodada.schedulep(5, ParametrosDSTE.Janela, no);
+						//rodada.schedulep(5, ParametrosDSTE.Janela, no);
 						
 						//Agenda avaliar rentenção 
-						//rodada.schedulep(6, ParametrosDSTE.Janela, no);
+						rodada.schedulep(6, ParametrosDSTE.Janela, no);
 						
 						
 					}else{
@@ -356,8 +368,8 @@ public class TesteSimulacao {
 						jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
 					}else{
 						BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
-						((BAMDescription)novocase.getDescription()).setCaseId("bam"+(recommender.getCaseBase().getCases().size()+1));
-						((BAMSolution)novocase.getSolution()).setId("bam"+(recommender.getCaseBase().getCases().size()+1));
+						((BAMDescription)novocase.getDescription()).setCaseId("bam"+(recommender.getCaseBaseDB2().getCases().size()+1));
+						((BAMSolution)novocase.getSolution()).setId("bam"+(recommender.getCaseBaseDB2().getCases().size()+1));
 						jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), novocase);
 						
 					}
@@ -718,6 +730,7 @@ public class TesteSimulacao {
 			Debug.setMensagem(" ==== Status dos Links  ====");
 			Debug.setMensagem(to.statusLinks());
 			Debug.setMensagem(rodada.imprime_evchain(), 0, 0);
+			//BancoDeDados.setXML(rodada.imprime_evchain(),"debug2");
 
 		}
 		Debug.setMensagem("\r\n\r\n ==== Status dos Links  ====");
