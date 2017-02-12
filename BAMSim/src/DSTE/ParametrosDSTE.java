@@ -404,7 +404,7 @@ public class ParametrosDSTE {
 					+ to.getRoteador(((Lsp)dados.item).src).getDescricao()
 					+" -->"
 					+ to.getRoteador(((Lsp)dados.item).dest).getDescricao());
-			rodada.schedulep (1, 0.05, dados);
+			rodada.schedulep (1, 0, dados);
 			
 			//Repetição do tráfego
 			Debug.setMensagem("Agenda estabelecimento da LSP "+((Lsp)dados.item).ID+" - "

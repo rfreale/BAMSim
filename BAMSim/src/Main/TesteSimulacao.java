@@ -172,7 +172,7 @@ public class TesteSimulacao {
 					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID + " Estabelecida ========"  + " Em CT=" + ((Lsp) dados.item).CT);
 
 					// agenda desestabelecimento
-					rodada.schedulep(2, ((Lsp) dados.item).tempoDeVida+0.02, dados);
+					rodada.schedulep(2, ((Lsp) dados.item).tempoDeVida, dados);
 
 				} else {
 					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID + " Bloqueada ========" + " Em CT=" + ((Lsp) dados.item).CT );
