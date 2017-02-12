@@ -1323,7 +1323,7 @@ public class EstatisticasDSTE {
 		} 
 		
 		for(int i=0;i<lspEstablishedCT.length;i++){ 
-			retorno+="LSP EstablishedTC["+i+"] = "+lspEstablishedCT[i]+"\r\n"; 
+			retorno+="LSP EstablishedTC Total["+i+"] = "+lspEstablishedTotalCT[i]+"\r\n"; 
 		} 
 		for(int i=0;i<lspUnbrokenCT.length;i++){ 
 			retorno+="LSP UnbrokenTC["+i+"] = "+lspUnbrokenCT[i]+"\r\n"; 
