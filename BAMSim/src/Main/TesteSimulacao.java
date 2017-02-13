@@ -326,7 +326,7 @@ public class TesteSimulacao {
 						rodada.schedulep(5, ParametrosDSTE.Janela, no);
 						
 						//Agenda avaliar rentenção 
-						rodada.schedulep(6, ParametrosDSTE.Janela, no);
+					////	rodada.schedulep(6, ParametrosDSTE.Janela, no);
 						
 						
 					}else{
@@ -729,7 +729,7 @@ public class TesteSimulacao {
 			}
 			Debug.setMensagem(" ==== Status dos Links  ====");
 			Debug.setMensagem(to.statusLinks());
-			Debug.setMensagem(rodada.imprime_evchain(), 0, 0);
+			/////Debug.setMensagem(rodada.imprime_evchain(), 0, 0);
 			//BancoDeDados.setXML(rodada.imprime_evchain(),"debug2");
 
 		}
