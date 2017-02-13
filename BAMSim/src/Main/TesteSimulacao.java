@@ -326,7 +326,7 @@ public class TesteSimulacao {
 						rodada.schedulep(5, ParametrosDSTE.Janela, no);
 						
 						//Agenda avaliar rentenção 
-						//rodada.schedulep(6, ParametrosDSTE.Janela, no);
+						rodada.schedulep(6, ParametrosDSTE.Janela, no);
 						
 						
 					}else{
