@@ -202,17 +202,34 @@ public class RodadaDeSimulacao
 			this.evc_begin = evc;
 			return;
 		}
-
+/*
 		if ( st == evc_aux.ev_time )					/* Tempo atual igual ao primeiro tempo da cadeia
 																						 como ele foi gerado depois ele ficara logo apos o primeiro */
-		{
+/*		{
 			evc.ev_next = evc_aux.ev_next;
 			evc.ev_prior = evc_aux;
 			evc_aux.ev_next.ev_prior = evc;
 			evc_aux.ev_next = evc;
 			return;
 		}
-
+		
+		
+		
+*/
+		
+		if ( st == evc_aux.ev_time )					/* Tempo atual igual ao primeiro tempo da cadeia
+			 como ele foi gerado depois ele ficara logo apos o ultimo com mesmo tempo */
+		{
+			while (evc_aux.ev_next!=null && ( st == evc_aux.ev_next.ev_time ))		/* Insere na lista mas nao e o primeiro */
+			{
+				evc_aux = evc_aux.ev_next;
+			}
+			evc.ev_next = evc_aux.ev_next;
+			evc.ev_prior = evc_aux;
+			evc_aux.ev_next.ev_prior = evc;
+			evc_aux.ev_next = evc;
+			return;
+		}
 		/* Tempo atual menor ou igual do que o ultimo  tempo da cadeia procura dentro da lista 
 			 ponto de insercao. A busca para insercao comeca do final para o inicio pois a 
 		   perspectiva e que o novo sn esteja mais proximo do final do que do inicio e isto

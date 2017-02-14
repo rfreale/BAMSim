@@ -34,7 +34,7 @@ import javax.swing.UIManager;
 
 import jcolibri.cbrcore.CBRCase;
 import BAM.BAMRecommender.BAMDescription;
-import BAM.BAMRecommender.BAMDescription.Problemas;
+//import BAM.BAMRecommender.BAMDescription.Problemas;
 import BAM.BAMRecommender.BAMRecommender;
 import BAM.BAMRecommender.BAMSolution;
 import BAM.BAMRecommender.BAMDescription.BAMTypes;
@@ -319,7 +319,7 @@ public class RevisionDialog extends JDialog {
 		BAMDescription desc = (BAMDescription) _case.getDescription();
 		
 		this.BAMAtual.setSelectedItem(desc.getBAMAtual().toString());
-		this.problema.setSelectedItem(desc.getProblema().toString());
+		//this.problema.setSelectedItem(desc.getProblema().toString());
 		this.utilizacaoDoEnlaceCT0.setValue(desc.getUtilizacaoDoEnlaceCT0());
 		this.utilizacaoDoEnlaceCT1.setValue(desc.getUtilizacaoDoEnlaceCT1());
 		this.utilizacaoDoEnlaceCT2.setValue(desc.getUtilizacaoDoEnlaceCT2());
@@ -351,7 +351,7 @@ public class RevisionDialog extends JDialog {
 		desc.setUtilizacaoDoEnlaceCT0(this.utilizacaoDoEnlaceCT0.getNumber().doubleValue());
 		desc.setUtilizacaoDoEnlaceCT1(this.utilizacaoDoEnlaceCT1.getNumber().doubleValue());
 		desc.setUtilizacaoDoEnlaceCT2(this.utilizacaoDoEnlaceCT2.getNumber().doubleValue());
-		desc.setNumeroDeBloqueiosCT0(this.numeroDeBloqueiosCT0.getNumber().intValue());
+		/*desc.setNumeroDeBloqueiosCT0(this.numeroDeBloqueiosCT0.getNumber().intValue());
 		desc.setNumeroDeBloqueiosCT1(this.numeroDeBloqueiosCT1.getNumber().intValue());
 		desc.setNumeroDeBloqueiosCT2(this.numeroDeBloqueiosCT2.getNumber().intValue());
 		desc.setNumeroDeDevolucoesCT0(this.numeroDeDevolucoesCT0.getNumber().intValue());
@@ -359,10 +359,10 @@ public class RevisionDialog extends JDialog {
 		desc.setNumeroDeDevolucoesCT2(this.numeroDeDevolucoesCT2.getNumber().intValue());
 		desc.setNumeroDePreempcoesCT0(this.numeroDePreempcoesCT0.getNumber().intValue());
 		desc.setNumeroDePreempcoesCT1(this.numeroDePreempcoesCT1.getNumber().intValue());
-		desc.setNumeroDePreempcoesCT2(this.numeroDePreempcoesCT2.getNumber().intValue());
+		desc.setNumeroDePreempcoesCT2(this.numeroDePreempcoesCT2.getNumber().intValue());*/
 		
 		desc.setBAMAtual(BAMTypes.valueOf((String)this.BAMAtual.getSelectedItem()));
-		desc.setProblema(Problemas.valueOf((String)this.problema.getSelectedItem()));
+		//desc.setProblema(Problemas.valueOf((String)this.problema.getSelectedItem()));
 		
 				
 		BAMSolution sol = (BAMSolution) _case.getSolution();

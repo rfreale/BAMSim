@@ -213,7 +213,7 @@ public class BAMTest {
 		desc.setUtilizacaoDoEnlaceCT2(30.0);
 		
 					
-		desc.setNumeroDeBloqueiosCT0(5);
+		/*desc.setNumeroDeBloqueiosCT0(5);
 		desc.setNumeroDeBloqueiosCT1(6);
 		desc.setNumeroDeBloqueiosCT2(8);
 		
@@ -223,7 +223,7 @@ public class BAMTest {
 		
 		//desc.setNumeroDeDevolucoesCT0(0);
 		desc.setNumeroDeDevolucoesCT1(0);
-		desc.setNumeroDeDevolucoesCT2(0);
+		desc.setNumeroDeDevolucoesCT2(0);*/
 
 		query.setDescription(desc);
 		try {

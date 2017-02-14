@@ -37,7 +37,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 
 
 	}
-	public enum Problemas {
+/*	public enum Problemas {
 		AltaPreempcao(0), 		AltoBloqueio(1), 		AltaDevolucao(2), 		BaixaUtilizacao(3),
 		AltaPreempcaoCT0(4), 	AltoBloqueioCT0(5), 	AltaDevolucaoCT0(6),	BaixaUtilizacaoCT0(7),
 		AltaPreempcaoCT1(8), 	AltoBloqueioCT1(8), 	AltaDevolucaoCT1(10),	BaixaUtilizacaoCT1(11),
@@ -54,7 +54,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 		}
 
 
-	}
+	}*/
 	//Colocar sintoma
 	String  caseId;
 	//Inclusão do gestor
@@ -62,7 +62,9 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	
 
 	BAMTypes BAMAtual;
-	Problemas problema;
+	//Problemas problema;
+	
+	long janela;
 	
 	//SLA
 	Integer  SLAUtilizacaoCT0;
@@ -92,17 +94,17 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	Double  utilizacaoDoEnlaceCT1;
 	Double  utilizacaoDoEnlaceCT2;
 	
-	Integer  numeroDePreempcoesCT0;
-	Integer  numeroDePreempcoesCT1;
-	Integer  numeroDePreempcoesCT2;
+	Double  numeroDeBloqueiosCT0;
+	Double  numeroDeBloqueiosCT1;
+	Double  numeroDeBloqueiosCT2;
 	
-	Integer  numeroDeBloqueiosCT0;
-	Integer  numeroDeBloqueiosCT1;
-	Integer  numeroDeBloqueiosCT2;
+	Double  numeroDePreempcoesCT0;
+	Double  numeroDePreempcoesCT1;
+	Double  numeroDePreempcoesCT2;
 	
-	Integer  numeroDeDevolucoesCT0;
-	Integer  numeroDeDevolucoesCT1;
-	Integer  numeroDeDevolucoesCT2;
+	Double  numeroDeDevolucoesCT0;
+	Double  numeroDeDevolucoesCT1;
+	Double  numeroDeDevolucoesCT2;
 	
 	
 	
@@ -154,20 +156,19 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	}
 
 
-
-	public Problemas getProblema() {
-		return problema;
-	}
-
-
-
-	public void setProblema(Problemas problema) {
-		this.problema = problema;
-	}
-
-
-
 	
+	public long getJanela() {
+		return janela;
+	}
+
+
+
+	public void setJanela(long janela) {
+		this.janela = janela;
+	}
+
+
+
 	public Integer getSLAUtilizacaoCT0() {
 		return SLAUtilizacaoCT0;
 	}
@@ -390,109 +391,108 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 
 
 
-	public Integer getNumeroDePreempcoesCT0() {
-		return numeroDePreempcoesCT0;
-	}
-
-
-
-	public void setNumeroDePreempcoesCT0(Integer numeroDePreempcoesCT0) {
-		this.numeroDePreempcoesCT0 = numeroDePreempcoesCT0;
-	}
-
-
-
-	public Integer getNumeroDePreempcoesCT1() {
-		return numeroDePreempcoesCT1;
-	}
-
-
-
-	public void setNumeroDePreempcoesCT1(Integer numeroDePreempcoesCT1) {
-		this.numeroDePreempcoesCT1 = numeroDePreempcoesCT1;
-	}
-
-
-
-	public Integer getNumeroDePreempcoesCT2() {
-		return numeroDePreempcoesCT2;
-	}
-
-
-
-	public void setNumeroDePreempcoesCT2(Integer numeroDePreempcoesCT2) {
-		this.numeroDePreempcoesCT2 = numeroDePreempcoesCT2;
-	}
-
-
-
-	public Integer getNumeroDeBloqueiosCT0() {
+		public Double getNumeroDeBloqueiosCT0() {
 		return numeroDeBloqueiosCT0;
 	}
 
 
 
-	public void setNumeroDeBloqueiosCT0(Integer numeroDeBloqueiosCT0) {
+	public void setNumeroDeBloqueiosCT0(Double numeroDeBloqueiosCT0) {
 		this.numeroDeBloqueiosCT0 = numeroDeBloqueiosCT0;
 	}
 
 
 
-	public Integer getNumeroDeBloqueiosCT1() {
+	public Double getNumeroDeBloqueiosCT1() {
 		return numeroDeBloqueiosCT1;
 	}
 
 
 
-	public void setNumeroDeBloqueiosCT1(Integer numeroDeBloqueiosCT1) {
+	public void setNumeroDeBloqueiosCT1(Double numeroDeBloqueiosCT1) {
 		this.numeroDeBloqueiosCT1 = numeroDeBloqueiosCT1;
 	}
 
 
 
-	public Integer getNumeroDeBloqueiosCT2() {
+	public Double getNumeroDeBloqueiosCT2() {
 		return numeroDeBloqueiosCT2;
 	}
 
 
 
-	public void setNumeroDeBloqueiosCT2(Integer numeroDeBloqueiosCT2) {
+	public void setNumeroDeBloqueiosCT2(Double numeroDeBloqueiosCT2) {
 		this.numeroDeBloqueiosCT2 = numeroDeBloqueiosCT2;
 	}
 
 
+	
+	public Double getNumeroDePreempcoesCT0() {
+		return numeroDePreempcoesCT0;
+	}
 
-	public Integer getNumeroDeDevolucoesCT0() {
+
+
+	public void setNumeroDePreempcoesCT0(Double numeroDePreempcoesCT0) {
+		this.numeroDePreempcoesCT0 = numeroDePreempcoesCT0;
+	}
+
+
+
+	public Double getNumeroDePreempcoesCT1() {
+		return numeroDePreempcoesCT1;
+	}
+
+
+
+	public void setNumeroDePreempcoesCT1(Double numeroDePreempcoesCT1) {
+		this.numeroDePreempcoesCT1 = numeroDePreempcoesCT1;
+	}
+
+
+
+	public Double getNumeroDePreempcoesCT2() {
+		return numeroDePreempcoesCT2;
+	}
+
+
+
+	public void setNumeroDePreempcoesCT2(Double numeroDePreempcoesCT2) {
+		this.numeroDePreempcoesCT2 = numeroDePreempcoesCT2;
+	}
+	
+
+	public Double getNumeroDeDevolucoesCT0() {
 		return numeroDeDevolucoesCT0;
 	}
 
 
 
-	public void setNumeroDeDevolucoesCT0(Integer numeroDeDevolucoesCT0) {
+	public void setNumeroDeDevolucoesCT0(Double numeroDeDevolucoesCT0) {
 		this.numeroDeDevolucoesCT0 = numeroDeDevolucoesCT0;
 	}
 
 
 
-	public Integer getNumeroDeDevolucoesCT1() {
+	public Double getNumeroDeDevolucoesCT1() {
 		return numeroDeDevolucoesCT1;
 	}
 
 
 
-	public void setNumeroDeDevolucoesCT1(Integer numeroDeDevolucoesCT1) {
+	public void setNumeroDeDevolucoesCT1(Double numeroDeDevolucoesCT1) {
 		this.numeroDeDevolucoesCT1 = numeroDeDevolucoesCT1;
 	}
 
 
 
-	public Integer getNumeroDeDevolucoesCT2() {
+	public Double getNumeroDeDevolucoesCT2() {
 		return numeroDeDevolucoesCT2;
 	}
 
 
 
-	public void setNumeroDeDevolucoesCT2(Integer numeroDeDevolucoesCT2) {
+	public void setNumeroDeDevolucoesCT2(Double numeroDeDevolucoesCT2) {
 		this.numeroDeDevolucoesCT2 = numeroDeDevolucoesCT2;
 	}
 
@@ -508,7 +508,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 		return "(CaseID=" + caseId 
 				+ ", gestor=" + gestor              //inserir  gestor e SLA  <=
 				+ ", BAMAtual=" + BAMAtual
-				+ ", Problema=" + problema
+				+ ", Janela=" + janela
 				+ ", SLAUtilizacaoCT0=" + SLAUtilizacaoCT0
 				+ ", SLAUtilizacaoCT1=" + SLAUtilizacaoCT1
 				+ ", SLAUtilizacaoCT2=" + SLAUtilizacaoCT2
@@ -541,7 +541,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 		String aux="insert into bam values(''";
 		aux+=",'"+gestor+"'";
 		aux+=",'"+BAMAtual+"'";
-		aux+=",'"+problema+"'";
+		aux+=",'"+janela+"'";
 		aux+="," + SLAUtilizacaoCT0;
 		aux+="," + SLAUtilizacaoCT1;
 		aux+="," + SLAUtilizacaoCT2;

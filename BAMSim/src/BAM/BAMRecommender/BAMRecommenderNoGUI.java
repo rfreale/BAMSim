@@ -366,9 +366,9 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 10.0);
 
-		attribute = new Attribute("problema",BAMDescription.class); 
+		/*attribute = new Attribute("problema",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 10.0);
+		config.setWeight(attribute, 10.0);*/
 		
 		attribute = new Attribute("utilizacaoDoEnlaceCT0",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());

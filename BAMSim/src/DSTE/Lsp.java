@@ -28,6 +28,11 @@ public class Lsp {
 		this.rodada=r;
 		ID=++r.LSPcount;
 	}
+	public Lsp()
+	{
+		this.rodada=null;
+		ID=null;
+	}
 
 	public  void estabelecerLSP (Link [] caminho) 
 	{
