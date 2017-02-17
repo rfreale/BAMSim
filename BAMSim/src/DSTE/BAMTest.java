@@ -57,24 +57,47 @@ public class BAMTest {
 	@Test
 	public void testPoissonDiaHora() 
 	{
-		int numeroDeLSPPorHora=GeradorDeNumerosAleatorios.uniform(3000, 5000);;
-		int lambdaPico = GeradorDeNumerosAleatorios.uniform(15, 45);
-		System.out.println("Lambda="+lambdaPico);
-		int numeroDeLSPs[] = new int[lambdaPico*3];
-		for (int i=0;i<numeroDeLSPPorHora;i++)
+		for (int j =0 ; j<4; j++)
 		{
-			int minuto=GeradorDeNumerosAleatorios.poisson(lambdaPico);
-			if(minuto<lambdaPico*2)
-				++numeroDeLSPs[minuto];
-			else
-				System.out.println("Discartado="+minuto);
-
-
+				
+			
+				
+			int numeroDeLSPPorHora=GeradorDeNumerosAleatorios.uniform(1000, 2000);
+			int lambdaPico = GeradorDeNumerosAleatorios.uniform(15, 45);
+			//System.out.println("Lambda="+lambdaPico);
+			int numeroDeLSPs[] = new int[lambdaPico*3];
+			for (int i=0;i<numeroDeLSPPorHora;i++)
+			{
+				int minuto=GeradorDeNumerosAleatorios.poisson(lambdaPico);
+				//if(minuto<lambdaPico*2)
+					++numeroDeLSPs[minuto];
+				//else
+					//System.out.println("Discartado="+minuto);
+	
+	
+			}
+			
+			int iCurva=0;
+			
+			for (int i = 0 ; i < lambdaPico*2 && numeroDeLSPs[i] < GeradorDeNumerosAleatorios.uniform(10, 50); i++) {
+			    //System.out.println(i+"="+numeroDeLSPs[i]);
+				//System.out.println(numeroDeLSPs[i]);
+				iCurva++ ;
+			  }
+			int fCurva = numeroDeLSPs.length-1;
+			
+			for (int i = numeroDeLSPs.length-1; i > 0 && numeroDeLSPs[i] < GeradorDeNumerosAleatorios.uniform(11, 50); i--) {
+			    //System.out.println(i+"="+numeroDeLSPs[i]);
+				fCurva--;
+				//System.out.println(numeroDeLSPs[i]);
+			  }
+			
+			for (int i =iCurva; i<= fCurva; i++ ) {
+			   System.out.println(numeroDeLSPs[i]);
+			  }
+			
+			
 		}
-		for (int i = 0; i < lambdaPico*2; i++) {
-		    //System.out.println(i+"="+numeroDeLSPs[i]);
-			System.out.println(numeroDeLSPs[i]);
-		  }
 		System.out.println();
 		
 	}
