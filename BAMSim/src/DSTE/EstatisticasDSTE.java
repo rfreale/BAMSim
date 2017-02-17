@@ -1294,18 +1294,25 @@ public class EstatisticasDSTE {
 		retorno+=String.format("Simulation Time (ms) = %d\r\n", tempoSimulacaoFim-tempoSimulacaoInicio);
 		retorno+=String.format("Total GRANT/DENY (ns) = %d\r\n", tempoAcumuladoGrantDeny);
 		retorno+=String.format("Total GRANT/DENY (ms) = %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoGrantDeny));
-		retorno+=String.format("Average GRANT/DENY (ns) = %d\r\n", tempoAcumuladoGrantDeny/lspRequested);
-		retorno+=String.format("Average GRANT/DENY (ms) = %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoGrantDeny/lspRequested));
+		//lspRequestedCT(ParametrosDSTE.Janela, 0) > 0 ? valor verdadeiro : valor falso
+		retorno+=String.format("Average GRANT/DENY (ns) = %d\r\n", lspRequested > 0 ?  tempoAcumuladoGrantDeny/lspRequested : 0);
+		retorno+=String.format("Average GRANT/DENY (ms) = %d\r\n", TimeUnit.NANOSECONDS.toMillis( lspRequested > 0 ?  tempoAcumuladoGrantDeny/lspRequested : 0)   );
 		retorno+=String.format("Establishment Total(ns) = %d\r\n", tempoAcumuladoEstabelecimento);
 		retorno+=String.format("Establishment Total(ms) = %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoEstabelecimento));
-		retorno+=String.format("Average of Establishment (ns) = %d\r\n", tempoAcumuladoEstabelecimento/lspRequested);
-		retorno+=String.format("Average of Establishment (ms) = %d\r\n", TimeUnit.NANOSECONDS.toMillis(tempoAcumuladoEstabelecimento/lspRequested));
+		retorno+=String.format("Average of Establishment (ns) = %d\r\n", lspRequested > 0 ?  tempoAcumuladoEstabelecimento/lspRequested : 0);
+		retorno+=String.format("Average of Establishment (ms) = %d\r\n", TimeUnit.NANOSECONDS.toMillis(lspRequested > 0 ?  tempoAcumuladoEstabelecimento/lspRequested : 0)    );
 		retorno+=String.format("LSPs Requested = %d\r\n", lspRequested);
 		retorno+=String.format("LSPs Established Total = %d\r\n", lspEstablishedTotal);
 		retorno+=String.format("LSPs Unbroken = %d\r\n", lspUnbroken);
 		retorno+=String.format("LSPs Preemptions = %d\r\n", preempcoes);
+		retorno+=String.format("LSPs Preemptions / Established = %d\r\n", lspEstablishedTotal > 0 ? preempcoes/lspEstablishedTotal: 0 );
 		retorno+=String.format("LSPs Devolutions = %d\r\n", devolucoes); 
+		retorno+=String.format("LSPs Devolutions / Established = %d\r\n", lspEstablishedTotal > 0 ? devolucoes/lspEstablishedTotal: 0 );
 		retorno+=String.format("LSPs Blocking = %d\r\n", bloqueios);
+		retorno+=String.format("LSPs Blocking / Requested  = %d\r\n", lspRequested > 0 ?  bloqueios / lspRequested : 0);
+		
+		
+		
 		retorno+=String.format("Bandwidth Requested = %6.2f\r\n", bandaRequested);
 		retorno+=String.format("Bandwidth Established = %6.2f\r\n", bandaEstabelecida);
 		retorno+=String.format("Bandwidth Unbroken = %6.2f\r\n", bandaUnbroken);

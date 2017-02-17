@@ -547,16 +547,22 @@ public class BAMTest {
 		
 		int lambda = 12;
 		int numeroDeLSPs[] = new int[lambda*3];
+		
 		for (int i=0;i<3000;i++)
 		{
 			int temp=GeradorDeNumerosAleatorios.poisson(lambda);
+			
 			if(temp<lambda*3)
+				
 				++numeroDeLSPs[temp];
+			
 			else
 				System.out.println("erro="+temp);
 
 
 		}
+		
+		
 		for (int i = 0; i < numeroDeLSPs.length; i++) {
 		    System.out.println(i+"="+numeroDeLSPs[i]);
 		  }
