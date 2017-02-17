@@ -7,7 +7,9 @@ import java.lang.Math;
 public class GeradorDeNumerosAleatorios {
 
 	/****************** GERAÇÃO DE NÚMEROS ALEATORIOS ********************/
-	public static Random rand = new Random(ParametrosDoSimulador.semente);
+	//public static Random rand = new Random(ParametrosDoSimulador.semente);
+	//Retira semente para testes
+	public static Random rand = new Random();
 	public  static int poisson(double lambda) {
 		double elambda = Math.exp(-1*lambda);
 		double product = 1;
