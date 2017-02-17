@@ -199,7 +199,7 @@ public class TesteSimulacao {
 				break;
 			case 3:// geracao de trafego
 				Debug.setMensagem("Tipo 3 - Agenda/Cria LSP ");
-				ParametrosDSTE.trafegoManualC(rodada, to, dados);
+				ParametrosDSTE.trafegoManual(rodada, to, dados);
 
 				break;
 
