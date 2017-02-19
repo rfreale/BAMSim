@@ -578,7 +578,7 @@ public class EstatisticasDSTE {
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setTimeSpan(starTime,curretTime);
 		graphDef.setVerticalLabel("Number");
-		graphDef.setValueAxis(this.lspRequested/50, 10);
+		graphDef.setValueAxis(this.lspRequested>=50?this.lspRequested/50:1, 10);
 		graphDef.setMinValue(0);
 		graphDef.setTitle("LSPs Requested");
 		graphDef.datasource("lspRequested", "saida/"+filename+"/"+filename+".rrd", "lspRequested", "MAX");
@@ -595,11 +595,21 @@ public class EstatisticasDSTE {
 
 
 		//Por tempo
+        
+        //Pega Máximo
+  		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_absoluto.rrd");
+  		FetchRequest fetchRequest = rrdDb.createFetchRequest("SUM", starTime,curretTime);
+  		FetchData fetchData = fetchRequest.fetchData();
+  		//Faz a subtração dos dois valores para pegar o valor na janela
+  		int max=(int) (fetchData.getAggregate("lspRequested", "MAX")); 
+  		rrdDb.close();       
+        
 		RrdGraphDef graphDef2 = new RrdGraphDef();
 		graphDef2.setTimeSpan(starTime,curretTime);
 		graphDef2.setVerticalLabel("Number");
 		//graphDef.setMinValue(0);
 		//graphDef2.setStep(3600);
+		graphDef2.setValueAxis(max>=50?max/50:1, 10);
 		graphDef2.setTitle("LSPs Requested");
 		graphDef2.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "SUM");
 		
@@ -650,7 +660,7 @@ public class EstatisticasDSTE {
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setTimeSpan(starTime,curretTime);
 		graphDef.setVerticalLabel("Number");
-		graphDef.setValueAxis(this.lspUnbroken/50, 10);
+		graphDef.setValueAxis(this.lspRequested>=50?this.lspRequested/50:1, 10);
 		graphDef.setMinValue(0);
 		graphDef.setTitle("LSPs Unbroken");
 		graphDef.datasource("lspUnbroken", "saida/"+filename+"/"+filename+".rrd", "lspUnbroken", "MAX");
@@ -667,9 +677,18 @@ public class EstatisticasDSTE {
 
 
 		//Por tempo
+        //Pega Máximo
+  		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_absoluto.rrd");
+  		FetchRequest fetchRequest = rrdDb.createFetchRequest("SUM", starTime,curretTime);
+  		FetchData fetchData = fetchRequest.fetchData();
+  		//Faz a subtração dos dois valores para pegar o valor na janela
+  		int max=(int) (fetchData.getAggregate("lspUnbroken", "MAX")); 
+  		rrdDb.close();  
+  		
 		RrdGraphDef graphDef2 = new RrdGraphDef();
 		graphDef2.setTimeSpan(starTime,curretTime);
 		graphDef2.setVerticalLabel("Number");
+		graphDef2.setValueAxis(max>=50?max/50:1, 10);
 		//graphDef.setMinValue(0);
 		//graphDef2.setStep(3600);
 		graphDef2.setTitle("LSPs Unbroken");
@@ -722,11 +741,11 @@ public class EstatisticasDSTE {
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setTimeSpan(starTime,curretTime);
 		graphDef.setVerticalLabel("Number");
-		graphDef.setValueAxis(this.lspEstablished/50, 10);
+		graphDef.setValueAxis(this.lspRequested>=50?this.lspRequested/50:1, 10);
 		graphDef.setMinValue(0);
-		graphDef.setTitle("LSPs Established");
-		graphDef.datasource("lspEstablished", "saida/"+filename+"/"+filename+".rrd", "lspEstablished", "MAX");
-		graphDef.line("lspEstablished", new Color(0xFF, 0, 0), "LSPs Established", graphWidthLine);
+		graphDef.setTitle("LSPs Established Total");
+		graphDef.datasource("lspEstabTotal", "saida/"+filename+"/"+filename+".rrd", "lspEstabTotal", "MAX");
+		graphDef.line("lspEstabTotal", new Color(0xFF, 0, 0), "LSPs Established Total", graphWidthLine);
 		graphDef.setWidth(this.graphWidth);
 		graphDef.setHeight(this.graphHeight);
 		graphDef.setLargeFont(this.graphLargeFont);
@@ -739,13 +758,24 @@ public class EstatisticasDSTE {
 
 
 		//Por tempo
+        
+        //Pega Máximo
+  		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+".rrd");
+  		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", starTime,curretTime);
+  		FetchData fetchData = fetchRequest.fetchData();
+  		//Faz a subtração dos dois valores para pegar o valor na janela
+  		int max=(int) (fetchData.getAggregate("lspEstablished", "MAX")); 
+  		rrdDb.close();  
+  		
+  		
 		RrdGraphDef graphDef2 = new RrdGraphDef();
 		graphDef2.setTimeSpan(starTime,curretTime);
 		graphDef2.setVerticalLabel("Number");
+		graphDef2.setValueAxis(max>=50?max/50:1, 10);
 		//graphDef.setMinValue(0);
 		//graphDef2.setStep(3600);
 		graphDef2.setTitle("LSPs Established");
-		graphDef2.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "SUM");
+		graphDef2.datasource("lspEstablished", "saida/"+filename+"/"+filename+".rrd", "lspEstablished", "MAX");
 		
 		graphDef2.area("lspEstablished", Color.gray, "LSPs Established");
 		graphDef2.setWidth(this.graphWidth);
@@ -765,9 +795,9 @@ public class EstatisticasDSTE {
   		graphDef3.setVerticalLabel("Percent");
   		//graphDef.setMinValue(0);
   		graphDef3.setTitle("LSPs Established x LSPs Requested (Percent)");
-  		graphDef3.datasource("lspRequested", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspRequested", "SUM");
-  		graphDef3.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "SUM");
-  		graphDef3.datasource("lspEstablisheds", "lspEstablished,lspRequested,/,100,*");
+  		graphDef3.datasource("lspRequested", "saida/"+filename+"/"+filename+".rrd", "lspRequested", "MAX");
+  		graphDef3.datasource("lspEstabTotal", "saida/"+filename+"/"+filename+".rrd", "lspEstabTotal", "MAX");
+  		graphDef3.datasource("lspEstablisheds", "lspEstabTotal,lspRequested,/,100,*");
   		graphDef3.area("lspEstablisheds", Color.gray, "% Established");
   		graphDef3.setWidth(this.graphWidth);
   		graphDef3.setHeight(this.graphHeight);
@@ -823,7 +853,7 @@ public class EstatisticasDSTE {
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setTimeSpan(starTime,curretTime);
 		graphDef.setVerticalLabel("Number");
-		graphDef.setValueAxis(this.preempcoes/50, 10);
+		graphDef.setValueAxis(this.lspRequested>=50?this.lspRequested/50:1, 10);
 		graphDef.setMinValue(0);
 		graphDef.setTitle("Preemptions (Total)");
 		graphDef.datasource("preempcao", "saida/"+filename+"/"+filename+".rrd", "preempcao", "MAX");
@@ -839,13 +869,22 @@ public class EstatisticasDSTE {
 
 
 		//Por tempo
+        //Pega Máximo
+  		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_absoluto.rrd");
+  		FetchRequest fetchRequest = rrdDb.createFetchRequest("SUM", starTime,curretTime);
+  		FetchData fetchData = fetchRequest.fetchData();
+  		//Faz a subtração dos dois valores para pegar o valor na janela
+  		int max=(int) (fetchData.getAggregate("lspEstablished", "MAX")); 
+  		
+  		rrdDb.close();  
 		RrdGraphDef graphDef2 = new RrdGraphDef();
 		graphDef2.setTimeSpan(starTime,curretTime);
 		graphDef2.setVerticalLabel("Number");
 		//graphDef.setMinValue(0);
+		graphDef2.setValueAxis(max>=50?max/50:1, 10);
 		graphDef2.setTitle("Preemptions x LSPs Established");
 		graphDef2.datasource("preempcao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao", "SUM");
-		graphDef2.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "SUM");
+		graphDef2.datasource("lspEstablished", "saida/"+filename+"/"+filename+".rrd", "lspEstablished", "MAX");
 		graphDef2.area("lspEstablished", Color.GREEN, "LSPs Established");
 		graphDef2.area("preempcao", Color.RED, "Preemptions");
 		for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
@@ -873,7 +912,7 @@ public class EstatisticasDSTE {
 		graphDef3.setTitle("Preemptions X LSPs Established (Percent)");
 
 		graphDef3.datasource("preempcao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "preempcao", "SUM");
-		graphDef3.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "SUM");
+		graphDef3.datasource("lspEstablished", "saida/"+filename+"/"+filename+".rrd", "lspEstablished", "MAX");
 		graphDef3.datasource("prempcoes", "preempcao,lspEstablished,/,100,*");
 		graphDef3.area("prempcoes", Color.gray, "% Preemptions");
 		
@@ -936,7 +975,7 @@ public class EstatisticasDSTE {
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setTimeSpan(starTime,curretTime);
 		graphDef.setVerticalLabel("Number");
-		graphDef.setValueAxis(this.bloqueios/50, 10);
+		graphDef.setValueAxis(this.lspRequested>=50?this.lspRequested/50:1, 10);
 		graphDef.setMinValue(0);
 		graphDef.setTitle("Blocking (Total)");
 		graphDef.datasource("bloqueio", "saida/"+filename+"/"+filename+".rrd", "bloqueio", "MAX");
@@ -952,9 +991,19 @@ public class EstatisticasDSTE {
 
 
 		//Por tempo
+        //Pega Máximo
+  		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_absoluto.rrd");
+  		FetchRequest fetchRequest = rrdDb.createFetchRequest("SUM", starTime,curretTime);
+  		FetchData fetchData = fetchRequest.fetchData();
+  		//Faz a subtração dos dois valores para pegar o valor na janela
+  		int max=(int) (fetchData.getAggregate("lspRequested", "MAX")); 
+  		rrdDb.close();  
+  		
 		RrdGraphDef graphDef2 = new RrdGraphDef();
 		graphDef2.setTimeSpan(starTime,curretTime);
 		graphDef2.setVerticalLabel("Number");
+		graphDef2.setValueAxis(max>=50?max/50:1, 10);
+		
 		//graphDef.setMinValue(0);
 		graphDef2.setTitle("Blocking x LSPs Requested");
 		graphDef2.datasource("bloqueio", "saida/"+filename+"/"+filename+"_absoluto.rrd", "bloqueio", "SUM");
@@ -1046,7 +1095,7 @@ public class EstatisticasDSTE {
 		RrdGraphDef graphDef = new RrdGraphDef();
 		graphDef.setTimeSpan(starTime,curretTime);
 		graphDef.setVerticalLabel("Number");
-		graphDef.setValueAxis(((double)this.devolucoes)/50, 10);
+		graphDef.setValueAxis(this.lspRequested>=50?this.lspRequested/50:1, 10);
 		graphDef.setMinValue(0);
 		graphDef.setTitle("Devolutions (Total)");
 		graphDef.datasource("devolucao", "saida/"+filename+"/"+filename+".rrd", "devolucao", "MAX");
@@ -1061,13 +1110,22 @@ public class EstatisticasDSTE {
         		this.graphLabelSpan, this.graphSimpleDateFormat);
 
 		//Por tempo
+        //Pega Máximo
+  		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_absoluto.rrd");
+  		FetchRequest fetchRequest = rrdDb.createFetchRequest("SUM", starTime,curretTime);
+  		FetchData fetchData = fetchRequest.fetchData();
+  		//Faz a subtração dos dois valores para pegar o valor na janela
+  		int max=(int) (fetchData.getAggregate("lspEstablished", "MAX")); 
+  		rrdDb.close();  
+  		
 		RrdGraphDef graphDef2 = new RrdGraphDef();
 		graphDef2.setTimeSpan(starTime,curretTime);
 		graphDef2.setVerticalLabel("Number");
 		//graphDef.setMinValue(0);
+		graphDef2.setValueAxis(max>=50?max/50:1, 10);
 		graphDef2.setTitle("Devolutions x LSPs Established");
 		graphDef2.datasource("devolucao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "devolucao", "SUM");
-		graphDef2.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "SUM");
+		graphDef2.datasource("lspEstablished", "saida/"+filename+"/"+filename+".rrd", "lspEstablished", "MAX");
 		graphDef2.area("lspEstablished", Color.GREEN, "LSPs Established");
 		graphDef2.area("devolucao", Color.RED, "Devolutions");
 		for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
@@ -1092,7 +1150,7 @@ public class EstatisticasDSTE {
 		graphDef3.setVerticalLabel("Percent");
 		//graphDef.setMinValue(0);
 		graphDef3.setTitle("Devolutions x LSP Established (Percent)");
-		graphDef3.datasource("lspEstablished", "saida/"+filename+"/"+filename+"_absoluto.rrd", "lspEstablished", "SUM");
+		graphDef3.datasource("lspEstablished", "saida/"+filename+"/"+filename+".rrd", "lspEstablished", "MAX");
 		graphDef3.datasource("devolucao", "saida/"+filename+"/"+filename+"_absoluto.rrd", "devolucao", "SUM");
 		graphDef3.datasource("devolucoes", "devolucao,lspEstablished,/,100,*");
 		graphDef3.area("devolucoes", Color.gray, "% Devolutions");
