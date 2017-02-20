@@ -8,16 +8,27 @@
  */
 package BAM.BAMRecommender;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 import jcolibri.util.FileIO;
 
 import org.hsqldb.Server;
+
+import DSTE.Link;
+import DSTE.ParametrosDSTE;
+import DSTE.Roteador;
+import bsh.This;
 
 /**
  * Creates a data base server with the tables for the examples/tests using the HSQLDB library.
@@ -131,10 +142,79 @@ public class HSQLDBserver
 	    		+ "BAMNovo VARCHAR(30), "
 	    		+ "aceita BIT);").execute();
 	    
-	   
-	  
+	   if(ParametrosDSTE.baseCBRManual)
+	    	carregarBaseCRBManual(conn);
+	   else
+		   carregarBaseCBRDeArquivo(conn);
 		
-		 /////////************************************** ID    Nome Gerente    BAMAtual           Problema          Utilização     Bloqueio       Preempção        Devolução        Largura de banda   Utilização     Bloqueio       Preempção        Devolução         Solução      
+		 
+
+	    /*SqlFile file = new SqlFile(new
+	    File(FileIO.findFile("BAM/BAMRecommender/bam.sql").getFile()),false,new HashMap());
+	    file.execute(conn,out,out, true);*/
+	    
+	    
+	    
+	    org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).info("Data base generation finished");
+	    
+	} catch (Exception e)
+	{
+	    org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).error(e);
+	}
+
+    }
+
+    /**
+     * Shutdown the server
+     */
+    public static void shutDown()
+    {
+
+	if (initialized)
+	{
+	    server.stop();
+	    initialized = false;
+	}
+    }
+
+    /**
+     * Testing method
+     */
+    public static void main(String[] args)
+    {
+	HSQLDBserver.init();
+	HSQLDBserver.shutDown();
+	System.exit(0);
+	
+    }
+    public static void carregarBaseCBRDeArquivo(Connection conn) throws SQLException
+	{
+		
+		try {
+			FileInputStream stream = new FileInputStream(ParametrosDSTE.filenameBaseCBR);
+			InputStreamReader reader = new InputStreamReader(stream);
+			BufferedReader br = new BufferedReader(reader);
+			String linha = br.readLine();
+
+			while(linha != null) {
+				conn.prepareStatement(linha).execute();
+				linha = br.readLine();
+			}
+
+			br.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		
+
+	}
+	
+    private static void carregarBaseCRBManual(Connection conn) throws SQLException
+    {
+    	/////////************************************** ID    Nome Gerente    BAMAtual           Problema          Utilização     Bloqueio       Preempção        Devolução        Largura de banda   Utilização     Bloqueio       Preempção        Devolução         Solução      
 	    
 	    conn.prepareStatement("insert into bam values('1','Conservador','NoPreemptionMAM',300,null,null,null,null,null,null,null,null,null,null,null,null,200,300,500,0,0,0.057,0,0,0,0,0,0,0,0,0,'PreemptionAllocCTSharing',true);").execute();
 	    conn.prepareStatement("insert into bam values('2','Conservador','NoPreemptionMAM',300,null,null,null,null,null,null,null,null,null,null,null,null,200,300,500,0,0,0.186,0,0,0,0,0,0,0,0,0,'PreemptionAllocCTSharing',true);").execute();
@@ -799,51 +879,6 @@ public class HSQLDBserver
 	    conn.prepareStatement("insert into bam values('648','Conservador','PreemptionAllocCTSharing',300,null,null,null,null,null,null,null,null,null,null,null,null,200,300,500,0,0,0,0,0,0,0,0,0,0,0,0,'PreemptionAllocCTSharing',true);").execute();
 
 
-
-
-
-
-	    
-	    
-	    
-	    
-	    /*SqlFile file = new SqlFile(new
-	    File(FileIO.findFile("BAM/BAMRecommender/bam.sql").getFile()),false,new HashMap());
-	    file.execute(conn,out,out, true);*/
-	    
-	    
-	    
-	    org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).info("Data base generation finished");
-	    
-	} catch (Exception e)
-	{
-	    org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).error(e);
-	}
-
-    }
-
-    /**
-     * Shutdown the server
-     */
-    public static void shutDown()
-    {
-
-	if (initialized)
-	{
-	    server.stop();
-	    initialized = false;
-	}
-    }
-
-    /**
-     * Testing method
-     */
-    public static void main(String[] args)
-    {
-	HSQLDBserver.init();
-	HSQLDBserver.shutDown();
-	System.exit(0);
-	
     }
 
 }
