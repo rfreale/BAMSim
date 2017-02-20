@@ -46,9 +46,7 @@ public class ParametrosDSTE {
 	public static final long SLADevolucoes = 5;
 	public static final long SLABloqueios = 10;
 	public static final long SLAUtilizacao = 80;
-	public static final boolean RecomendacaoCBRSwitchBAM = false;
-	public static final double RecomendacaoCBRLimiarDeCorte = 0.85;
-	public static final long TempoSimulacao = 3600*3;
+	public static final long TempoSimulacao = 3600*18;
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -69,12 +67,17 @@ public class ParametrosDSTE {
 	
 	
 	
+	public static final boolean RecomendacaoCBRSwitchBAM = false;
+	public static final double RecomendacaoCBRLimiarDeCorte = 0.85;
+	public static final String filenameBaseCBR= ".//basesCBR//cenario1.sql";
+	
+	
+	
 	public static final Boolean baseCBRManual= false;
 	public static final Boolean topologiaManual= false;
 	public static final Boolean matrizCaminhosManual= false;
 	//public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
 	//public static final String filenameMatrizCaminhos= ".//topologias//NSF-14n-42e_Caminhos.txt";
-	public static final String filenameBaseCBR= ".//basesCBR//conservador.sql";
 	public static final String filenameTopologia= ".//topologias//PTP-2n-1e.txt";
 	public static final String filenameMatrizCaminhos= ".//topologias//PTP-2n-1e_Caminhos.txt";
 	
@@ -82,18 +85,13 @@ public class ParametrosDSTE {
 	public static void trafegoManual(RodadaDeSimulacao rodada,Topologia to, No dados)
 	{
 		
-		GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
+		//GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
+		GeradorDeTrafego.trafegoDeterministico(rodada, to, dados);
 		
 		
 	}
 	
 	
-	
-	
-	
-	
-	
-
 	
 	public static void topologiaManual(Topologia t)
 	{
@@ -225,13 +223,13 @@ public class ParametrosDSTE {
 	public static double [] BCHTLPadrao= new double[]
 			{	0,//BC0 Nunca mudar
 				
-				100, //BC1
-				100 //BC2
+				0, //BC1
+				0 //BC2
 			};
 	
 	public static double [] BCLTHPadrao= new double[]
-			{	100, //BC0 
-				100, //BC1
+			{	0, //BC0 
+				0, //BC1
 				
 				0//BC2 Nunca mudar
 			};
