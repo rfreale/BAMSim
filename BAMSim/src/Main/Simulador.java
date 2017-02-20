@@ -66,13 +66,14 @@ public class Simulador
 			//GraficosRRD.agregarLspGeradas(filenames);
 			 * 
 			 */
+			/*
 			if(ParametrosDoSimulador.MAX_SIMULATIONS>1)
 			{
 				GraficosRRD.agregarRRD(filenames,"Preempções","preempcao");
 				GraficosRRD.agregarRRD(filenames,"LSPs Requested","lspRequested");
 				GraficosRRD.agregarRRD(filenames,"Bloqueios","bloqueio");
 				GraficosRRD.agregarRRD(filenames,"Devoloções","devolucao");
-			}
+			}*/
 				
 			try {
 				recommender.postCycle();
