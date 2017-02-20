@@ -1363,11 +1363,8 @@ public class EstatisticasDSTE {
 		retorno+=String.format("LSPs Established Total = %d\r\n", lspEstablishedTotal);
 		retorno+=String.format("LSPs Unbroken = %d\r\n", lspUnbroken);
 		retorno+=String.format("LSPs Preemptions = %d\r\n", preempcoes);
-		retorno+=String.format("LSPs Preemptions / Established = %d\r\n", lspEstablishedTotal > 0 ? preempcoes/lspEstablishedTotal: 0 );
 		retorno+=String.format("LSPs Devolutions = %d\r\n", devolucoes); 
-		retorno+=String.format("LSPs Devolutions / Established = %d\r\n", lspEstablishedTotal > 0 ? devolucoes/lspEstablishedTotal: 0 );
 		retorno+=String.format("LSPs Blocking = %d\r\n", bloqueios);
-		retorno+=String.format("LSPs Blocking / Requested  = %d\r\n", lspRequested > 0 ?  bloqueios / lspRequested : 0);
 		
 		
 		
