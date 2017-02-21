@@ -380,7 +380,7 @@ public class GeradorDeTrafego {
 
 		int slotsDeTempo = tempoEmSegundos / 60;
 		int numeroDeLSPsPorMinuto[][] = new int[ParametrosDSTE.MaxClassType][slotsDeTempo];
-		int pesoLSPHora = 10;		
+		int pesoLSPHora = 30;		
 		int numeroDeLSPPorHoraCT[] = new int[] {(int)ParametrosDSTE.BCPadrao[0]*pesoLSPHora,
 				(int)ParametrosDSTE.BCPadrao[1]*pesoLSPHora,
 				(int)ParametrosDSTE.BCPadrao[2]*pesoLSPHora};
@@ -392,7 +392,7 @@ public class GeradorDeTrafego {
 				int numeroDeLSPPorHora = GeradorDeNumerosAleatorios.uniform(numeroDeLSPPorHoraCT[ct]-
 						((int)(numeroDeLSPPorHoraCT[ct]*0.01)),numeroDeLSPPorHoraCT[ct]+
 						((int)(numeroDeLSPPorHoraCT[ct]*0.01)));
-				int lambdaPico = GeradorDeNumerosAleatorios.uniform(50, 70);
+				int lambdaPico = GeradorDeNumerosAleatorios.uniform(150, 210);
 				// System.out.println("Lambda="+lambdaPico);
 				int numeroDeLSPs[] = new int[lambdaPico * 3];
 				for (int i = 0; i < numeroDeLSPPorHora; i++) {
