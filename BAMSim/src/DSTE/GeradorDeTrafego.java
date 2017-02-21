@@ -392,7 +392,7 @@ public class GeradorDeTrafego {
 				int numeroDeLSPPorHora = GeradorDeNumerosAleatorios.uniform(numeroDeLSPPorHoraCT[ct]-
 						((int)(numeroDeLSPPorHoraCT[ct]*0.01)),numeroDeLSPPorHoraCT[ct]+
 						((int)(numeroDeLSPPorHoraCT[ct]*0.01)));
-				int lambdaPico = GeradorDeNumerosAleatorios.uniform(35, 55);
+				int lambdaPico = GeradorDeNumerosAleatorios.uniform(50, 70);
 				// System.out.println("Lambda="+lambdaPico);
 				int numeroDeLSPs[] = new int[lambdaPico * 3];
 				for (int i = 0; i < numeroDeLSPPorHora; i++) {
