@@ -69,7 +69,7 @@ public class ParametrosDSTE {
 	
 	public static final boolean RecomendacaoCBRSwitchBAM = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.85;
-	public static final String filenameBaseCBR= ".//basesCBR//cenario1.sql";
+	public static final String filenameBaseCBR= ".//basesCBR//cenario3.sql";
 	
 	
 	

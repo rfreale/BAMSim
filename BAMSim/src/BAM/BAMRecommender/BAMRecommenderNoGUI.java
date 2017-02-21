@@ -191,7 +191,6 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		{
 			BancoDeDados.setXML(rr.toString());
 		}
-		BancoDeDados.setXML("");
 		
 		BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 		BAMSolution sol = null;
