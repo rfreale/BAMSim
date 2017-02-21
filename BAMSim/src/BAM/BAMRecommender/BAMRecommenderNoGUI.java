@@ -181,12 +181,17 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
 		// Select k cases
 		//Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval,3);
-		BancoDeDados.setXML("====Query===", "Debug");
-		BancoDeDados.setXML(query.toString(), "Debug");
-		BancoDeDados.setXML(((BAMDescription)query.getDescription()).getInsertDB(), "Debug");
-		BancoDeDados.setXML("====+Similar===", "Debug");
-		BancoDeDados.setXML(eval.toArray()[0].toString(), "Debug");
-		BancoDeDados.setXML("", "Debug");
+		BancoDeDados.setXML("====Query===");
+		BancoDeDados.setXML(query.toString());
+		//BancoDeDados.setXML(((BAMDescription)query.getDescription()).getInsertDB(), "Debug");
+		BancoDeDados.setXML("====+Similar===");
+		//BancoDeDados.setXML(eval.toArray()[0].toString(), "Debug");
+		Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval,10);
+		for(RetrievalResult rr: selectedcases)
+		{
+			BancoDeDados.setXML(rr.toString());
+		}
+		BancoDeDados.setXML("");
 		
 		BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 		BAMSolution sol = null;

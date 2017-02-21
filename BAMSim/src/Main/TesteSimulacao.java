@@ -29,7 +29,6 @@ public class TesteSimulacao {
 
 
 		Debug.setMensagem("============================ Início da Primeira Rodada ============================");
-
 		Topologia to = new Topologia();
 
 		// Mostra parámetros padrões
@@ -104,6 +103,9 @@ public class TesteSimulacao {
 		// agenda avaliação CBR
 		if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
 		{
+			//Inicia Debug CBR
+			BancoDeDados.setXML("", rodada.filename);
+			//Agenda primeira avaliação
 			rodada.schedulep (5, ParametrosDSTE.Janela+0.30, null);
 		}
 		//rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
