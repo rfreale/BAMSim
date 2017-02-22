@@ -26,7 +26,7 @@ public class MensagensDoSimulador {
 	  }
 	  catch (IOException e) {
 	   // TODO Auto-generated catch block
-	   System.out.println("Erro na gravação do arquivo");
+	   System.out.println("Erro na gravaÃ§Ã£o do arquivo");
 	  }
 	 }
 

@@ -216,9 +216,12 @@ public class TesteSimulacao {
 				break;
 			case 5:
 				//Avalia BAM via CBR
-
+				
+				
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
+				
+				BancoDeDados.setXML( "Tempo de simulação:\t" + rodada.simtime() , rodada.filename);
 				
 				query = rodada.estatistica.getQuery(to.link[0], ParametrosDSTE.Gestor, ParametrosDSTE.SLAUtilizacaoCT, ParametrosDSTE.SLABloqueiosCT,ParametrosDSTE.SLAPreempcoesCT,ParametrosDSTE.SLADevolucoesCT);
 				cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
@@ -314,7 +317,7 @@ public class TesteSimulacao {
 						
 						
 
-						BancoDeDados.setXML(rodada.simtime()+" SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+"->Recomenda BAM"+solution.getBAMNovo()+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
+						//BancoDeDados.setXML(rodada.simtime() + " SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+"-> Recomenda BAM"+solution.getBAMNovo()+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
 						BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
 						CBRCase novocase = new CBRCase();
