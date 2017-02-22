@@ -23,7 +23,7 @@ public class Threshold implements LocalSimilarityFunction {
 	/**
 	 * Applies the similarity function.
 	 */
-	public int compare(int x, int y) {
+	public double compare(double x, double y) {
 		if (Math.abs(x - y) > _threshold)
 			return 0;
 		else
@@ -44,15 +44,15 @@ public class Threshold implements LocalSimilarityFunction {
 	public double compute(Object o1, Object o2) throws jcolibri.exception.NoApplicableSimilarityFunctionException {
 		if ((o1 == null) || (o2 == null))
 			return 0;
-		if (!(o1 instanceof java.lang.Integer))
+		if (!(o1 instanceof java.lang.Number))
 			throw new jcolibri.exception.NoApplicableSimilarityFunctionException(this.getClass(), o1.getClass());
-		if (!(o2 instanceof java.lang.Integer))
+		if (!(o2 instanceof java.lang.Number))
 			throw new jcolibri.exception.NoApplicableSimilarityFunctionException(this.getClass(), o2.getClass());
 
 
-		Integer i1 = (Integer) o1;
-		Integer i2 = (Integer) o2;
-		return (double) compare(i1.intValue(), i2.intValue());
+		Number i1 = (Number) o1;
+		Number i2 = (Number) o2;
+		return (double) compare(i1.doubleValue(), i2.doubleValue());
 	}
 	
 	/** Applicable to Integer */

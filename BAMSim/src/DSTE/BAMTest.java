@@ -413,9 +413,9 @@ public class BAMTest {
 		desc.setSLADevolucoesCT2( ParametrosDSTE.SLADevolucoesCT[2]);
 		
 					
-		desc.setBC0( 250 );
-		desc.setBC1( 600 );
-		desc.setBC2( 1000 );
+		desc.setBC0( 250.0 );
+		desc.setBC1( 600.0 );
+		desc.setBC2( 1000.0 );
 		
 		desc.setUtilizacaoDoEnlaceCT0(10.0);
 		desc.setUtilizacaoDoEnlaceCT1(20.0);

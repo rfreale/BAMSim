@@ -34,10 +34,10 @@ public class ParametrosDSTE {
 	public static final String Gestor = "Conservador";
 	//SLAs em Percentual
 	
-	public static final int []SLAUtilizacaoCT   = new int [] {35, 40, 45} ;  // ou SLA
-	public static final int []SLABloqueiosCT    = new int [] {80, 70, 80} ;  // ou SLA
-	public static final int []SLAPreempcoesCT   = new int [] {80, 80, 00} ;  // ou SLA
-	public static final int []SLADevolucoesCT   = new int [] {00, 80, 80} ;  // ou SLA
+	public static final double []SLAUtilizacaoCT   = new double [] {35, 40, 45} ;  // ou SLA
+	public static final double []SLABloqueiosCT    = new double [] {80, 70, 80} ;  // ou SLA
+	public static final double []SLAPreempcoesCT   = new double [] {80, 80, 00} ;  // ou SLA
+	public static final double []SLADevolucoesCT   = new double [] {00, 80, 80} ;  // ou SLA
 	
 	
 	

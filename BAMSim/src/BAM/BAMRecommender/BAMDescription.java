@@ -67,26 +67,26 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	long janela;
 	
 	//SLA
-	Integer  SLAUtilizacaoCT0;
-	Integer  SLAUtilizacaoCT1;
-	Integer  SLAUtilizacaoCT2;
+	Double  SLAUtilizacaoCT0;
+	Double  SLAUtilizacaoCT1;
+	Double  SLAUtilizacaoCT2;
 	
-	Integer  SLAPreempcoesCT0;
-	Integer  SLAPreempcoesCT1;
-	Integer  SLAPreempcoesCT2;
+	Double  SLAPreempcoesCT0;
+	Double  SLAPreempcoesCT1;
+	Double  SLAPreempcoesCT2;
 	
-	Integer  SLABloqueiosCT0;
-	Integer  SLABloqueiosCT1;
-	Integer  SLABloqueiosCT2;
+	Double  SLABloqueiosCT0;
+	Double  SLABloqueiosCT1;
+	Double  SLABloqueiosCT2;
 	
-	Integer  SLADevolucoesCT0;
-	Integer  SLADevolucoesCT1;
-	Integer  SLADevolucoesCT2;
+	Double  SLADevolucoesCT0;
+	Double  SLADevolucoesCT1;
+	Double  SLADevolucoesCT2;
 	
 	//Limites
-	Integer BC0;
-	Integer BC1;
-	Integer BC2;
+	Double BC0;
+	Double BC1;
+	Double BC2;
 		
 		
 	//Medições
@@ -169,191 +169,190 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 
 
 
-	public Integer getSLAUtilizacaoCT0() {
+
+	
+	
+	
+
+	public Double getSLAUtilizacaoCT0() {
 		return SLAUtilizacaoCT0;
 	}
 
 
 
-	public void setSLAUtilizacaoCT0(Integer sLAUtilizacaoCT0) {
+	public void setSLAUtilizacaoCT0(Double sLAUtilizacaoCT0) {
 		SLAUtilizacaoCT0 = sLAUtilizacaoCT0;
 	}
 
 
 
-	public Integer getSLAUtilizacaoCT1() {
+	public Double getSLAUtilizacaoCT1() {
 		return SLAUtilizacaoCT1;
 	}
 
 
 
-	public void setSLAUtilizacaoCT1(Integer sLAUtilizacaoCT1) {
+	public void setSLAUtilizacaoCT1(Double sLAUtilizacaoCT1) {
 		SLAUtilizacaoCT1 = sLAUtilizacaoCT1;
 	}
 
 
 
-	public Integer getSLAUtilizacaoCT2() {
+	public Double getSLAUtilizacaoCT2() {
 		return SLAUtilizacaoCT2;
 	}
 
 
 
-	public void setSLAUtilizacaoCT2(Integer sLAUtilizacaoCT2) {
+	public void setSLAUtilizacaoCT2(Double sLAUtilizacaoCT2) {
 		SLAUtilizacaoCT2 = sLAUtilizacaoCT2;
 	}
 
-	
 
-	public Integer getSLAPreempcoesCT0() {
+
+	public Double getSLAPreempcoesCT0() {
 		return SLAPreempcoesCT0;
 	}
 
 
 
-	public void setSLAPreempcoesCT0(Integer SLAPreempcoesCT0) {
-		this.SLAPreempcoesCT0 = SLAPreempcoesCT0;
+	public void setSLAPreempcoesCT0(Double sLAPreempcoesCT0) {
+		SLAPreempcoesCT0 = sLAPreempcoesCT0;
 	}
 
 
 
-	public Integer getSLAPreempcoesCT1() {
+	public Double getSLAPreempcoesCT1() {
 		return SLAPreempcoesCT1;
 	}
 
 
 
-	public void setSLAPreempcoesCT1(Integer SLAPreempcoesCT1) {
-		this.SLAPreempcoesCT1 = SLAPreempcoesCT1;
+	public void setSLAPreempcoesCT1(Double sLAPreempcoesCT1) {
+		SLAPreempcoesCT1 = sLAPreempcoesCT1;
 	}
 
 
 
-	public Integer getSLAPreempcoesCT2() {
+	public Double getSLAPreempcoesCT2() {
 		return SLAPreempcoesCT2;
 	}
 
 
 
-	public void setSLAPreempcoesCT2(Integer SLAPreempcoesCT2) {
-		this.SLAPreempcoesCT2 = SLAPreempcoesCT2;
+	public void setSLAPreempcoesCT2(Double sLAPreempcoesCT2) {
+		SLAPreempcoesCT2 = sLAPreempcoesCT2;
 	}
 
 
 
-	public Integer getSLABloqueiosCT0() {
+	public Double getSLABloqueiosCT0() {
 		return SLABloqueiosCT0;
 	}
 
 
 
-	public void setSLABloqueiosCT0(Integer SLABloqueiosCT0) {
-		this.SLABloqueiosCT0 = SLABloqueiosCT0;
+	public void setSLABloqueiosCT0(Double sLABloqueiosCT0) {
+		SLABloqueiosCT0 = sLABloqueiosCT0;
 	}
 
 
 
-	public Integer getSLABloqueiosCT1() {
+	public Double getSLABloqueiosCT1() {
 		return SLABloqueiosCT1;
 	}
 
 
 
-	public void setSLABloqueiosCT1(Integer SLABloqueiosCT1) {
-		this.SLABloqueiosCT1 = SLABloqueiosCT1;
+	public void setSLABloqueiosCT1(Double sLABloqueiosCT1) {
+		SLABloqueiosCT1 = sLABloqueiosCT1;
 	}
 
 
 
-	public Integer getSLABloqueiosCT2() {
+	public Double getSLABloqueiosCT2() {
 		return SLABloqueiosCT2;
 	}
 
 
 
-	public void setSLABloqueiosCT2(Integer SLABloqueiosCT2) {
-		this.SLABloqueiosCT2 = SLABloqueiosCT2;
+	public void setSLABloqueiosCT2(Double sLABloqueiosCT2) {
+		SLABloqueiosCT2 = sLABloqueiosCT2;
 	}
 
 
 
-	public Integer getSLADevolucoesCT0() {
+	public Double getSLADevolucoesCT0() {
 		return SLADevolucoesCT0;
 	}
 
 
 
-	public void setSLADevolucoesCT0(Integer SLADevolucoesCT0) {
-		this.SLADevolucoesCT0 = SLADevolucoesCT0;
+	public void setSLADevolucoesCT0(Double sLADevolucoesCT0) {
+		SLADevolucoesCT0 = sLADevolucoesCT0;
 	}
 
 
 
-	public Integer getSLADevolucoesCT1() {
+	public Double getSLADevolucoesCT1() {
 		return SLADevolucoesCT1;
 	}
 
 
 
-	public void setSLADevolucoesCT1(Integer SLADevolucoesCT1) {
-		this.SLADevolucoesCT1 = SLADevolucoesCT1;
+	public void setSLADevolucoesCT1(Double sLADevolucoesCT1) {
+		SLADevolucoesCT1 = sLADevolucoesCT1;
 	}
 
 
 
-	public Integer getSLADevolucoesCT2() {
+	public Double getSLADevolucoesCT2() {
 		return SLADevolucoesCT2;
 	}
 
 
 
-	public void setSLADevolucoesCT2(Integer SLADevolucoesCT2) {
-		this.SLADevolucoesCT2 = SLADevolucoesCT2;
+	public void setSLADevolucoesCT2(Double sLADevolucoesCT2) {
+		SLADevolucoesCT2 = sLADevolucoesCT2;
 	}
 
 
-	
-	
-	
 
-
-	public Integer getBC0() {
+	public Double getBC0() {
 		return BC0;
 	}
 
 
 
-	public void setBC0(Integer BC0) {
-		this.BC0 = BC0;
+	public void setBC0(Double bC0) {
+		BC0 = bC0;
 	}
 
 
 
-	public Integer getBC1() {
+	public Double getBC1() {
 		return BC1;
 	}
 
 
 
-	public void setBC1(Integer BC1) {
-		this.BC1 = BC1;
+	public void setBC1(Double bC1) {
+		BC1 = bC1;
 	}
 
 
 
-	public Integer getBC2() {
+	public Double getBC2() {
 		return BC2;
 	}
 
 
 
-	public void setBC2(Integer BC2) {
-		this.BC2 = BC2;
+	public void setBC2(Double bC2) {
+		BC2 = bC2;
 	}
-	
-	
-	
-	
+
+
 
 	public Double getUtilizacaoDoEnlaceCT0() {
 		return utilizacaoDoEnlaceCT0;

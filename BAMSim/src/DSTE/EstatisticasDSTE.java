@@ -1414,10 +1414,10 @@ public class EstatisticasDSTE {
 	
 	public CBRQuery getQuery(Link link, 
 							String  gestor,
-							int []SLAUtilizacaoCT,
-							int []SLABloqueiosCT,
-							int []SLAPreempcoesCT, 
-							int []SLADevolucoesCT )   
+							double []SLAUtilizacaoCT,
+							double []SLABloqueiosCT,
+							double []SLAPreempcoesCT, 
+							double []SLADevolucoesCT )   
 	{
 		BAMDescription desc = new BAMDescription();
 		
@@ -1463,9 +1463,9 @@ public class EstatisticasDSTE {
 			desc.setSLADevolucoesCT2(  SLADevolucoesCT[2]);
 			
 						
-			desc.setBC0( (int) (link.BC[0] * link.CargaEnlace) /100);
-			desc.setBC1( (int) (link.BC[1] * link.CargaEnlace) /100);
-			desc.setBC2( (int) (link.BC[2] * link.CargaEnlace) /100);
+			desc.setBC0(  (link.BC[0] * link.CargaEnlace) /100);
+			desc.setBC1(  (link.BC[1] * link.CargaEnlace) /100);
+			desc.setBC2(  (link.BC[2] * link.CargaEnlace) /100);
 			
 			desc.setUtilizacaoDoEnlaceCT0(this.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,0) /  link.CargaEnlace );
 			desc.setUtilizacaoDoEnlaceCT1(this.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,1) /  link.CargaEnlace );

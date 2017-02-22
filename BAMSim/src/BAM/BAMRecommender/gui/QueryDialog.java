@@ -330,27 +330,27 @@ public class QueryDialog extends JDialog {
 		desc.setBAMAtual(BAMTypes.valueOf((String)this.BAMAtual.getSelectedItem()));
 		//desc.setProblema(Problemas.valueOf((String)this.problema.getSelectedItem()));
 		
-		desc.setSLAUtilizacaoCT0(this.SLAUtilizacaoCT0.getNumber().intValue());
-		desc.setSLAUtilizacaoCT1(this.SLAUtilizacaoCT1.getNumber().intValue());
-		desc.setSLAUtilizacaoCT2(this.SLAUtilizacaoCT2.getNumber().intValue());
+		desc.setSLAUtilizacaoCT0(this.SLAUtilizacaoCT0.getNumber().doubleValue());
+		desc.setSLAUtilizacaoCT1(this.SLAUtilizacaoCT1.getNumber().doubleValue());
+		desc.setSLAUtilizacaoCT2(this.SLAUtilizacaoCT2.getNumber().doubleValue());
 		
-		desc.setSLABloqueiosCT0(this.SLABloqueiosCT0.getNumber().intValue());
-		desc.setSLABloqueiosCT1(this.SLABloqueiosCT1.getNumber().intValue());
-		desc.setSLABloqueiosCT2(this.SLABloqueiosCT2.getNumber().intValue());
+		desc.setSLABloqueiosCT0(this.SLABloqueiosCT0.getNumber().doubleValue());
+		desc.setSLABloqueiosCT1(this.SLABloqueiosCT1.getNumber().doubleValue());
+		desc.setSLABloqueiosCT2(this.SLABloqueiosCT2.getNumber().doubleValue());
 		
 		
-		desc.setSLAPreempcoesCT0(this.SLAPreempcoesCT0.getNumber().intValue());
-		desc.setSLAPreempcoesCT1(this.SLAPreempcoesCT1.getNumber().intValue());
+		desc.setSLAPreempcoesCT0(this.SLAPreempcoesCT0.getNumber().doubleValue());
+		desc.setSLAPreempcoesCT1(this.SLAPreempcoesCT1.getNumber().doubleValue());
 		/*desc.setSLAPreempcoesCT2(this.SLAPreempcoesCT2.getNumber().intValue());
 		
 		desc.setSLADevolucoesCT0(this.SLADevolucoesCT0.getNumber().intValue());*/
-		desc.setSLADevolucoesCT1(this.SLADevolucoesCT1.getNumber().intValue());
-		desc.setSLADevolucoesCT2(this.SLADevolucoesCT2.getNumber().intValue());
+		desc.setSLADevolucoesCT1(this.SLADevolucoesCT1.getNumber().doubleValue());
+		desc.setSLADevolucoesCT2(this.SLADevolucoesCT2.getNumber().doubleValue());
 		
 		
-		desc.setBC0(this.BC0.getNumber().intValue());
-		desc.setBC1(this.BC1.getNumber().intValue());
-		desc.setBC2(this.BC2.getNumber().intValue());
+		desc.setBC0(this.BC0.getNumber().doubleValue());
+		desc.setBC1(this.BC1.getNumber().doubleValue());
+		desc.setBC2(this.BC2.getNumber().doubleValue());
 		
 		
 		
