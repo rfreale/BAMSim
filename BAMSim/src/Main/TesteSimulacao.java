@@ -284,8 +284,8 @@ public class TesteSimulacao {
 						case PreemptionRDM:
 							to.link[0].bamType = BAMType.PreemptionGBAM;
 							to.link[0].BCLTH= new double[]
-							{	100, //BC0 
-								100, //BC1
+							{	000, //BC0 
+								000, //BC1
 								0  //BC2 Nunca mudar
 							};
 							LSPaux.CT=0; 
@@ -294,8 +294,8 @@ public class TesteSimulacao {
 							
 							to.link[0].BCHTL= new double[]
 							{	0, //BC0 Nunca mudar
-								000, //BC1
-								000 //BC2
+								100, //BC1
+								100 //BC2
 							};
 							
 							break;
