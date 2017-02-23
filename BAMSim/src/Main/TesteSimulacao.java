@@ -252,7 +252,7 @@ public class TesteSimulacao {
 					}
 					
 					
-					if (!cbrCase.getSolution().equals(nomeBAMAtual) ){
+					if (((BAMSolution)cbrCase.getSolution()).getBAMNovo().toString()!=nomeBAMAtual ){
 						
 						BAMSolution solution = (BAMSolution) cbrCase.getSolution();
 						//Temporário para forçar devolução
@@ -355,7 +355,7 @@ public class TesteSimulacao {
 				CBRCase novocase = ((CBRCase)dados.item);
 				
 				
-								
+				BancoDeDados.setXML( "Tempo de simulação (Retenção):\t" + rodada.simtime() , rodada.filename);				
 				queryRetain = rodada.estatistica.getQuery(to.link[0], ParametrosDSTE.Gestor, ParametrosDSTE.SLAUtilizacaoCT, ParametrosDSTE.SLABloqueiosCT,ParametrosDSTE.SLAPreempcoesCT,ParametrosDSTE.SLADevolucoesCT);
 				
 				
