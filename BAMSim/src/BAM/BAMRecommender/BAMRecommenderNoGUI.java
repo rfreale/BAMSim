@@ -151,14 +151,14 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		// Print the cases
 		java.util.Collection<CBRCase> cases = _caseBase.getCases();
 		for (CBRCase c : cases)
-			System.out.println(c);
+			System.out.println(((BAMDescription) c.getDescription()).toTabela() +"\t"+ ((BAMSolution) c.getSolution()).getBAMNovo());
 		System.out.println("===================DB2==================");
 		// Load cases from connector into the case base
 		_caseBaseDB2.init(_connectorDB2);
 		// Print the cases
 		cases = _caseBaseDB2.getCases();
 		for (CBRCase c : cases)
-			System.out.println(c);
+			System.out.println(((BAMDescription) c.getDescription()).toTabela() +"\t"+ ((BAMSolution) c.getSolution()).getBAMNovo());
 		return _caseBase;
 	}
 
@@ -183,6 +183,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		// "Debug");
 		//BancoDeDados.setXML("====Similar===");
 		// BancoDeDados.setXML(eval.toArray()[0].toString(), "Debug");
+		
 		Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval, 10);
 		for (RetrievalResult rr : selectedcases) {
 			BancoDeDados.setXML("Sim \t" + ((BAMDescription) rr.get_case().getDescription()).toTabela() +"\t"+ ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
@@ -296,17 +297,19 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 
 		return false;
 	}
+	
+	//BancoDeDados.setXML("Sim \t" + ((BAMDescription) rr.get_case().getDescription()).toTabela() +"\t"+ ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
 
 	public void postCycle() throws ExecutionException {
 		java.util.Collection<CBRCase> cases = _caseBase.getCases();
 		System.out.println("===================DB==================");
 		for (CBRCase c : cases)
-			System.out.println(c);
+			System.out.println( ((BAMDescription) c.getDescription()).toTabela() +"\t"+ ((BAMSolution) c.getSolution()).getBAMNovo()  );
 		_connector.close();
 		System.out.println("===================DB2==================");
 		cases = _caseBaseDB2.getCases();
 		for (CBRCase c : cases)
-			System.out.println(c);
+			System.out.println( ((BAMDescription) c.getDescription()).toTabela() +"\t"+ ((BAMSolution) c.getSolution()).getBAMNovo());
 		_connectorDB2.close();
 
 		HSQLDBserver.shutDown();
@@ -316,11 +319,11 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		String aux = "===================DB==================\r\n";
 		java.util.Collection<CBRCase> cases = _caseBase.getCases();
 		for (CBRCase c : cases)
-			aux += c + "\r\n";
+			aux += ((BAMDescription) c.getDescription()).toTabela() +"\t"+ ((BAMSolution) c.getSolution()).getBAMNovo() + "\r\n";
 		aux += "===================DB2==================\r\n";
 		cases = _caseBaseDB2.getCases();
 		for (CBRCase c : cases)
-			aux += c + "\r\n";
+			aux += ((BAMDescription) c.getDescription()).toTabela() +"\t"+ ((BAMSolution) c.getSolution()).getBAMNovo() + "\r\n";
 		return aux;
 	}
 

@@ -5,6 +5,9 @@ import Simulador.*;
 public class GeradorDeTrafego {
 
 	private static int numeroDeLSPsPorMinuto[][];
+	private static int numeroDeLSPsPorSlot[][];
+	
+	
 
 	public static void trafegoDeterministico(RodadaDeSimulacao rodada, Topologia to, No dados) {
 
@@ -375,6 +378,152 @@ public class GeradorDeTrafego {
 		}
 
 	}
+	
+	
+	public static void trafegoPoissonTempo(RodadaDeSimulacao rodada, Topologia to, No dados) {
+
+		if (dados == null) {
+			
+			numeroDeLSPsPorSlot = new int [][] {gerarCurvasPoissonPorSlot((int)(ParametrosDSTE.TempoSimulacao/3600)+1, (int)ParametrosDSTE.BCPadrao[0]*60, 3, 1, 3),
+												gerarCurvasPoissonPorSlot((int)(ParametrosDSTE.TempoSimulacao/3600)+1, (int)ParametrosDSTE.BCPadrao[1]*60, 3, 1, 3), 
+												gerarCurvasPoissonPorSlot((int)(ParametrosDSTE.TempoSimulacao/3600)+1, (int)ParametrosDSTE.BCPadrao[2]*60, 3, 1, 3)};
+			
+			dados = new No();
+			dados.item = 0;
+			Debug.setMensagem("Agenda estabelecimento de LSP do slot:" + 0 );
+			rodada.schedulep(3, 0, dados);
+
+		} else {
+			
+			int slot = (int) dados.item;
+			for (int ct = 0; ct < ParametrosDSTE.MaxClassType; ct++){
+				//if (ct!=0){
+					for (int i = 0; i < numeroDeLSPsPorSlot[ct][slot]; i++) {
+						No dadosLSP = new No();
+
+						Lsp lsp = new Lsp(rodada);
+						lsp.CargaReduzida = 0;
+						lsp.src = 0; // id do router fonte
+						lsp.dest = 1; // id do router destino
+						lsp.CT = ct;
+						lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
+						lsp.tempoDeVida = (int) GeradorDeNumerosAleatorios.expntl(250);
+						dadosLSP.item = lsp;
+
+						Debug.setMensagem("Cria LSP " + ((Lsp) dadosLSP.item).ID + " - "
+								+ to.getRoteador(((Lsp) dadosLSP.item).src).getDescricao() + " -->"
+								+ to.getRoteador(((Lsp) dadosLSP.item).dest).getDescricao());
+						rodada.schedulep(1, GeradorDeNumerosAleatorios.expntl(3599), dadosLSP);
+									//.uniform(0, 3599)
+					}
+					
+				/*}else if (slot !=0){
+					for (int i = 0; i < numeroDeLSPsPorSlot[ct][slot-1]; i++) {
+						No dadosLSP = new No();
+
+						Lsp lsp = new Lsp(rodada);
+						lsp.CargaReduzida = 0;
+						lsp.src = 0; // id do router fonte
+						lsp.dest = 1; // id do router destino
+						lsp.CT = ct;
+						lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
+						lsp.tempoDeVida = (int) GeradorDeNumerosAleatorios.expntl(250);
+						dadosLSP.item = lsp;
+
+						Debug.setMensagem("Cria LSP " + ((Lsp) dadosLSP.item).ID + " - "
+								+ to.getRoteador(((Lsp) dadosLSP.item).src).getDescricao() + " -->"
+								+ to.getRoteador(((Lsp) dadosLSP.item).dest).getDescricao());
+						rodada.schedulep(1, GeradorDeNumerosAleatorios.uniform(0, 3599), dadosLSP);
+
+					}
+				}*/
+				
+			}
+			Debug.setMensagem("Agenda estabelecimento de LSP do slot:" + slot );
+			dados.item = slot+1;
+			rodada.schedulep(3, 3600, dados);
+
+		}
+
+	}
+	
+	
+	public static void trafegoPoissonTempo2(RodadaDeSimulacao rodada, Topologia to, No dados) {
+
+		if (dados == null) {
+			//numeroDeLSPsPorSlot = gerarCurvasPoisson( (int)(ParametrosDSTE.TempoSimulacao/3600)+1, 60, 3);
+			
+			numeroDeLSPsPorSlot = new int [][] {gerarCurvasPoissonPorSlot((int)(ParametrosDSTE.TempoSimulacao/3600)+1, (int)ParametrosDSTE.BCPadrao[0]*20, 3, 1, 3),/// numero de slot , 
+												gerarCurvasPoissonPorSlot((int)(ParametrosDSTE.TempoSimulacao/3600)+1, (int)ParametrosDSTE.BCPadrao[1]*20, 3, 1, 3), 
+												gerarCurvasPoissonPorSlot((int)(ParametrosDSTE.TempoSimulacao/3600)+1, (int)ParametrosDSTE.BCPadrao[2]*20, 3, 1, 3)};
+			
+			dados = new No();
+			dados.item = 0;
+			Debug.setMensagem("Agenda estabelecimento de LSP do slot:" + 0 );
+			rodada.schedulep(3, 0, dados);
+
+		} else {
+			
+			int slot = (int) dados.item;
+			for (int ct = 0; ct < ParametrosDSTE.MaxClassType; ct++){
+				//if (ct!=0){
+				
+				int numeroDeLSPsPorMinuto[] =   gerarCurvasPoissonPorSlot(60, numeroDeLSPsPorSlot[ct][slot], 30, -1, -1);
+				 
+					for (int i = 0; i < 60; i++) {
+						
+						for (int z=0; z < numeroDeLSPsPorMinuto[i]; z++)
+						{
+							No dadosLSP = new No();
+	
+							Lsp lsp = new Lsp(rodada);
+							lsp.CargaReduzida = 0;
+							lsp.src = 0; // id do router fonte
+							lsp.dest = 1; // id do router destino
+							lsp.CT = ct;
+							lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
+							lsp.tempoDeVida = (int) GeradorDeNumerosAleatorios.expntl(250);
+							dadosLSP.item = lsp;
+	
+							Debug.setMensagem("Cria LSP " + ((Lsp) dadosLSP.item).ID + " - "
+									+ to.getRoteador(((Lsp) dadosLSP.item).src).getDescricao() + " -->"
+									+ to.getRoteador(((Lsp) dadosLSP.item).dest).getDescricao());
+						
+							rodada.schedulep(1, GeradorDeNumerosAleatorios.uniform((60*i),59+(60*i)), dadosLSP);
+						}			//.uniform(0, 3599)
+						
+						
+					}
+					
+				/*}else if (slot !=0){
+					for (int i = 0; i < numeroDeLSPsPorSlot[ct][slot-1]; i++) {
+						No dadosLSP = new No();
+
+						Lsp lsp = new Lsp(rodada);
+						lsp.CargaReduzida = 0;
+						lsp.src = 0; // id do router fonte
+						lsp.dest = 1; // id do router destino
+						lsp.CT = ct;
+						lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
+						lsp.tempoDeVida = (int) GeradorDeNumerosAleatorios.expntl(250);
+						dadosLSP.item = lsp;
+
+						Debug.setMensagem("Cria LSP " + ((Lsp) dadosLSP.item).ID + " - "
+								+ to.getRoteador(((Lsp) dadosLSP.item).src).getDescricao() + " -->"
+								+ to.getRoteador(((Lsp) dadosLSP.item).dest).getDescricao());
+						rodada.schedulep(1, GeradorDeNumerosAleatorios.uniform(0, 3599), dadosLSP);
+
+					}
+				}*/
+				
+			}
+			Debug.setMensagem("Agenda estabelecimento de LSP do slot:" + slot );
+			dados.item = slot+1;
+			rodada.schedulep(3, 3600, dados);
+
+		}
+
+	}
 
 	public static int[][] gerarCurvasPoisson(int tempoEmSegundos) {
 
@@ -431,6 +580,128 @@ public class GeradorDeTrafego {
 		}
 
 		return numeroDeLSPsPorMinuto;
+	}
+	
+	/*public static int[][] gerarCurvasPoisson(int slotsDeLSP, int pesoLSPHora, int pico) {  // escala é a unidade de tempo
+
+		//int slotsDeTempo = tempoEmSegundos / escala;
+		int numeroDeLSPsPorMinuto[][] = new int[ParametrosDSTE.MaxClassType][slotsDeLSP];
+				
+		int numeroDeLSPPorHoraCT[] = new int[] {(int)ParametrosDSTE.BCPadrao[0]*pesoLSPHora,
+				(int)ParametrosDSTE.BCPadrao[1]*pesoLSPHora,
+				(int)ParametrosDSTE.BCPadrao[2]*pesoLSPHora};
+		
+		for (int ct = 0; ct < ParametrosDSTE.MaxClassType; ct++) {
+			// System.out.println("========" + ct + "========");
+			int countSlotDeTempo = 0;
+			while (countSlotDeTempo < numeroDeLSPsPorMinuto[ct].length) {
+
+				int numeroDeLSPPorHora = numeroDeLSPPorHoraCT[ct] ;GeradorDeNumerosAleatorios.uniform(numeroDeLSPPorHoraCT[ct]-
+						((int)(numeroDeLSPPorHoraCT[ct]*0.01)),numeroDeLSPPorHoraCT[ct]+
+						((int)(numeroDeLSPPorHoraCT[ct]*0.01)));
+				int lambdaPico = pico; //GeradorDeNumerosAleatorios.uniform(pico - ((int)(pico*0.01)) , pico + ((int)(pico*0.01)));
+				// System.out.println("Lambda="+lambdaPico);
+				int numeroDeLSPs[] = new int[lambdaPico * 2];
+				for (int i = 0; i < numeroDeLSPPorHora; i++) {
+					int tempo = GeradorDeNumerosAleatorios.poisson(lambdaPico);
+					if(tempo<lambdaPico*2){
+						++numeroDeLSPs[tempo];
+					}else{
+						i--;
+						System.out.println("Discartado="+tempo);
+					}
+					// System.out.println("Discartado="+minuto);
+
+				}
+
+				int iCurva = 0;
+
+				for (int i = 0; i < lambdaPico * 2
+						&& numeroDeLSPs[i] < GeradorDeNumerosAleatorios.uniform(1, 3); i++) {
+					// System.out.println(i+"="+numeroDeLSPs[i]);
+					// System.out.println(numeroDeLSPs[i]);
+					iCurva++;
+				}
+				int fCurva = numeroDeLSPs.length - 1;
+
+				for (int i = numeroDeLSPs.length - 1; i > 0
+						&& numeroDeLSPs[i] < GeradorDeNumerosAleatorios.uniform(2, 3); i--) {
+					// System.out.println(i+"="+numeroDeLSPs[i]);
+					fCurva--;
+					// System.out.println(numeroDeLSPs[i]);
+				}
+
+				for (int i = iCurva; i <= fCurva && (countSlotDeTempo < numeroDeLSPsPorMinuto[ct].length); i++) {
+					// System.out.println(numeroDeLSPs[i]);
+					numeroDeLSPsPorMinuto[ct][countSlotDeTempo++] = numeroDeLSPs[i];
+				}
+
+			}
+
+		}
+
+		return numeroDeLSPsPorMinuto;
+	}*/
+	
+	
+	public static int[] gerarCurvasPoissonPorSlot(int slotsDeLSP, int numeroDeLSPSlot, int pico, int corteInicio, int corteFim) {  // escala é a unidade de tempo
+
+		//int slotsDeTempo = tempoEmSegundos / escala;
+		int numeroDeLSPsPorSlot[] = new int[slotsDeLSP];
+				
+				
+			int countSlotDeTempo = 0;
+			while (countSlotDeTempo < numeroDeLSPsPorSlot.length) {
+
+				
+				int lambdaPico = pico; 
+				int numeroDeLSPs[] = new int[lambdaPico * 2];
+				for (int i = 0; i < numeroDeLSPSlot; i++) {
+					int tempo = GeradorDeNumerosAleatorios.poisson(lambdaPico);
+					if(tempo<lambdaPico*2){
+						++numeroDeLSPs[tempo];
+					}
+				}
+				int iCurva = 0;
+				
+				if (corteInicio ==-1){
+					iCurva = 0;
+				}else {
+					for (int i = 0; i < lambdaPico * 2
+							&& numeroDeLSPs[i] < corteInicio; i++) {
+						// System.out.println(i+"="+numeroDeLSPs[i]);
+						// System.out.println(numeroDeLSPs[i]);
+						iCurva++;
+					}
+				}
+				
+				int fCurva = numeroDeLSPs.length - 1;
+				
+				if(corteFim==-1){
+					fCurva=2*pico;
+				}else {
+					for (int i = numeroDeLSPs.length - 1; i > 0
+							&& numeroDeLSPs[i] < corteFim; i--) {
+						// System.out.println(i+"="+numeroDeLSPs[i]);
+						fCurva--;
+						// System.out.println(numeroDeLSPs[i]);
+					}
+					
+				}
+				
+				
+				
+
+				for (int i = iCurva; i <= fCurva && (countSlotDeTempo < numeroDeLSPsPorSlot.length); i++) {
+					// System.out.println(numeroDeLSPs[i]);
+					numeroDeLSPsPorSlot[countSlotDeTempo++] = numeroDeLSPs[i];
+				}
+
+			}
+
+		
+
+		return numeroDeLSPsPorSlot;
 	}
 
 }

@@ -23,6 +23,10 @@ import Simulador.No;
 import Simulador.RodadaDeSimulacao;
 
 public class TesteSimulacao {
+	
+	
+	private static int AGENDAMENTO = 0;
+
 
 	public TesteSimulacao(RodadaDeSimulacao rodada) throws IOException,
 			RrdException {
@@ -108,7 +112,7 @@ public class TesteSimulacao {
 			//Agenda primeira avaliação
 			rodada.schedulep (5, ParametrosDSTE.Janela+0.30, null);
 		}
-		//rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
+		rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -216,8 +220,8 @@ public class TesteSimulacao {
 				break;
 			case 5:
 				//Avalia BAM via CBR
-				
-				
+				System.out.println("entrou em recomendação no tempo: " + rodada.simtime());
+				//////////////BancoDeDados.setXML(  rodada.simtime() + "\t"
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
 				
@@ -251,17 +255,18 @@ public class TesteSimulacao {
 							nomeBAMAtual = "NoPreemptionMAM";
 					}
 					
+					String solutionRecomendada = ((BAMSolution) cbrCase.getSolution()).getBAMNovo().toString();
 					
-					if (((BAMSolution)cbrCase.getSolution()).getBAMNovo().toString()!=nomeBAMAtual ){
+					if (solutionRecomendada != nomeBAMAtual ){
 						
-						BAMSolution solution = (BAMSolution) cbrCase.getSolution();
+						//BAMSolution solution = (BAMSolution) cbrCase.getSolution();
 						//Temporário para forçar devolução
 						Lsp LSPaux= new Lsp(); 
 	            		LSPaux.Carga=0; 
 						
 						
-						switch (solution.getBAMNovo()) {
-						case NoPreemptionMAM:
+						switch (solutionRecomendada) {
+						case "NoPreemptionMAM":
 							to.link[0].bamType = BAMType.PreemptionGBAM;
 							to.link[0].BCLTH= new double[]
 							{	000, //BC0 
@@ -281,7 +286,7 @@ public class TesteSimulacao {
 							LSPaux.CT=2; 
 		              		BAM.preemptionG(to.link[0],LSPaux); 
 							break;
-						case PreemptionRDM:
+						case "PreemptionRDM":
 							to.link[0].bamType = BAMType.PreemptionGBAM;
 							to.link[0].BCLTH= new double[]
 							{	000, //BC0 
@@ -299,7 +304,7 @@ public class TesteSimulacao {
 							};
 							
 							break;
-						case PreemptionAllocCTSharing:
+						case "PreemptionAllocCTSharing":
 							to.link[0].bamType = BAMType.PreemptionGBAM;
 							to.link[0].BCLTH= new double[]
 							{	100, //BC0 
@@ -317,7 +322,7 @@ public class TesteSimulacao {
 						
 						
 
-						//BancoDeDados.setXML(rodada.simtime() + " SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+"-> Recomenda BAM"+solution.getBAMNovo()+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
+						BancoDeDados.setXML(rodada.simtime() + " SimCaseID - "+((BAMDescription) cbrCase.getDescription()).getCaseId()+"-> Recomenda BAM"+solutionRecomendada+":"+((BAMDescription) query.getDescription()).toString(), rodada.filename);
 						BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
 						CBRCase novocase = new CBRCase();
@@ -325,18 +330,21 @@ public class TesteSimulacao {
 						novocase.setSolution(sol);
 						No no = new No();
 						no.item=novocase;
+		
 						
 						
 						//Por enquanto só recomendação
 						rodada.schedulep(5, ParametrosDSTE.Janela, no);
 						
 						//Agenda avaliar rentenção 
-					////	rodada.schedulep(6, ParametrosDSTE.Janela, no);
+						rodada.schedulep(6, ParametrosDSTE.Janela*2+0.10, no);
+						this.AGENDAMENTO++;
+						BancoDeDados.setXML(rodada.simtime() + ": BAM modificado agendado retenção \n", rodada.filename);
 						
 						
 					}else{
-						Debug.setMensagem("Nada a fazer = mesmo BAM");
 						
+						BancoDeDados.setXML(rodada.simtime() + ": Nada a fazer = mesmo BAM \n", rodada.filename);
 						//Agenda avaliar BAM via CBR
 						rodada.schedulep(5, ParametrosDSTE.Janela, null );
 					}
@@ -344,18 +352,81 @@ public class TesteSimulacao {
 				}else {
 					//Agenda avaliar BAM via CBR
 					rodada.schedulep(5, ParametrosDSTE.Janela, null );
+					BancoDeDados.setXML(rodada.simtime() + "Nenhum caso válido na base?????????????? ", rodada.filename);
+					
 				}
 					
 				
 				break;
 			case 6:
 				//Avalia rentenção
-				CBRQuery queryRetain  = null;
+				
+				System.out.println("entrou em Avaliação  no tempo: " + rodada.simtime());
+				if(this.AGENDAMENTO==1){
+					CBRCase novocase = ((CBRCase)dados.item);
+					if (1>0) { ///// Codigo do gerente virtual para case 3
+						int score = 0;
+						
+						double []preempcoesCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT2()} ;  
+						double []devolucoesCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT2()} ;
+										
+						double []preempcoesCTJanelaAgora  	= new double [] {0, 0, 0} ;  
+						double []devolucoesCTJanelaAgora   	= new double [] {0, 0, 0} ;
+						
+						preempcoesCTJanelaAgora[0] = (double)rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,0)/ (rodada.estatistica.lspEstablishedTotalCT(ParametrosDSTE.Janela, 0) + rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 0))		;
+						preempcoesCTJanelaAgora[1] = (double)rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,1)/	(rodada.estatistica.lspEstablishedTotalCT(ParametrosDSTE.Janela, 1)	+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 1));				
+						preempcoesCTJanelaAgora[2] = (double)rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,2)/	(rodada.estatistica.lspEstablishedTotalCT(ParametrosDSTE.Janela, 2)	+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 2));				
+		
+						devolucoesCTJanelaAgora[0] = (double)rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,0)/	(rodada.estatistica.lspEstablishedTotalCT(ParametrosDSTE.Janela, 0)	+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 0));			
+						devolucoesCTJanelaAgora[1] = (double)rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,1)/ 	(rodada.estatistica.lspEstablishedTotalCT(ParametrosDSTE.Janela, 1)	+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 1));				
+						devolucoesCTJanelaAgora[2] = (double)rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,2)/	(rodada.estatistica.lspEstablishedTotalCT(ParametrosDSTE.Janela, 2)	+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 2));	
+						
+						
+						for (int i = 0; i < ParametrosDSTE.MaxClassType; i++) {
+							if ((preempcoesCTJanelaAgora[i]< preempcoesCTJanelaAnterior[i])||(preempcoesCTJanelaAgora[i]==0 && preempcoesCTJanelaAnterior[i]>=0) )
+							{
+								score++;					
+							}
+							
+							if ((devolucoesCTJanelaAgora[i]< devolucoesCTJanelaAnterior[i])|| (devolucoesCTJanelaAgora[i]==0 && devolucoesCTJanelaAnterior[i]>=0) )
+							{
+								score++;					
+							}
+						}
+						
+						System.out.println(rodada.simtime() + " " + "Score:" + score);
+						if (score > 5 ){
+							BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
+							
+							((BAMDescription)novocase.getDescription()).setCaseId("bam"+(recommender.getCaseBase().getCases().size()+1));
+							
+							((BAMSolution)novocase.getSolution()).setId("bam"+(recommender.getCaseBase().getCases().size()+1));
+							
+							jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
+							
+						}else{
+							BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
+							
+							((BAMDescription)novocase.getDescription()).setCaseId("bam"+(recommender.getCaseBaseDB2().getCases().size()+1));
+							
+							((BAMSolution)novocase.getSolution()).setId("bam"+(recommender.getCaseBaseDB2().getCases().size()+1));
+							
+							jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), novocase);
+							
+						}
+					
+					
+					}
+				}else{
+					BancoDeDados.setXML(rodada.simtime() + " BAM não validado. A rede mudou o comportamento???\n", "saida");
+				}
+				this.AGENDAMENTO--;
+				
+				/*CBRQuery queryRetain  = null;
 				CBRCase atualCase = null;
 				CBRCase novocase = ((CBRCase)dados.item);
 				
-				
-				BancoDeDados.setXML( "Tempo de simulação (Retenção):\t" + rodada.simtime() , rodada.filename);				
+								
 				queryRetain = rodada.estatistica.getQuery(to.link[0], ParametrosDSTE.Gestor, ParametrosDSTE.SLAUtilizacaoCT, ParametrosDSTE.SLABloqueiosCT,ParametrosDSTE.SLAPreempcoesCT,ParametrosDSTE.SLADevolucoesCT);
 				
 				
@@ -380,10 +451,10 @@ public class TesteSimulacao {
 					}
 				
 				
-				}
+				}*/
 					
 				
-				rodada.schedulep(5, ParametrosDSTE.Janela, null);
+				//rodada.schedulep(5, ParametrosDSTE.Janela, null);
 				
 
 				
@@ -487,35 +558,7 @@ public class TesteSimulacao {
 			
 			
 			case 7:
-				//Gerar base log debug,etc
 				
-				
-				
-				
-				/*if (rodada.simtime()== 3660.2){
-					Lsp LSPaux= new Lsp(rodada); 
-            		LSPaux.Carga=0; 
-					to.link[0].bamType = BAMType.PreemptionGBAM;
-					
-			
-					to.link[0].BCLTH= new double[]
-					{	100, //BC0 
-						100, //BC1
-						0  //BC2 Nunca mudar
-					};
-					LSPaux.CT=0; 
-              		BAM.devolutionG(to.link[0],LSPaux);
-					
-					
-					to.link[0].BCHTL= new double[]
-					{	0, //BC0 Nunca mudar
-						100, //BC1
-						100 //BC2
-					};
-					
-					LSPaux.CT=2; 
-              		BAM.preemptionG(to.link[0],LSPaux); 
-				} */
 				
 				
 
@@ -718,13 +761,13 @@ public class TesteSimulacao {
 							+ devolucoesCTJanela[1] + "\t"
 							+ devolucoesCTJanela[2] + "\t"
 
-							//, "saida");
+							, "saida");
 
-							, rodada.filename);
+							//, rodada.filename);
 				
 				
 					
-					rodada.schedulep(7, ParametrosDSTE.Janela , null);
+					rodada.schedulep(7, ParametrosDSTE.RRDBatida , null);
 					
 					
 				break;
@@ -734,7 +777,7 @@ public class TesteSimulacao {
 			}
 			Debug.setMensagem(" ==== Status dos Links  ====");
 			Debug.setMensagem(to.statusLinks());
-			/////Debug.setMensagem(rodada.imprime_evchain(), 0, 0);
+			Debug.setMensagem(rodada.imprime_evchain(), 0, 0);
 			//BancoDeDados.setXML(rodada.imprime_evchain(),"debug2");
 
 		}
