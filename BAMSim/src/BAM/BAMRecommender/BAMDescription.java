@@ -541,9 +541,9 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	
 	public String toTabela() {
 		return  	caseId			+ "\t"
-				+ 	gestor			+ "\t"           
+				//+ 	gestor			+ "\t"           
 				+ 	BAMAtual		+ "\t"
-				+ 	janela			+ "\t"
+				/*+ 	janela			+ "\t"
 				+ 	SLAUtilizacaoCT0+ "\t"
 				+ 	SLAUtilizacaoCT1+ "\t"
 				+ 	SLAUtilizacaoCT2+ "\t"
@@ -558,7 +558,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 				+ 	SLADevolucoesCT2+ "\t"
 				+ 	BC0				+ "\t"
 				+	BC1				+ "\t"
-				+	BC2				+ "\t"
+				+	BC2				+ "\t"*/
 				+	utilizacaoDoEnlaceCT0+ "\t"
 				+ 	utilizacaoDoEnlaceCT1+ "\t"
 				+	utilizacaoDoEnlaceCT2+ "\t"

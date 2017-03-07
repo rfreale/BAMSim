@@ -233,7 +233,7 @@ public class TesteSimulacao {
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
 				
-				BancoDeDados.setXML( "Tempo de simulação:\t" + rodada.simtime() , rodada.filename);
+				BancoDeDados.setXML( "Recomendação in:" + rodada.simtime() , rodada.filename);
 				
 				query = rodada.estatistica.getQuery(to.link[0], ParametrosDSTE.Gestor, ParametrosDSTE.SLAUtilizacaoCT, ParametrosDSTE.SLABloqueiosCT,ParametrosDSTE.SLAPreempcoesCT,ParametrosDSTE.SLADevolucoesCT);
 				cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
@@ -322,7 +322,7 @@ public class TesteSimulacao {
 							
 							to.link[0].BCHTL= new double[]
 							{	0, //BC0 Nunca mudar
-								100, //BC1
+								100, //BC
 								100 //BC2
 							};
 							break;
@@ -330,7 +330,7 @@ public class TesteSimulacao {
 						
 						
 
-						BancoDeDados.setXML(rodada.simtime() + "\tSimCaseID\t"+((BAMDescription) cbrCase.getDescription()).getCaseId()+"-> Recomenda BAM"+solutionRecomendada+":"+((BAMDescription) query.getDescription()).toTabela(), rodada.filename);
+						//BancoDeDados.setXML(rodada.simtime() + " SimCaseID"+((BAMDescription) cbrCase.getDescription()).getCaseId()+"-> Recomenda BAM"+solutionRecomendada+":"+((BAMDescription) query.getDescription()).toTabela(), rodada.filename);
 						BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
 						CBRCase novocase = new CBRCase();
@@ -338,6 +338,7 @@ public class TesteSimulacao {
 						novocase.setSolution(sol);
 						No no = new No();
 						no.item=novocase;
+						//BancoDeDados.setXML("Caso Sugerido\t" + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename);
 						
 						
 						
@@ -347,12 +348,12 @@ public class TesteSimulacao {
 						//Agenda avaliar rentenção 
 						rodada.schedulep(6, ParametrosDSTE.Janela*2-0.10, no);
 						this.AGENDAMENTO++;
-						BancoDeDados.setXML(rodada.simtime() + ": BAM modificado agendado retenção para tempo:" + (rodada.simtime() + (2*ParametrosDSTE.Janela-0.10))+"\n" , "saida");
+						BancoDeDados.setXML(/*rodada.simtime() +*/ "##################  BAM modificado. Agendado retenção para tempo:" + (rodada.simtime() + (2*ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
 						
 						
 					}else{
 						
-						BancoDeDados.setXML("\n" + rodada.simtime() + ": Nada a fazer = mesmo BAM \n", "saida");
+						BancoDeDados.setXML(/*"\n" + rodada.simtime() + */"Nada a fazer = mesmo BAM", rodada.filename);
 						//Agenda avaliar BAM via CBR
 						rodada.schedulep(5, ParametrosDSTE.Janela, null );
 					}
@@ -360,14 +361,15 @@ public class TesteSimulacao {
 				}else {
 					//Agenda avaliar BAM via CBR
 					rodada.schedulep(5, ParametrosDSTE.Janela, null );
-					BancoDeDados.setXML(rodada.simtime() + ": Nenhum caso válido na base?????????????? \n", "saida");
+					BancoDeDados.setXML(rodada.simtime() + ": Nenhum caso válido na base?????????????? \n", rodada.filename);
 					
 				}
-					
+				//BancoDeDados.setXML( "Recomendação out. " + rodada.simtime() + "\n" , rodada.filename);	
 				
 				break;
 			case 6:
 				//Avalia rentenção
+				BancoDeDados.setXML( "Entrou em retenção:\t" + rodada.simtime() , rodada.filename);
 				
 				if(this.AGENDAMENTO==1){
 					CBRCase novocase = ((CBRCase)dados.item);
@@ -383,13 +385,13 @@ public class TesteSimulacao {
 					Collection <RetrievalResult> eval2 = NNScoringMethod.evaluateSimilarity(tmp, query,fun2 );
 					double sim = eval2.iterator().next().getEval();
 					
-					//if (sim >= 0.9){ // verifica se houve mudança na rede
+					if (sim >= 0.9){ // verifica se houve mudança na rede
 						
 						if (1>0) { ///// Codigo do gerente virtual para case 3
 							
 							int score = 0;
-							/*	double []utilizacaoCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT0(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT1(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT2()} ;  
-							double []bloqueioCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT2()} ;*/
+							double []utilizacaoCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT0(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT1(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT2()} ;  
+							double []bloqueioCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT2()} ;
 							double []preempcoesCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT2()} ;  
 							double []devolucoesCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT2()} ;				
 							double []utilizacaoCTJanelaAgora   	= new double [] {0, 0, 0} ;
@@ -436,7 +438,7 @@ public class TesteSimulacao {
 								((BAMSolution)novocase.getSolution()).setId("novo"+(recommender.getCaseBase().getCases().size()+1));
 								
 								jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
-								BancoDeDados.setXML(rodada.simtime() + ": BAM Aceito\n","saida" );
+								BancoDeDados.setXML("\n" + rodada.simtime() + ": BAM"+ ((BAMSolution)novocase.getSolution()).getId()  + " Aceito\n",rodada.filename );
 								
 							}else{
 								BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
@@ -446,153 +448,21 @@ public class TesteSimulacao {
 								((BAMSolution)novocase.getSolution()).setId("bam"+(recommender.getCaseBaseDB2().getCases().size()+1));
 								
 								jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), novocase);
-								BancoDeDados.setXML(rodada.simtime() + ": BAM Rejeitado\n","saida" );
+								BancoDeDados.setXML("\n" + rodada.simtime() + ": BAM Rejeitado\n",rodada.filename );
 								
 							}
 						}
 						
-					/*	
+						
 					}else{
-						BancoDeDados.setXML(rodada.simtime() + ": BAM não validado. A rede mudou o comportamento" + "variação:"+ sim +"\n" ,"saida" );
-						}*/
+						BancoDeDados.setXML(rodada.simtime() + ": BAM não validado. A rede mudou o comportamento" + "variação:"+ sim +"\n" ,rodada.filename );
+						}
 				}else{
 					
-					BancoDeDados.setXML(rodada.simtime() + ": BAM não validado. Duas chamadas de Troca.. A rede mudou o comportamento??????\n","saida" );
+					BancoDeDados.setXML(rodada.simtime() + ": BAM não validado. Duas chamadas de Troca.. A rede mudou o comportamento??????\n",rodada.filename );
 				}
 				this.AGENDAMENTO--;
-				
-				/*CBRQuery queryRetain  = null;
-				CBRCase atualCase = null;
-				CBRCase novocase = ((CBRCase)dados.item);
-				
-								
-				queryRetain = rodada.estatistica.getQuery(to.link[0], ParametrosDSTE.Gestor, ParametrosDSTE.SLAUtilizacaoCT, ParametrosDSTE.SLABloqueiosCT,ParametrosDSTE.SLAPreempcoesCT,ParametrosDSTE.SLADevolucoesCT);
-				
-				
-				atualCase = BAMRecommenderNoGUI.getInstance().cycle(queryRetain);
-				
-				
-				
-				
-				if(atualCase!= null){
-				
-					if(atualCase.getSolution().toString() == novocase.getSolution().toString()){
-						BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
-						((BAMDescription)novocase.getDescription()).setCaseId("bam"+(recommender.getCaseBase().getCases().size()+1));
-						((BAMSolution)novocase.getSolution()).setId("bam"+(recommender.getCaseBase().getCases().size()+1));
-						jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
-					}else{
-						BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
-						((BAMDescription)novocase.getDescription()).setCaseId("bam"+(recommender.getCaseBaseDB2().getCases().size()+1));
-						((BAMSolution)novocase.getSolution()).setId("bam"+(recommender.getCaseBaseDB2().getCases().size()+1));
-						jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), novocase);
-						
-					}
-				
-				
-				}*/
-					
-				
-				//rodada.schedulep(5, ParametrosDSTE.Janela, null);
-				
-
-				
-				
-				/*Boolean UCT0, UCT1, UCT2, BCT0, BCT1, BCT2, PCT0, PCT1, PCT2, DCT0, DCT1, DCT2  = null;
-				
-				
-				if ( to.link[0].CargaCTAtual[0]*100/to.link[0].CargaEnlace >=  ParametrosDSTE.SLAUtilizacaoCT[0] ){
-					System.out.println("UtilizaçãoCT0 Okay");
-					UCT0 = true;
-				}else{
-					UCT0 = false;
-				}
-				if ( to.link[0].CargaCTAtual[1]*100/to.link[0].CargaEnlace >=  ParametrosDSTE.SLAUtilizacaoCT[1] ){
-					System.out.println("UtilizaçãoCT1 Okay");
-					UCT1 = true;
-				}else{
-					UCT1 = false;
-				}
-				if ( to.link[0].CargaCTAtual[2]*100/to.link[0].CargaEnlace >=  ParametrosDSTE.SLAUtilizacaoCT[2] ){
-					System.out.println("UtilizaçãoCT2 Okay");
-					UCT2 = true;
-				}else{
-					UCT2 = false;
-				}
-				
-				
-				
-				if ( rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLABloqueiosCT[0] ){
-					System.out.println("BloqueiosCT0 Okay");
-					BCT0 = true;
-				}else{
-					BCT0 = false;
-				}
-				if ( rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLABloqueiosCT[1] ){
-					System.out.println("BloqueiosCT1 Okay");
-					BCT1 = true;
-				}else{
-					BCT1 = false;
-				}
-				if ( rodada.estatistica.bloqueiosCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLABloqueiosCT[2] ){
-					System.out.println("BloqueiosCT2 Okay");
-					BCT2 = true;
-				}else{
-					BCT2 = false;
-				}
-				
-				
-				
-				if ( rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLAPreempcoesCT[0] ){
-					System.out.println("PreempcoesCT0 Okay");
-					PCT0 = true;
-				}else{
-					PCT0 = false;
-				}
-				if ( rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLAPreempcoesCT[1] ){
-					System.out.println("PreempcoesCT1 Okay");
-					PCT1 = true;
-				}else{
-					PCT1 = false;
-				}
-				if ( rodada.estatistica.preempcoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLAPreempcoesCT[2] ){
-					System.out.println("PreempcoesCT2 Okay");
-					PCT2 = true;
-				}else{
-					PCT2 = false;
-				}
-				
-				
-				
-				if ( rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,0)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLADevolucoesCT[0] ){
-					System.out.println("DevolucoesCT0  Okay");
-					DCT0 = true;
-				}else{
-					DCT0 = false;
-				}
-				if ( rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,1)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLADevolucoesCT[1] ){
-					System.out.println("DevolucoesCT1  Okay");
-					DCT1 = true;
-				}else{
-					DCT1 = false;
-				}
-				if ( rodada.estatistica.devolucoesCT(ParametrosDSTE.Janela,2)*100/rodada.estatistica.lspRequested(ParametrosDSTE.Janela) <=ParametrosDSTE.SLADevolucoesCT[2] ){
-					System.out.println("DevolucoesCT2  Okay");
-					DCT2 = true;
-				}else{
-					DCT2 = false;
-				}
-				
-				
-				
-				if (UCT0 && UCT1 && UCT2 && BCT0 && BCT1 && BCT2 && PCT0 && PCT1 && PCT2 && DCT0 && DCT1 && DCT2){
-					BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
-					jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
-				}*/
-				
-				
-				
-				
+				BancoDeDados.setXML( "Saiu em retenção:\t" + rodada.simtime() , rodada.filename);
 			break;
 			
 			
@@ -610,71 +480,15 @@ public class TesteSimulacao {
 				{
 					//Se BCLTH diferente de 0 é pq reflete Alloc
 					if (to.link[0].BCLTH[0]!=0)
-						
 						nomeBAMAtual = "PreemptionAllocCTSharing";
-					
 					//Se BCLTH diferente é igual a 0 e BCHTL diferente de 0 é pq reflete RDM
 					else if (to.link[0].BCHTL[2]!=0)
-						
 						nomeBAMAtual = "PreemptionRDM";
-					
 					//Se BCLTH e BCHTL igual a 0 é pq reflete MAM
 					else
-						
 						nomeBAMAtual = "NoPreemptionMAM";
 				}
 				
-				
-					
-					/*if(rodada.simtime() <= 3600*1){
-						
-												
-					}else if (rodada.simtime() <= 3600*2){// 7.200
-						
-
-					}else if (rodada.simtime() <= 3600*3){//  10.800
-						
-						
-					}else if (rodada.simtime() <= 3600*4){ //  14.400	
-						
-						
-					}else if (rodada.simtime() <= 3600*5){
-						
-						
-					}else if (rodada.simtime() >= 16800)
-					{
-						
-						
-					}*/
-					
-					
-				/*	
-				 * Lsp LSPaux= new Lsp(rodada); 
-            		LSPaux.Carga=0; 
-					to.link[0].bamType = BAMType.PreemptionGBAM;
-					
-			
-					to.link[0].BCLTH= new double[]
-					{	000, //BC0 
-						000, //BC1
-						0  //BC2 Nunca mudar
-					};
-					LSPaux.CT=0; 
-              		BAM.devolutionG(to.link[0],LSPaux);
-					
-					
-					to.link[0].BCHTL= new double[]
-					{	0, //BC0 Nunca mudar
-						100, //BC1
-						100 //BC2
-					};
-					
-					LSPaux.CT=2; 
-              		BAM.preemptionG(to.link[0],LSPaux); 
-					*
-					*/
-					
-					
 					
 				double []bloqueiosCTJanela   	= new double [] {0, 0, 0} ;  
 				double []preempcoesCTJanela  	= new double [] {0, 0, 0} ;  
@@ -725,12 +539,12 @@ public class TesteSimulacao {
 					
 					BancoDeDados.setXML(  rodada.simtime() + "\t"
 							+ nomeBAMAtual + "\t"
-							+ ParametrosDSTE.Janela + "\t"
+							/*+ ParametrosDSTE.Janela + "\t"
 							
 							+ to.link[0].CargaEnlace * to.link[0].BC[0] / 100 + "\t"
 							+ to.link[0].CargaEnlace * to.link[0].BC[1] / 100 + "\t"
 							+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
-							
+							*/
 							
 							/*+ to.link[0].CargaCTAtual[0] + "\t"
 							+ to.link[0].CargaCTAtual[1] + "\t"
@@ -800,9 +614,9 @@ public class TesteSimulacao {
 							+ devolucoesCTJanela[1] + "\t"
 							+ devolucoesCTJanela[2] + "\t"
 
-							, "saida");
+							//, "saida");
 
-							//, rodada.filename);
+							, rodada.filename);
 				
 				
 					

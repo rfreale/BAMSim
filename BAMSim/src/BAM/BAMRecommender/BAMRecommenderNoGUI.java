@@ -176,7 +176,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		//BancoDeDados.setXML("\n");
 		//BancoDeDados.setXML("====Query===");
 
-		BancoDeDados.setXML("Query \t" + ((BAMDescription) query.getDescription()).toTabela() );
+		BancoDeDados.setXML("Query, ID: " + ((BAMDescription) query.getDescription()).toTabela() );
 		 //BancoDeDados.setXML(query.toString());
 
 		// BancoDeDados.setXML(((BAMDescription)query.getDescription()).getInsertDB(),
@@ -186,7 +186,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		
 		Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval, 10);
 		for (RetrievalResult rr : selectedcases) {
-			BancoDeDados.setXML("Sim \t" + ((BAMDescription) rr.get_case().getDescription()).toTabela() +"\t"+ ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
+			BancoDeDados.setXML("Sim, ID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
 			//BancoDeDados.setXML(rr.toString());
 		}
 
