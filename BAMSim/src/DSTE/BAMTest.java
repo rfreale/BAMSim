@@ -42,7 +42,7 @@ import org.rosuda.REngine.Rserve.RserveException;
 
 import BAM.BAMRecommender.BAMDescription;
 import BAM.BAMRecommender.BAMRecommenderNoGUI;
-import BAM.BAMRecommender.BAMDescription.BAMTypes;
+import BAM.BAMRecommender.BAMTypes;
 import Simulador.Debug;
 import Simulador.Estatisticas;
 import Simulador.GeradorDeNumerosAleatorios;

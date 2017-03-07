@@ -27,7 +27,7 @@ import org.jrobin.graph.RrdGraphConstants;
 import org.jrobin.graph.RrdGraphDef;
 
 import BAM.BAMRecommender.BAMDescription;
-import BAM.BAMRecommender.BAMDescription.BAMTypes;
+import BAM.BAMRecommender.BAMTypes;
 //import BAM.BAMRecommender.BAMDescription.Problemas;
 import Simulador.ParametrosDoSimulador;
 import jcolibri.cbrcore.CBRQuery;

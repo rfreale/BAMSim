@@ -6,10 +6,10 @@
  * 25/07/2006
  */
 package BAM.BAMRecommender;
-import BAM.BAMRecommender.BAMDescription.BAMTypes;
+//import BAM.BAMRecommender.BAMTypes;
 import jcolibri.cbrcore.Attribute;
 
-/**
+/** 
  * Bean that stores the solution of the case (trip)
  * @author Juan A. Recio-Garcia
  * @version 1.0

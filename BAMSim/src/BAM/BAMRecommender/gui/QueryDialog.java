@@ -30,7 +30,7 @@ import javax.swing.UIManager;
 
 import jcolibri.cbrcore.CBRQuery;
 import BAM.BAMRecommender.BAMDescription;
-import BAM.BAMRecommender.BAMDescription.BAMTypes;
+import BAM.BAMRecommender.BAMTypes;
 //import BAM.BAMRecommender.BAMDescription.Problemas;
 import BAM.BAMRecommender.BAMRecommender;
 import jcolibri.util.FileIO;

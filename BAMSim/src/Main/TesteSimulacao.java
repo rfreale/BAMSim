@@ -10,6 +10,7 @@ import BAM.BAMRecommender.BAMDescription;
 //import BAM.BAMRecommender.BAMDescription.Problemas;
 import BAM.BAMRecommender.BAMRecommenderNoGUI;
 import BAM.BAMRecommender.BAMSolution;
+import BAM.BAMRecommender.BAMTypes;
 import DSTE.BAM;
 import DSTE.BAMType;
 import DSTE.BancoDeDados;
@@ -232,36 +233,33 @@ public class TesteSimulacao {
 				//////////////BancoDeDados.setXML(  rodada.simtime() + "\t"
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
-				
+				String nomeBAMAtual = null;
 				BancoDeDados.setXML( "Recomendação in:" + rodada.simtime() , rodada.filename);
 				
 				query = rodada.estatistica.getQuery(to.link[0], ParametrosDSTE.Gestor, ParametrosDSTE.SLAUtilizacaoCT, ParametrosDSTE.SLABloqueiosCT,ParametrosDSTE.SLAPreempcoesCT,ParametrosDSTE.SLADevolucoesCT);
 				cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
 							
+				if(to.link[0].bamType!=BAMType.PreemptionGBAM)
+				{
+					nomeBAMAtual = to.link[0].bamType.toString();
+				}else
+				{
+					//Se BCLTH diferente de 0 é pq reflete Alloc
+					if (to.link[0].BCLTH[0]!=0)
+						
+						nomeBAMAtual = "PreemptionAllocCTSharing";
+					
+					//Se BCLTH diferente é igual a 0 e BCHTL diferente de 0 é pq reflete RDM
+					else if (to.link[0].BCHTL[2]!=0)
+						
+						nomeBAMAtual = "PreemptionRDM";
+					
+					//Se BCLTH e BCHTL igual a 0 é pq reflete MAM
+					else
+						nomeBAMAtual = "NoPreemptionMAM";
+				}
 				
 				if (cbrCase != null) {
-					
-					String nomeBAMAtual = null;
-					
-					if(to.link[0].bamType!=BAMType.PreemptionGBAM)
-					{
-						nomeBAMAtual = to.link[0].bamType.toString();
-					}else
-					{
-						//Se BCLTH diferente de 0 é pq reflete Alloc
-						if (to.link[0].BCLTH[0]!=0)
-							
-							nomeBAMAtual = "PreemptionAllocCTSharing";
-						
-						//Se BCLTH diferente é igual a 0 e BCHTL diferente de 0 é pq reflete RDM
-						else if (to.link[0].BCHTL[2]!=0)
-							
-							nomeBAMAtual = "PreemptionRDM";
-						
-						//Se BCLTH e BCHTL igual a 0 é pq reflete MAM
-						else
-							nomeBAMAtual = "NoPreemptionMAM";
-					}
 					
 					String solutionRecomendada = ((BAMSolution) cbrCase.getSolution()).getBAMNovo().toString();
 					
@@ -361,7 +359,30 @@ public class TesteSimulacao {
 				}else {
 					//Agenda avaliar BAM via CBR
 					rodada.schedulep(5, ParametrosDSTE.Janela, null );
-					BancoDeDados.setXML(rodada.simtime() + ": Nenhum caso válido na base?????????????? \n", rodada.filename);
+					BancoDeDados.setXML("Nenhum caso válido na base", rodada.filename);
+					double uti = to.link[0].getCargaEnlaceAtual()/to.link[0].CargaEnlace;
+					
+					if ( nomeBAMAtual.equals("NoPreemptionMAM") && uti < 0.81  ){
+						
+						
+						BAMTypes bam = BAMTypes.values()[0];	//=  (BAMTypes) 0 ;//.NoPreemptionMAM;
+						BAMSolution sol= new BAMSolution();
+						sol.setBAMNovo(bam.NoPreemptionMAM);
+						//sol.setAceita(true);
+						
+						
+						
+						BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
+						CBRCase novocase = new CBRCase();
+						novocase.setDescription(desc);
+						//novocase.setSolution(sol);
+						No no = new No();
+						no.item=novocase;
+						
+						
+					}else {
+						
+					}
 					
 				}
 				//BancoDeDados.setXML( "Recomendação out. " + rodada.simtime() + "\n" , rodada.filename);	
@@ -471,7 +492,7 @@ public class TesteSimulacao {
 				
 				
 
-				String nomeBAMAtual = null;
+				 nomeBAMAtual = null;
 				
 				if(to.link[0].bamType!=BAMType.PreemptionGBAM)
 				{

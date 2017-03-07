@@ -22,9 +22,9 @@ import jcolibri.datatypes.Instance;
 public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable{
 	
 	
-	public enum BAMTypes {
+	/*public enum BAMTypes {
 		NoPreemptionMAM(0), NoPreemptionRDM(1), NoPreemptionAllocCTSharing(2),PreemptionMAM(3), PreemptionRDM(4), PreemptionAllocCTSharing(5),PreemptionGBAM(6),NoPreemptionBestEffort(7);
-		private final int status; 
+		private  int status; 
 		
 		BAMTypes(int valorStatus)
 		{ 
@@ -34,9 +34,12 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 		{ 
 			return status; 
 		}
+		public void setValor(int valorStatus)
+		{ 
+			status = valorStatus; 
+		} 
 
-
-	}
+	}*/
 /*	public enum Problemas {
 		AltaPreempcao(0), 		AltoBloqueio(1), 		AltaDevolucao(2), 		BaixaUtilizacao(3),
 		AltaPreempcaoCT0(4), 	AltoBloqueioCT0(5), 	AltaDevolucaoCT0(6),	BaixaUtilizacaoCT0(7),
