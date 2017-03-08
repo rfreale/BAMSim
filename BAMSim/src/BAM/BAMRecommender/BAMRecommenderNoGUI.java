@@ -279,11 +279,11 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBaseDB2.getCases(), query, simConfig);
 		
-		BancoDeDados.setXML("QueryforaDaLinha, ID: " + ((BAMDescription) query.getDescription()).toTabela() );
+		BancoDeDados.setXML("Query_ForaDaLinha ID: " + ((BAMDescription) query.getDescription()).toTabela() );
 				
 		Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval, 10);
 		for (RetrievalResult rr : selectedcases) {
-			BancoDeDados.setXML("SimforaDaLinha, ID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
+			BancoDeDados.setXML("Sim_ForaDaLinha ID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
 		}
 
 		BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
@@ -292,7 +292,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		novocase.setDescription(desc);
 		int []bams = {0,0,0};
 		
-		while( !eval.isEmpty() &&  eval.iterator().next().getEval()  >= ParametrosDSTE.RecomendacaoCBRLimiarDeCorte2  )
+		/*while( !eval.isEmpty() &&  eval.iterator().next().getEval()  >= ParametrosDSTE.RecomendacaoCBRLimiarDeCorte2  )
 		{
 			if (   ((BAMSolution)eval.iterator()).getBAMNovo().toString() == BAMTypes.NoPreemptionMAM.toString()              )
 			{
@@ -305,26 +305,28 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 				bams[2]++;
 			}
 		}
+		*/
 		
-		
-		/*for (RetrievalResult rr : eval) {
+		for (RetrievalResult rr : eval) {
 
 			if (rr.getEval() >= ParametrosDSTE.RecomendacaoCBRLimiarDeCorte2) {
 
 				sol = ((BAMSolution) rr.get_case().getSolution());
-				novocase.setSolution(sol);
-
-				if ((!this.equal(novocase, _caseBaseDB2)))
-					return rr.get_case();
+				if (   sol.getBAMNovo().toString() == BAMTypes.NoPreemptionMAM.toString()              )
+				{
+					bams[0]++;
+				}else if (   sol.getBAMNovo().toString() == BAMTypes.PreemptionRDM.toString()              )
+				{
+					bams[1]++;
+				}else if (   sol.getBAMNovo().toString() == BAMTypes.PreemptionAllocCTSharing.toString()              )
+				{
+					bams[2]++;
+				}
+				
 			} else {
-				return null;
-
+				return bams;
 			}
-
-		}*/
-		
-		
-
+		}
 		return bams;
 	}
 
@@ -361,12 +363,12 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		java.util.Collection<CBRCase> cases = _caseBase.getCases();
 		System.out.println("===================DB==================");
 		for (CBRCase c : cases)
-			System.out.println( ((BAMDescription) c.getDescription()).toTabela() +"\t"+ ((BAMSolution) c.getSolution()).getBAMNovo()  );
+			System.out.println( ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo()  );
 		_connector.close();
 		System.out.println("===================DB2==================");
 		cases = _caseBaseDB2.getCases();
 		for (CBRCase c : cases)
-			System.out.println( ((BAMDescription) c.getDescription()).toTabela() +"\t"+ ((BAMSolution) c.getSolution()).getBAMNovo());
+			System.out.println( ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo());
 		_connectorDB2.close();
 
 		HSQLDBserver.shutDown();

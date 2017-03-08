@@ -71,7 +71,7 @@ public class ParametrosDSTE {
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.95;
 	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.95;
-	public static final String filenameBaseCBR= ".//basesCBR//cenarioC.sql";
+	public static final String filenameBaseCBR= ".//basesCBR//baseM.sql";
 	
 	
 	
@@ -88,9 +88,9 @@ public class ParametrosDSTE {
 	{
 		
 		//GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
-		GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
+		//GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
 		
-		//GeradorDeTrafego.trafegoDeterministico(rodada, to, dados);
+		GeradorDeTrafego.trafegoDeterministico(rodada, to, dados);
 		
 		
 	}
