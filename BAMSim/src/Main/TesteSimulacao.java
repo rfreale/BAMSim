@@ -264,68 +264,8 @@ public class TesteSimulacao {
 					String solutionRecomendada = ((BAMSolution) cbrCase.getSolution()).getBAMNovo().toString();
 					
 					if (solutionRecomendada != nomeBAMAtual ){
-						
-						//BAMSolution solution = (BAMSolution) cbrCase.getSolution();
 						//Temporário para forçar devolução
-						Lsp LSPaux= new Lsp(); 
-	            		LSPaux.Carga=0; 
-						
-						
-						switch (solutionRecomendada) {
-						case "NoPreemptionMAM":
-							to.link[0].bamType = BAMType.PreemptionGBAM;
-							to.link[0].BCLTH= new double[]
-							{	000, //BC0 
-								000, //BC1
-								0  //BC2 Nunca mudar
-							};
-							LSPaux.CT=0; 
-		              		BAM.devolutionG(to.link[0],LSPaux);
-							
-							
-							to.link[0].BCHTL= new double[]
-							{	0, //BC0 Nunca mudar
-								000, //BC1
-								000 //BC2
-							};
-							
-							LSPaux.CT=2; 
-		              		BAM.preemptionG(to.link[0],LSPaux); 
-							break;
-						case "PreemptionRDM":
-							to.link[0].bamType = BAMType.PreemptionGBAM;
-							to.link[0].BCLTH= new double[]
-							{	000, //BC0 
-								000, //BC1
-								0  //BC2 Nunca mudar
-							};
-							LSPaux.CT=0; 
-		              		BAM.devolutionG(to.link[0],LSPaux);
-							
-							
-							to.link[0].BCHTL= new double[]
-							{	0, //BC0 Nunca mudar
-								100, //BC1
-								100 //BC2
-							};
-							
-							break;
-						case "PreemptionAllocCTSharing":
-							to.link[0].bamType = BAMType.PreemptionGBAM;
-							to.link[0].BCLTH= new double[]
-							{	100, //BC0 
-								100, //BC1
-								0  //BC2 Nunca mudar
-							};
-							
-							to.link[0].BCHTL= new double[]
-							{	0, //BC0 Nunca mudar
-								100, //BC
-								100 //BC2
-							};
-							break;
-						}
-						
+						switchBAM(to, solutionRecomendada);
 						
 
 						//BancoDeDados.setXML(rodada.simtime() + " SimCaseID"+((BAMDescription) cbrCase.getDescription()).getCaseId()+"-> Recomenda BAM"+solutionRecomendada+":"+((BAMDescription) query.getDescription()).toTabela(), rodada.filename);
@@ -337,8 +277,6 @@ public class TesteSimulacao {
 						No no = new No();
 						no.item=novocase;
 						//BancoDeDados.setXML("Caso Sugerido\t" + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename);
-						
-						
 						
 						//Por enquanto só recomendação
 						rodada.schedulep(5, ParametrosDSTE.Janela, no);
@@ -357,42 +295,96 @@ public class TesteSimulacao {
 					}
 					
 				}else {
-					//Agenda avaliar BAM via CBR
-					rodada.schedulep(5, ParametrosDSTE.Janela, null );
+					boolean mudouBAM= true;
 					BancoDeDados.setXML("Nenhum caso válido na base", rodada.filename);
-					double uti = to.link[0].getCargaEnlaceAtual()/to.link[0].CargaEnlace;
+					int []bams = BAMRecommenderNoGUI.getInstance().foraDaLinha(query);
+					BAMTypes bam = null;
+					switch (nomeBAMAtual) {
+					case "NoPreemptionMAM":
+						if (bams[0]==0){
+							 bam = BAMTypes.values()[0];
+							 mudouBAM= false;
+						}else if (bams[1]==0){
+							 bam = BAMTypes.values()[4];
+							 switchBAM(to, bam.name());
+						}else if (bams[2]==0){
+							 bam = BAMTypes.values()[5];
+							 switchBAM(to, bam.name());
+						}else{
+							 bam = BAMTypes.values()[0];
+							 switchBAM(to, bam.name());
+							/////Forcar a retenção <<<<<<<<<<<==================================================
+						}	
+						break;
 					
-					if ( nomeBAMAtual.equals("NoPreemptionMAM") && uti < 0.81  ){
-						
-						
-						BAMTypes bam = BAMTypes.values()[0];	//=  (BAMTypes) 0 ;//.NoPreemptionMAM;
-						BAMSolution sol= new BAMSolution();
-						sol.setBAMNovo(bam.NoPreemptionMAM);
-						//sol.setAceita(true);
-						
-						
-						
-						BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
-						CBRCase novocase = new CBRCase();
-						novocase.setDescription(desc);
-						//novocase.setSolution(sol);
-						No no = new No();
-						no.item=novocase;
-						
-						
-					}else {
-						
+					case "PreemptionRDM":
+						if (bams[1]==0){
+							 bam = BAMTypes.values()[4];
+							 mudouBAM= false;
+						}else if (bams[0]==0){
+							 bam = BAMTypes.values()[0];
+							 switchBAM(to, bam.name());
+						}else if (bams[2]==0){
+							 bam = BAMTypes.values()[5];
+							 switchBAM(to, bam.name());
+						}else{
+							 bam = BAMTypes.values()[0];
+							 switchBAM(to, bam.name());
+							/////Forcar a retenção <<<<<<<<<<<==================================================
+						}
+						break;
+					
+					case "PreemptionAllocCTSharing":
+						if (bams[2]==0){
+							 bam = BAMTypes.values()[5];
+							 mudouBAM= false;
+						}else if (bams[1]==0){
+							 bam = BAMTypes.values()[4];
+							 switchBAM(to, bam.name());
+						}else if (bams[0]==0){
+							 bam = BAMTypes.values()[0];
+							 switchBAM(to, bam.name());
+						}else{
+							 bam = BAMTypes.values()[0];
+							 switchBAM(to, bam.name());
+							/////Forcar a retenção <<<<<<<<<<<==================================================
+						}
 					}
 					
+					
+					BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
+					//BAMTypes bam = BAMTypes.values()[0];
+					BAMSolution sol= new BAMSolution();
+					sol.setBAMNovo(bam);
+					sol.setAceita(true);
+										
+					CBRCase novocase = new CBRCase();
+					novocase.setDescription(desc);
+					novocase.setSolution(sol);
+					No no = new No();
+					no.item=novocase;
+					//BancoDeDados.setXML("Caso Sugerido\t" + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename);
+					//Por enquanto só recomendação
+					rodada.schedulep(5, ParametrosDSTE.Janela, no);
+					//Agenda avaliar rentenção 
+					if (mudouBAM){
+						rodada.schedulep(6, ParametrosDSTE.Janela*2-0.10, no);
+						this.AGENDAMENTO++;
+					}else{
+						rodada.schedulep(6, ParametrosDSTE.Janela-0.10, no);
+					}
+					
+					BancoDeDados.setXML(/*rodada.simtime() +*/ "##################  BAM modificado. Agendado retenção para tempo:" + (rodada.simtime() + (2*ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);					
 				}
 				//BancoDeDados.setXML( "Recomendação out. " + rodada.simtime() + "\n" , rodada.filename);	
 				
 				break;
+			
 			case 6:
 				//Avalia rentenção
 				BancoDeDados.setXML( "Entrou em retenção:\t" + rodada.simtime() , rodada.filename);
 				
-				if(this.AGENDAMENTO==1){
+				if(this.AGENDAMENTO<=1){
 					CBRCase novocase = ((CBRCase)dados.item);
 					((BAMDescription)novocase.getDescription()).setCaseId("tmp01") ;
 										
@@ -637,7 +629,7 @@ public class TesteSimulacao {
 
 							//, "saida");
 
-							, rodada.filename);
+							, rodada.filename+"b");
 				
 				
 					
@@ -675,6 +667,69 @@ public class TesteSimulacao {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void switchBAM(Topologia to, String solutionRecomendada) {
+		Lsp LSPaux= new Lsp(); 
+		LSPaux.Carga=0; 
+		
+		
+		switch (solutionRecomendada) {
+		case "NoPreemptionMAM":
+			to.link[0].bamType = BAMType.PreemptionGBAM;
+			to.link[0].BCLTH= new double[]
+			{	000, //BC0 
+				000, //BC1
+				0  //BC2 Nunca mudar
+			};
+			LSPaux.CT=0; 
+      		BAM.devolutionG(to.link[0],LSPaux);
+			
+			
+			to.link[0].BCHTL= new double[]
+			{	0, //BC0 Nunca mudar
+				000, //BC1
+				000 //BC2
+			};
+			
+			LSPaux.CT=2; 
+      		BAM.preemptionG(to.link[0],LSPaux); 
+			break;
+		case "PreemptionRDM":
+			to.link[0].bamType = BAMType.PreemptionGBAM;
+			to.link[0].BCLTH= new double[]
+			{	000, //BC0 
+				000, //BC1
+				0  //BC2 Nunca mudar
+			};
+			LSPaux.CT=0; 
+      		BAM.devolutionG(to.link[0],LSPaux);
+			
+			
+			to.link[0].BCHTL= new double[]
+			{	0, //BC0 Nunca mudar
+				100, //BC1
+				100 //BC2
+			};
+			
+			break;
+		case "PreemptionAllocCTSharing":
+			to.link[0].bamType = BAMType.PreemptionGBAM;
+			to.link[0].BCLTH= new double[]
+			{	100, //BC0 
+				100, //BC1
+				0  //BC2 Nunca mudar
+			};
+			
+			to.link[0].BCHTL= new double[]
+			{	0, //BC0 Nunca mudar
+				100, //BC
+				100 //BC2
+			};
+			break;
+		}
+		
+		
 	}
 
 

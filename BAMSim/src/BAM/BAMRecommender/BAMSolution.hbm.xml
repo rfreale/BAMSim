@@ -7,7 +7,7 @@
 	<property name="aceita" column="aceita"/>
 	<property name="BAMNovo" column="BAMNovo">
 		<type name="jcolibri.connector.databaseutils.EnumUserType">
-			<param name="enumClassName">BAM.BAMRecommender.BAMDescription$BAMTypes</param>
+			<param name="enumClassName">BAM.BAMRecommender.BAMTypes</param>
     	</type>
   	</property>
 </class>
