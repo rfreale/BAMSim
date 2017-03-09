@@ -285,12 +285,12 @@ public class TesteSimulacao {
 						//BancoDeDados.setXML("Caso Sugerido\t" + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename);
 						
 						
-						BancoDeDados.setXML(/*rodada.simtime() +*/ "########Dentro da linha de corte######  BAM modificado. Agendado retenção para tempo:" + (rodada.simtime() + (2*ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
+						BancoDeDados.setXML(/*rodada.simtime() +*/ "######## Dentro da linha de corte ######  BAM modificado. Agendado retenção para tempo:" + (rodada.simtime() + (2*ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
 						
 						
 					}else{
 						mudouBAM=-1; /// não é necessário agendar avaliação
-						BancoDeDados.setXML(/*"\n" + rodada.simtime() + */"########Dentro da linha de corte###### BAM mantido - Nada a fazer ", rodada.filename);
+						BancoDeDados.setXML(/*"\n" + rodada.simtime() + */"######## Dentro da linha de corte ###### BAM mantido - Nada a fazer ", rodada.filename);
 						//Agenda avaliar BAM via CBR
 						
 					}
@@ -361,9 +361,9 @@ public class TesteSimulacao {
 									
 					if (mudouBAM==1)
 					{
-						BancoDeDados.setXML(/*rodada.simtime() +*/ "########Fora da linha de corte######  BAM Modificado. Agendado retenção para tempo:" + (rodada.simtime() + (2*ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
+						BancoDeDados.setXML(/*rodada.simtime() +*/ "######## Fora da linha de corte ######  BAM Modificado. Agendado retenção para tempo:" + (rodada.simtime() + (2*ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
 					}else {
-						BancoDeDados.setXML(/*rodada.simtime() +*/ "########Fora da linha de corte######  BAM Mantido. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
+						BancoDeDados.setXML(/*rodada.simtime() +*/ "######## Fora da linha de corte ######  BAM Mantido. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
 
 					}
 				}
