@@ -71,7 +71,7 @@ public class ParametrosDSTE {
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.98;
 	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.85;
-	public static final String filenameBaseCBR= ".//basesCBR//baseM.sql";
+	public static final String filenameBaseCBR= ".//basesCBR//base4C.sql";
 	
 	
 	
@@ -86,13 +86,10 @@ public class ParametrosDSTE {
 	
 	public static void trafegoManual(RodadaDeSimulacao rodada,Topologia to, No dados)
 	{
-		
-		//GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
+
 		GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
-		
 		//GeradorDeTrafego.trafegoDeterministico(rodada, to, dados);
-		
-		
+
 	}
 	
 	
@@ -213,15 +210,11 @@ public class ParametrosDSTE {
 				75, // BC[1] = CT1 + CT2
 				40 // BC[1] = CT2
 			};
-			
-			
-	
-	
 */	
 	public static double [] BCPadrao= new double[]           //para MAN 
-			{	20, // BC[0] =CT0 (Valor do Enlace)
-				30, // BC[1] = CT1
-				50 // BC[2] =  CT2
+			{	40, // BC[0] =CT0 (Valor do Enlace)
+				35, // BC[1] = CT1
+				25 // BC[2] =  CT2
 			};
 	
 	public static double [] BCHTLPadrao= new double[]
