@@ -250,27 +250,7 @@ public class TesteSimulacao {
 				No no = new No();
 				
 				
-				/*			
-				if(to.link[0].bamType!=BAMType.PreemptionGBAM)
-				{
-					nomeBAMAtual = to.link[0].bamType.toString();
-				}else
-				{
-					//Se BCLTH diferente de 0 é pq reflete Alloc
-					if (to.link[0].BCLTH[0]!=0)
-						
-						nomeBAMAtual = "PreemptionAllocCTSharing";
-					
-					//Se BCLTH diferente é igual a 0 e BCHTL diferente de 0 é pq reflete RDM
-					else if (to.link[0].BCHTL[2]!=0)
-						
-						nomeBAMAtual = "PreemptionRDM";
-					
-					//Se BCLTH e BCHTL igual a 0 é pq reflete MAM
-					else
-						nomeBAMAtual = "NoPreemptionMAM";
-				}
-				*/
+			
 				
 				if (cbrCase != null) {
 					
@@ -447,11 +427,20 @@ public class TesteSimulacao {
 							}
 							if (bamAnterior == BAMTypes.NoPreemptionMAM.name() && bamAgora == BAMTypes.NoPreemptionMAM.name() ){
 								
-								if (utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[0]<0.60){
+																
+								
+								double uti =  (to.link[0].CargaEnlace - ( minimo(to.link[0].BC[0], to.link[0].BC[1]) + minimo(to.link[0].BC[1], to.link[0].BC[2]) ))/ to.link[0].CargaEnlace;
+								double bloq = uti * ParametrosDSTE.SLABloqueios;
+								
+								if (   (utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[1]+utilizacaoCTJanelaAgora[2]) < uti    &&     (bloqueiosCTJanelaAgora[0] + bloqueiosCTJanelaAgora[1] + bloqueiosCTJanelaAgora[2]) <  bloq ){
 									score =0;
 								}
 
 							}
+							
+							
+							
+							
 							
 							System.out.println(rodada.simtime() + " " + "Score:" + score);
 							if (score > 5 ){
@@ -742,7 +731,15 @@ public class TesteSimulacao {
 		
 	}
 
-
+	private double minimo(double  a, double  b){
+		if (a<b)
+		{
+			return a;
+		}else{
+			return b;
+		}
+				
+	}
 	
 
 
