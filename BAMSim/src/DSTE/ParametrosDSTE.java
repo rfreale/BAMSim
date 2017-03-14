@@ -68,9 +68,9 @@ public class ParametrosDSTE {
 	
 	
 	public static final boolean RecomendacaoCBRSwitchBAM = true;
-	public static final boolean RecomendacaoCBRRetencao = false;
+	public static final boolean RecomendacaoCBRRetencao = false ;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
-	public static final double RecomendacaoCBRLimiarDeCorte = 0.98;
+	public static final double RecomendacaoCBRLimiarDeCorte = 0.85;
 	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.85;
 	public static final String filenameBaseCBR= ".//basesCBR//base4.sql";
 	
