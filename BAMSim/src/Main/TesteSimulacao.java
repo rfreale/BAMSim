@@ -355,6 +355,7 @@ public class TesteSimulacao {
 				}
 					
 				//Agenda avaliar rentenção 
+				if (ParametrosDSTE.RecomendacaoCBRRetencao){
 					if (mudouBAM==1){
 						if (casoRenAntigo!=null){
 							rodada.cancelp_tkn(casoRenAntigo);
@@ -371,7 +372,7 @@ public class TesteSimulacao {
 						casoRenAntigo = null;
 					}
 					
-					
+				}
 					BancoDeDados.setXML( "Recomendação out. " + rodada.simtime() + "\n" , rodada.filename);	
 					rodada.schedulep(5, ParametrosDSTE.Janela, null);
 				
@@ -429,10 +430,11 @@ public class TesteSimulacao {
 								
 																
 								
-								double uti =  (to.link[0].CargaEnlace - ( minimo(to.link[0].BC[0], to.link[0].BC[1]) + minimo(to.link[0].BC[1], to.link[0].BC[2]) ))/ to.link[0].CargaEnlace;
+								double uti =  ( ( minimo(to.link[0].BC[0], to.link[0].BC[1]) + minimo(to.link[0].BC[1], to.link[0].BC[2]) ))/ (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]);
 								double bloq = uti * ParametrosDSTE.SLABloqueios;
 								
-								if (   (utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[1]+utilizacaoCTJanelaAgora[2]) < uti    &&     (bloqueiosCTJanelaAgora[0] + bloqueiosCTJanelaAgora[1] + bloqueiosCTJanelaAgora[2]) <  bloq ){
+								if (    (utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[1]+utilizacaoCTJanelaAgora[2]) < uti    &&   
+										(  (bloqueiosCTJanelaAgora[0]*to.link[0].BC[0] + bloqueiosCTJanelaAgora[1]*to.link[0].BC[1] + bloqueiosCTJanelaAgora[2]*to.link[0].BC[2])/  (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2])  )<  bloq ){
 									score =0;
 								}
 

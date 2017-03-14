@@ -44,7 +44,7 @@ public class ParametrosDSTE {
 	public static final int  Escada = 128; //limite da função de similaridade Threshold
 	public static final double SLAPreempcoes = 10;
 	public static final double SLADevolucoes = 5;
-	public static final double SLABloqueios = 0.2;
+	public static final double SLABloqueios = 0.25;
 	public static final double SLAUtilizacao = 80;
 	public static final long TempoSimulacao = 3600*24;
 	/*//////Dados do RRDTools
@@ -68,10 +68,11 @@ public class ParametrosDSTE {
 	
 	
 	public static final boolean RecomendacaoCBRSwitchBAM = true;
+	public static final boolean RecomendacaoCBRRetencao = false;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.98;
 	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.85;
-	public static final String filenameBaseCBR= ".//basesCBR//baseZ.sql";
+	public static final String filenameBaseCBR= ".//basesCBR//base4.sql";
 	
 	
 	
