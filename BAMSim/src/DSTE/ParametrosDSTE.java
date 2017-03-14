@@ -221,13 +221,13 @@ public class ParametrosDSTE {
 	public static double [] BCHTLPadrao= new double[]
 			{	0,//BC0 Nunca mudar
 				
-				100, //BC1
-				100 //BC2
+				00, //BC1
+				00 //BC2
 			};
 	
 	public static double [] BCLTHPadrao= new double[]
-			{	100, //BC0 
-				100, //BC1
+			{	00, //BC0 
+				00, //BC1
 				
 				0//BC2 Nunca mudar
 			};
@@ -380,7 +380,7 @@ public class ParametrosDSTE {
 	
 			attribute = new Attribute("numeroDeBloqueiosCT2",BAMDescription.class);
 			config.addMapping(attribute, new Interval(1));
-			config.setWeight(attribute, 1.0);
+			config.setWeight(attribute, 10.0);
 			
 					
 			attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class); 
