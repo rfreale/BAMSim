@@ -277,7 +277,7 @@ public class TesteSimulacao {
 						
 					}
 					
-				}/*else {
+				}else if (ParametrosDSTE.RecomendacaoCBRRetencao){ 
 					mudouBAM=1;
 					BancoDeDados.setXML("Nenhum caso válido na base", rodada.filename);
 					int []bams = BAMRecommenderNoGUI.getInstance().foraDaLinha(query);
@@ -352,7 +352,7 @@ public class TesteSimulacao {
 						BancoDeDados.setXML(rodada.simtime() + "######## Fora da linha de corte ######  BAM Mantido. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
 
 					}
-				}*/
+				}
 					
 				//Agenda avaliar rentenção 
 				if (ParametrosDSTE.RecomendacaoCBRRetencao){
@@ -627,8 +627,8 @@ public class TesteSimulacao {
 							+ devolucoesCTJanela[2] + "\t"
 
 							//, "saida");
-							, rodada.filename+"_7");
-							//, rodada.filename);
+							//, rodada.filename+"_7");
+							, rodada.filename);
 				
 				
 					
@@ -646,6 +646,8 @@ public class TesteSimulacao {
 			//BancoDeDados.setXML(rodada.imprime_evchain(),"debug2");
 
 		}
+		
+		
 		Debug.setMensagem("\r\n\r\n ==== Status dos Links  ====");
 		Debug.setMensagem(to.statusLinks());
 		rodada.estatistica.tempoSimulacaoFim=System.currentTimeMillis();
