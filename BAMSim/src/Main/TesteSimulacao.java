@@ -120,7 +120,7 @@ public class TesteSimulacao {
 			//Agenda primeira avaliação
 			rodada.schedulep (5, ParametrosDSTE.Janela+0.40, null);
 		}
-		//rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
+		rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -342,7 +342,7 @@ public class TesteSimulacao {
 					sol.setAceita(true);
 					novocase.setSolution(sol);
 					no.item=novocase;
-					BancoDeDados.setXML("Caso Sugerido\t" + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename);
+					BancoDeDados.setXML("Caso Sugerido ID:" + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename);
 					//Por enquanto só recomendação
 									
 					if (mudouBAM==1)
@@ -442,28 +442,28 @@ public class TesteSimulacao {
 							
 							
 							
-							
+							BancoDeDados.setXML(rodada.simtime() + ": Avaliando BAM, pois a rede ainda é "+ sim*100 + "% similar"  ,rodada.filename );
 							
 							System.out.println(rodada.simtime() + " " + "Score:" + score);
 							if (score > 5 ){
 								BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
 								
-								((BAMDescription)novocase.getDescription()).setCaseId("novo"+(recommender.getCaseBase().getCases().size()+1));
+								((BAMDescription)novocase.getDescription()).setCaseId("N_"+(recommender.getCaseBase().getCases().size()+1));
 								
 								((BAMSolution)novocase.getSolution()).setId("N_"+(recommender.getCaseBase().getCases().size()+1));
 								
 								jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
-								BancoDeDados.setXML( rodada.simtime() + ": BAM: "+ ((BAMSolution)novocase.getSolution()).getId()  + " = Aceito. Armazenado na base positiva. Rede similar em: " + sim,rodada.filename );
+								BancoDeDados.setXML( rodada.simtime() + ": BAM: "+  ((BAMDescription)novocase.getDescription()).getCaseId() + " = Aceito. Armazenado na base positiva. Rede similar em: " + sim,rodada.filename );
 								
 							}else{
 								BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
 								
-								((BAMDescription)novocase.getDescription()).setCaseId("bam"+(recommender.getCaseBaseDB2().getCases().size()+1));
+								((BAMDescription)novocase.getDescription()).setCaseId("R_"+(recommender.getCaseBaseDB2().getCases().size()+1));
 								
 								((BAMSolution)novocase.getSolution()).setId("R_"+(recommender.getCaseBaseDB2().getCases().size()+1));
 								
 								jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), novocase);
-								BancoDeDados.setXML( rodada.simtime() + ": BAM: "+ ((BAMSolution)novocase.getSolution()).getId()  +  " = Rejeitado. Armazenado na base negativa.",rodada.filename );
+								BancoDeDados.setXML( rodada.simtime() + ": BAM: "+ ((BAMDescription)novocase.getDescription()).getCaseId()   +  " = Rejeitado. Armazenado na base negativa.",rodada.filename );
 								
 							}
 						}
@@ -551,11 +551,11 @@ public class TesteSimulacao {
 					
 					BancoDeDados.setXML(  rodada.simtime() + "\t"
 							+ nomeBAMAtual + "\t"
-							+ ParametrosDSTE.Janela + "\t"
+							/////////////+ ParametrosDSTE.Janela + "\t"
 							
-							+ to.link[0].CargaEnlace * to.link[0].BC[0] / 100 + "\t"
-							+ to.link[0].CargaEnlace * to.link[0].BC[1] / 100 + "\t"
-							+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
+							///////////////+ to.link[0].CargaEnlace * to.link[0].BC[0] / 100 + "\t"
+							///////////////+ to.link[0].CargaEnlace * to.link[0].BC[1] / 100 + "\t"
+							////////////////+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
 							
 							
 						/*	+ to.link[0].CargaCTAtual[0] + "\t"
@@ -631,8 +631,8 @@ public class TesteSimulacao {
 							, rodada.filename);
 				
 				
-					
-					rodada.schedulep(7, ParametrosDSTE.Janela , null);
+					rodada.schedulep(7, ParametrosDSTE.RRDBatida, null);
+					//rodada.schedulep(7, ParametrosDSTE.Janela , null);
 					
 					
 				break;
