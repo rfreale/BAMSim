@@ -176,7 +176,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		//BancoDeDados.setXML("\n");
 		//BancoDeDados.setXML("====Query===");
 
-		BancoDeDados.setXML("Query, ID: " + ((BAMDescription) query.getDescription()).toTabela() );
+		BancoDeDados.setXML("\nQuery, ID: " + ((BAMDescription) query.getDescription()).toTabela() );
 		 //BancoDeDados.setXML(query.toString());
 
 		// BancoDeDados.setXML(((BAMDescription)query.getDescription()).getInsertDB(),
@@ -184,7 +184,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		//BancoDeDados.setXML("====Similar===");
 		// BancoDeDados.setXML(eval.toArray()[0].toString(), "Debug");
 		
-		Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval, 10);
+		Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval, 3);
 		for (RetrievalResult rr : selectedcases) {
 			BancoDeDados.setXML("Sim, ID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
 			//BancoDeDados.setXML(rr.toString());
@@ -279,9 +279,9 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBaseDB2.getCases(), query, simConfig);
 		
-		BancoDeDados.setXML("Query_ForaDaLinha ID: " + ((BAMDescription) query.getDescription()).toTabela() );
+		BancoDeDados.setXML("\nQuery_ForaDaLinha ID: " + ((BAMDescription) query.getDescription()).toTabela() );
 				
-		Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval, 10);
+		Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval, 3);
 		for (RetrievalResult rr : selectedcases) {
 			BancoDeDados.setXML("Sim_ForaDaLinha ID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
 		}

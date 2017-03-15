@@ -291,11 +291,11 @@ public class TesteSimulacao {
 						if (bams[0]==0){
 							 bam = BAMTypes.values()[0];
 							 mudouBAM= 0;
-						}else if (bams[1]==0){
-							 bam = BAMTypes.values()[4];
-							 switchBAM(to, bam.name());
 						}else if (bams[2]==0){
 							 bam = BAMTypes.values()[5];
+							 switchBAM(to, bam.name());
+						}else if (bams[1]==0){
+							 bam = BAMTypes.values()[4];
 							 switchBAM(to, bam.name());
 						}else{
 							 bam = BAMTypes.values()[0];
@@ -364,17 +364,22 @@ public class TesteSimulacao {
 						casoRenAntigo = (CBRCase)no.item;
 						
 						rodada.schedulep(6, ParametrosDSTE.Janela*2-0.10, no);
-						//this.AGENDAMENTO++;
+						rodada.schedulep(5, ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida, null);
+						
 					}else if (mudouBAM==0){
 						rodada.schedulep(6, ParametrosDSTE.Janela-0.10, no);
 						casoRenAntigo = null;
+						rodada.schedulep(5, ParametrosDSTE.Janela, null);
 					}else{
 						casoRenAntigo = null;
+						rodada.schedulep(5, ParametrosDSTE.Janela, null);
 					}
 					
+				}else{
+					rodada.schedulep(5, ParametrosDSTE.Janela, null);
 				}
 					BancoDeDados.setXML( "Recomendação out. " + rodada.simtime() + "\n" , rodada.filename);	
-					rodada.schedulep(5, ParametrosDSTE.Janela, null);
+					//rodada.schedulep(5, ParametrosDSTE.Janela, null);
 				
 				
 				break;
@@ -403,7 +408,7 @@ public class TesteSimulacao {
 							
 							int score = 0;
 							String bamAnterior = ((BAMDescription)novocase.getDescription()).getBAMAtual().name();
-							//double []utilizacaoCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT0(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT1(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT2()} ;  
+							double []utilizacaoCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT0(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT1(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT2()} ;  
 							//double []bloqueioCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT2()} ;
 							double []preempcoesCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT2()} ;  
 							double []devolucoesCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT2()} ;				
@@ -413,15 +418,23 @@ public class TesteSimulacao {
 							double []bloqueiosCTJanelaAgora   	= new double [] {((BAMDescription)query.getDescription()).getNumeroDeBloqueiosCT0(), ((BAMDescription)query.getDescription()).getNumeroDeBloqueiosCT1(), ((BAMDescription)query.getDescription()).getNumeroDeBloqueiosCT2()} ; 
 							double []preempcoesCTJanelaAgora  	= new double [] {((BAMDescription)query.getDescription()).getNumeroDePreempcoesCT0(), ((BAMDescription)query.getDescription()).getNumeroDePreempcoesCT1(), ((BAMDescription)query.getDescription()).getNumeroDePreempcoesCT2()} ;  
 							double []devolucoesCTJanelaAgora   	= new double [] {((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT0(), ((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT1(), ((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT2()} ;
-														
+							
+							double somatorioUtilizacaoCTJanelaAnterior = utilizacaoCTJanelaAnterior[0]+utilizacaoCTJanelaAnterior[1]+	utilizacaoCTJanelaAnterior[2];
+							double somatorioUtilizacaoCTJanelaAgora = 	utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[1]+utilizacaoCTJanelaAgora[2];
+											
+									
+									
+									
 							
 							for (int i = 0; i < ParametrosDSTE.MaxClassType; i++) {
-								if ((preempcoesCTJanelaAgora[i]< preempcoesCTJanelaAnterior[i])||(preempcoesCTJanelaAgora[i]==0 && preempcoesCTJanelaAnterior[i]>=0) )
+								//if ((preempcoesCTJanelaAgora[i]< preempcoesCTJanelaAnterior[i])||(preempcoesCTJanelaAgora[i]==0 && preempcoesCTJanelaAnterior[i]>=0) )
+								if ( preempcoesCTJanelaAgora[i]==0 )
 								{
 									score++;					
 								}
 								
-								if ((devolucoesCTJanelaAgora[i]< devolucoesCTJanelaAnterior[i])|| (devolucoesCTJanelaAgora[i]==0 && devolucoesCTJanelaAnterior[i]>=0) )
+								//if ((devolucoesCTJanelaAgora[i]< devolucoesCTJanelaAnterior[i])|| (devolucoesCTJanelaAgora[i]==0 && devolucoesCTJanelaAnterior[i]>=0) )
+								if ( devolucoesCTJanelaAgora[i]==0 )
 								{
 									score++;					
 								}
@@ -433,7 +446,7 @@ public class TesteSimulacao {
 								double uti =  ( ( minimo(to.link[0].BC[0], to.link[0].BC[1]) + minimo(to.link[0].BC[1], to.link[0].BC[2]) ))/ (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]);
 								double bloq = uti * ParametrosDSTE.SLABloqueios;
 								
-								if (    (utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[1]+utilizacaoCTJanelaAgora[2]) < uti    &&   
+								if (    (somatorioUtilizacaoCTJanelaAgora) < uti    &&   
 										(  (bloqueiosCTJanelaAgora[0]*to.link[0].BC[0] + bloqueiosCTJanelaAgora[1]*to.link[0].BC[1] + bloqueiosCTJanelaAgora[2]*to.link[0].BC[2])/  (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2])  )<  bloq ){
 									score =0;
 								}
