@@ -151,14 +151,14 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		// Print the cases
 		java.util.Collection<CBRCase> cases = _caseBase.getCases();
 		for (CBRCase c : cases)
-			System.out.println(((BAMDescription) c.getDescription()).toTabela() +"\t"+ ((BAMSolution) c.getSolution()).getBAMNovo());
+			System.out.println(((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo());
 		System.out.println("===================DB2==================");
 		// Load cases from connector into the case base
 		_caseBaseDB2.init(_connectorDB2);
 		// Print the cases
 		cases = _caseBaseDB2.getCases();
 		for (CBRCase c : cases)
-			System.out.println(((BAMDescription) c.getDescription()).toTabela() +"\t"+ ((BAMSolution) c.getSolution()).getBAMNovo());
+			System.out.println(((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo());
 		return _caseBase;
 	}
 
@@ -378,11 +378,11 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		String aux = "===================DB==================\r\n";
 		java.util.Collection<CBRCase> cases = _caseBase.getCases();
 		for (CBRCase c : cases)
-			aux += ((BAMDescription) c.getDescription()).toTabela() +"\t"+ ((BAMSolution) c.getSolution()).getBAMNovo() + "\r\n";
+			aux += ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo() + "\n";
 		aux += "===================DB2==================\r\n";
 		cases = _caseBaseDB2.getCases();
 		for (CBRCase c : cases)
-			aux += ((BAMDescription) c.getDescription()).toTabela() +"\t"+ ((BAMSolution) c.getSolution()).getBAMNovo() + "\r\n";
+			aux += ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo() + "\n";
 		return aux;
 	}
 

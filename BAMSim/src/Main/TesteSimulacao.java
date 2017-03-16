@@ -120,7 +120,7 @@ public class TesteSimulacao {
 			//Agenda primeira avaliação
 			rodada.schedulep (5, ParametrosDSTE.Janela+0.40, null);
 		}
-		rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
+		//rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -264,10 +264,10 @@ public class TesteSimulacao {
 						//BancoDeDados.setXML(rodada.simtime() + " SimCaseID"+((BAMDescription) cbrCase.getDescription()).getCaseId()+"-> Recomenda BAM"+solutionRecomendada+":"+((BAMDescription) query.getDescription()).toTabela(), rodada.filename);
 						novocase.setSolution(sol);
 						no.item=novocase;
-						BancoDeDados.setXML("Caso Sugerido\t" + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename);
+						BancoDeDados.setXML("Caso Sugerido ID: " + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename);
 						
 						
-						BancoDeDados.setXML(/*rodada.simtime() +*/ "######## Dentro da linha de corte ######  BAM modificado. Agendado retenção para tempo:" + (rodada.simtime() + (2*ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
+						BancoDeDados.setXML(/*rodada.simtime() +*/ "######## Dentro da linha de corte ######  BAM modificado. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) + "##################", rodada.filename);
 						
 						
 					}else{
@@ -347,7 +347,7 @@ public class TesteSimulacao {
 									
 					if (mudouBAM==1)
 					{
-						BancoDeDados.setXML(rodada.simtime() + "######## Fora da linha de corte ######  BAM Modificado. Agendado retenção para tempo:" + (rodada.simtime() + (2*ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
+						BancoDeDados.setXML(rodada.simtime() + "######## Fora da linha de corte ######  BAM Modificado. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) + "##################", rodada.filename);
 					}else {
 						BancoDeDados.setXML(rodada.simtime() + "######## Fora da linha de corte ######  BAM Mantido. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
 
@@ -358,13 +358,14 @@ public class TesteSimulacao {
 				if (ParametrosDSTE.RecomendacaoCBRRetencao){
 					if (mudouBAM==1){
 						if (casoRenAntigo!=null){
-							rodada.cancelp_tkn(casoRenAntigo);
-							BancoDeDados.setXML(rodada.simtime()+300 + "##############. Desagenda retenção - Duas Trocas",rodada.filename );
+						//	rodada.cancelp_tkn(casoRenAntigo);
+							BancoDeDados.setXML(rodada.simtime()+300 + "##############. Desagenda retenção - Duas Trocas ==== avaliar isso",rodada.filename );
 						}
 						casoRenAntigo = (CBRCase)no.item;
 						
-						rodada.schedulep(6, ParametrosDSTE.Janela*2-0.10, no);
+						rodada.schedulep(6, ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10, no);
 						rodada.schedulep(5, ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida, null);
+						//rodada.schedulep(5, ParametrosDSTE.Janela, null);
 						
 					}else if (mudouBAM==0){
 						rodada.schedulep(6, ParametrosDSTE.Janela-0.10, no);
@@ -402,7 +403,7 @@ public class TesteSimulacao {
 					Collection <RetrievalResult> eval2 = NNScoringMethod.evaluateSimilarity(tmp, query,fun2 );
 					double sim = eval2.iterator().next().getEval();
 					
-					if (sim >= 0.8){ // verifica se houve mudança na rede
+					if (sim >= 0.80){ // verifica se houve mudança na rede
 						
 						if (1>0) { ///// Codigo do gerente virtual para case 3
 							
@@ -453,6 +454,19 @@ public class TesteSimulacao {
 
 							}
 							
+							if (bamAnterior == BAMTypes.PreemptionAllocCTSharing.name() && bamAgora == BAMTypes.PreemptionAllocCTSharing.name() ){
+								
+								if (  (preempcoesCTJanelaAnterior[0]
+									   + preempcoesCTJanelaAnterior[1]
+									   + preempcoesCTJanelaAnterior[2]
+								       + devolucoesCTJanelaAnterior[0]
+									   + devolucoesCTJanelaAnterior[1]
+									   + devolucoesCTJanelaAnterior[2])  >0){
+									score =1;
+								}
+
+							}
+							
 							
 							
 							BancoDeDados.setXML(rodada.simtime() + ": Avaliando BAM, pois a rede ainda é "+ sim*100 + "% similar"  ,rodada.filename );
@@ -476,7 +490,7 @@ public class TesteSimulacao {
 								((BAMSolution)novocase.getSolution()).setId("R_"+(recommender.getCaseBaseDB2().getCases().size()+1));
 								
 								jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), novocase);
-								BancoDeDados.setXML( rodada.simtime() + ": BAM: "+ ((BAMDescription)novocase.getDescription()).getCaseId()   +  " = Rejeitado. Armazenado na base negativa.",rodada.filename );
+								BancoDeDados.setXML( rodada.simtime() + ": BAM: "+ ((BAMDescription)novocase.getDescription()).getCaseId()   +  " = Rejeitado. Armazenado na base negativa. Score:" + score,rodada.filename );
 								
 							}
 						}
@@ -562,87 +576,109 @@ public class TesteSimulacao {
 										+ rodada.estatistica.lspEstablishedAnterior(ParametrosDSTE.Janela, 2))		:0;	
 
 					
-					BancoDeDados.setXML(  rodada.simtime() + "\t"
-							+ nomeBAMAtual + "\t"
-							/////////////+ ParametrosDSTE.Janela + "\t"
-							
-							///////////////+ to.link[0].CargaEnlace * to.link[0].BC[0] / 100 + "\t"
-							///////////////+ to.link[0].CargaEnlace * to.link[0].BC[1] / 100 + "\t"
-							////////////////+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
-							
-							
-						/*	+ to.link[0].CargaCTAtual[0] + "\t"
-							+ to.link[0].CargaCTAtual[1] + "\t"
-							+ to.link[0].CargaCTAtual[2] + "\t"*/
-							
-							
-							+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
-							+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
-							+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace + "\t"
+								BancoDeDados.setXML(  rodada.simtime() + "\t"
+										+ nomeBAMAtual + "\t"
+										/////////////+ ParametrosDSTE.Janela + "\t"
+										
+										///////////////+ to.link[0].CargaEnlace * to.link[0].BC[0] / 100 + "\t"
+										///////////////+ to.link[0].CargaEnlace * to.link[0].BC[1] / 100 + "\t"
+										////////////////+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
+										
+										
+									/*	+ to.link[0].CargaCTAtual[0] + "\t"
+										+ to.link[0].CargaCTAtual[1] + "\t"
+										+ to.link[0].CargaCTAtual[2] + "\t"*/
+										
+										
+										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
+										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
+										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace + "\t"
 
-							
-							//+ rodada.estatistica.lspRequested + "\t"
-							
-						/*								
-							+ rodada.estatistica.lspRequestedCT[0] + "\t"
-							+ rodada.estatistica.lspRequestedCT[1] + "\t"
-							+ rodada.estatistica.lspRequestedCT[2] + "\t"
-							
+										
+										//+ rodada.estatistica.lspRequested + "\t"
+										
+									/*								
+										+ rodada.estatistica.lspRequestedCT[0] + "\t"
+										+ rodada.estatistica.lspRequestedCT[1] + "\t"
+										+ rodada.estatistica.lspRequestedCT[2] + "\t"
+										
+																	
+										+ rodada.estatistica.lspEstablishedCT[0] + "\t"
+										+ rodada.estatistica.lspEstablishedCT[1] + "\t"
+										+ rodada.estatistica.lspEstablishedCT[2] + "\t"
+
+										
+										+ rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 0) + "\t"
+										+ rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 1) + "\t"
+										+ rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 2) + "\t"
+
+										
+										+ rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0) + "\t"
+										+ rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1) + "\t"
+										+ rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2) + "\t"
+														*/
+
+										
+									
+										
+									/*
+										+ rodada.estatistica.bloqueios + "\t"
+										+ rodada.estatistica.preempcoes + "\t"
+										+ rodada.estatistica.devolucoes + "\t"
+										
+										
+										
+										+ rodada.estatistica.bloqueiosCT[0] + "\t"
+										+ rodada.estatistica.bloqueiosCT[1] + "\t"
+										+ rodada.estatistica.bloqueiosCT[2] + "\t"
+										
+										+ rodada.estatistica.preempcoesCT[0] + "\t"
+										+ rodada.estatistica.preempcoesCT[1] + "\t"
+										+ rodada.estatistica.preempcoesCT[2] + "\t"
+
+										+ rodada.estatistica.devolucoesCT[0] + "\t"
+										+ rodada.estatistica.devolucoesCT[1] + "\t"
+										+ rodada.estatistica.devolucoesCT[2] + "\t"
+										*/
 														
-							+ rodada.estatistica.lspEstablishedCT[0] + "\t"
-							+ rodada.estatistica.lspEstablishedCT[1] + "\t"
-							+ rodada.estatistica.lspEstablishedCT[2] + "\t"
+										+ bloqueiosCTJanela[0] + "\t"
+										+ bloqueiosCTJanela[1] + "\t"
+										+ bloqueiosCTJanela[2] + "\t"
+										
+										+ preempcoesCTJanela[0] + "\t"
+										+ preempcoesCTJanela[1] + "\t"
+										+ preempcoesCTJanela[2] + "\t"
+										
+										+ devolucoesCTJanela[0] + "\t"
+										+ devolucoesCTJanela[1] + "\t"
+										+ devolucoesCTJanela[2] + "\t"
 
-							
-							+ rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 0) + "\t"
-							+ rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 1) + "\t"
-							+ rodada.estatistica.lspRequestedCT(ParametrosDSTE.Janela, 2) + "\t"
-
-							
-							+ rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 0) + "\t"
-							+ rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 1) + "\t"
-							+ rodada.estatistica.lspEstablishedCT(ParametrosDSTE.Janela, 2) + "\t"
-											*/
-
-							
-						
-							
-						/*
-							+ rodada.estatistica.bloqueios + "\t"
-							+ rodada.estatistica.preempcoes + "\t"
-							+ rodada.estatistica.devolucoes + "\t"
-							
-							
-							
-							+ rodada.estatistica.bloqueiosCT[0] + "\t"
-							+ rodada.estatistica.bloqueiosCT[1] + "\t"
-							+ rodada.estatistica.bloqueiosCT[2] + "\t"
-							
-							+ rodada.estatistica.preempcoesCT[0] + "\t"
-							+ rodada.estatistica.preempcoesCT[1] + "\t"
-							+ rodada.estatistica.preempcoesCT[2] + "\t"
-
-							+ rodada.estatistica.devolucoesCT[0] + "\t"
-							+ rodada.estatistica.devolucoesCT[1] + "\t"
-							+ rodada.estatistica.devolucoesCT[2] + "\t"
-							*/
-											
-							+ bloqueiosCTJanela[0] + "\t"
-							+ bloqueiosCTJanela[1] + "\t"
-							+ bloqueiosCTJanela[2] + "\t"
-							
-							+ preempcoesCTJanela[0] + "\t"
-							+ preempcoesCTJanela[1] + "\t"
-							+ preempcoesCTJanela[2] + "\t"
-							
-							+ devolucoesCTJanela[0] + "\t"
-							+ devolucoesCTJanela[1] + "\t"
-							+ devolucoesCTJanela[2] + "\t"
-
-							//, "saida");
+										//, "saida");
 							//, rodada.filename+"_7");
 							, rodada.filename);
-				
+								
+								BancoDeDados.setXML(  rodada.simtime() + "\t"
+										+ nomeBAMAtual + "\t"
+										
+										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
+										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
+										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace + "\t"
+														
+										+ bloqueiosCTJanela[0] + "\t"
+										+ bloqueiosCTJanela[1] + "\t"
+										+ bloqueiosCTJanela[2] + "\t"
+										
+										+ preempcoesCTJanela[0] + "\t"
+										+ preempcoesCTJanela[1] + "\t"
+										+ preempcoesCTJanela[2] + "\t"
+										
+										+ devolucoesCTJanela[0] + "\t"
+										+ devolucoesCTJanela[1] + "\t"
+										+ devolucoesCTJanela[2] + "\t"
+
+										//, "saida");
+								, rodada.filename+"_7");
+								
 				
 					rodada.schedulep(7, ParametrosDSTE.RRDBatida, null);
 					//rodada.schedulep(7, ParametrosDSTE.Janela , null);

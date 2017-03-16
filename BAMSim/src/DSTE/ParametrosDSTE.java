@@ -70,8 +70,8 @@ public class ParametrosDSTE {
 	public static final boolean RecomendacaoCBRSwitchBAM = true;
 	public static final boolean RecomendacaoCBRRetencao = true ;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
-	public static final double RecomendacaoCBRLimiarDeCorte = 0.95;
-	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.85;
+	public static final double RecomendacaoCBRLimiarDeCorte = 0.97;
+	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.95;
 	public static final String filenameBaseCBR= ".//basesCBR//base4.2.sql";
 	
 	
@@ -275,7 +275,7 @@ public class ParametrosDSTE {
 
 		attribute = new Attribute("BAMAtual",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 100.0);
+		config.setWeight(attribute, 50.0);
 		
 		/*attribute = new Attribute("gestor",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
@@ -493,15 +493,15 @@ public class ParametrosDSTE {
 						
 		attribute = new Attribute("utilizacaoDoEnlaceCT0",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(1));
-		config.setWeight(attribute, 1.0);
+		config.setWeight(attribute, 50.0);
 		
 		attribute = new Attribute("utilizacaoDoEnlaceCT1",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(1));
-		config.setWeight(attribute, 1.0);
+		config.setWeight(attribute, 50.0);
 		
 		attribute = new Attribute("utilizacaoDoEnlaceCT2",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(1));
-		config.setWeight(attribute, 1.0);
+		config.setWeight(attribute, 50.0);
 		
 		attribute = new Attribute("numeroDeBloqueiosCT0",BAMDescription.class);
 		config.addMapping(attribute, new Interval(0.5));
@@ -517,14 +517,14 @@ public class ParametrosDSTE {
 		config.addMapping(attribute, new Interval(0.5));
 		config.setWeight(attribute, 1.0);
 		
-		/*		
+				
 		attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(1));
 		config.setWeight(attribute, 1.0);
 
 		attribute = new Attribute("numeroDePreempcoesCT1",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(1));
-		config.setWeight(attribute, 1.0);*/
+		config.setWeight(attribute, 1.0);
 		
 					/*nunca existe esse valor
 					attribute = new Attribute("numeroDePreempcoesCT2",BAMDescription.class);
@@ -537,7 +537,7 @@ public class ParametrosDSTE {
 					config.addMapping(attribute, new Interval(100));
 					config.setWeight(attribute, 0.0);*/
 					
-/*		
+		
 		attribute = new Attribute("numeroDeDevolucoesCT1",BAMDescription.class);
 		config.addMapping(attribute, new Interval(1));
 		config.setWeight(attribute, 1.0);
@@ -545,7 +545,7 @@ public class ParametrosDSTE {
 		
 		attribute = new Attribute("numeroDeDevolucoesCT2",BAMDescription.class);
 		config.addMapping(attribute, new Interval(1));
-		config.setWeight(attribute, 1.0);*/
+		config.setWeight(attribute, 1.0);
 		
 		
 		return config;
