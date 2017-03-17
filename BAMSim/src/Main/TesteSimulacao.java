@@ -232,7 +232,7 @@ public class TesteSimulacao {
 			case 5:
 				//Avalia BAM via CBR
 				
-				BancoDeDados.setXML( "\nRecomendação in:" + rodada.simtime() , rodada.filename);
+				BancoDeDados.setXML(rodada.simtime() + " Entrou na Recomendação", rodada.filename);
 				
 				int mudouBAM= -1;
 				CBRCase cbrCase = null;
@@ -264,10 +264,10 @@ public class TesteSimulacao {
 						//BancoDeDados.setXML(rodada.simtime() + " SimCaseID"+((BAMDescription) cbrCase.getDescription()).getCaseId()+"-> Recomenda BAM"+solutionRecomendada+":"+((BAMDescription) query.getDescription()).toTabela(), rodada.filename);
 						novocase.setSolution(sol);
 						no.item=novocase;
-						BancoDeDados.setXML("Caso Sugerido ID: " + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename);
+						BancoDeDados.setXML("\nCASO SUGERIDO ID: " + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename);
 						
 						
-						BancoDeDados.setXML(/*rodada.simtime() +*/ "######## Dentro da linha de corte ######  BAM modificado. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) + "##################", rodada.filename);
+						//BancoDeDados.setXML(/*rodada.simtime() +*/ "######## Dentro da linha de corte ######  BAM modificado. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) + "##################", rodada.filename);
 						
 						
 					}else{
@@ -277,9 +277,9 @@ public class TesteSimulacao {
 						
 					}
 					
-				}else if (ParametrosDSTE.RecomendacaoCBRRetencao){ 
+				}else if (ParametrosDSTE.RecomendacaoCBRRetencao){
 					mudouBAM=1;
-					BancoDeDados.setXML("Nenhum caso válido na base", rodada.filename);
+					//BancoDeDados.setXML("Nenhum caso válido na base", rodada.filename);
 					int []bams = BAMRecommenderNoGUI.getInstance().foraDaLinha(query);
 					BAMTypes bam = null;
 					
@@ -288,68 +288,58 @@ public class TesteSimulacao {
 					
 					switch (nomeBAMAtual) {
 					case "NoPreemptionMAM":
-						if (bams[0]==0){
-							 bam = BAMTypes.values()[0];
-							 mudouBAM= 0;
-						}else if (bams[2]==0){
+						if (bams[2]==0){
 							 bam = BAMTypes.values()[5];
 							 switchBAM(to, bam.name());
 						}else if (bams[1]==0){
 							 bam = BAMTypes.values()[4];
 							 switchBAM(to, bam.name());
-						}else{
-							 bam = BAMTypes.values()[0];
-							 switchBAM(to, bam.name());
-							/////Forcar a retenção <<<<<<<<<<<==================================================
+						}else {
+							bam = BAMTypes.values()[0];
+							 mudouBAM= 0;
 						}	
 						break;
 					
 					case "PreemptionRDM":
-						if (bams[1]==0){
-							 bam = BAMTypes.values()[4];
-							 mudouBAM= 0;
-						}else if (bams[0]==0){
-							 bam = BAMTypes.values()[0];
-							 switchBAM(to, bam.name());
-						}else if (bams[2]==0){
+						if (bams[2]==0){
 							 bam = BAMTypes.values()[5];
 							 switchBAM(to, bam.name());
-						}else{
+						}else if (bams[1]==0){
+							bam = BAMTypes.values()[4];
+							mudouBAM= 0;
+						}else {
 							 bam = BAMTypes.values()[0];
 							 switchBAM(to, bam.name());
-							/////Forcar a retenção <<<<<<<<<<<==================================================
 						}
 						break;
 					
 					case "PreemptionAllocCTSharing":
 						if (bams[2]==0){
-							 bam = BAMTypes.values()[5];
-							 mudouBAM= 0;
+							bam = BAMTypes.values()[5];
+							mudouBAM= 0;
 						}else if (bams[1]==0){
 							 bam = BAMTypes.values()[4];
 							 switchBAM(to, bam.name());
-						}else if (bams[0]==0){
+						}else {
 							 bam = BAMTypes.values()[0];
 							 switchBAM(to, bam.name());
-						}else{
-							 bam = BAMTypes.values()[0];
-							 switchBAM(to, bam.name());
-							/////Forcar a retenção <<<<<<<<<<<==================================================
 						}
+						break;
 					}
+					
 					BAMSolution sol = new BAMSolution() ;
 					sol.setBAMNovo(bam);
 					sol.setAceita(true);
 					novocase.setSolution(sol);
 					no.item=novocase;
-					BancoDeDados.setXML("Caso Sugerido ID:" + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename);
+					BancoDeDados.setXML("\nCASO SUGERIDO ID:" + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo()+ "\n", rodada.filename);
 					//Por enquanto só recomendação
 									
 					if (mudouBAM==1)
 					{
-						BancoDeDados.setXML(rodada.simtime() + "######## Fora da linha de corte ######  BAM Modificado. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) + "##################", rodada.filename);
+						//BancoDeDados.setXML(rodada.simtime() + "######## Fora da linha de corte ######  BAM Modificado. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) + "##################", rodada.filename);
 					}else {
-						BancoDeDados.setXML(rodada.simtime() + "######## Fora da linha de corte ######  BAM Mantido. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
+						//BancoDeDados.setXML(rodada.simtime() + "######## Fora da linha de corte ######  BAM Mantido. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
 
 					}
 				}
@@ -359,7 +349,7 @@ public class TesteSimulacao {
 					if (mudouBAM==1){
 						if (casoRenAntigo!=null){
 						//	rodada.cancelp_tkn(casoRenAntigo);
-							BancoDeDados.setXML(rodada.simtime()+300 + "##############. Desagenda retenção - Duas Trocas ==== avaliar isso",rodada.filename );
+							//BancoDeDados.setXML(rodada.simtime()+300 + "##############. Desagenda retenção - Duas Trocas ==== avaliar isso",rodada.filename );
 						}
 						casoRenAntigo = (CBRCase)no.item;
 						
@@ -368,18 +358,18 @@ public class TesteSimulacao {
 						//rodada.schedulep(5, ParametrosDSTE.Janela, null);
 						
 					}else if (mudouBAM==0){
-						rodada.schedulep(6, ParametrosDSTE.Janela-0.10, no);
-						casoRenAntigo = null;
+						rodada.schedulep(6, ParametrosDSTE.Janela-0.10, no);///////////////////////colocar  batida em vez ee janela??? ,,,<<<<<<<<<<<<<+============
+						//casoRenAntigo = null;
 						rodada.schedulep(5, ParametrosDSTE.Janela, null);
 					}else{
-						casoRenAntigo = null;
+						//casoRenAntigo = null;
 						rodada.schedulep(5, ParametrosDSTE.Janela, null);
 					}
 					
 				}else{
 					rodada.schedulep(5, ParametrosDSTE.Janela, null);
 				}
-					BancoDeDados.setXML( "Recomendação out. " + rodada.simtime() + "\n" , rodada.filename);	
+					BancoDeDados.setXML(rodada.simtime() + " Saio da Recomendação.", rodada.filename);	
 					//rodada.schedulep(5, ParametrosDSTE.Janela, null);
 				
 				
@@ -387,7 +377,7 @@ public class TesteSimulacao {
 			
 			case 6:
 				//Avalia rentenção
-				BancoDeDados.setXML( "\nEntrou em retenção:\t" + rodada.simtime() , rodada.filename);
+				BancoDeDados.setXML(rodada.simtime() + " Entrou em retenção.", rodada.filename);
 				
 				
 					 novocase = ((CBRCase)dados.item);
@@ -403,8 +393,19 @@ public class TesteSimulacao {
 					Collection <RetrievalResult> eval2 = NNScoringMethod.evaluateSimilarity(tmp, query,fun2 );
 					double sim = eval2.iterator().next().getEval();
 					
-					if (sim >= 0.80){ // verifica se houve mudança na rede
-						
+					
+					int lspRequestedAgora = rodada.estatistica.lspRequested(ParametrosDSTE.Janela);
+					int lspRequestedAnterior = Math.abs(rodada.estatistica.lspRequested(ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida) - rodada.estatistica.lspRequested(ParametrosDSTE.Janela*2+ParametrosDSTE.RRDBatida ) );
+					
+					
+					
+					int difLSPs = lspRequestedAgora - lspRequestedAnterior;
+					
+					
+					
+					
+					//if (sim >= 0.80){ // verifica se houve mudança na rede
+					if (Math.abs(difLSPs)< 200){ // verifica se houve mudança na rede	
 						
 							
 							int score = 10;
@@ -474,40 +475,86 @@ public class TesteSimulacao {
 							}
 							*/
 							
+							//regras de melhoria da rede
 							if (bamAgora == BAMTypes.NoPreemptionMAM.name()){
-								if (bamAnterior== BAMTypes.NoPreemptionMAM.name()){
+								/*if (bamAnterior== BAMTypes.NoPreemptionMAM.name()){
 									if ( somatorioUtilizacaoCTJanelaAnterior< utilizacao  && somatorioPonderadoBloqueioCTJanelaAnterior<bloqueio ){
 										score =0;
 									}							
-								}
-							}else{
-								if(somatorioPreempcoesCTJanelaAnterior > ParametrosDSTE.SLAPreempcoes || somatorioDevolucoesCTJanelaAnterior > ParametrosDSTE.SLADevolucoes){
-									score=-1;
+								}*/
+								
+							}else if(bamAgora == BAMTypes.PreemptionRDM.name()){
+								if(somatorioPreempcoesCTJanelaAnterior > ParametrosDSTE.SLAPreempcoes ){
+									score=score-1;
 								}
 								if(somatorioPreempcoesCTJanelaAgora > ParametrosDSTE.SLAPreempcoes || somatorioDevolucoesCTJanelaAgora > ParametrosDSTE.SLADevolucoes){
-									score=-2;
-								}								
+									score=score-2;
+								}
+								
+								
+								
+							}if(bamAgora == BAMTypes.PreemptionAllocCTSharing.name()){
+								if(somatorioPreempcoesCTJanelaAnterior > ParametrosDSTE.SLAPreempcoes || somatorioDevolucoesCTJanelaAnterior > ParametrosDSTE.SLADevolucoes){
+									score=score-3;
+								}
+								if(somatorioPreempcoesCTJanelaAgora > ParametrosDSTE.SLAPreempcoes || somatorioDevolucoesCTJanelaAgora > ParametrosDSTE.SLADevolucoes){
+									score=score-4;
+								}	
+								
+								
+							}
+							
+							
+							//Regras de subida
+							if (bamAnterior == BAMTypes.NoPreemptionMAM.name() && bamAgora != BAMTypes.NoPreemptionMAM.name()  ){
+								
+								if ( somatorioUtilizacaoCTJanelaAnterior > utilizacao  || somatorioPonderadoBloqueioCTJanelaAgora>bloqueio )
+								{
+									score =score-5;
+								}
+
+							}
+							
+							if (bamAnterior == BAMTypes.PreemptionRDM.name() && bamAgora == BAMTypes.PreemptionAllocCTSharing.name()  ){
+								
+								if ( somatorioUtilizacaoCTJanelaAnterior > utilizacao  || somatorioPonderadoBloqueioCTJanelaAgora>bloqueio )
+								{
+									score =score-6;
+								}
+
 							}
 							
 							
 							
-							/*if (bamAnterior == BAMTypes.NoPreemptionMAM.name() && bamAgora == BAMTypes.PreemptionAllocCTSharing.name() ){
+							
+							//Regras de decida
+							if (bamAnterior == BAMTypes.PreemptionAllocCTSharing.name() && bamAgora != BAMTypes.PreemptionAllocCTSharing.name()  ){
 								
-								if ( somatorioUtilizacaoCTJanelaAnterior > utilizacao+0.2*utilizacao  || somatorioPonderadoBloqueioCTJanelaAgora>bloqueio+ 0.2*bloqueio )
+								if ( somatorioUtilizacaoCTJanelaAnterior < utilizacao  && somatorioPonderadoBloqueioCTJanelaAgora<bloqueio )
 								{
-									score =-3;
+									score =score-6;
 								}
 
-							}*/
+							}
+							
+							if (bamAnterior == BAMTypes.PreemptionRDM.name() && bamAgora == BAMTypes.NoPreemptionMAM.name()  ){
+								
+								if ( somatorioUtilizacaoCTJanelaAnterior < utilizacao  && somatorioPonderadoBloqueioCTJanelaAgora<bloqueio )
+								{
+									score =score-6;
+								}
+							
+							} 
 							
 							
 							
 							
 							
-							BancoDeDados.setXML(rodada.simtime() + ": Avaliando BAM, pois a rede ainda é "+ sim*100 + "% similar. " + "SCORE do BAM="+score ,rodada.filename );
 							
-							System.out.println(rodada.simtime() + " " + "Score:" + score);
-							if (score >0 ){
+							//BancoDeDados.setXML(rodada.simtime() + ": Avaliando BAM, pois Dif LSPs: "+ difLSPs + ". O Score é:" + score,rodada.filename );
+							
+							//System.out.println(rodada.simtime() + " " + "Score:" + score);
+							if (score ==10 ){
 								BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
 								
 								((BAMDescription)novocase.getDescription()).setCaseId("N_"+(recommender.getCaseBase().getCases().size()+1));
@@ -515,7 +562,7 @@ public class TesteSimulacao {
 								((BAMSolution)novocase.getSolution()).setId("N_"+(recommender.getCaseBase().getCases().size()+1));
 								
 								jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
-								BancoDeDados.setXML( rodada.simtime() + ": BAM: "+  ((BAMDescription)novocase.getDescription()).getCaseId() + " = Aceito. Armazenado na base positiva. Rede similar em: " + sim,rodada.filename );
+								BancoDeDados.setXML( rodada.simtime() + ": BAM: "+  ((BAMDescription)novocase.getDescription()).getCaseId() + " = Aceito. Armazenado na base positiva. Score: "+score + " Dif LSFs:" + difLSPs  ,rodada.filename );
 								
 							}else{
 								BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
@@ -525,18 +572,21 @@ public class TesteSimulacao {
 								((BAMSolution)novocase.getSolution()).setId("R_"+(recommender.getCaseBaseDB2().getCases().size()+1));
 								
 								jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), novocase);
-								BancoDeDados.setXML( rodada.simtime() + ": BAM: "+ ((BAMDescription)novocase.getDescription()).getCaseId()   +  " = Rejeitado. Armazenado na base negativa. Score:" + score,rodada.filename );
+								BancoDeDados.setXML( rodada.simtime() + ": BAM: "+ ((BAMDescription)novocase.getDescription()).getCaseId()   +  " = Rejeitado. Armazenado na base negativa. Score:" + score + " Dif LSFs:" + difLSPs,rodada.filename );
+								/*BancoDeDados.setXML( rodada.simtime() + "Voltando para :"+ bamAnterior ,rodada.filename );
+								 switchBAM(to, bamAnterior);*/
 								
 							}
 						
 						
 						
 					}else{
-						BancoDeDados.setXML(rodada.simtime() + ": BAM não validado. A rede mudou o comportamento. Variação: "+ sim  ,rodada.filename );
+							BancoDeDados.setXML(rodada.simtime() + ": BAM não validado. A rede mudou o comportamento. Dif LSFs:" + difLSPs,rodada.filename );
+							
 						}
 				
 			
-				BancoDeDados.setXML( "Saiu em retenção:\t" + rodada.simtime() , rodada.filename);
+				BancoDeDados.setXML(rodada.simtime() + " Saiu em retenção\n", rodada.filename);
 			break;
 			
 			
@@ -687,7 +737,8 @@ public class TesteSimulacao {
 										+ devolucoesCTJanela[0] + "\t"
 										+ devolucoesCTJanela[1] + "\t"
 										+ devolucoesCTJanela[2] + "\t"
-										+ (rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace) 
+										+ (rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace)  + "\t"
+										+ rodada.estatistica.lspRequested(ParametrosDSTE.Janela)
 
 										//, "saida");
 							//, rodada.filename+"_7");
@@ -711,10 +762,12 @@ public class TesteSimulacao {
 										+ devolucoesCTJanela[0] + "\t"
 										+ devolucoesCTJanela[1] + "\t"
 										+ devolucoesCTJanela[2] + "\t"
+										+ (rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace)  + "\t"
+										+ rodada.estatistica.lspRequested(ParametrosDSTE.Janela)
 										
 
-									, "saida");
-								//, rodada.filename+"_7");
+										//,"saida");
+										, rodada.filename+"_7");
 								
 				
 					rodada.schedulep(7, ParametrosDSTE.RRDBatida, null);

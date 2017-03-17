@@ -88,8 +88,8 @@ public class ParametrosDSTE {
 	public static void trafegoManual(RodadaDeSimulacao rodada,Topologia to, No dados)
 	{
 
-		//GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
-		GeradorDeTrafego.trafegoDeterministico2(rodada, to, dados);
+		GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
+		//GeradorDeTrafego.trafegoDeterministico2(rodada, to, dados);
 
 	}
 	
