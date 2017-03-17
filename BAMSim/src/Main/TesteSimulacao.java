@@ -120,7 +120,7 @@ public class TesteSimulacao {
 			//Agenda primeira avaliação
 			rodada.schedulep (5, ParametrosDSTE.Janela+0.40, null);
 		}
-		//rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
+		rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -421,9 +421,12 @@ public class TesteSimulacao {
 							double []devolucoesCTJanelaAgora   	= new double [] {((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT0(), ((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT1(), ((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT2()} ;
 							
 							double somatorioUtilizacaoCTJanelaAnterior = utilizacaoCTJanelaAnterior[0]+utilizacaoCTJanelaAnterior[1]+	utilizacaoCTJanelaAnterior[2];
-							double somatorioUtilizacaoCTJanelaAgora = 	utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[1]+utilizacaoCTJanelaAgora[2];
-											
-									
+							double somatorioUtilizacaoCTJanelaAgora    = utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[1]+utilizacaoCTJanelaAgora[2];
+							double somatorioPonderadoBloqueioCTJanelaAgora = (bloqueiosCTJanelaAgora[0]*to.link[0].BC[0] + bloqueiosCTJanelaAgora[1]*to.link[0].BC[1] + bloqueiosCTJanelaAgora[2]*to.link[0].BC[2])  /  (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]) ;				
+							
+							double utilizacao =  ( ( minimo(to.link[0].BC[0], to.link[0].BC[1]) + minimo(to.link[0].BC[1], to.link[0].BC[2]) ))/ (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]);
+							double bloqueio = utilizacao * ParametrosDSTE.SLABloqueios;
+							
 									
 									
 							
@@ -440,21 +443,18 @@ public class TesteSimulacao {
 									score++;					
 								}
 							}
+							
+							
 							if (bamAnterior == BAMTypes.NoPreemptionMAM.name() && bamAgora == BAMTypes.NoPreemptionMAM.name() ){
 								
-																
-								
-								double uti =  ( ( minimo(to.link[0].BC[0], to.link[0].BC[1]) + minimo(to.link[0].BC[1], to.link[0].BC[2]) ))/ (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]);
-								double bloq = uti * ParametrosDSTE.SLABloqueios;
-								
-								if (    (somatorioUtilizacaoCTJanelaAgora) < uti    &&   
-										(  (bloqueiosCTJanelaAgora[0]*to.link[0].BC[0] + bloqueiosCTJanelaAgora[1]*to.link[0].BC[1] + bloqueiosCTJanelaAgora[2]*to.link[0].BC[2])/  (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2])  )<  bloq ){
-									score =0;
-								}
-
+								if ( somatorioUtilizacaoCTJanelaAnterior< utilizacao  && somatorioPonderadoBloqueioCTJanelaAgora<bloqueio )
+									{
+										score =0;
+									}
 							}
 							
-							if (bamAnterior == BAMTypes.PreemptionAllocCTSharing.name() && bamAgora == BAMTypes.PreemptionAllocCTSharing.name() ){
+							
+							if ( bamAgora != BAMTypes.NoPreemptionMAM.name()   ){
 								
 								if (  (preempcoesCTJanelaAnterior[0]
 									   + preempcoesCTJanelaAnterior[1]
@@ -462,11 +462,19 @@ public class TesteSimulacao {
 								       + devolucoesCTJanelaAnterior[0]
 									   + devolucoesCTJanelaAnterior[1]
 									   + devolucoesCTJanelaAnterior[2])  >0){
-									score =1;
+									score =-1;
 								}
 
 							}
 							
+							if (bamAnterior == BAMTypes.NoPreemptionMAM.name() && bamAgora == BAMTypes.PreemptionAllocCTSharing.name() ){
+								
+								if ( somatorioUtilizacaoCTJanelaAnterior > utilizacao+0.2*utilizacao  || somatorioPonderadoBloqueioCTJanelaAgora>bloqueio+ 0.2*bloqueio )
+								{
+									score =-2;
+								}
+
+							}
 							
 							
 							BancoDeDados.setXML(rodada.simtime() + ": Avaliando BAM, pois a rede ainda é "+ sim*100 + "% similar"  ,rodada.filename );
@@ -676,8 +684,8 @@ public class TesteSimulacao {
 										+ devolucoesCTJanela[1] + "\t"
 										+ devolucoesCTJanela[2] + "\t"
 
-										//, "saida");
-								, rodada.filename+"_7");
+									, "saida");
+								//, rodada.filename+"_7");
 								
 				
 					rodada.schedulep(7, ParametrosDSTE.RRDBatida, null);
