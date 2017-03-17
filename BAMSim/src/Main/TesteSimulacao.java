@@ -284,7 +284,7 @@ public class TesteSimulacao {
 					BAMTypes bam = null;
 					
 					BancoDeDados.setXML( "Valor MAM:"+bams[0]+" Valor RDM:"+bams[1]+" Valor ALLOC: "+bams[2] , rodada.filename);
-					
+					///man=0   RDM=4  ALLOC=5
 					
 					switch (nomeBAMAtual) {
 					case "NoPreemptionMAM":
@@ -405,12 +405,12 @@ public class TesteSimulacao {
 					
 					if (sim >= 0.80){ // verifica se houve mudança na rede
 						
-						if (1>0) { ///// Codigo do gerente virtual para case 3
+						
 							
-							int score = 0;
+							int score = 10;
 							String bamAnterior = ((BAMDescription)novocase.getDescription()).getBAMAtual().name();
 							double []utilizacaoCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT0(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT1(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT2()} ;  
-							//double []bloqueioCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT2()} ;
+							double []bloqueioCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT2()} ;
 							double []preempcoesCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT2()} ;  
 							double []devolucoesCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT2()} ;				
 							
@@ -422,7 +422,16 @@ public class TesteSimulacao {
 							
 							double somatorioUtilizacaoCTJanelaAnterior = utilizacaoCTJanelaAnterior[0]+utilizacaoCTJanelaAnterior[1]+	utilizacaoCTJanelaAnterior[2];
 							double somatorioUtilizacaoCTJanelaAgora    = utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[1]+utilizacaoCTJanelaAgora[2];
+							
+							double somatorioPonderadoBloqueioCTJanelaAnterior = (bloqueioCTJanelaAnterior[0]*to.link[0].BC[0] + bloqueioCTJanelaAnterior[1]*to.link[0].BC[1] + bloqueioCTJanelaAnterior[2]*to.link[0].BC[2])  /  (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]) ;				
 							double somatorioPonderadoBloqueioCTJanelaAgora = (bloqueiosCTJanelaAgora[0]*to.link[0].BC[0] + bloqueiosCTJanelaAgora[1]*to.link[0].BC[1] + bloqueiosCTJanelaAgora[2]*to.link[0].BC[2])  /  (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]) ;				
+							
+							double somatorioPreempcoesCTJanelaAnterior = preempcoesCTJanelaAnterior[0]+preempcoesCTJanelaAnterior[1]+preempcoesCTJanelaAnterior[2];
+							double somatorioPreempcoesCTJanelaAgora = preempcoesCTJanelaAgora[0]+preempcoesCTJanelaAgora[1]+preempcoesCTJanelaAgora[2];
+							
+							double somatorioDevolucoesCTJanelaAnterior = devolucoesCTJanelaAnterior[0]+devolucoesCTJanelaAnterior[1]+devolucoesCTJanelaAnterior[2];
+							double somatorioDevolucoesCTJanelaAgora = devolucoesCTJanelaAgora[0]+devolucoesCTJanelaAgora[1]+devolucoesCTJanelaAgora[2];
+							
 							
 							double utilizacao =  ( ( minimo(to.link[0].BC[0], to.link[0].BC[1]) + minimo(to.link[0].BC[1], to.link[0].BC[2]) ))/ (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]);
 							double bloqueio = utilizacao * ParametrosDSTE.SLABloqueios;
@@ -430,7 +439,7 @@ public class TesteSimulacao {
 									
 									
 							
-							for (int i = 0; i < ParametrosDSTE.MaxClassType; i++) {
+							/*for (int i = 0; i < ParametrosDSTE.MaxClassType; i++) {
 								//if ((preempcoesCTJanelaAgora[i]< preempcoesCTJanelaAnterior[i])||(preempcoesCTJanelaAgora[i]==0 && preempcoesCTJanelaAnterior[i]>=0) )
 								if ( preempcoesCTJanelaAgora[i]==0 )
 								{
@@ -443,11 +452,9 @@ public class TesteSimulacao {
 									score++;					
 								}
 							}
-							
-							
 							if (bamAnterior == BAMTypes.NoPreemptionMAM.name() && bamAgora == BAMTypes.NoPreemptionMAM.name() ){
 								
-								if ( somatorioUtilizacaoCTJanelaAnterior< utilizacao  && somatorioPonderadoBloqueioCTJanelaAgora<bloqueio )
+								if ( somatorioUtilizacaoCTJanelaAnterior< utilizacao  && somatorioPonderadoBloqueioCTJanelaAnterior<bloqueio )
 									{
 										score =0;
 									}
@@ -456,8 +463,7 @@ public class TesteSimulacao {
 							
 							if ( bamAgora != BAMTypes.NoPreemptionMAM.name()   ){
 								
-								if (  (preempcoesCTJanelaAnterior[0]
-									   + preempcoesCTJanelaAnterior[1]
+								if (  (preempcoesCTJanelaAnterior[0]+ preempcoesCTJanelaAnterior[1]
 									   + preempcoesCTJanelaAnterior[2]
 								       + devolucoesCTJanelaAnterior[0]
 									   + devolucoesCTJanelaAnterior[1]
@@ -466,21 +472,42 @@ public class TesteSimulacao {
 								}
 
 							}
+							*/
 							
-							if (bamAnterior == BAMTypes.NoPreemptionMAM.name() && bamAgora == BAMTypes.PreemptionAllocCTSharing.name() ){
-								
-								if ( somatorioUtilizacaoCTJanelaAnterior > utilizacao+0.2*utilizacao  || somatorioPonderadoBloqueioCTJanelaAgora>bloqueio+ 0.2*bloqueio )
-								{
-									score =-2;
+							if (bamAgora == BAMTypes.NoPreemptionMAM.name()){
+								if (bamAnterior== BAMTypes.NoPreemptionMAM.name()){
+									if ( somatorioUtilizacaoCTJanelaAnterior< utilizacao  && somatorioPonderadoBloqueioCTJanelaAnterior<bloqueio ){
+										score =0;
+									}							
 								}
-
+							}else{
+								if(somatorioPreempcoesCTJanelaAnterior > ParametrosDSTE.SLAPreempcoes || somatorioDevolucoesCTJanelaAnterior > ParametrosDSTE.SLADevolucoes){
+									score=-1;
+								}
+								if(somatorioPreempcoesCTJanelaAgora > ParametrosDSTE.SLAPreempcoes || somatorioDevolucoesCTJanelaAgora > ParametrosDSTE.SLADevolucoes){
+									score=-2;
+								}								
 							}
 							
 							
-							BancoDeDados.setXML(rodada.simtime() + ": Avaliando BAM, pois a rede ainda é "+ sim*100 + "% similar"  ,rodada.filename );
+							
+							/*if (bamAnterior == BAMTypes.NoPreemptionMAM.name() && bamAgora == BAMTypes.PreemptionAllocCTSharing.name() ){
+								
+								if ( somatorioUtilizacaoCTJanelaAnterior > utilizacao+0.2*utilizacao  || somatorioPonderadoBloqueioCTJanelaAgora>bloqueio+ 0.2*bloqueio )
+								{
+									score =-3;
+								}
+
+							}*/
+							
+							
+							
+							
+							
+							BancoDeDados.setXML(rodada.simtime() + ": Avaliando BAM, pois a rede ainda é "+ sim*100 + "% similar. " + "SCORE do BAM="+score ,rodada.filename );
 							
 							System.out.println(rodada.simtime() + " " + "Score:" + score);
-							if (score > 5 ){
+							if (score >0 ){
 								BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
 								
 								((BAMDescription)novocase.getDescription()).setCaseId("N_"+(recommender.getCaseBase().getCases().size()+1));
@@ -501,7 +528,7 @@ public class TesteSimulacao {
 								BancoDeDados.setXML( rodada.simtime() + ": BAM: "+ ((BAMDescription)novocase.getDescription()).getCaseId()   +  " = Rejeitado. Armazenado na base negativa. Score:" + score,rodada.filename );
 								
 							}
-						}
+						
 						
 						
 					}else{
@@ -660,6 +687,7 @@ public class TesteSimulacao {
 										+ devolucoesCTJanela[0] + "\t"
 										+ devolucoesCTJanela[1] + "\t"
 										+ devolucoesCTJanela[2] + "\t"
+										+ (rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace) 
 
 										//, "saida");
 							//, rodada.filename+"_7");
@@ -683,6 +711,7 @@ public class TesteSimulacao {
 										+ devolucoesCTJanela[0] + "\t"
 										+ devolucoesCTJanela[1] + "\t"
 										+ devolucoesCTJanela[2] + "\t"
+										
 
 									, "saida");
 								//, rodada.filename+"_7");
