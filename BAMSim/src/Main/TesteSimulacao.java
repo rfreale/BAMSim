@@ -120,7 +120,7 @@ public class TesteSimulacao {
 			//Agenda primeira avaliação
 			rodada.schedulep (5, ParametrosDSTE.Janela+0.40, null);
 		}
-		rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
+		//rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -272,7 +272,7 @@ public class TesteSimulacao {
 						
 					}else{
 						mudouBAM=-1; /// não é necessário agendar avaliação
-						BancoDeDados.setXML(/*"\n" + rodada.simtime() + */"######## Dentro da linha de corte ###### BAM mantido - Nada a fazer ", rodada.filename);
+						BancoDeDados.setXML(/*"\n" + rodada.simtime() + */"######## Dentro da linha de corte ###### BAM mantido MESMO CENARIO - Nada a fazer ", rodada.filename);
 						//Agenda avaliar BAM via CBR
 						
 					}
@@ -382,6 +382,8 @@ public class TesteSimulacao {
 				
 					 novocase = ((CBRCase)dados.item);
 					((BAMDescription)novocase.getDescription()).setCaseId("tmp01") ;
+					
+					
 										
 					NNConfig fun2 = ParametrosDSTE.getSimilarityConfigRede();
 					fun2.setDescriptionSimFunction(new Average());
@@ -394,14 +396,16 @@ public class TesteSimulacao {
 					double sim = eval2.iterator().next().getEval();
 					
 					
+					//Caso que será colocado na base de caos negativos. OBS é possivel cria tb um 3° caso aqui  (caso atual com a nova query acima) 
+					CBRCase badcase = new CBRCase();
+					badcase.setDescription(    ( (BAMDescription)novocase.getDescription()  ).clone()    );
+					badcase.setSolution(null);
+								
+					
 					int lspRequestedAgora = rodada.estatistica.lspRequested(ParametrosDSTE.Janela);
 					int lspRequestedAnterior = Math.abs(rodada.estatistica.lspRequested(ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida) - rodada.estatistica.lspRequested(ParametrosDSTE.Janela*2+ParametrosDSTE.RRDBatida ) );
 					
-					
-					
 					int difLSPs = lspRequestedAgora - lspRequestedAnterior;
-					
-					
 					
 					
 					//if (sim >= 0.80){ // verifica se houve mudança na rede
@@ -437,124 +441,156 @@ public class TesteSimulacao {
 							double utilizacao =  ( ( minimo(to.link[0].BC[0], to.link[0].BC[1]) + minimo(to.link[0].BC[1], to.link[0].BC[2]) ))/ (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]);
 							double bloqueio = utilizacao * ParametrosDSTE.SLABloqueios;
 							
-									
-									
 							
-							/*for (int i = 0; i < ParametrosDSTE.MaxClassType; i++) {
-								//if ((preempcoesCTJanelaAgora[i]< preempcoesCTJanelaAnterior[i])||(preempcoesCTJanelaAgora[i]==0 && preempcoesCTJanelaAnterior[i]>=0) )
-								if ( preempcoesCTJanelaAgora[i]==0 )
+							
+						if (bamAnterior == BAMTypes.NoPreemptionMAM.name()){
+							switch (bamAgora) {
+							case "NoPreemptionMAM":
+								//não tive problema de performasse na rede. Vou verificar agora subina e decida
+								if ( somatorioUtilizacaoCTJanelaAnterior < utilizacao  && somatorioPonderadoBloqueioCTJanelaAgora<bloqueio )
 								{
-									score++;					
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MA
 								}
-								
-								//if ((devolucoesCTJanelaAgora[i]< devolucoesCTJanelaAnterior[i])|| (devolucoesCTJanelaAgora[i]==0 && devolucoesCTJanelaAnterior[i]>=0) )
-								if ( devolucoesCTJanelaAgora[i]==0 )
-								{
-									score++;					
-								}
-							}
-							if (bamAnterior == BAMTypes.NoPreemptionMAM.name() && bamAgora == BAMTypes.NoPreemptionMAM.name() ){
-								
-								if ( somatorioUtilizacaoCTJanelaAnterior< utilizacao  && somatorioPonderadoBloqueioCTJanelaAnterior<bloqueio )
-									{
-										score =0;
-									}
-							}
+							break;
 							
-							
-							if ( bamAgora != BAMTypes.NoPreemptionMAM.name()   ){
-								
-								if (  (preempcoesCTJanelaAnterior[0]+ preempcoesCTJanelaAnterior[1]
-									   + preempcoesCTJanelaAnterior[2]
-								       + devolucoesCTJanelaAnterior[0]
-									   + devolucoesCTJanelaAnterior[1]
-									   + devolucoesCTJanelaAnterior[2])  >0){
-									score =-1;
-								}
-
-							}
-							*/
-							
-							//regras de melhoria da rede
-							if (bamAgora == BAMTypes.NoPreemptionMAM.name()){
-								/*if (bamAnterior== BAMTypes.NoPreemptionMAM.name()){
-									if ( somatorioUtilizacaoCTJanelaAnterior< utilizacao  && somatorioPonderadoBloqueioCTJanelaAnterior<bloqueio ){
-										score =0;
-									}							
+							case "PreemptionRDM":
+								/*if(somatorioPreempcoesCTJanelaAnterior+somatorioDevolucoesCTJanelaAnterior > ParametrosDSTE.SLADevolucoes){
 								}*/
-								
-							}else if(bamAgora == BAMTypes.PreemptionRDM.name()){
-								if(somatorioPreempcoesCTJanelaAnterior > ParametrosDSTE.SLAPreempcoes ){
-									score=score-1;
+								if(somatorioPreempcoesCTJanelaAgora > ParametrosDSTE.SLAPreempcoes){
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+								}else {
+										//não tive problema de performasse na rede. Vou verificar agora subina e decida
+										if ( somatorioUtilizacaoCTJanelaAnterior > utilizacao  || somatorioPonderadoBloqueioCTJanelaAgora>bloqueio ){
+											badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+											((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+										}
 								}
-								if(somatorioPreempcoesCTJanelaAgora > ParametrosDSTE.SLAPreempcoes || somatorioDevolucoesCTJanelaAgora > ParametrosDSTE.SLADevolucoes){
-									score=score-2;
+							break;
+							
+							case "PreemptionAllocCTSharing":
+								if(somatorioPreempcoesCTJanelaAgora > ParametrosDSTE.SLAPreempcoes){
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+								}else if(somatorioDevolucoesCTJanelaAgora > ParametrosDSTE.SLADevolucoes ){
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									novocase.setSolution(null);///// nesse caso eu não si o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
+								}else {
+										//não tive problema de performasse na rede. Vou verificar agora subina e decida
+										if ( somatorioUtilizacaoCTJanelaAnterior > utilizacao  || somatorioPonderadoBloqueioCTJanelaAgora>bloqueio ){
+											badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+											novocase.setSolution(null);///// nesse caso eu não si o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
+										}
 								}
-								
-								
-								
-							}if(bamAgora == BAMTypes.PreemptionAllocCTSharing.name()){
-								if(somatorioPreempcoesCTJanelaAnterior > ParametrosDSTE.SLAPreempcoes || somatorioDevolucoesCTJanelaAnterior > ParametrosDSTE.SLADevolucoes){
-									score=score-3;
-								}
-								if(somatorioPreempcoesCTJanelaAgora > ParametrosDSTE.SLAPreempcoes || somatorioDevolucoesCTJanelaAgora > ParametrosDSTE.SLADevolucoes){
-									score=score-4;
-								}	
-								
-								
+							break;
 							}
 							
 							
-							//Regras de subida
-							if (bamAnterior == BAMTypes.NoPreemptionMAM.name() && bamAgora != BAMTypes.NoPreemptionMAM.name()  ){
-								
-								if ( somatorioUtilizacaoCTJanelaAnterior > utilizacao  || somatorioPonderadoBloqueioCTJanelaAgora>bloqueio )
-								{
-									score =score-5;
+							
+							
+							
+						} else if (bamAnterior == BAMTypes.PreemptionRDM.name()){
+							switch (bamAgora) {
+							case "NoPreemptionMAM":
+								//não tive problema de performasse na rede. Vou verificar agora subina e decida
+									if ( somatorioUtilizacaoCTJanelaAnterior < utilizacao  && somatorioPonderadoBloqueioCTJanelaAgora<bloqueio )
+									{
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MA
+									}
+							break;
+							
+							case "PreemptionRDM":
+								if(somatorioPreempcoesCTJanelaAnterior > ParametrosDSTE.SLAPreempcoes){
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+								}else if(somatorioPreempcoesCTJanelaAgora > ParametrosDSTE.SLAPreempcoes){   
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+								}else {
+									//não tive problema de performasse na rede. Vou verificar agora subina e decida ??????/
 								}
+							break;
+							
+							case "PreemptionAllocCTSharing":
+								if(somatorioPreempcoesCTJanelaAnterior > ParametrosDSTE.SLAPreempcoes){
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+								}else if(somatorioPreempcoesCTJanelaAgora > ParametrosDSTE.SLAPreempcoes){
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+								}else if(somatorioDevolucoesCTJanelaAgora > ParametrosDSTE.SLADevolucoes){
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									novocase.setSolution(null);///// nesse caso eu não si o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
+								}else {
+										//não tive problema de performasse na rede. Vou verificar agora subina e decida
+										if ( somatorioUtilizacaoCTJanelaAnterior > utilizacao  || somatorioPonderadoBloqueioCTJanelaAgora>bloqueio ){
+											badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+											novocase.setSolution(null);///// nesse caso eu não si o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
+										}
+								}
+							break;
+							}
 
-							}
-							
-							if (bamAnterior == BAMTypes.PreemptionRDM.name() && bamAgora == BAMTypes.PreemptionAllocCTSharing.name()  ){
-								
-								if ( somatorioUtilizacaoCTJanelaAnterior > utilizacao  || somatorioPonderadoBloqueioCTJanelaAgora>bloqueio )
-								{
-									score =score-6;
-								}
 
-							}
 							
 							
 							
-							
-							//Regras de decida
-							if (bamAnterior == BAMTypes.PreemptionAllocCTSharing.name() && bamAgora != BAMTypes.PreemptionAllocCTSharing.name()  ){
+						}else if (bamAnterior == BAMTypes.PreemptionAllocCTSharing.name()){
+							switch (bamAgora) {
+							case "NoPreemptionMAM":
 								
+								//não tive problema de performasse na rede. Vou verificar agora subina e decida
 								if ( somatorioUtilizacaoCTJanelaAnterior < utilizacao  && somatorioPonderadoBloqueioCTJanelaAgora<bloqueio )
 								{
-									score =score-6;
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MA
 								}
-
-							}
-							
-							if (bamAnterior == BAMTypes.PreemptionRDM.name() && bamAgora == BAMTypes.NoPreemptionMAM.name()  ){
 								
-								if ( somatorioUtilizacaoCTJanelaAnterior < utilizacao  && somatorioPonderadoBloqueioCTJanelaAgora<bloqueio )
-								{
-									score =score-6;
+							break;
+							
+							case "PreemptionRDM":
+								if(somatorioPreempcoesCTJanelaAnterior > ParametrosDSTE.SLAPreempcoes){
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+								}else if(somatorioPreempcoesCTJanelaAgora > ParametrosDSTE.SLAPreempcoes){   
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+								}else {
+										//não tive problema de performasse na rede. Vou verificar agora subina e decida
+										if ( somatorioUtilizacaoCTJanelaAnterior < utilizacao  && somatorioPonderadoBloqueioCTJanelaAgora<bloqueio )
+										{
+											badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+											novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MA
+										}
 								}
+							break;
 							
-							} 
-							
-							
-							
-							
-							
+							case "PreemptionAllocCTSharing":
+								if(somatorioPreempcoesCTJanelaAnterior > ParametrosDSTE.SLAPreempcoes){
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+								}else if(somatorioPreempcoesCTJanelaAgora > ParametrosDSTE.SLAPreempcoes){
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+								}else if(somatorioDevolucoesCTJanelaAnterior  > ParametrosDSTE.SLADevolucoes		){ 
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									novocase.setSolution(null);///// nesse caso eu não si o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
+								}else if(somatorioDevolucoesCTJanelaAgora  > ParametrosDSTE.SLADevolucoes ){
+									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+									novocase.setSolution(null);///// nesse caso eu não si o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
+								}else {
+									//não tive problema de performasse na rede. Vou verificar agora subina e decida????????
+								}
+							break;
+							}
+						}
 							
 							//BancoDeDados.setXML(rodada.simtime() + ": Avaliando BAM, pois Dif LSPs: "+ difLSPs + ". O Score é:" + score,rodada.filename );
 							
 							//System.out.println(rodada.simtime() + " " + "Score:" + score);
-							if (score ==10 ){
+							if (novocase.getSolution() !=null ){
 								BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
 								
 								((BAMDescription)novocase.getDescription()).setCaseId("N_"+(recommender.getCaseBase().getCases().size()+1));
@@ -564,15 +600,17 @@ public class TesteSimulacao {
 								jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
 								BancoDeDados.setXML( rodada.simtime() + ": BAM: "+  ((BAMDescription)novocase.getDescription()).getCaseId() + " = Aceito. Armazenado na base positiva. Score: "+score + " Dif LSFs:" + difLSPs  ,rodada.filename );
 								
-							}else{
+							}
+							
+							if(badcase.getSolution()!=null) {
 								BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
 								
-								((BAMDescription)novocase.getDescription()).setCaseId("R_"+(recommender.getCaseBaseDB2().getCases().size()+1));
+								((BAMDescription)badcase.getDescription()).setCaseId("R_"+(recommender.getCaseBaseDB2().getCases().size()+1));
 								
-								((BAMSolution)novocase.getSolution()).setId("R_"+(recommender.getCaseBaseDB2().getCases().size()+1));
+								((BAMSolution)badcase.getSolution()).setId("R_"+(recommender.getCaseBaseDB2().getCases().size()+1));
 								
-								jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), novocase);
-								BancoDeDados.setXML( rodada.simtime() + ": BAM: "+ ((BAMDescription)novocase.getDescription()).getCaseId()   +  " = Rejeitado. Armazenado na base negativa. Score:" + score + " Dif LSFs:" + difLSPs,rodada.filename );
+								jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), badcase);
+								BancoDeDados.setXML( rodada.simtime() + ": BAM: "+ ((BAMDescription)badcase.getDescription()).getCaseId()   +  " = Rejeitado. Armazenado na base negativa. Score:" + score + " Dif LSFs:" + difLSPs,rodada.filename );
 								/*BancoDeDados.setXML( rodada.simtime() + "Voltando para :"+ bamAnterior ,rodada.filename );
 								 switchBAM(to, bamAnterior);*/
 								
@@ -771,7 +809,7 @@ public class TesteSimulacao {
 								
 				
 					rodada.schedulep(7, ParametrosDSTE.RRDBatida, null);
-					//rodada.schedulep(7, ParametrosDSTE.Janela , null);
+					//rodada.schedulep(7, ParametrosDSTE.Janela*3 , null);
 					
 					
 				break;

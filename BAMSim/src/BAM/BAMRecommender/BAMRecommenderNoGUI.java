@@ -344,7 +344,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase.getCases(), query, simConfigDB2);
 		// Select k cases
 		for (RetrievalResult rr : eval) {
-			if (rr.getEval() >= 1.0) {
+			if (rr.getEval() >= 1.0) {/////////////////////////////////////diminuir esse valor <<<<<<<<<<<<<<<<<<<<<<<<<<<<<===================================== 
 				if (((BAMSolution) rr.get_case().getSolution()).BAMNovo == ((BAMSolution) cbrcase.getSolution()).BAMNovo
 						&& ((BAMSolution) rr.get_case().getSolution()).aceita == ((BAMSolution) cbrcase
 								.getSolution()).aceita) {

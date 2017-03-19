@@ -44,8 +44,8 @@ public class ParametrosDSTE {
 	public static final int  Escada = 128; //limite da função de similaridade Threshold
 	public static final double SLAPreempcoes = 0;
 	public static final double SLADevolucoes = 0;
-	public static final double SLABloqueios = 0.25;
-	public static final double SLAUtilizacao = 80;
+	public static final double SLABloqueios = 0.25;  ////0.25
+	public static final double SLAUtilizacao = 60;
 	public static final long TempoSimulacao = 3600*24;
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
@@ -213,21 +213,21 @@ public class ParametrosDSTE {
 			};
 */	
 	public static double [] BCPadrao= new double[]           //para MAN 
-			{	20, // BC[0] =CT0 (Valor do Enlace)
-				30, // BC[1] = CT1
-				50 // BC[2] =  CT2
+			{	40, // BC[0] =CT0 (Valor do Enlace)
+				35, // BC[1] = CT1
+				25 // BC[2] =  CT2
 			};
 	
 	public static double [] BCHTLPadrao= new double[]
 			{	0,//BC0 Nunca mudar
 				
-				00, //BC1
-				00 //BC2
+				100, //BC1
+				100 //BC2
 			};
 	
 	public static double [] BCLTHPadrao= new double[]
-			{	00, //BC0 
-				00, //BC1
+			{	100, //BC0 
+				100, //BC1
 				
 				0//BC2 Nunca mudar
 			};
