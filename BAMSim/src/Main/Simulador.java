@@ -35,10 +35,11 @@ public class Simulador
 			RodadaDeSimulacao sim[] = new RodadaDeSimulacao[ParametrosDoSimulador.MAX_SIMULATIONS];
 			String [] filenames= new String[ParametrosDoSimulador.MAX_SIMULATIONS];
 			
+			
 			for (int j=0;j<sim.length;j++)
 			{
-				
-				if (j==7){
+				GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente+j*100);
+				/*if (j==7){
 					GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente+j*100);
 				}else if (j==14){
 					GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente+j*100);
@@ -46,7 +47,7 @@ public class Simulador
 					GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente+j*100);
 				}else{
 					GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente);
-				}
+				}*/
 				
 				
 				//GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente);
