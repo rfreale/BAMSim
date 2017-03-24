@@ -280,7 +280,7 @@ public class TesteSimulacao {
 				}else if (ParametrosDSTE.RecomendacaoCBRRetencao){
 					mudouBAM=1;
 					//BancoDeDados.setXML("Nenhum caso válido na base", rodada.filename);
-					int []bams = BAMRecommenderNoGUI.getInstance().foraDaLinha(query);
+					int []bams = BAMRecommenderNoGUI.getInstance().foraDaLinha(query);  // busca na bae de casos negativa se existe alguma caso negativado na base e de que BAm eles são
 					BAMTypes bam = null;
 					
 					BancoDeDados.setXML( "Valor MAM:"+bams[0]+" Valor RDM:"+bams[1]+" Valor ALLOC: "+bams[2] , rodada.filename);
@@ -379,22 +379,10 @@ public class TesteSimulacao {
 				//Avalia rentenção
 				BancoDeDados.setXML(rodada.simtime() + " Entrou em retenção.", rodada.filename);
 				
-				
 					 novocase = ((CBRCase)dados.item);
 					((BAMDescription)novocase.getDescription()).setCaseId("tmp01") ;
 					
-					
-										
-					NNConfig fun2 = ParametrosDSTE.getSimilarityConfigRede();
-					fun2.setDescriptionSimFunction(new Average());
-									
 					query = rodada.estatistica.getQuery(to.link[0], ParametrosDSTE.Gestor, ParametrosDSTE.SLAUtilizacaoCT, ParametrosDSTE.SLABloqueiosCT,ParametrosDSTE.SLAPreempcoesCT,ParametrosDSTE.SLADevolucoesCT);
-					
-					Collection<CBRCase> tmp = new ArrayList<CBRCase>();
-					tmp.add(novocase);
-					Collection <RetrievalResult> eval2 = NNScoringMethod.evaluateSimilarity(tmp, query,fun2 );
-					double sim = eval2.iterator().next().getEval();
-					
 					
 					//Caso que será colocado na base de caos negativos. OBS é possivel cria tb um 3° caso aqui  (caso atual com a nova query acima) 
 					CBRCase badcase = new CBRCase();
@@ -408,7 +396,6 @@ public class TesteSimulacao {
 					int difLSPs = lspRequestedAgora - lspRequestedAnterior;
 					
 					
-					//if (sim >= 0.80){ // verifica se houve mudança na rede
 					if (Math.abs(difLSPs)< 200){ // verifica se houve mudança na rede	
 						
 							
@@ -438,7 +425,7 @@ public class TesteSimulacao {
 							double somatorioDevolucoesCTJanelaAgora = devolucoesCTJanelaAgora[0]+devolucoesCTJanelaAgora[1]+devolucoesCTJanelaAgora[2];
 							
 							
-							double utilizacao =  ( ( minimo(to.link[0].BC[0], to.link[0].BC[1]) + minimo(to.link[0].BC[1], to.link[0].BC[2]) ))/ (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]);
+							double utilizacao =  ( ( Math.min(to.link[0].BC[0], to.link[0].BC[1]) + Math.min(to.link[0].BC[1], to.link[0].BC[2]) ))/ (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]);
 							double bloqueio = utilizacao * ParametrosDSTE.SLABloqueios;
 							
 							
@@ -615,15 +602,9 @@ public class TesteSimulacao {
 								 switchBAM(to, bamAnterior);*/
 								
 							}
-						
-						
-						
 					}else{
 							BancoDeDados.setXML(rodada.simtime() + ": BAM não validado. A rede mudou o comportamento. Dif LSFs:" + difLSPs,rodada.filename );
-							
 						}
-				
-			
 				BancoDeDados.setXML(rodada.simtime() + " Saiu em retenção\n", rodada.filename);
 			break;
 			
@@ -911,17 +892,5 @@ public class TesteSimulacao {
 		
 		
 	}
-
-	private double minimo(double  a, double  b){
-		if (a<b)
-		{
-			return a;
-		}else{
-			return b;
-		}
-				
-	}
-	
-
 
 }
