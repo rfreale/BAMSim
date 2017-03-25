@@ -55,6 +55,175 @@ import jcolibri.exception.ExecutionException;
 
 public class BAMTest {
 	@Test
+	public void testeSoftSwitchGBAM() {
+		//Definição da Topologia de Testes
+				RodadaDeSimulacao r = new RodadaDeSimulacao();
+				Roteador roteadorOrigem= new Roteador(); 
+				roteadorOrigem.ID = 0;
+				roteadorOrigem.Descricao = "S1";
+				
+				Roteador roteadorDestino= new Roteador(); 
+				roteadorDestino.ID = 4;
+				roteadorDestino.Descricao = "D1";
+				
+				
+				
+				Link link=new Link();
+				link.Descricao = "S1->D1";
+				link.ID = 1;
+				link.CustoEnlace = 1;
+				link.CargaEnlace = 1000;
+				link.lsrSrc = roteadorOrigem;
+				link.lsrDest = roteadorDestino;
+				link.bamType = BAMType.PreemptionGBAM;
+				
+				roteadorOrigem.caminhos[0][0]=link;
+				
+				
+				link.BC= new double[]
+						{	10, // BC[0] =CT0 (Valor do Enlace)
+							70, // BC[1] = CT1
+							20 // BC[2] =  CT2
+						};
+						
+				link.BCHTL= new double[]
+						{	0, 
+							90, 
+							100 
+						};
+				
+				link.BCLTH= new double[]
+						{	100, 
+							80,
+							0 
+						};
+				
+				Lsp lsp = new Lsp(r);
+				lsp.CargaReduzida = 0;
+				lsp.src = 0;
+				lsp.dest = 4;
+				lsp.CT = 0;
+				lsp.Carga = 50;
+				lsp.caminho=roteadorOrigem.caminhos[0];
+				
+				
+				Lsp lsp2 = new Lsp(r);
+				lsp2.CargaReduzida = 0;
+				lsp2.src = 0;
+				lsp2.dest = 4;
+				lsp2.CT = 1;
+				lsp2.Carga = 100;
+				lsp2.caminho=roteadorOrigem.caminhos[0];
+				
+				
+				Lsp lsp3 = new Lsp(r);
+				lsp3.CargaReduzida = 0;
+				lsp3.src = 0;
+				lsp3.dest = 4;
+				lsp3.CT = 2;
+				lsp3.Carga = 450;
+				lsp3.caminho=roteadorOrigem.caminhos[0];
+				
+				
+				Lsp lsp4 = new Lsp(r);
+				lsp4.CargaReduzida = 0;
+				lsp4.src = 0;
+				lsp4.dest = 4;
+				lsp4.CT = 2;
+				lsp4.Carga = 250;
+				lsp4.caminho=roteadorOrigem.caminhos[0];
+				
+				
+				Lsp lsp5 = new Lsp(r);
+				lsp5.CargaReduzida = 0;
+				lsp5.src = 0;
+				lsp5.dest = 4;
+				lsp5.CT = 0;
+				lsp5.Carga = 100;
+				lsp5.caminho=roteadorOrigem.caminhos[0];
+				
+				Lsp lsp6 = new Lsp(r);
+				lsp6.CargaReduzida = 0;
+				lsp6.src = 0;
+				lsp6.dest = 4;
+				lsp6.CT = 1;
+				lsp6.Carga = 100;
+				lsp6.caminho=roteadorOrigem.caminhos[0];
+				
+				System.out.print(link.imprimirResumoGBAM());
+				
+				assertEquals("Limite", BAMStatus.aceita,BAM.preemptionGBAM(link, lsp));
+				if(BAM.preemptionGBAM(link, lsp)==BAMStatus.aceita) lsp.estabelecerLSP(roteadorOrigem.caminhos[0]);
+				//System.out.print(link.imprimirUtilizacaoGBAM());
+				//System.out.print(link.imprimirResumoGBAM());
+				System.out.println("==========CONSOLIDADO===========");
+				System.out.print(link.imprimirConsolidadoGBAM());
+				
+				assertEquals("Limite", BAMStatus.aceita,BAM.preemptionGBAM(link, lsp2));
+				if(BAM.preemptionGBAM(link, lsp2)==BAMStatus.aceita) lsp2.estabelecerLSP(roteadorOrigem.caminhos[0]);
+				//System.out.print(link.imprimirUtilizacaoGBAM());
+				//System.out.print(link.imprimirResumoGBAM());
+				System.out.println("==========CONSOLIDADO===========");
+				System.out.print(link.imprimirConsolidadoGBAM());
+				
+				assertEquals("Limite", BAMStatus.aceita,BAM.preemptionGBAM(link, lsp3));
+				if(BAM.preemptionGBAM(link, lsp3)==BAMStatus.aceita) lsp3.estabelecerLSP(roteadorOrigem.caminhos[0]);
+				//System.out.print(link.imprimirUtilizacaoGBAM());
+				//System.out.print(link.imprimirResumoGBAM());
+				System.out.println("==========CONSOLIDADO===========");
+				System.out.print(link.imprimirConsolidadoGBAM());
+				/*
+				assertEquals("Limite", BAMStatus.aceita,BAM.preemptionGBAM(link, lsp4));
+				if(BAM.preemptionGBAM(link, lsp4)==BAMStatus.aceita) lsp4.estabelecerLSP(roteadorOrigem.caminhos[0]);
+				//System.out.print(link.imprimirUtilizacaoGBAM());
+				//System.out.print(link.imprimirResumoGBAM());
+				System.out.println("==========CONSOLIDADO===========");
+				System.out.print(link.imprimirConsolidadoGBAM());
+				
+				assertEquals("Limite", BAMStatus.aceita,BAM.preemptionGBAM(link, lsp5));
+				if(BAM.preemptionGBAM(link, lsp5)==BAMStatus.aceita) lsp5.estabelecerLSP(roteadorOrigem.caminhos[0]);
+				//System.out.print(link.imprimirUtilizacaoGBAM());
+				//System.out.print(link.imprimirResumoGBAM());
+				System.out.println("==========CONSOLIDADO===========");
+				System.out.print(link.imprimirConsolidadoGBAM());
+				
+				assertEquals("Limite", BAMStatus.aceita,BAM.preemptionGBAM(link, lsp6));
+				if(BAM.preemptionGBAM(link, lsp6)==BAMStatus.aceita) lsp6.estabelecerLSP(roteadorOrigem.caminhos[0]);
+				//System.out.print(link.imprimirUtilizacaoGBAM());
+				//System.out.print(link.imprimirResumoGBAM());
+				//System.out.print(link.statusLinks());
+				System.out.println("==========CONSOLIDADO===========");
+				System.out.print(link.imprimirConsolidadoGBAM());*/
+				/*for(int i=ParametrosDSTE.MaxClassType-1;i>=0;i--)
+				{
+					System.out.println(link.BCAtual[i]-link.BCMbps(i));
+
+				}*/
+				/*Lsp LSPaux= new Lsp(); 
+        		LSPaux.Carga=0; 
+				
+				link.BCLTH= new double[]
+						{	100, 
+							80,
+							0 
+						};
+				LSPaux.CT=0; 
+          		BAM.devolutionG(link,LSPaux);
+          		System.out.print(link.imprimirUtilizacaoGBAM());
+				System.out.print(link.imprimirResumoGBAM());
+				link.BCHTL= new double[]
+						{	100, 
+							80,
+							0 
+						};
+				LSPaux.CT=2; 
+          		BAM.preemptionG(link,LSPaux);
+          		System.out.print(link.imprimirUtilizacaoGBAM());
+				System.out.print(link.imprimirResumoGBAM());
+				//System.out.print(Lsp.imprime_lista(link.ListaLSPs)+"\n - Carga:"+link.getCargaEnlaceAtual()+"\n");*/
+				
+	}
+	@Test
 	public void testPoissonDiaHora() 
 	{
 		int slotsDeTempo =(int)ParametrosDSTE.TempoSimulacao/60;

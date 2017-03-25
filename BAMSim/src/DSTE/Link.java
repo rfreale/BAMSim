@@ -2,6 +2,7 @@ package DSTE;
 
 import Simulador.Debug;
 import Simulador.No;
+import Simulador.ParametrosDoSimulador;
 
 /* o link entre dois roteadores atende de maneira uniforme os
 os pacotes que chegam a ele (uniforme em funcao da taxa de
@@ -300,7 +301,95 @@ public class Link {
 			retorno+=("=================================================================================================================\r\n");
 			return retorno;
 		}
+		public String imprimirConsolidadoGBAM()
+		{
+			String retorno="";
+			retorno+=("====================================================================================================================================================================================\r\n");
+			retorno+=("||BC| BC%  |BC(Mbps)|| HTL% |HTL(Mbps)|| LTH% |LTH(Mbps)||Utilização||Disp. BC.||Excedente||Disp. HTL||Disp. LTH||Pegou CT0||Pegou CT1||Pegou CT2||Emprestando HTL||Emprestando LTH||\r\n");
+			for (int i=0; i<this.BC.length;i++){
+				retorno+=(String.format("|| %d|%6.2f|%8.2f|",i,this.BC[i],this.BCMbps(i)));
+				retorno+=(String.format("|%6.2f|%9.2f|",this.BCHTL[i],this.HTLMbps(i)));
+				retorno+=(String.format("|%6.2f|%9.2f|",this.BCLTH[i],this.LTHMbps(i)));
+				retorno+=(String.format("|%10.2f|",this.BCAtual[i]));
+				retorno+=(String.format("|%9.2f|",bandaDisponivelNaBC(i)));
+				retorno+=(String.format("|%9.2f|",bandaExcedenteDaBC(i)));
+				//double dispHTL=bandaDisponivelNaBC(i)>this.HTLMbps(i)?this.HTLMbps(i):bandaDisponivelNaBC(i);
+				retorno+=(String.format("|%9.2f|",HTLMbpsCompartilhavel(i)));
+				//double dispLTH=bandaDisponivelNaBC(i)>this.LTHMbps(i)?this.LTHMbps(i):bandaDisponivelNaBC(i);
+				retorno+=(String.format("|%9.2f|",LTHMbpsCompartilhavel(i)));
+				
+				retorno+=(String.format("|%9.2f|",bandaEmprestadaDeCTxParaCTy(0,i)));
+				retorno+=(String.format("|%9.2f|",bandaEmprestadaDeCTxParaCTy(1,i)));
+				retorno+=(String.format("|%9.2f|",bandaEmprestadaDeCTxParaCTy(2,i)));
+				
+				retorno+=(String.format("|%15.2f|",bandaEmprestadaDaCTPorHTL(i)));
+				retorno+=(String.format("|%15.2f||",bandaEmprestadaDaCTPorLTH(i)));
+				
+				retorno+=("\r\n");
+			}
+			retorno+=("=============================================================================================================================================================================================\r\n");
+			return retorno;
+		}
+		public double bandaEmprestadaDaCTPorHTL(int daCTx)
+		{
+			double retorno=0;
+			for (int i=0;i<daCTx;i++)
+			{
+				retorno+=bandaEmprestadaDeCTxParaCTy(daCTx, i);
+			}
+			return retorno;
+		}
+		public double bandaEmprestadaDaCTPorLTH(int daCTx)
+		{
+			double retorno=0;
+			for (int i=ParametrosDSTE.MaxClassType-1;i>daCTx;i--)
+			{
+				retorno+=bandaEmprestadaDeCTxParaCTy(daCTx, i);
+			}
+			return retorno;
+		}
+		public double bandaEmprestadaDeCTxParaCTy(int deCTx, int paraCTy)
+		{
+			double retorno=0;
+			double MbpsCompartilhavel=0;
+			//Não pega banda emprestada de sí mesma, então retorna 0
+			//deCTx<0 permite a recursividade
+			if (deCTx==paraCTy||deCTx<0)
+			{
+				return 0;
+			} 
+			//
+			if (paraCTy>deCTx)
+			{
+				MbpsCompartilhavel=LTHMbpsCompartilhavel(deCTx);
+			}
+			else
+			{
+				MbpsCompartilhavel=HTLMbpsCompartilhavel(deCTx);
+			}
+			
+			if ((bandaExcedenteDaBC(paraCTy)-bandaEmprestadaDeCTxParaCTy(deCTx-1, paraCTy)-bandaEmprestadaDeCTxParaCTy(deCTx-2, paraCTy)>0)&&(MbpsCompartilhavel>0))
+			{
+					if(bandaExcedenteDaBC(paraCTy)>MbpsCompartilhavel)
+					{
+						retorno=MbpsCompartilhavel;
+					}else
+					{
+						retorno=bandaExcedenteDaBC(paraCTy)-bandaEmprestadaDeCTxParaCTy(deCTx-1, paraCTy)-bandaEmprestadaDeCTxParaCTy(deCTx-2, paraCTy);
+					}
+			}
+
+			return retorno;
+		}
 		
+		public double bandaExcedenteDaBC(int BC)
+		{
+			return ((this.BCAtual[BC]-this.BCMbps(BC))>0)?this.BCAtual[BC]-this.BCMbps(BC):0;
+		}
+		public double bandaDisponivelNaBC(int BC)
+		{
+			return ((this.BCMbps(BC)-this.BCAtual[BC])>0)?this.BCMbps(BC)-this.BCAtual[BC]:0;
+		}
 		public double HTLMbps(int BC)
 		{
 			
@@ -525,6 +614,36 @@ public class Link {
 				
 			}
 			return excedente;
+		}
+		public String statusLinks()
+		{
+			Link aux=this;
+			String retorno="";
+
+			
+					retorno+=("------- Enlace "+aux.Descricao+" ("+aux.lsrSrc.ID+"->"+aux.lsrDest.ID+") -------\r\n");
+					for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
+					{
+						
+						if(i!=ParametrosDSTE.MaxClassType-1)
+							retorno+=String.format("BC[%d] = %3.0f(%6.2f) | CT[%d] = %3.0f(%6.2f)\r\n", i, aux.BCAcumulado(i), 100*aux.BCAcumulado(i)/aux.CargaEnlace, i, aux.BCAcumulado(i)-aux.BCAcumulado(i+1), 100*(aux.BCAcumulado(i)-aux.BCAcumulado(i+1))/aux.CargaEnlace);
+						else
+							retorno+=String.format("BC[%d] = %3.0f(%6.2f) | CT[%d] = %3.0f(%6.2f)\r\n", i, aux.BCAcumulado(i),100*aux.BCAcumulado(i)/aux.CargaEnlace, i, aux.BCAcumulado(i), 100*aux.BCAcumulado(i)/aux.CargaEnlace);
+					}
+					if(ParametrosDoSimulador.DebugFile>=8)
+						retorno+=("LSPs no enlace:"+Lsp.imprime_lista(aux.ListaLSPs)+"\r\n");
+					retorno+=("Carga:"+aux.getCargaEnlaceAtual()+"\r\n");
+					retorno+=("Preempções:"+aux.preempcoes+"\r\n");
+					retorno+=("Devoluções:"+aux.devolucoes+"\r\n");
+					retorno+=("LSP Estabelecidas:"+aux.lspEstabelecidas+"\r\n");
+					retorno+=("LSP EstabelecidasCT0:"+aux.lspEstabelecidasCT[0]+"\r\n");
+					retorno+=("LSP EstabelecidasCT1:"+aux.lspEstabelecidasCT[1]+"\r\n");
+					retorno+=("LSP EstabelecidasCT2:"+aux.lspEstabelecidasCT[2]+"\r\n");
+					retorno+=("LSP Estabelecidas Total:"+aux.lspEstabelecidasTotal+"\r\n");
+					retorno+=("LSP Unbroken:"+aux.lspUnbroken+"\r\n");
+					retorno+=("Banda Unbroken:"+aux.bandaUnbroken+"\r\n");
+				
+			return retorno;
 		}
 }
 
