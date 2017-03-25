@@ -37,7 +37,7 @@ import BAM.BAMRecommender.BAMDescription;
 //import BAM.BAMRecommender.BAMDescription.Problemas;
 import BAM.BAMRecommender.BAMRecommender;
 import BAM.BAMRecommender.BAMSolution;
-import BAM.BAMRecommender.BAMDescription.BAMTypes;
+import BAM.BAMRecommender.BAMTypes;
 import jcolibri.util.FileIO;
 
 /**

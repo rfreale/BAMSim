@@ -33,7 +33,7 @@ import jcolibri.cbrcore.CBRCase;
 import BAM.BAMRecommender.BAMDescription;
 import BAM.BAMRecommender.BAMRecommender;
 import BAM.BAMRecommender.BAMSolution;
-import BAM.BAMRecommender.BAMDescription.BAMTypes;
+import BAM.BAMRecommender.BAMTypes;
 import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.util.FileIO;
 

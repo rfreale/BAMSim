@@ -38,7 +38,7 @@ public class Debug {
 		  }
 		  catch (IOException e) {
 			   // TODO Auto-generated catch block
-			   System.out.println("Erro na gravação do arquivo:"+e.toString());
+			   System.out.println("Erro na gravaÃ§Ã£o do arquivo:"+e.toString());
 		  }
 	 }
 /*

@@ -9,9 +9,9 @@ public class Estatisticas {
 	/** Quando alfa vale 0.1, (1 - alfa/2) = 0.95. Valor de t-student-95 para n tendendo a infinito = 1.645.*/
 	public static final double T_STUDENT_095 = 1.96;
 	/** 
-	 * Método utilizado para calcular intervalo de confiança de n amostras.
+	 * MÃ©todo utilizado para calcular intervalo de confianÃ§a de n amostras.
 	 * @param amostras analisadas
-	 * @return percentual do intervalo de confiança
+	 * @return percentual do intervalo de confianÃ§a
 	 */
 	public static double calculaIntervaloDeConfianca(List<Double> amostras) {
 
@@ -29,19 +29,19 @@ public class Estatisticas {
 
 	
 	/** 
-	 * Método utilizado para calcular intervalo de confiança de n amostras.
+	 * MÃ©todo utilizado para calcular intervalo de confianÃ§a de n amostras.
 	 * @param somatorioQuadradoValores de uma amostra
 	 * @param somatorioValores de uma amostra
 	 * @param size tamanho de uma amostra
-	 * @return percentual do intervalo de confiança
+	 * @return percentual do intervalo de confianÃ§a
 	 */
 	public static double calculaIC(double somatorioQuadradoValores, double somatorioValores, double size) {
 		
 		double variancia = 0.0;
 		double n = size;
 		
-		//TODO: Agora: Verificar formula. Tem que levar em conta a média. 
-		//Referência da fórmula: Site de AD - Ano:2000 - Período:1º - Assuntos:Simulação - 4a Questão
+		//TODO: Agora: Verificar formula. Tem que levar em conta a mÃ©dia. 
+		//ReferÃªncia da fÃ³rmula: Site de AD - Ano:2000 - PerÃ­odo:1Âº - Assuntos:SimulaÃ§Ã£o - 4a QuestÃ£o
 		variancia = ((somatorioQuadradoValores)/(n-1)) - (Math.pow(somatorioValores, 2)/(n*(n-1)));
 
 		return T_STUDENT_095 * Math.sqrt(variancia / n);
@@ -49,11 +49,11 @@ public class Estatisticas {
 	}
 
 	/** 
-	 * Método utilizado para calcular intervalo de confiança de n amostras.
+	 * MÃ©todo utilizado para calcular intervalo de confianÃ§a de n amostras.
 	 * @param somatorioQuadradoValores de uma amostra
 	 * @param somatorioValores de uma amostra
 	 * @param size tamanho de uma amostra
-	 * @return percentual do intervalo de confiança
+	 * @return percentual do intervalo de confianÃ§a
 	 */
 	public static double calculaIC(List<Double> amostras) {
 		
@@ -87,9 +87,9 @@ public class Estatisticas {
 	}
 	
 	/**
-	 * Calcula a média de n amostras.
+	 * Calcula a mÃ©dia de n amostras.
 	 * @param amostras analisadas
-	 * @return média amostral
+	 * @return mÃ©dia amostral
 	 */
 	public static Double calculaMedia(List<Double> amostras) {
 		int n = amostras.size();
@@ -104,10 +104,10 @@ public class Estatisticas {
 	}
 	
 	/**
-	 * Calcula a média de um somatório de valores.
+	 * Calcula a mÃ©dia de um somatÃ³rio de valores.
 	 * @param somatorioValores analisados
 	 * @param size tamanho do conjunto analisado
-	 * @return média amostral
+	 * @return mÃ©dia amostral
 	 */
 	public static double calculaMedia(double somatorioValores, int size) {
 		return somatorioValores/size;

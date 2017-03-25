@@ -1,19 +1,25 @@
 package DSTE;
-import java.io.*;
-
-import Simulador.*;
-
-import java.util.Date;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 public class BancoDeDados {
 	
 
-	
+	public static String filename=null;
 	
 	public static void setXML(String mensagem, String filename) {
-		
+		BancoDeDados.filename=filename;
 		gravarArquivoXML(mensagem, filename);
+
+	}
+	public static void setXML(String mensagem) {
+		if(BancoDeDados.filename!=null)
+			gravarArquivoXML(mensagem, BancoDeDados.filename);
+		else
+			throw new NullPointerException();
 
 	}
 	

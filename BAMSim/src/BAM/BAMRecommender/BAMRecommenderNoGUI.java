@@ -45,16 +45,17 @@ import jcolibri.util.FileIO;
 import es.ucm.fdi.gaia.ontobridge.OntoBridge;
 import es.ucm.fdi.gaia.ontobridge.OntologyDocument;
 
-
 /**
  * Implementes the recommender main class
+ * 
  * @author Juan A. Recio-Garcia
  * @version 1.0
  */
 public class BAMRecommenderNoGUI implements StandardCBRApplication {
 
-	int K=2;
+	int K = 2;
 	NNConfig simConfig;
+
 	/**
 	 * @return the simConfig
 	 */
@@ -63,13 +64,15 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 	}
 
 	/**
-	 * @param simConfig the simConfig to set
+	 * @param simConfig
+	 *            the simConfig to set
 	 */
 	public void setSimConfigDB2(NNConfig simConfigDB2) {
 		this.simConfigDB2 = simConfigDB2;
 	}
-	
-	NNConfig simConfigDB2=getSimilarityConfigDB2();
+
+	NNConfig simConfigDB2 = getSimilarityConfigDB2();
+
 	/**
 	 * @return the simConfig
 	 */
@@ -78,360 +81,384 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 	}
 
 	/**
-	 * @param simConfig the simConfig to set
+	 * @param simConfig
+	 *            the simConfig to set
 	 */
 	public void setSimConfig(NNConfig simConfig) {
 		this.simConfig = simConfig;
 	}
 
 	private static BAMRecommenderNoGUI _instance = null;
-	
-	public  static BAMRecommenderNoGUI getInstance()
-	{
-		if(_instance == null)
-		   _instance = new BAMRecommenderNoGUI();
+
+	public static BAMRecommenderNoGUI getInstance() {
+		if (_instance == null)
+			_instance = new BAMRecommenderNoGUI();
 		return _instance;
 	}
-	
-	private BAMRecommenderNoGUI()
-	{
+
+	private BAMRecommenderNoGUI() {
 	}
-	
+
 	/** Connector object */
 	Connector _connector;
 	/** CaseBase object */
 	CBRCaseBase _caseBase;
-	
+
 	/** Connector object */
 	Connector _connectorDB2;
 	/** CaseBase object */
 	CBRCaseBase _caseBaseDB2;
-	
-	
-	
+
 	/**
 	 * @return the _caseBase
 	 */
 	public CBRCaseBase getCaseBase() {
 		return _caseBase;
 	}
-	
+
 	public CBRCaseBase getCaseBaseDB2() {
 		return _caseBaseDB2;
 	}
 
-
 	public void configure() throws ExecutionException {
 		try {
-			//Emulate data base server
+			// Emulate data base server
 			BAM.BAMRecommender.HSQLDBserver.init();
-			
+
 			// Create a data base connector
 			_connector = new DataBaseConnector();
 			// Init the ddbb connector with the config file
-			_connector.initFromXMLfile(jcolibri.util.FileIO
-					.findFile("BAM/BAMRecommender/databaseconfig.xml"));
+			_connector.initFromXMLfile(jcolibri.util.FileIO.findFile("BAM/BAMRecommender/databaseconfig.xml"));
 			// Create a Lineal case base for in-memory organization
 			_caseBase = new LinealCaseBase();
-			
+
 			// Create a data base connector
 			_connectorDB2 = new DataBaseConnector();
 			// Init the ddbb connector with the config file
-			_connectorDB2.initFromXMLfile(jcolibri.util.FileIO
-					.findFile("BAM/BAMRecommender/databaseconfig2.xml"));
+			_connectorDB2.initFromXMLfile(jcolibri.util.FileIO.findFile("BAM/BAMRecommender/databaseconfig2.xml"));
 			// Create a Lineal case base for in-memory organization
 			_caseBaseDB2 = new LinealCaseBase();
-			
-			
-			
+
 		} catch (Exception e) {
 			throw new ExecutionException(e);
 		}
 	}
-	
-	
+
 	public CBRCaseBase preCycle() throws ExecutionException {
 		// Load cases from connector into the case base
-		_caseBase.init(_connector);		
+		_caseBase.init(_connector);
 		System.out.println("===================DB==================");
 		// Print the cases
 		java.util.Collection<CBRCase> cases = _caseBase.getCases();
-		for(CBRCase c: cases)
-			System.out.println(c);
+		for (CBRCase c : cases)
+			System.out.println(((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo());
 		System.out.println("===================DB2==================");
 		// Load cases from connector into the case base
-		_caseBaseDB2.init(_connectorDB2);		
+		_caseBaseDB2.init(_connectorDB2);
 		// Print the cases
 		cases = _caseBaseDB2.getCases();
-		for(CBRCase c: cases)
-			System.out.println(c);
+		for (CBRCase c : cases)
+			System.out.println(((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo());
 		return _caseBase;
 	}
-	
 
 	public CBRCase cycle(CBRQuery query) throws ExecutionException {
-		
-		
 
 		// Obtain configuration for KNN
 
 		simConfig.setDescriptionSimFunction(new Average());
-		
+
 		// Execute NN
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
 		// Select k cases
-		//Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval,3);
-		BancoDeDados.setXML("====Query===", "Debug");
-		BancoDeDados.setXML(query.toString(), "Debug");
-		BancoDeDados.setXML(((BAMDescription)query.getDescription()).getInsertDB(), "Debug");
-		BancoDeDados.setXML("====+Similar===", "Debug");
-		BancoDeDados.setXML(eval.toArray()[0].toString(), "Debug");
-		BancoDeDados.setXML("", "Debug");
+		// Collection<RetrievalResult> selectedcases =
+		// SelectCases.selectTopKRR(eval,3);
+		//BancoDeDados.setXML("\n");
+		//BancoDeDados.setXML("====Query===");
+
+		BancoDeDados.setXML("\nQuery, ID: " + ((BAMDescription) query.getDescription()).toTabela() );
+		 //BancoDeDados.setXML(query.toString());
+
+		// BancoDeDados.setXML(((BAMDescription)query.getDescription()).getInsertDB(),
+		// "Debug");
+		//BancoDeDados.setXML("====Similar===");
+		// BancoDeDados.setXML(eval.toArray()[0].toString(), "Debug");
 		
+		Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval, 3);
+		for (RetrievalResult rr : selectedcases) {
+			BancoDeDados.setXML("Sim, ID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
+			//BancoDeDados.setXML(rr.toString());
+		}
+
 		BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 		BAMSolution sol = null;
 		CBRCase novocase = new CBRCase();
 		novocase.setDescription(desc);
-		
-		
-		for(RetrievalResult rr: eval)
-		{
-			
-			
-			if (rr.getEval()>=ParametrosDSTE.RecomendacaoCBRLimiarDeCorte){
-				
+
+		for (RetrievalResult rr : eval) {
+
+			if (rr.getEval() >= ParametrosDSTE.RecomendacaoCBRLimiarDeCorte) {
+
 				sol = ((BAMSolution) rr.get_case().getSolution()).clone();
 				novocase.setSolution(sol);
-				
-				if((!this.equal(novocase, _caseBaseDB2)))
+
+				if ((!this.equal(novocase, _caseBaseDB2)))
 					return rr.get_case();
-			}
-			else{
+			} else {
 				return null;
-				
+
 			}
-			
-			
-			
+
 		}
-			
+
 		return null;
 		// Show result
 		/*
-		ArrayList<RetrievalResult> cases;
-		cases = new ArrayList<RetrievalResult>();
-		for(RetrievalResult rr: eval)
-		{
-			if(selectedcases.contains(rr.get_case()))
-				cases.add(rr);
-		}
-
-				
-		for(RetrievalResult rr: cases)
-		{	
-				double sim = rr.getEval();
-				
-				CBRCase _case = rr.get_case();
-								
-				BAMDescription desc = (BAMDescription) _case.getDescription();
-								
-				System.out.println(desc.toString());
-					
-				BAMSolution sol = (BAMSolution) _case.getSolution();
-				System.out.println(sol.toString());
-		}
-		
-		BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
-		desc.setCaseId("BAM"+_caseBase.getCases().size());
-		BAMSolution sol = ((BAMSolution) cases.get(0).get_case().getSolution()).clone();
-		sol.setId("BAM"+_caseBase.getCases().size());
-		CBRCase novocase = new CBRCase();
-		novocase.setDescription(desc);
-		novocase.setSolution(sol);
-		jcolibri.method.retain.StoreCasesMethod.storeCase(_caseBase, novocase);
-		
-		*/
+		 * ArrayList<RetrievalResult> cases; cases = new
+		 * ArrayList<RetrievalResult>(); for(RetrievalResult rr: eval) {
+		 * if(selectedcases.contains(rr.get_case())) cases.add(rr); }
+		 * 
+		 * 
+		 * for(RetrievalResult rr: cases) { double sim = rr.getEval();
+		 * 
+		 * CBRCase _case = rr.get_case();
+		 * 
+		 * BAMDescription desc = (BAMDescription) _case.getDescription();
+		 * 
+		 * System.out.println(desc.toString());
+		 * 
+		 * BAMSolution sol = (BAMSolution) _case.getSolution();
+		 * System.out.println(sol.toString()); }
+		 * 
+		 * BAMDescription desc = ((BAMDescription)
+		 * query.getDescription()).clone();
+		 * desc.setCaseId("BAM"+_caseBase.getCases().size()); BAMSolution sol =
+		 * ((BAMSolution) cases.get(0).get_case().getSolution()).clone();
+		 * sol.setId("BAM"+_caseBase.getCases().size()); CBRCase novocase = new
+		 * CBRCase(); novocase.setDescription(desc); novocase.setSolution(sol);
+		 * jcolibri.method.retain.StoreCasesMethod.storeCase(_caseBase,
+		 * novocase);
+		 * 
+		 */
 		/*
-		// Show adaptation dialog
-		autoAdaptDialog.setVisible(false);
-		
-		// Adapt depending on user selection
-		if(autoAdaptDialog.adapt_Duration_Price())
-		{
-			// Compute a direct proportion between the "Duration" and "Price" attributes.
-			NumericDirectProportionMethod.directProportion(	new Attribute("Duration",BAMDescription.class), 
-				 											new Attribute("price",BAMSolution.class), 
-				 											query, selectedcases);
-		}
-		
-		if(autoAdaptDialog.adapt_NumberOfPersons_Price())
-		{
-			// Compute a direct proportion between the "Duration" and "Price" attributes.
-			NumericDirectProportionMethod.directProportion(	new Attribute("NumberOfPersons",BAMDescription.class), 
-				 											new Attribute("price",BAMSolution.class), 
-				 											query, selectedcases);
-		}
-		*/
+		 * // Show adaptation dialog autoAdaptDialog.setVisible(false);
+		 * 
+		 * // Adapt depending on user selection
+		 * if(autoAdaptDialog.adapt_Duration_Price()) { // Compute a direct
+		 * proportion between the "Duration" and "Price" attributes.
+		 * NumericDirectProportionMethod.directProportion( new
+		 * Attribute("Duration",BAMDescription.class), new
+		 * Attribute("price",BAMSolution.class), query, selectedcases); }
+		 * 
+		 * if(autoAdaptDialog.adapt_NumberOfPersons_Price()) { // Compute a
+		 * direct proportion between the "Duration" and "Price" attributes.
+		 * NumericDirectProportionMethod.directProportion( new
+		 * Attribute("NumberOfPersons",BAMDescription.class), new
+		 * Attribute("price",BAMSolution.class), query, selectedcases); }
+		 */
 		// Revise
-		//revisionDialog.showCases(selectedcases);
-		//revisionDialog.setVisible(true);
-		
+		// revisionDialog.showCases(selectedcases);
+		// revisionDialog.setVisible(true);
+
 		// Retain
-		//retainDialog.showCases(selectedcases, _caseBase.getCases().size(), query);
-		//retainDialog.setVisible(true);
-		//Collection<CBRCase> casesToRetain = retainDialog.getCasestoRetain();
-		//_caseBase.learnCases(casesToRetain);
-		//jcolibri.method.retain.StoreCasesMethod.storeCases(_caseBase, casesToRetain);
-		//jcolibri.method.retain.StoreCasesMethod.storeCase(_caseBase, casesToRetain.iterator().next());
-		
-		
+		// retainDialog.showCases(selectedcases, _caseBase.getCases().size(),
+		// query);
+		// retainDialog.setVisible(true);
+		// Collection<CBRCase> casesToRetain = retainDialog.getCasestoRetain();
+		// _caseBase.learnCases(casesToRetain);
+		// jcolibri.method.retain.StoreCasesMethod.storeCases(_caseBase,
+		// casesToRetain);
+		// jcolibri.method.retain.StoreCasesMethod.storeCase(_caseBase,
+		// casesToRetain.iterator().next());
+
 	}
 	
-	
-	
-	public boolean equal(CBRCase cbrcase, CBRCaseBase caseBase)
-	{
-		CBRQuery query = new CBRQuery();
+	public int[] foraDaLinha(CBRQuery query) throws ExecutionException {
 		
+		simConfig.setDescriptionSimFunction(new Average());
+
+		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBaseDB2.getCases(), query, simConfig);
+		
+		BancoDeDados.setXML("\nQuery_ForaDaLinha ID: " + ((BAMDescription) query.getDescription()).toTabela() );
+				
+		Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval, 3);
+		for (RetrievalResult rr : selectedcases) {
+			BancoDeDados.setXML("Sim_ForaDaLinha ID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
+		}
+
+		BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
+		BAMSolution sol = null;
+		CBRCase novocase = new CBRCase();
+		novocase.setDescription(desc);
+		int []bams = {0,0,0};
+		
+		/*while( !eval.isEmpty() &&  eval.iterator().next().getEval()  >= ParametrosDSTE.RecomendacaoCBRLimiarDeCorte2  )
+		{
+			if (   ((BAMSolution)eval.iterator()).getBAMNovo().toString() == BAMTypes.NoPreemptionMAM.toString()              )
+			{
+				bams[0]++;
+			}else if (   ((BAMSolution)eval.iterator()).getBAMNovo().toString() == BAMTypes.PreemptionRDM.toString()              )
+			{
+				bams[1]++;
+			}else if (   ((BAMSolution)eval.iterator()).getBAMNovo().toString() == BAMTypes.PreemptionAllocCTSharing.toString()              )
+			{
+				bams[2]++;
+			}
+		}
+		*/
+		
+		for (RetrievalResult rr : eval) {
+
+			if (rr.getEval() >= ParametrosDSTE.RecomendacaoCBRLimiarDeCorte2) {
+
+				sol = ((BAMSolution) rr.get_case().getSolution());
+				if (   sol.getBAMNovo().toString() == BAMTypes.NoPreemptionMAM.toString()              )
+				{
+					bams[0]++;
+				}else if (   sol.getBAMNovo().toString() == BAMTypes.PreemptionRDM.toString()              )
+				{
+					bams[1]++;
+				}else if (   sol.getBAMNovo().toString() == BAMTypes.PreemptionAllocCTSharing.toString()              )
+				{
+					bams[2]++;
+				}
+				
+			} else {
+				return bams;
+			}
+		}
+		return bams;
+	}
+
+	
+	
+	public boolean equal(CBRCase cbrcase, CBRCaseBase caseBase) {
+		CBRQuery query = new CBRQuery();
+
 		// Obtain configuration for KNN
 
 		simConfigDB2.setDescriptionSimFunction(new Average());
 		query.setDescription(cbrcase.getDescription());
-		
-		
+
 		// Execute NN
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase.getCases(), query, simConfigDB2);
 		// Select k cases
-		for(RetrievalResult rr: eval)
-		{
-			if(rr.getEval()>=1.0)
-			{
-				if(
-						((BAMSolution) rr.get_case().getSolution()).BAMNovo 
-						== 
-						((BAMSolution) cbrcase.getSolution()).BAMNovo
-					&&
-						((BAMSolution) rr.get_case().getSolution()).aceita 
-							== 
-						((BAMSolution) cbrcase.getSolution()).aceita
-					)
-				{
+		for (RetrievalResult rr : eval) {
+			if (rr.getEval() >= 1.0) {/////////////////////////////////////diminuir esse valor <<<<<<<<<<<<<<<<<<<<<<<<<<<<<===================================== 
+				if (((BAMSolution) rr.get_case().getSolution()).BAMNovo == ((BAMSolution) cbrcase.getSolution()).BAMNovo
+						&& ((BAMSolution) rr.get_case().getSolution()).aceita == ((BAMSolution) cbrcase
+								.getSolution()).aceita) {
 					return true;
 				}
 			}
-					
-						
+
 		}
-		
-		
+
 		return false;
 	}
+	
+	//BancoDeDados.setXML("Sim \t" + ((BAMDescription) rr.get_case().getDescription()).toTabela() +"\t"+ ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
 
 	public void postCycle() throws ExecutionException {
 		java.util.Collection<CBRCase> cases = _caseBase.getCases();
 		System.out.println("===================DB==================");
-		for(CBRCase c: cases)
-			System.out.println(c);
+		for (CBRCase c : cases)
+			System.out.println( ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo()  );
 		_connector.close();
 		System.out.println("===================DB2==================");
 		cases = _caseBaseDB2.getCases();
-		for(CBRCase c: cases)
-			System.out.println(c);
+		for (CBRCase c : cases)
+			System.out.println( ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo());
 		_connectorDB2.close();
-		
+
 		HSQLDBserver.shutDown();
 	}
-	
+
 	public String getStringCases() throws ExecutionException {
-		String aux ="===================DB==================\r\n";
+		String aux = "===================DB==================\r\n";
 		java.util.Collection<CBRCase> cases = _caseBase.getCases();
-		for(CBRCase c: cases)
-			aux +=c+"\r\n";
-		aux +="===================DB2==================\r\n";
+		for (CBRCase c : cases)
+			aux += ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo() + "\n";
+		aux += "===================DB2==================\r\n";
 		cases = _caseBaseDB2.getCases();
-		for(CBRCase c: cases)
-			aux +=c+"\r\n";
+		for (CBRCase c : cases)
+			aux += ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo() + "\n";
 		return aux;
 	}
-	
-	private NNConfig getSimilarityConfigDB2()
-	{
+
+	private NNConfig getSimilarityConfigDB2() {
 		NNConfig config = new NNConfig();
 		Attribute attribute;
-		
+
 		LocalSimilarityFunction function;
-		
 
-		attribute = new Attribute("BAMAtual",BAMDescription.class); 
-		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 10.0);
-
-		/*attribute = new Attribute("problema",BAMDescription.class); 
-		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 10.0);*/
-		
-		attribute = new Attribute("utilizacaoDoEnlaceCT0",BAMDescription.class); 
-		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 10.0);
-		attribute = new Attribute("utilizacaoDoEnlaceCT1",BAMDescription.class); 
-		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 10.0);
-		attribute = new Attribute("utilizacaoDoEnlaceCT2",BAMDescription.class); 
+		attribute = new Attribute("BAMAtual", BAMDescription.class);
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 10.0);
 
+		/*
+		 * attribute = new Attribute("problema",BAMDescription.class);
+		 * config.addMapping(attribute, new Equal());
+		 * config.setWeight(attribute, 10.0);
+		 */
 
-		attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class); 
+		attribute = new Attribute("utilizacaoDoEnlaceCT0", BAMDescription.class);
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+		attribute = new Attribute("utilizacaoDoEnlaceCT1", BAMDescription.class);
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+		attribute = new Attribute("utilizacaoDoEnlaceCT2", BAMDescription.class);
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 10.0);
 
+		attribute = new Attribute("numeroDePreempcoesCT0", BAMDescription.class);
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
 
-		attribute = new Attribute("numeroDePreempcoesCT1",BAMDescription.class); 
+		attribute = new Attribute("numeroDePreempcoesCT1", BAMDescription.class);
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 10.0);
-		
-		/*nunca existe esse valor
-		attribute = new Attribute("numeroDePreempcoesCT2",BAMDescription.class);
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 0.0);*/
-		
 
-		attribute = new Attribute("numeroDeBloqueiosCT0",BAMDescription.class);
-		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 10.0);
-		
+		/*
+		 * nunca existe esse valor attribute = new
+		 * Attribute("numeroDePreempcoesCT2",BAMDescription.class);
+		 * config.addMapping(attribute, new Interval(100));
+		 * config.setWeight(attribute, 0.0);
+		 */
 
-		attribute = new Attribute("numeroDeBloqueiosCT1",BAMDescription.class);
+		attribute = new Attribute("numeroDeBloqueiosCT0", BAMDescription.class);
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 10.0);
-		
 
-		attribute = new Attribute("numeroDeBloqueiosCT2",BAMDescription.class);
+		attribute = new Attribute("numeroDeBloqueiosCT1", BAMDescription.class);
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 10.0);
-		
-		/*nunca existe esse valor
-		attribute = new Attribute("numeroDeDevolucoesCT0",BAMDescription.class);
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 0.0);*/
-		
-		
-		attribute = new Attribute("numeroDeDevolucoesCT1",BAMDescription.class);
+
+		attribute = new Attribute("numeroDeBloqueiosCT2", BAMDescription.class);
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 10.0);
-		
-		
-		attribute = new Attribute("numeroDeDevolucoesCT2",BAMDescription.class);
+
+		/*
+		 * nunca existe esse valor attribute = new
+		 * Attribute("numeroDeDevolucoesCT0",BAMDescription.class);
+		 * config.addMapping(attribute, new Interval(100));
+		 * config.setWeight(attribute, 0.0);
+		 */
+
+		attribute = new Attribute("numeroDeDevolucoesCT1", BAMDescription.class);
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 10.0);
-		
-		attribute = new Attribute("numeroDeDevolucoesCT2",BAMDescription.class);
+
+		attribute = new Attribute("numeroDeDevolucoesCT2", BAMDescription.class);
 		config.addMapping(attribute, new Equal());
 		config.setWeight(attribute, 10.0);
-		
+
+		attribute = new Attribute("numeroDeDevolucoesCT2", BAMDescription.class);
+		config.addMapping(attribute, new Equal());
+		config.setWeight(attribute, 10.0);
+
 		return config;
 	}
 
-
-	
-	}
+}

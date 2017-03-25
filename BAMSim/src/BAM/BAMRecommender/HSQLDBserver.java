@@ -8,16 +8,27 @@
  */
 package BAM.BAMRecommender;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 import jcolibri.util.FileIO;
 
 import org.hsqldb.Server;
+
+import DSTE.Link;
+import DSTE.ParametrosDSTE;
+import DSTE.Roteador;
+import bsh.This;
 
 /**
  * Creates a data base server with the tables for the examples/tests using the HSQLDB library.
@@ -66,33 +77,33 @@ public class HSQLDBserver
 	    		+ "BAMAtual VARCHAR(30), "
 //	    		+ "problema VARCHAR(30), "
 	    		+ "Janela INTEGER, "
-	    		+ "SLAUtilizacaoCT0 INTEGER, "
-	    		+ "SLAUtilizacaoCT1 INTEGER, "
-	    		+ "SLAUtilizacaoCT2 INTEGER, "
-	    		+ "SLABloqueiosCT0 INTEGER, "
-	    		+ "SLABloqueiosCT1 INTEGER, "
-	    		+ "SLABloqueiosCT2 INTEGER, "
-	    		+ "SLAPreempcoesCT0 INTEGER, "
-	    		+ "SLAPreempcoesCT1 INTEGER, "
-	    		+ "SLAPreempcoesCT2 INTEGER, "
-	    		+ "SLADevolucoesCT0 INTEGER, "
-	    		+ "SLADevolucoesCT1 INTEGER, "
-	    		+ "SLADevolucoesCT2 INTEGER, "
-	    		+ "BC0 DECIMAL(10,2), "
-	    		+ "BC1 DECIMAL(10,2), "
-	    		+ "BC2 DECIMAL(10,2), "
-	    		+ "utilizacaoDoEnlaceCT0 DECIMAL(10,2), "
-	    		+ "utilizacaoDoEnlaceCT1 DECIMAL(10,2), "
-	    		+ "utilizacaoDoEnlaceCT2 DECIMAL(10,2), "
-	    		+ "numeroDeBloqueiosCT0 INTEGER, "
-	    		+ "numeroDeBloqueiosCT1 INTEGER, "
-	    		+ "numeroDeBloqueiosCT2 INTEGER, "
-	    		+ "numeroDePreempcoesCT0 INTEGER, "
-	    		+ "numeroDePreempcoesCT1 INTEGER, "
-	    		+ "numeroDePreempcoesCT2 INTEGER, "
-	    		+ "numeroDeDevolucoesCT0 INTEGER, "
-	    		+ "numeroDeDevolucoesCT1 INTEGER, "
-	    		+ "numeroDeDevolucoesCT2 INTEGER, "
+	    		+ "SLAUtilizacaoCT0 DOUBLE, "
+	    		+ "SLAUtilizacaoCT1 DOUBLE, "
+	    		+ "SLAUtilizacaoCT2 DOUBLE, "
+	    		+ "SLABloqueiosCT0 DOUBLE, "
+	    		+ "SLABloqueiosCT1 DOUBLE, "
+	    		+ "SLABloqueiosCT2 DOUBLE, "
+	    		+ "SLAPreempcoesCT0 DOUBLE, "
+	    		+ "SLAPreempcoesCT1 DOUBLE, "
+	    		+ "SLAPreempcoesCT2 DOUBLE, "
+	    		+ "SLADevolucoesCT0 DOUBLE, "
+	    		+ "SLADevolucoesCT1 DOUBLE, "
+	    		+ "SLADevolucoesCT2 DOUBLE, "
+	    		+ "BC0 DOUBLE, "
+	    		+ "BC1 DOUBLE, "
+	    		+ "BC2 DOUBLE, "
+	    		+ "utilizacaoDoEnlaceCT0 DOUBLE, "
+	    		+ "utilizacaoDoEnlaceCT1 DOUBLE, "
+	    		+ "utilizacaoDoEnlaceCT2 DOUBLE, "
+	    		+ "numeroDeBloqueiosCT0 DOUBLE, "
+	    		+ "numeroDeBloqueiosCT1 DOUBLE, "
+	    		+ "numeroDeBloqueiosCT2 DOUBLE, "
+	    		+ "numeroDePreempcoesCT0 DOUBLE, "
+	    		+ "numeroDePreempcoesCT1 DOUBLE, "
+	    		+ "numeroDePreempcoesCT2 DOUBLE, "
+	    		+ "numeroDeDevolucoesCT0 DOUBLE, "
+	    		+ "numeroDeDevolucoesCT1 DOUBLE, "
+	    		+ "numeroDeDevolucoesCT2 DOUBLE, "
 	    		+ "BAMNovo VARCHAR(30), "
 	    		+ "aceita BIT);").execute();
 	    
@@ -101,40 +112,109 @@ public class HSQLDBserver
 	    		+ "BAMAtual VARCHAR(30), "
 //	    		+ "problema VARCHAR(30), "
 	    		+ "Janela INTEGER, "
-	    		+ "SLAUtilizacaoCT0 INTEGER, "
-	    		+ "SLAUtilizacaoCT1 INTEGER, "
-	    		+ "SLAUtilizacaoCT2 INTEGER, "
-	    		+ "SLABloqueiosCT0 INTEGER, "
-	    		+ "SLABloqueiosCT1 INTEGER, "
-	    		+ "SLABloqueiosCT2 INTEGER, "
-	    		+ "SLAPreempcoesCT0 INTEGER, "
-	    		+ "SLAPreempcoesCT1 INTEGER, "
-	    		+ "SLAPreempcoesCT2 INTEGER, "
-	    		+ "SLADevolucoesCT0 INTEGER, "
-	    		+ "SLADevolucoesCT1 INTEGER, "
-	    		+ "SLADevolucoesCT2 INTEGER, "
-	    		+ "BC0 DECIMAL(10,2), "
-	    		+ "BC1 DECIMAL(10,2), "
-	    		+ "BC2 DECIMAL(10,2), "
-	    		+ "utilizacaoDoEnlaceCT0 DECIMAL(10,2), "
-	    		+ "utilizacaoDoEnlaceCT1 DECIMAL(10,2), "
-	    		+ "utilizacaoDoEnlaceCT2 DECIMAL(10,2), "
-	    		+ "numeroDeBloqueiosCT0 INTEGER, "
-	    		+ "numeroDeBloqueiosCT1 INTEGER, "
-	    		+ "numeroDeBloqueiosCT2 INTEGER, "
-	    		+ "numeroDePreempcoesCT0 INTEGER, "
-	    		+ "numeroDePreempcoesCT1 INTEGER, "
-	    		+ "numeroDePreempcoesCT2 INTEGER, "
-	    		+ "numeroDeDevolucoesCT0 INTEGER, "
-	    		+ "numeroDeDevolucoesCT1 INTEGER, "
-	    		+ "numeroDeDevolucoesCT2 INTEGER, "
+	    		+ "SLAUtilizacaoCT0 DOUBLE, "
+	    		+ "SLAUtilizacaoCT1 DOUBLE, "
+	    		+ "SLAUtilizacaoCT2 DOUBLE, "
+	    		+ "SLABloqueiosCT0 DOUBLE, "
+	    		+ "SLABloqueiosCT1 DOUBLE, "
+	    		+ "SLABloqueiosCT2 DOUBLE, "
+	    		+ "SLAPreempcoesCT0 DOUBLE, "
+	    		+ "SLAPreempcoesCT1 DOUBLE, "
+	    		+ "SLAPreempcoesCT2 DOUBLE, "
+	    		+ "SLADevolucoesCT0 DOUBLE, "
+	    		+ "SLADevolucoesCT1 DOUBLE, "
+	    		+ "SLADevolucoesCT2 DOUBLE, "
+	    		+ "BC0 DOUBLE, "
+	    		+ "BC1 DOUBLE, "
+	    		+ "BC2 DOUBLE, "
+	    		+ "utilizacaoDoEnlaceCT0 DOUBLE, "
+	    		+ "utilizacaoDoEnlaceCT1 DOUBLE, "
+	    		+ "utilizacaoDoEnlaceCT2 DOUBLE, "
+	    		+ "numeroDeBloqueiosCT0 DOUBLE, "
+	    		+ "numeroDeBloqueiosCT1 DOUBLE, "
+	    		+ "numeroDeBloqueiosCT2 DOUBLE, "
+	    		+ "numeroDePreempcoesCT0 DOUBLE, "
+	    		+ "numeroDePreempcoesCT1 DOUBLE, "
+	    		+ "numeroDePreempcoesCT2 DOUBLE, "
+	    		+ "numeroDeDevolucoesCT0 DOUBLE, "
+	    		+ "numeroDeDevolucoesCT1 DOUBLE, "
+	    		+ "numeroDeDevolucoesCT2 DOUBLE, "
 	    		+ "BAMNovo VARCHAR(30), "
 	    		+ "aceita BIT);").execute();
 	    
-	   
-	  
+	   if(ParametrosDSTE.baseCBRManual)
+	    	carregarBaseCRBManual(conn);
+	   else
+		   carregarBaseCBRDeArquivo(conn);
 		
-		 /////////************************************** ID    Nome Gerente    BAMAtual           Problema          Utilização     Bloqueio       Preempção        Devolução        Largura de banda   Utilização     Bloqueio       Preempção        Devolução         Solução      
+		 
+
+	    /*SqlFile file = new SqlFile(new
+	    File(FileIO.findFile("BAM/BAMRecommender/bam.sql").getFile()),false,new HashMap());
+	    file.execute(conn,out,out, true);*/
+	    
+	    
+	    
+	    org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).info("Data base generation finished");
+	    
+	} catch (Exception e)
+	{
+	    org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).error(e);
+	}
+
+    }
+
+    /**
+     * Shutdown the server
+     */
+    public static void shutDown()
+    {
+
+	if (initialized)
+	{
+	    server.stop();
+	    initialized = false;
+	}
+    }
+
+    /**
+     * Testing method
+     */
+    public static void main(String[] args)
+    {
+	HSQLDBserver.init();
+	HSQLDBserver.shutDown();
+	System.exit(0);
+	
+    }
+    public static void carregarBaseCBRDeArquivo(Connection conn) throws SQLException
+	{
+		
+		try {
+			FileInputStream stream = new FileInputStream(ParametrosDSTE.filenameBaseCBR);
+			InputStreamReader reader = new InputStreamReader(stream);
+			BufferedReader br = new BufferedReader(reader);
+			String linha = br.readLine();
+
+			while(linha != null) {
+				conn.prepareStatement(linha).execute();
+				linha = br.readLine();
+			}
+
+			br.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		
+
+	}
+	
+    private static void carregarBaseCRBManual(Connection conn) throws SQLException
+    {
+    	/////////************************************** ID    Nome Gerente    BAMAtual           Problema          Utilização     Bloqueio       Preempção        Devolução        Largura de banda   Utilização     Bloqueio       Preempção        Devolução         Solução      
 	    
 	    conn.prepareStatement("insert into bam values('1','Conservador','NoPreemptionMAM',300,null,null,null,null,null,null,null,null,null,null,null,null,200,300,500,0,0,0.057,0,0,0,0,0,0,0,0,0,'PreemptionAllocCTSharing',true);").execute();
 	    conn.prepareStatement("insert into bam values('2','Conservador','NoPreemptionMAM',300,null,null,null,null,null,null,null,null,null,null,null,null,200,300,500,0,0,0.186,0,0,0,0,0,0,0,0,0,'PreemptionAllocCTSharing',true);").execute();
@@ -799,51 +879,6 @@ public class HSQLDBserver
 	    conn.prepareStatement("insert into bam values('648','Conservador','PreemptionAllocCTSharing',300,null,null,null,null,null,null,null,null,null,null,null,null,200,300,500,0,0,0,0,0,0,0,0,0,0,0,0,'PreemptionAllocCTSharing',true);").execute();
 
 
-
-
-
-
-	    
-	    
-	    
-	    
-	    /*SqlFile file = new SqlFile(new
-	    File(FileIO.findFile("BAM/BAMRecommender/bam.sql").getFile()),false,new HashMap());
-	    file.execute(conn,out,out, true);*/
-	    
-	    
-	    
-	    org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).info("Data base generation finished");
-	    
-	} catch (Exception e)
-	{
-	    org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).error(e);
-	}
-
-    }
-
-    /**
-     * Shutdown the server
-     */
-    public static void shutDown()
-    {
-
-	if (initialized)
-	{
-	    server.stop();
-	    initialized = false;
-	}
-    }
-
-    /**
-     * Testing method
-     */
-    public static void main(String[] args)
-    {
-	HSQLDBserver.init();
-	HSQLDBserver.shutDown();
-	System.exit(0);
-	
     }
 
 }
