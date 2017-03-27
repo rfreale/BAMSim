@@ -451,6 +451,8 @@ public class Link {
 		}
 		public double LTHMbpsCompartilhavel(int BC)
 		{
+			return bandaDisponivelNaBC(BC)>this.LTHMbps(BC)?this.LTHMbps(BC):bandaDisponivelNaBC(BC);
+			/*
 			//Se não usou o privado é pq tem disponível o compartilhado
 			if(this.BCAtual[BC]<=this.privado(BC))
 			{
@@ -462,14 +464,16 @@ public class Link {
 				if((this.BCAtual[BC]-this.privado(BC))>=LTHMbps(BC))
 					return 0;
 				else
+					//corrigir aqui!!!!!!!!!
 					return LTHMbps(BC)-(this.BCAtual[BC]-this.privado(BC));	
 				
 			}
-			
+			*/
 		}
 		public double HTLMbpsCompartilhavel(int BC)
 		{
-			
+			return bandaDisponivelNaBC(BC)>this.HTLMbps(BC)?this.HTLMbps(BC):bandaDisponivelNaBC(BC);
+			/*
 			//Se não usou o privado é pq tem disponível o compartilhado
 			if(this.BCAtual[BC]<=this.privado(BC))
 			{
@@ -484,7 +488,7 @@ public class Link {
 					return HTLMbps(BC)-(this.BCAtual[BC]-this.privado(BC));	
 				
 			}
-			
+			*/
 		}
 		public double maxCompartilhavelGBAM(int BC)
 		{
@@ -532,6 +536,15 @@ public class Link {
 		public double LTHMbpsCompartilhavelAUX(int BC, Lsp lsp)
 		{
 			double carga=0;
+			
+			if(lsp.CT==BC)
+			{
+				 if ((bandaDisponivelNaBC(BC)-lsp.Carga)>=0)
+					 carga=lsp.Carga;
+			}
+			return bandaDisponivelNaBC(BC)-carga>this.LTHMbps(BC)?this.LTHMbps(BC):bandaDisponivelNaBC(BC)-carga;
+			/*
+			double carga=0;
 			if(lsp.CT==BC)
 				carga=lsp.Carga;
 			//Se não usou o privado é pq tem disponível o compartilhado
@@ -548,10 +561,23 @@ public class Link {
 					return LTHMbps(BC)-(this.BCAtual[BC]+carga-this.privado(BC));	
 				
 			}
-			
+			*/
 		}
 		public double HTLMbpsCompartilhavelAUX(int BC, Lsp lsp)
 		{
+			double carga=0;
+			
+			if(lsp.CT==BC)
+			{
+				 if ((bandaDisponivelNaBC(BC)-lsp.Carga)>=0)
+					 carga=lsp.Carga;
+			}
+				
+				
+				
+			return bandaDisponivelNaBC(BC)-carga>this.HTLMbps(BC)?this.HTLMbps(BC):bandaDisponivelNaBC(BC)-carga;
+
+			/*
 			double carga=0;
 			if(lsp.CT==BC)
 				carga=lsp.Carga;
@@ -570,7 +596,7 @@ public class Link {
 					return HTLMbps(BC)-(this.BCAtual[BC]+carga-this.privado(BC));	
 				
 			}
-			
+			*/
 		}
 		public double maxCompartilhavelGBAMAUX(int BC, Lsp lsp)
 		{
