@@ -370,7 +370,7 @@ public class Link {
 			
 			if ((bandaExcedenteDaBC(paraCTy)-bandaEmprestadaDeCTxParaCTy(deCTx-1, paraCTy)-bandaEmprestadaDeCTxParaCTy(deCTx-2, paraCTy)>0)&&(MbpsCompartilhavel>0))
 			{
-					if(bandaExcedenteDaBC(paraCTy)>MbpsCompartilhavel)
+					if(bandaExcedenteDaBC(paraCTy)-bandaEmprestadaDeCTxParaCTy(deCTx-1, paraCTy)-bandaEmprestadaDeCTxParaCTy(deCTx-2, paraCTy)>MbpsCompartilhavel)
 					{
 						retorno=MbpsCompartilhavel;
 					}else

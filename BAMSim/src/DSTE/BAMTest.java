@@ -103,7 +103,7 @@ public class BAMTest {
 				lsp.src = 0;
 				lsp.dest = 4;
 				lsp.CT = 0;
-				lsp.Carga = 100;
+				lsp.Carga = 10;
 				lsp.caminho=roteadorOrigem.caminhos[0];
 				
 				
@@ -112,7 +112,7 @@ public class BAMTest {
 				lsp2.src = 0;
 				lsp2.dest = 4;
 				lsp2.CT = 1;
-				lsp2.Carga = 100;
+				lsp2.Carga = 830;
 				lsp2.caminho=roteadorOrigem.caminhos[0];
 				
 				
@@ -121,7 +121,7 @@ public class BAMTest {
 				lsp3.src = 0;
 				lsp3.dest = 4;
 				lsp3.CT = 2;
-				lsp3.Carga = 200;
+				lsp3.Carga = 100;
 				lsp3.caminho=roteadorOrigem.caminhos[0];
 				
 				
@@ -130,7 +130,7 @@ public class BAMTest {
 				lsp4.src = 0;
 				lsp4.dest = 4;
 				lsp4.CT = 0;
-				lsp4.Carga = 100;
+				lsp4.Carga = 10;
 				lsp4.caminho=roteadorOrigem.caminhos[0];
 				
 				
@@ -139,7 +139,7 @@ public class BAMTest {
 				lsp5.src = 0;
 				lsp5.dest = 4;
 				lsp5.CT = 2;
-				lsp5.Carga = 250;
+				lsp5.Carga = 10;
 				lsp5.caminho=roteadorOrigem.caminhos[0];
 				
 				Lsp lsp6 = new Lsp(r);
@@ -147,7 +147,7 @@ public class BAMTest {
 				lsp6.src = 0;
 				lsp6.dest = 4;
 				lsp6.CT = 0;
-				lsp6.Carga = 200;
+				lsp6.Carga = 10;
 				lsp6.caminho=roteadorOrigem.caminhos[0];
 				
 				System.out.print(link.imprimirResumoGBAM());
@@ -214,9 +214,9 @@ public class BAMTest {
           		System.out.println("==========CONSOLIDADO===========");
 				System.out.print(link.imprimirConsolidadoGBAM());
 				link.BCHTL= new double[]
-						{	link.bandaEmprestadaDaCTPorHTL(0)*100/link.BCMbps(0),//000, 
+						{	0,//000, 
 							link.bandaEmprestadaDaCTPorHTL(1)*100/link.BCMbps(1)+link.bandaEmprestadaDaCTPorLTH(1)*100/link.BCMbps(1),//000,
-							0 
+							link.bandaEmprestadaDaCTPorHTL(2)*100/link.BCMbps(2) 
 						};
 				LSPaux.CT=2; 
           		BAM.preemptionG(link,LSPaux);
