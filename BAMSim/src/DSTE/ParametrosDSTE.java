@@ -72,11 +72,12 @@ public class ParametrosDSTE {
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.97;
 	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.95;
-	public static final String filenameBaseCBR= ".//basesCBR//baseZ.sql";
+	public static final String filenameBaseCBRP= ".//basesCBR//baseP.sql";
+	public static final String filenameBaseCBRN= ".//basesCBR//baseN.sql";
 	
 	
 	
-	public static final Boolean baseCBRManual= false;
+	public static final Boolean baseCBRManual= true;
 	public static final Boolean topologiaManual= false;
 	public static final Boolean matrizCaminhosManual= false;
 	//public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
