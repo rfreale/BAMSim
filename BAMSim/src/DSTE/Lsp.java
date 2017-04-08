@@ -76,10 +76,10 @@ public class Lsp {
 			}
 			
 			caminho[j].insereLsp(this);
-			caminho[j].lspEstabelecidas++;
-			caminho[j].lspEstabelecidasCT[this.CT]++;
-			caminho[j].lspEstabelecidasTotal++;
-			caminho[j].lspEstabelecidasTotalCT[this.CT]++;
+			caminho[j].lspEstablished++;
+			caminho[j].lspEstablishedCT[this.CT]++;
+			caminho[j].lspEstablishedTotal++;
+			caminho[j].lspEstablishedTotalCT[this.CT]++;
 			if(caminho[j].lsrDest.ID==this.dest)
 			{
 				break;

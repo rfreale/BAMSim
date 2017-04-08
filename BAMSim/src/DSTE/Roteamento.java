@@ -13,11 +13,20 @@ public class Roteamento {
 		{
 			for(int j=0;caminho[i][j]!=null&&j<ParametrosDSTE.MaxSaltos-1;j++)
 			{
-
+				//verificar se vai ser assim
+				caminho[i][j].lspRequested++;
+				caminho[i][j].lspRequestedCT[LSP.CT]++;
+				caminho[i][j].bandaRequested += LSP.Carga;
+				caminho[i][j].bandaRequestedCT[LSP.CT] += LSP.Carga;
 				auxbreak1=caminho[i][j].checkBAM(LSP);
 				
 				if (auxbreak1==BAMStatus.bloqueada)
+				{
+					//verificar se vai ser assim
+					caminho[i][j].bloqueios++;
+					caminho[i][j].bloqueiosCT[LSP.CT]++;
 					break;
+				}
 				
 				if((caminho[i][j].lsrDest.ID==LSP.dest)&&auxbreak1!=BAMStatus.bloqueada&&j<tamanho)
 				{

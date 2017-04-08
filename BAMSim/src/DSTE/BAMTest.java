@@ -457,12 +457,12 @@ public class BAMTest {
 		estatistica.bloqueios=40;
 		estatistica.lspRequested=100;
 		estatistica.inserirDadosRRD(0);
-		estatistica.inserirDadosAbsolutoRRD(0);
+		//estatistica.inserirDadosAbsolutoRRD(0);
 		
 		System.out.println("preempções="+estatistica.preempcoes);
 		System.out.println("preempções-base="+estatistica.preempcoesAUX);
 		System.out.println("preempções-janela="+estatistica.preempcoes(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
-		System.out.println("preempções-janelaAbs="+estatistica.preempcoesAbsoluto(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
+		//System.out.println("preempções-janelaAbs="+estatistica.preempcoesAbsoluto(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
 		
 		for (i=2;i<=20;i++)
 		{
@@ -475,11 +475,11 @@ public class BAMTest {
 			
 			
 			estatistica.inserirDadosRRD(ParametrosDSTE.RRDBatida*(i-1));
-			estatistica.inserirDadosAbsolutoRRD(ParametrosDSTE.RRDBatida*(i-1));
+			//estatistica.inserirDadosAbsolutoRRD(ParametrosDSTE.RRDBatida*(i-1));
 			System.out.println("preempções="+estatistica.preempcoes);
 			System.out.println("preempções-base="+estatistica.preempcoesAUX);
 			System.out.println("preempções-janela="+estatistica.preempcoes(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
-			System.out.println("preempções-janelaAbs="+estatistica.preempcoesAbsoluto(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
+			//System.out.println("preempções-janelaAbs="+estatistica.preempcoesAbsoluto(ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps*5));
 			
 		}
 		estatistica.gerarRRDXML();
