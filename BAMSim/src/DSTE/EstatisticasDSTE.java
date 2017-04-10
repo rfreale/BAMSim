@@ -1628,7 +1628,7 @@ public class EstatisticasDSTE {
 		
 		
 		try {
-			
+			desc.setLink(link.ID);
 			desc.setGestor(gestor);
 			
 			//Compatibilidade com G-BAM apenas refeltindo MAM, RDM e Alloc

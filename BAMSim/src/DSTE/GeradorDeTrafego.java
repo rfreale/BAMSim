@@ -17,7 +17,7 @@ public class GeradorDeTrafego {
 				Lsp lsp = new Lsp(rodada);
 				lsp.CargaReduzida = 0;
 				lsp.src = 0; // id do router fonte
-				lsp.dest = 1; // id do router destino
+				lsp.dest = 2; // id do router destino
 				lsp.CT = auxCT;
 				lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
 				dados.item = lsp;
@@ -55,7 +55,7 @@ public class GeradorDeTrafego {
 			Lsp lsp = new Lsp(rodada);
 			lsp.CargaReduzida = 0;
 			lsp.src = 0; // id do router fonte
-			lsp.dest = 1; // id do router destino
+			lsp.dest = 2; // id do router destino
 			lsp.CT = auxCT;
 			lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
 			dados.item = lsp;
@@ -258,7 +258,7 @@ public class GeradorDeTrafego {
 				Lsp lsp = new Lsp(rodada);
 				lsp.CargaReduzida = 0;
 				lsp.src = 0; // id do router fonte
-				lsp.dest = 1; // id do router destino
+				lsp.dest = 2; // id do router destino
 				lsp.CT = auxCT;
 				lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
 				dados.item = lsp;
@@ -296,7 +296,7 @@ public class GeradorDeTrafego {
 			Lsp lsp = new Lsp(rodada);
 			lsp.CargaReduzida = 0;
 			lsp.src = 0; // id do router fonte
-			lsp.dest = 1; // id do router destino
+			lsp.dest = 2; // id do router destino
 			lsp.CT = auxCT;
 			lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
 			dados.item = lsp;
@@ -721,7 +721,7 @@ public class GeradorDeTrafego {
 					Lsp lsp = new Lsp(rodada);
 					lsp.CargaReduzida = 0;
 					lsp.src = 0; // id do router fonte
-					lsp.dest = 1; // id do router destino
+					lsp.dest = 2; // id do router destino
 					lsp.CT = ct;
 					lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
 					lsp.tempoDeVida = (int) GeradorDeNumerosAleatorios.expntl(250);
@@ -770,7 +770,7 @@ public class GeradorDeTrafego {
 					Lsp lsp = new Lsp(rodada);
 					lsp.CargaReduzida = 0;
 					lsp.src = 0; // id do router fonte
-					lsp.dest = 1; // id do router destino
+					lsp.dest = 2; // id do router destino
 					lsp.CT = ct;
 					lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
 					lsp.tempoDeVida = (int) GeradorDeNumerosAleatorios.expntl(250);
@@ -852,7 +852,7 @@ public class GeradorDeTrafego {
 						Lsp lsp = new Lsp(rodada);
 						lsp.CargaReduzida = 0;
 						lsp.src = 0; // id do router fonte
-						lsp.dest = 1; // id do router destino
+						lsp.dest = 2; // id do router destino
 						lsp.CT = ct;
 						lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
 						lsp.tempoDeVida = (int) GeradorDeNumerosAleatorios.expntl(250);

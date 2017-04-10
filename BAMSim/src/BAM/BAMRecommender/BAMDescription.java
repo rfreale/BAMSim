@@ -22,6 +22,11 @@ import jcolibri.datatypes.Instance;
 public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable{
 	
 	
+
+
+
+
+
 	/*public enum BAMTypes {
 		NoPreemptionMAM(0), NoPreemptionRDM(1), NoPreemptionAllocCTSharing(2),PreemptionMAM(3), PreemptionRDM(4), PreemptionAllocCTSharing(5),PreemptionGBAM(6),NoPreemptionBestEffort(7);
 		private  int status; 
@@ -60,6 +65,8 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	}*/
 	//Colocar sintoma
 	String  caseId;
+	//Inclusão do gestor
+	int link;
 	//Inclusão do gestor
 	String gestor;
 	
@@ -134,7 +141,15 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 		this.caseId = caseId;
 	}
 
+	public int getLink() {
+		return link;
+	}
 
+
+
+	public void setLink(int link) {
+		this.link = link;
+	}
 	
 	public String getGestor() {
 		return gestor;
@@ -509,6 +524,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	public String toString() {
 		return "(CaseID=" + caseId 
 				+ ", gestor=" + gestor              //inserir  gestor e SLA  <=
+				+ ", link=" + link 
 				+ ", BAMAtual=" + BAMAtual
 				+ ", Janela=" + janela
 				+ ", SLAUtilizacaoCT0=" + SLAUtilizacaoCT0
@@ -544,7 +560,8 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	
 	public String toTabela() {
 		return  	caseId			+ "\t"
-				//+ 	gestor			+ "\t"           
+				//+ 	gestor			+ "\t" 
+				+ 	link		+ "\t"
 				+ 	BAMAtual		+ "\t"
 				/*+ 	janela			+ "\t"
 				+ 	SLAUtilizacaoCT0+ "\t"
@@ -581,6 +598,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	
 	public String getInsertDB() {
 		String aux="insert into bam values(''";
+		aux+=","+link+"";
 		aux+=",'"+gestor+"'";
 		aux+=",'"+BAMAtual+"'";
 		aux+=",'"+janela+"'";

@@ -81,8 +81,8 @@ public class ParametrosDSTE {
 	public static final Boolean matrizCaminhosManual= false;
 	//public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
 	//public static final String filenameMatrizCaminhos= ".//topologias//NSF-14n-42e_Caminhos.txt";
-	public static final String filenameTopologia= ".//topologias//PTP-2n-1e.txt";
-	public static final String filenameMatrizCaminhos= ".//topologias//PTP-2n-1e_Caminhos.txt";
+	public static final String filenameTopologia= ".//topologias//PTP-3n-2e.txt";
+	public static final String filenameMatrizCaminhos= ".//topologias//PTP-3n-2e_Caminhos.txt";
 	
 	
 	public static void trafegoManual(RodadaDeSimulacao rodada,Topologia to, No dados)

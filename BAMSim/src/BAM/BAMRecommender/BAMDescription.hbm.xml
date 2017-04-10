@@ -6,6 +6,7 @@
 	<id name="caseId" column="caseId">
 
 	</id>
+	<property name="link" column="link"/>
 	<property name="gestor" column="gestor"/>
 	
 	<property name="BAMAtual" column="BAMAtual">

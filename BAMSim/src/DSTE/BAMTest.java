@@ -559,7 +559,9 @@ public class BAMTest {
 
 		BAMDescription desc = new BAMDescription();
 		
+		desc.setLink(0);
 		desc.setGestor("Rafael");
+		
 		
 		
 		desc.setBAMAtual(BAMTypes.NoPreemptionMAM);

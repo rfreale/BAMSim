@@ -346,6 +346,7 @@ public class Topologia {
 				retorno+=("Carga:"+aux.getCargaEnlaceAtual()+"\r\n");
 				retorno+=("Preempções:"+aux.preempcoes+"\r\n");
 				retorno+=("Devoluções:"+aux.devolucoes+"\r\n");
+				retorno+=("Bloqueios:"+aux.bloqueios+"\r\n");
 				retorno+=("LSP Estabelecidas:"+aux.lspEstablished+"\r\n");
 				retorno+=("LSP EstabelecidasCT0:"+aux.lspEstablishedCT[0]+"\r\n");
 				retorno+=("LSP EstabelecidasCT1:"+aux.lspEstablishedCT[1]+"\r\n");

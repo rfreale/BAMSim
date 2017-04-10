@@ -390,8 +390,8 @@ public class TesteSimulacao {
 					badcase.setSolution(null);
 								
 					
-					int lspRequestedAgora = rodada.estatistica.lspRequested(ParametrosDSTE.Janela);
-					int lspRequestedAnterior = Math.abs(rodada.estatistica.lspRequested(ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida) - rodada.estatistica.lspRequested(ParametrosDSTE.Janela*2+ParametrosDSTE.RRDBatida ) );
+					int lspRequestedAgora = rodada.estatistica.lspRequested(ParametrosDSTE.Janela,to.link[0]);
+					int lspRequestedAnterior = Math.abs(rodada.estatistica.lspRequested(ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida, to.link[0]) - rodada.estatistica.lspRequested(ParametrosDSTE.Janela*2+ParametrosDSTE.RRDBatida,to.link[0] ) );
 					
 					int difLSPs = lspRequestedAgora - lspRequestedAnterior;
 					
@@ -837,56 +837,64 @@ public class TesteSimulacao {
 		
 		switch (solutionRecomendada) {
 		case "NoPreemptionMAM":
-			to.link[0].bamType = BAMType.PreemptionGBAM;
-			to.link[0].BCLTH= new double[]
-			{	000, //BC0 
-				000, //BC1
-				0  //BC2 Nunca mudar
-			};
-			LSPaux.CT=0; 
-      		BAM.devolutionG(to.link[0],LSPaux);
-			
-			
-			to.link[0].BCHTL= new double[]
-			{	0, //BC0 Nunca mudar
-				000, //BC1
-				000 //BC2
-			};
-			
-			LSPaux.CT=2; 
-      		BAM.preemptionG(to.link[0],LSPaux); 
+			for(int i=0;i<ParametrosDSTE.LINKS;i++)
+			{
+				to.link[i].bamType = BAMType.PreemptionGBAM;
+				to.link[i].BCLTH= new double[]
+				{	000, //BC0 
+					000, //BC1
+					0  //BC2 Nunca mudar
+				};
+				LSPaux.CT=0; 
+	      		BAM.devolutionG(to.link[i],LSPaux);
+				
+				
+				to.link[i].BCHTL= new double[]
+				{	0, //BC0 Nunca mudar
+					000, //BC1
+					000 //BC2
+				};
+				
+				LSPaux.CT=2; 
+	      		BAM.preemptionG(to.link[i],LSPaux);
+			}
 			break;
 		case "PreemptionRDM":
-			to.link[0].bamType = BAMType.PreemptionGBAM;
-			to.link[0].BCLTH= new double[]
-			{	000, //BC0 
-				000, //BC1
-				0  //BC2 Nunca mudar
-			};
-			LSPaux.CT=0; 
-      		BAM.devolutionG(to.link[0],LSPaux);
-			
-			
-			to.link[0].BCHTL= new double[]
-			{	0, //BC0 Nunca mudar
-				100, //BC1
-				100 //BC2
-			};
-			
+			for(int i=0;i<ParametrosDSTE.LINKS;i++)
+			{
+				to.link[i].bamType = BAMType.PreemptionGBAM;
+				to.link[i].BCLTH= new double[]
+				{	000, //BC0 
+					000, //BC1
+					0  //BC2 Nunca mudar
+				};
+				LSPaux.CT=0; 
+	      		BAM.devolutionG(to.link[i],LSPaux);
+				
+				
+				to.link[i].BCHTL= new double[]
+				{	0, //BC0 Nunca mudar
+					100, //BC1
+					100 //BC2
+				};
+			}
 			break;
 		case "PreemptionAllocCTSharing":
-			to.link[0].bamType = BAMType.PreemptionGBAM;
-			to.link[0].BCLTH= new double[]
-			{	100, //BC0 
-				100, //BC1
-				0  //BC2 Nunca mudar
-			};
-			
-			to.link[0].BCHTL= new double[]
-			{	0, //BC0 Nunca mudar
-				100, //BC
-				100 //BC2
-			};
+			for(int i=0;i<ParametrosDSTE.LINKS;i++)
+			{
+				to.link[i].bamType = BAMType.PreemptionGBAM;
+				to.link[i].BCLTH= new double[]
+				{	100, //BC0 
+					100, //BC1
+					0  //BC2 Nunca mudar
+				};
+				
+				to.link[i].BCHTL= new double[]
+				{	0, //BC0 Nunca mudar
+					100, //BC
+					100 //BC2
+				};
+			}
 			break;
 		}
 		
