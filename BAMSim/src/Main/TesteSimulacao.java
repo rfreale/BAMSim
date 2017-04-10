@@ -823,6 +823,7 @@ public class TesteSimulacao {
 			rodada.estatistica.gerarRRDXML();
 			rodada.estatistica.gerarLinksRRDXML();
 			System.out.println("Agora sim acabou");
+			
 		} catch (RrdException e) {
 			
 			e.printStackTrace();

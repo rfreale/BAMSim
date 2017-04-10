@@ -35,10 +35,10 @@ public class Simulador
 			RodadaDeSimulacao sim[] = new RodadaDeSimulacao[ParametrosDoSimulador.MAX_SIMULATIONS];
 			String [] filenames= new String[ParametrosDoSimulador.MAX_SIMULATIONS];
 			
-			
+			int sementeAgora = ParametrosDoSimulador.semente;
 			for (int j=0;j<sim.length;j++)
 			{
-				GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente+j*100);
+				//GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente+j*100);
 				/*if (j==7){
 					GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente+j*100);
 				}else if (j==14){
@@ -50,11 +50,13 @@ public class Simulador
 				}*/
 				
 				
-				//GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente);
+				GeradorDeNumerosAleatorios.rand= new Random(sementeAgora);
 				sim[j]=new RodadaDeSimulacao();
 				Debug.filename=sim[j].filename;
 				filenames[j]=sim[j].filename;
 				TesteSimulacao t1 = new TesteSimulacao(sim[j]);
+				Debug.setMensagem("Semente da Rodada:\t" + sementeAgora);
+				
 			}
 	
 			/*RodadaDeSimulacao sim = new RodadaDeSimulacao();
