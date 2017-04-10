@@ -13,7 +13,7 @@
 			<param name="enumClassName">BAM.BAMRecommender.BAMTypes</param>
     	</type>
   	</property>
-  	
+  	<!-- teste-->
 	<!-- <property name="problema" column="problema">
 		<type name="jcolibri.connector.databaseutils.EnumUserType">
 			<param name="enumClassName">BAM.BAMRecommender.BAMDescription$Problemas</param>

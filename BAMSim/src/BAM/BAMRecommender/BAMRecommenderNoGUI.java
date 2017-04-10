@@ -212,64 +212,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		}
 
 		return null;
-		// Show result
-		/*
-		 * ArrayList<RetrievalResult> cases; cases = new
-		 * ArrayList<RetrievalResult>(); for(RetrievalResult rr: eval) {
-		 * if(selectedcases.contains(rr.get_case())) cases.add(rr); }
-		 * 
-		 * 
-		 * for(RetrievalResult rr: cases) { double sim = rr.getEval();
-		 * 
-		 * CBRCase _case = rr.get_case();
-		 * 
-		 * BAMDescription desc = (BAMDescription) _case.getDescription();
-		 * 
-		 * System.out.println(desc.toString());
-		 * 
-		 * BAMSolution sol = (BAMSolution) _case.getSolution();
-		 * System.out.println(sol.toString()); }
-		 * 
-		 * BAMDescription desc = ((BAMDescription)
-		 * query.getDescription()).clone();
-		 * desc.setCaseId("BAM"+_caseBase.getCases().size()); BAMSolution sol =
-		 * ((BAMSolution) cases.get(0).get_case().getSolution()).clone();
-		 * sol.setId("BAM"+_caseBase.getCases().size()); CBRCase novocase = new
-		 * CBRCase(); novocase.setDescription(desc); novocase.setSolution(sol);
-		 * jcolibri.method.retain.StoreCasesMethod.storeCase(_caseBase,
-		 * novocase);
-		 * 
-		 */
-		/*
-		 * // Show adaptation dialog autoAdaptDialog.setVisible(false);
-		 * 
-		 * // Adapt depending on user selection
-		 * if(autoAdaptDialog.adapt_Duration_Price()) { // Compute a direct
-		 * proportion between the "Duration" and "Price" attributes.
-		 * NumericDirectProportionMethod.directProportion( new
-		 * Attribute("Duration",BAMDescription.class), new
-		 * Attribute("price",BAMSolution.class), query, selectedcases); }
-		 * 
-		 * if(autoAdaptDialog.adapt_NumberOfPersons_Price()) { // Compute a
-		 * direct proportion between the "Duration" and "Price" attributes.
-		 * NumericDirectProportionMethod.directProportion( new
-		 * Attribute("NumberOfPersons",BAMDescription.class), new
-		 * Attribute("price",BAMSolution.class), query, selectedcases); }
-		 */
-		// Revise
-		// revisionDialog.showCases(selectedcases);
-		// revisionDialog.setVisible(true);
-
-		// Retain
-		// retainDialog.showCases(selectedcases, _caseBase.getCases().size(),
-		// query);
-		// retainDialog.setVisible(true);
-		// Collection<CBRCase> casesToRetain = retainDialog.getCasestoRetain();
-		// _caseBase.learnCases(casesToRetain);
-		// jcolibri.method.retain.StoreCasesMethod.storeCases(_caseBase,
-		// casesToRetain);
-		// jcolibri.method.retain.StoreCasesMethod.storeCase(_caseBase,
-		// casesToRetain.iterator().next());
+		
 
 	}
 	

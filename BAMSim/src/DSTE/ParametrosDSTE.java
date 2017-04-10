@@ -77,7 +77,7 @@ public class ParametrosDSTE {
 	
 	
 	
-	public static final Boolean baseCBRManual= true;
+	public static final Boolean baseCBRManual= false;
 	public static final Boolean topologiaManual= false;
 	public static final Boolean matrizCaminhosManual= false;
 	//public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
