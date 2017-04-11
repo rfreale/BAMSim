@@ -327,7 +327,7 @@ public class BAM {
 				  )
 				{
 					//status=BAMStatus.devolucao;
-					status=status==BAMStatus.devolucao?BAMStatus.devolucaoEpreempcao:BAMStatus.devolucao;
+					status=status==BAMStatus.preempcao?BAMStatus.devolucaoEpreempcao:BAMStatus.devolucao;
 					break;
 				}
 			}

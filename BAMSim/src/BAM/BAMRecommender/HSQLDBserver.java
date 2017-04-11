@@ -10,25 +10,23 @@ package BAM.BAMRecommender;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.StringTokenizer;
-
-import jcolibri.util.FileIO;
 
 import org.hsqldb.Server;
 
-import DSTE.Link;
 import DSTE.ParametrosDSTE;
-import DSTE.Roteador;
-import bsh.This;
 
 /**
  * Creates a data base server with the tables for the examples/tests using the HSQLDB library.
@@ -51,10 +49,34 @@ public class HSQLDBserver
         org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).info("Creating data base ...");
 
 	server = new Server();
+	
+	
+	Path directory = Paths.get("database");
+	   try {
+		Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+			   @Override
+			   public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+				   Files.delete(file);
+				   return FileVisitResult.CONTINUE;
+			   }
+
+			   @Override
+			   public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+				   Files.delete(dir);
+				   return FileVisitResult.CONTINUE;
+			   }
+
+		   });
+	} catch (IOException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
 	server.setDatabaseName(0, "bam");
-	server.setDatabasePath(0, "mem:bam;sql.enforce_strict_size=true");
+	server.setDatabasePath(0, "database/bam");
+	//server.setDatabasePath(0, "mem:bam;sql.enforce_strict_size=true");
 	server.setDatabaseName(1, "bam2");
-	server.setDatabasePath(1, "mem:bam2;sql.enforce_strict_size=true");
+	server.setDatabasePath(1, "database/bam2");
+	//server.setDatabasePath(1, "mem:bam2;sql.enforce_strict_size=true");
 	
 	server.setLogWriter(null);
 	server.setErrWriter(null);
