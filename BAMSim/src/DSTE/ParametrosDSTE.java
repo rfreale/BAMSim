@@ -46,7 +46,7 @@ public class ParametrosDSTE {
 	public static final double SLADevolucoes = 0;
 	public static final double SLABloqueios = 0.25;  ////0.25
 	public static final double SLAUtilizacao = 60;
-	public static final long TempoSimulacao = 3600*24;
+	public static final long TempoSimulacao = 3600*1;
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -67,7 +67,7 @@ public class ParametrosDSTE {
 	
 	
 	
-	public static final boolean RecomendacaoCBRSwitchBAM = false;
+	public static final boolean RecomendacaoCBRSwitchBAM = true;
 	public static final boolean RecomendacaoCBRRetencao = true ;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.97;
@@ -79,16 +79,16 @@ public class ParametrosDSTE {
 	public static final Boolean baseCBRManual= false;
 	public static final Boolean topologiaManual= false;
 	public static final Boolean matrizCaminhosManual= false;
-	//public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
-	//public static final String filenameMatrizCaminhos= ".//topologias//NSF-14n-42e_Caminhos.txt";
-	public static final String filenameTopologia= ".//topologias//PTP-3n-2e.txt";
-	public static final String filenameMatrizCaminhos= ".//topologias//PTP-3n-2e_Caminhos.txt";
+	public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
+	public static final String filenameMatrizCaminhos= ".//topologias//NSF-14n-42e_Caminhos.txt";
+	//public static final String filenameTopologia= ".//topologias//PTP-3n-2e.txt";
+	//public static final String filenameMatrizCaminhos= ".//topologias//PTP-3n-2e_Caminhos.txt";
 	
 	
 	public static void trafegoManual(RodadaDeSimulacao rodada,Topologia to, No dados)
 	{
 
-		GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
+		GeradorDeTrafego.trafegoAleatorio(rodada, to, dados);
 		//GeradorDeTrafego.trafegoDeterministico2(rodada, to, dados);
 
 	}

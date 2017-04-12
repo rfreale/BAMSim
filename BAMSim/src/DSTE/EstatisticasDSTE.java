@@ -305,10 +305,10 @@ public class EstatisticasDSTE {
 				{
 					rrdDef.addDatasource(aux.ID+"_"+"lspUnbroken_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 				}
-				rrdDef.addDatasource(aux.ID+"_"+"lspEstablished", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				rrdDef.addDatasource(aux.ID+"_"+"lspEstab", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 				for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 				{
-					rrdDef.addDatasource(aux.ID+"_"+"lspEstablished_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+					rrdDef.addDatasource(aux.ID+"_"+"lspEstab_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 				}
 				rrdDef.addDatasource(aux.ID+"_"+"lspEstabTotal", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 				for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
@@ -547,7 +547,7 @@ public class EstatisticasDSTE {
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
-		int lspEstablished=(int) (fetchData.getAggregate(link.ID+"_"+"lspEstablished", "AVERAGE"));//////////////////////////////<<<<----- porque média??????????
+		int lspEstablished=(int) (fetchData.getAggregate(link.ID+"_"+"lspEstab", "AVERAGE"));//////////////////////////////<<<<----- porque média??????????
 		
 		rrdDb.close();
 		return lspEstablished;
@@ -572,7 +572,7 @@ public class EstatisticasDSTE {
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
-		int lspEstablished=(int) (fetchData.getAggregate(link.ID+"_"+"lspEstablished_CT"+ct, "AVERAGE")); 
+		int lspEstablished=(int) (fetchData.getAggregate(link.ID+"_"+"lspEstab_CT"+ct, "AVERAGE")); 
 		
 		rrdDb.close();
 		return lspEstablished;
@@ -596,7 +596,7 @@ public class EstatisticasDSTE {
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
-		int lspEstablished=(int) (fetchData.getAggregate(link.ID+"_"+"lspEstablished", "FIRST")); 
+		int lspEstablished=(int) (fetchData.getAggregate(link.ID+"_"+"lspEstab", "FIRST")); 
 		
 		rrdDb.close();
 		return lspEstablished;
@@ -621,7 +621,7 @@ public class EstatisticasDSTE {
 		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
-		int lspEstablished=(int) (fetchData.getAggregate(link.ID+"_"+"lspEstablished_CT"+ct, "FIRST"));  
+		int lspEstablished=(int) (fetchData.getAggregate(link.ID+"_"+"lspEstab_CT"+ct, "FIRST"));  
 		
 		rrdDb.close();
 		return lspEstablished;
@@ -1676,22 +1676,32 @@ public class EstatisticasDSTE {
 			desc.setUtilizacaoDoEnlaceCT1(this.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,1) /  link.CargaEnlace );
 			desc.setUtilizacaoDoEnlaceCT2(this.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,2) /  link.CargaEnlace );
 			
+			//Variáveis para evitar muitas consultas repetidas
+			int lspRequestedCT0=lspRequestedCT(ParametrosDSTE.Janela,link, 0);
+			int lspRequestedCT1=lspRequestedCT(ParametrosDSTE.Janela,link, 1);
+			int lspRequestedCT2=lspRequestedCT(ParametrosDSTE.Janela,link, 2);
+			int lspEstablishedTotalCT0=lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 0);
+			int lspEstablishedTotalCT1=lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 1);
+			int lspEstablishedTotalCT2=lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 2);
+			int lspEstablishedAnteriorCT0=lspEstablishedAnterior(ParametrosDSTE.Janela,link, 0);
+			int lspEstablishedAnteriorCT1=lspEstablishedAnterior(ParametrosDSTE.Janela,link, 1);
+			int lspEstablishedAnteriorCT2=lspEstablishedAnterior(ParametrosDSTE.Janela,link, 2);
 			
 			// operador ternário de if - a = condicao ? 1 : 2			
 			//lspRequestedCT(ParametrosDSTE.Janela, 0) > 0 ? valor verdadeiro : valor falso
-			desc.setNumeroDeBloqueiosCT0(lspRequestedCT(ParametrosDSTE.Janela,link, 0) > 0 ? (double)this.bloqueiosCT(ParametrosDSTE.Janela,link,0)/lspRequestedCT(ParametrosDSTE.Janela,link, 0):0);
-			desc.setNumeroDeBloqueiosCT1(lspRequestedCT(ParametrosDSTE.Janela,link, 1) > 0 ? (double)this.bloqueiosCT(ParametrosDSTE.Janela,link,1)/lspRequestedCT(ParametrosDSTE.Janela,link, 1):0);
-			desc.setNumeroDeBloqueiosCT2(lspRequestedCT(ParametrosDSTE.Janela,link, 2) > 0 ? (double)this.bloqueiosCT(ParametrosDSTE.Janela,link,2)/lspRequestedCT(ParametrosDSTE.Janela,link, 2):0);
+			desc.setNumeroDeBloqueiosCT0(lspRequestedCT0 > 0 ? (double)this.bloqueiosCT(ParametrosDSTE.Janela,link,0)/lspRequestedCT0:0);
+			desc.setNumeroDeBloqueiosCT1(lspRequestedCT1 > 0 ? (double)this.bloqueiosCT(ParametrosDSTE.Janela,link,1)/lspRequestedCT1:0);
+			desc.setNumeroDeBloqueiosCT2(lspRequestedCT2 > 0 ? (double)this.bloqueiosCT(ParametrosDSTE.Janela,link,2)/lspRequestedCT2:0);
 			
 			
-			desc.setNumeroDePreempcoesCT0((lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 0) + lspEstablishedAnterior(ParametrosDSTE.Janela,link, 0) ) > 0 ? (double)preempcoesCT(ParametrosDSTE.Janela,link,0)/ (lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 0)	+ lspEstablishedAnterior(ParametrosDSTE.Janela,link, 0)):0);  	
-			desc.setNumeroDePreempcoesCT1((lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 1) + lspEstablishedAnterior(ParametrosDSTE.Janela,link, 1) ) > 0 ? (double)preempcoesCT(ParametrosDSTE.Janela,link,1)/ (lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 1)	+ lspEstablishedAnterior(ParametrosDSTE.Janela,link, 1)):0);  	
-			desc.setNumeroDePreempcoesCT2((lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 2) + lspEstablishedAnterior(ParametrosDSTE.Janela,link, 2) ) > 0 ? (double)preempcoesCT(ParametrosDSTE.Janela,link,2)/ (lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 2)	+ lspEstablishedAnterior(ParametrosDSTE.Janela,link, 2)):0);  	
+			desc.setNumeroDePreempcoesCT0((lspEstablishedTotalCT0 + lspEstablishedAnteriorCT0 ) > 0 ? (double)preempcoesCT(ParametrosDSTE.Janela,link,0)/ (lspEstablishedTotalCT0	+ lspEstablishedAnteriorCT0):0);  	
+			desc.setNumeroDePreempcoesCT1((lspEstablishedTotalCT1 + lspEstablishedAnteriorCT1 ) > 0 ? (double)preempcoesCT(ParametrosDSTE.Janela,link,1)/ (lspEstablishedTotalCT1	+ lspEstablishedAnteriorCT1):0);  	
+			desc.setNumeroDePreempcoesCT2((lspEstablishedTotalCT2 + lspEstablishedAnteriorCT2 ) > 0 ? (double)preempcoesCT(ParametrosDSTE.Janela,link,2)/ (lspEstablishedTotalCT2	+ lspEstablishedAnteriorCT2):0);  	
 			
 			
-			desc.setNumeroDeDevolucoesCT0((lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 0) + lspEstablishedAnterior(ParametrosDSTE.Janela,link, 0)) > 0 ? (double)devolucoesCT(ParametrosDSTE.Janela,link,0)/(lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 0)+ lspEstablishedAnterior(ParametrosDSTE.Janela,link, 0)):0);
-			desc.setNumeroDeDevolucoesCT1((lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 1) + lspEstablishedAnterior(ParametrosDSTE.Janela,link, 1)) > 0 ? (double)devolucoesCT(ParametrosDSTE.Janela,link,1)/(lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 1)+ lspEstablishedAnterior(ParametrosDSTE.Janela,link, 1)):0);
-			desc.setNumeroDeDevolucoesCT2((lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 2) + lspEstablishedAnterior(ParametrosDSTE.Janela,link, 2)) > 0 ? (double)devolucoesCT(ParametrosDSTE.Janela,link,2)/(lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 2)+ lspEstablishedAnterior(ParametrosDSTE.Janela,link, 2)):0);
+			desc.setNumeroDeDevolucoesCT0((lspEstablishedTotalCT0 + lspEstablishedAnteriorCT0) > 0 ? (double)devolucoesCT(ParametrosDSTE.Janela,link,0)/(lspEstablishedTotalCT0+ lspEstablishedAnteriorCT0):0);
+			desc.setNumeroDeDevolucoesCT1((lspEstablishedTotalCT1 + lspEstablishedAnteriorCT1) > 0 ? (double)devolucoesCT(ParametrosDSTE.Janela,link,1)/(lspEstablishedTotalCT1+ lspEstablishedAnteriorCT1):0);
+			desc.setNumeroDeDevolucoesCT2((lspEstablishedTotalCT2 + lspEstablishedAnteriorCT2) > 0 ? (double)devolucoesCT(ParametrosDSTE.Janela,link,2)/(lspEstablishedTotalCT2+ lspEstablishedAnteriorCT2):0);
 				
 
 			/*//BancoDeDados.setXML("UCT0" + "\t" + "UCT1" + "\t" + "UCT2" + "\t" + "BCT0" + "\t" + "BCT1" + "\t" + "BCT2" + "\t" + "PCT0" + "\t" + "PCT1" + "\t" + "PCT2"+ "\t" + "DCT0" + "\t" + "DCT1" + "\t" + "DCT2", "Gerar_base");

@@ -51,7 +51,7 @@ public class HSQLDBserver
 	server = new Server();
 	
 	
-	Path directory = Paths.get("database");
+	Path directory = Paths.get("saida/database");
 	   try {
 		Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
 			   @Override
@@ -72,10 +72,10 @@ public class HSQLDBserver
 		e1.printStackTrace();
 	}
 	server.setDatabaseName(0, "bam");
-	server.setDatabasePath(0, "database/bam");
+	server.setDatabasePath(0, "saida/database/bam");
 	//server.setDatabasePath(0, "mem:bam;sql.enforce_strict_size=true");
 	server.setDatabaseName(1, "bam2");
-	server.setDatabasePath(1, "database/bam2");
+	server.setDatabasePath(1, "saida/database/bam2");
 	//server.setDatabasePath(1, "mem:bam2;sql.enforce_strict_size=true");
 	
 	server.setLogWriter(null);
