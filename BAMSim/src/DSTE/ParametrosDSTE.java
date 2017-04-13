@@ -46,7 +46,7 @@ public class ParametrosDSTE {
 	public static final double SLADevolucoes = 0;
 	public static final double SLABloqueios = 0.25;  ////0.25
 	public static final double SLAUtilizacao = 60;
-	public static final long TempoSimulacao = 3600*1;
+	public static final long TempoSimulacao = 3600*12;
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -93,7 +93,25 @@ public class ParametrosDSTE {
 
 	}
 	
+	public static double [] BCPadrao= new double[]           //para MAN 
+			{	40, // BC[0] =CT0 (Valor do Enlace)
+				35, // BC[1] = CT1
+				25 // BC[2] =  CT2
+			};
 	
+	public static double [] BCHTLPadrao= new double[]
+			{	0,//BC0 Nunca mudar
+				
+				100, //BC1
+				100 //BC2
+			};
+	
+	public static double [] BCLTHPadrao= new double[]
+			{	100, //BC0 
+				100, //BC1
+				
+				0//BC2 Nunca mudar
+			};
 	
 	public static void topologiaManual(Topologia t)
 	{
@@ -212,25 +230,7 @@ public class ParametrosDSTE {
 				40 // BC[1] = CT2
 			};
 */	
-	public static double [] BCPadrao= new double[]           //para MAN 
-			{	40, // BC[0] =CT0 (Valor do Enlace)
-				35, // BC[1] = CT1
-				25 // BC[2] =  CT2
-			};
-	
-	public static double [] BCHTLPadrao= new double[]
-			{	0,//BC0 Nunca mudar
-				
-				100, //BC1
-				100 //BC2
-			};
-	
-	public static double [] BCLTHPadrao= new double[]
-			{	100, //BC0 
-				100, //BC1
-				
-				0//BC2 Nunca mudar
-			};
+
 		
 	public static boolean condicaoDeParada(RodadaDeSimulacao rodada)
 	{

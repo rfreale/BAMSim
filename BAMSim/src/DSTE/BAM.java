@@ -171,7 +171,7 @@ public class BAM {
 					while(aux!=null&&(BandaAcimaCT > bandaPreemptada)) //Banda que é necessária ser preemptada no enlace
 					{
 						Debug.setMensagem("============= preempção =============");
-						((Lsp)aux.item).preemptaLSP();
+						((Lsp)aux.item).preemptaLSP(link);
 						((Lsp)aux.item).status=LspStatus.preemptada;
 
 						bandaPreemptada = bandaPreemptada + ((Lsp)aux.item).Carga; // Incrementa Banda Preemptada acima do BC atual
@@ -201,7 +201,7 @@ public class BAM {
 					while(aux!=null&&(BandaAcimaCT > bandaPreemptada)) //Banda que é necessária ser preemptada no enlace
 					{
 						Debug.setMensagem("============= preempção =============");
-						((Lsp)aux.item).preemptaLSP();
+						((Lsp)aux.item).preemptaLSP(link);
 						((Lsp)aux.item).status=LspStatus.preemptada;
 
 						bandaPreemptada = bandaPreemptada + ((Lsp)aux.item).Carga; // Incrementa Banda Preemptada acima do BC atual
@@ -240,7 +240,7 @@ public class BAM {
 					while(aux!=null&&(BandaAcimaCT > bandaDevolvida)) //Banda que é necessária ser preemptada no enlace
 					{
 						Debug.setMensagem("============= Devolução =============");
-						((Lsp)aux.item).devolveLSP();
+						((Lsp)aux.item).devolveLSP(link);
 						((Lsp)aux.item).status=LspStatus.devolvida;
 
 						bandaDevolvida = bandaDevolvida + ((Lsp)aux.item).Carga; // Incrementa Banda Preemptada acima do BC atual
@@ -374,7 +374,7 @@ public class BAM {
 			  ) )
 			{
 					Debug.setMensagem("============= preempção =============");
-					((Lsp)aux.item).preemptaLSP();
+					((Lsp)aux.item).preemptaLSP(link);
 					((Lsp)aux.item).status=LspStatus.preemptada;
 
 					bandaPreemptada = bandaPreemptada + ((Lsp)aux.item).Carga; // Incrementa Banda Preemptada acima do BC atual
@@ -416,7 +416,7 @@ public class BAM {
 			  )
 			{
 				Debug.setMensagem("============= Devolução =============");
-				((Lsp)aux.item).devolveLSP();
+				((Lsp)aux.item).devolveLSP(link);
 				((Lsp)aux.item).status=LspStatus.devolvida;
 
 				bandaDevolvida = bandaDevolvida + ((Lsp)aux.item).Carga; // Incrementa Banda Preemptada acima do BC atual
@@ -485,7 +485,7 @@ public class BAM {
 			  ) 
 			{
 					Debug.setMensagem("============= preempção =============");
-					((Lsp)aux.item).preemptaLSP();
+					((Lsp)aux.item).preemptaLSP(link);
 					((Lsp)aux.item).status=LspStatus.preemptada;
 
 					bandaPreemptada = bandaPreemptada + ((Lsp)aux.item).Carga; // Incrementa Banda Preemptada acima do BC atual

@@ -659,29 +659,29 @@ public class GeradorDeTrafego {
 		}
 		dados.item = lsps;
 		if (rodada.simtime() < 1800)
-			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(5), dados);
-		else if (rodada.simtime() < 3600)
-			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(5), dados);
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(8), dados);
+		else if (rodada.simtime() < 3600)//1
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(8), dados);
 		else if (rodada.simtime() < 5400)
 			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(1), dados);
-		else if (rodada.simtime() < 7200)
-			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(2), dados);
-		else if (rodada.simtime() < 9000)
+		else if (rodada.simtime() < 7200)//2
 			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(1), dados);
-		else if (rodada.simtime() < 10800)
+		else if (rodada.simtime() < 9000)
 			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(2), dados);
+		else if (rodada.simtime() < 10800)//3
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(1), dados);
 		else if (rodada.simtime() < 12600)
 			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(1), dados);
-		else if (rodada.simtime() < 14400)
-			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(5), dados);
+		else if (rodada.simtime() < 14400)//4
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(8), dados);
 		else if (rodada.simtime() < 16200)
-			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(5), dados);
-		else if (rodada.simtime() < 18000)
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(8), dados);
+		else if (rodada.simtime() < 18000)//5
 			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(1), dados);
 		else if (rodada.simtime() < 19800)
 			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(1), dados);
 		else
-			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(2), dados);
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(8), dados);
 	}
 
 	// Aleatório2

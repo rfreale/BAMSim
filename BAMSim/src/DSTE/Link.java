@@ -31,15 +31,17 @@ public class Link {
 		public Lista ListaLSPsPorCT[] = new Lista[ParametrosDSTE.MaxClassType];
 		
 		//Estatísticas
-		double BandaPreemptada =0; // Variável que contém a Banda Preemptada atual no Enlace, se preempção for necessária
+		/*double BandaPreemptada =0; // Variável que contém a Banda Preemptada atual no Enlace, se preempção for necessária
 		double TotalBandaPreemptada = 0; // Variável com o total de banda preemptada de cada enlace para computação das estatísticas finais
-		double BandaPreemptadaCT[] = new double[ParametrosDSTE.MaxClassType];
+		double BandaPreemptadaCT[] = new double[ParametrosDSTE.MaxClassType];*/
 		
 		//como computar bloqueio e requested para o enlace, como?
 		public int bloqueios = 0;
 		public int preempcoes = 0;
 		public int devolucoes = 0;
+		//Quantas LSP Tem estabelecida no momento
 		public int lspEstablished = 0;
+		//Qualtas LSP foram estabelecidas no enlace até o momento
 		public int lspEstablishedTotal = 0;
 		public int lspUnbroken = 0;
 		public int lspRequested = 0;
