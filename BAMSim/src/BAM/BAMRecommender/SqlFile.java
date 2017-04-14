@@ -27,7 +27,7 @@ import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 
-import org.hsqldb.util.SqlToolError;
+import org.hsqldb.cmdline.SqlToolError;
 
 @SuppressWarnings("all")
 public class SqlFile 

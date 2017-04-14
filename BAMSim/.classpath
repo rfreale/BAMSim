@@ -125,5 +125,6 @@
 	<classpathentry kind="lib" path="rjava/JRI.jar"/>
 	<classpathentry kind="lib" path="rjava/JRIEngine.jar"/>
 	<classpathentry kind="lib" path="rjava/RserveEngine.jar"/>
+	<classpathentry kind="lib" path="lib/databaseconnector/sqltool.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
