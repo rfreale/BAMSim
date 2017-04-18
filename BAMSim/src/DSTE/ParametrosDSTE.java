@@ -46,7 +46,7 @@ public class ParametrosDSTE {
 	public static final double SLADevolucoes = 0;
 	public static final double SLABloqueios = 0.25;  ////0.25
 	public static final double SLAUtilizacao = 60;
-	public static final long TempoSimulacao = 3600*24;
+	public static final long TempoSimulacao = 3600*5;
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -228,8 +228,8 @@ public class ParametrosDSTE {
 			};
 	
 	public static double [] BCLTHPadrao= new double[]
-			{	100, //BC0 
-				100, //BC1
+			{	00, //BC0 
+				00, //BC1
 				
 				0//BC2 Nunca mudar
 			};
