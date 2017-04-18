@@ -67,7 +67,7 @@ public class ParametrosDSTE {
 	
 	
 	
-	public static final boolean RecomendacaoCBRSwitchBAM = true;
+	public static final boolean RecomendacaoCBRSwitchBAM = false;
 	public static final boolean RecomendacaoCBRRetencao = true ;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.97;
@@ -89,9 +89,10 @@ public class ParametrosDSTE {
 	public static void trafegoManual(RodadaDeSimulacao rodada,Topologia to, No dados)
 	{
 
-		GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
+		//GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
 		//GeradorDeTrafego.trafegoDeterministico2(rodada, to, dados);
-
+		
+		GeradorDeTrafego.trafegoDeterministico(rodada, to, dados);
 	}
 	
 	
