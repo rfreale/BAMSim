@@ -120,7 +120,7 @@ public class TesteSimulacao {
 			//Agenda primeira avaliação
 			rodada.schedulep (5, ParametrosDSTE.Janela+0.40, null);
 		}
-		//rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
+		rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -147,8 +147,7 @@ public class TesteSimulacao {
 	public void cadeiaDeEventos(RodadaDeSimulacao rodada, Topologia to)
 			throws IOException, RrdException, ExecutionException {
 		No dados;
-		//int AGENDAMENTO = 0;
-		CBRCase casoRenAntigo = null;
+		
 
 		// Lsp lsp;
 		rodada.estatistica.tempoSimulacaoInicio=System.currentTimeMillis();
@@ -257,25 +256,22 @@ public class TesteSimulacao {
 					String solutionRecomendada = ((BAMSolution) cbrCase.getSolution()).getBAMNovo().toString();
 					
 					if (solutionRecomendada != nomeBAMAtual ){
-						//Temporário para forçar devolução
 						switchBAM(to, solutionRecomendada);
 						mudouBAM= 1;
 						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
-						//BancoDeDados.setXML(rodada.simtime() + " SimCaseID"+((BAMDescription) cbrCase.getDescription()).getCaseId()+"-> Recomenda BAM"+solutionRecomendada+":"+((BAMDescription) query.getDescription()).toTabela(), rodada.filename);
 						novocase.setSolution(sol);
 						no.item=novocase;
 						BancoDeDados.setXML("\nCASO SUGERIDO ID: " + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename);
 						
-						
-						//BancoDeDados.setXML(/*rodada.simtime() +*/ "######## Dentro da linha de corte ######  BAM modificado. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) + "##################", rodada.filename);
-						
-						
 					}else{
-						mudouBAM=-1; /// não é necessário agendar avaliação
-						BancoDeDados.setXML(/*"\n" + rodada.simtime() + */"######## Dentro da linha de corte ###### BAM mantido MESMO CENARIO - Nada a fazer ", rodada.filename);
-						//Agenda avaliar BAM via CBR
-						
+						mudouBAM= 0;
+						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
+						novocase.setSolution(sol);
+						no.item=novocase;
+						BancoDeDados.setXML(/*"\n" + rodada.simtime() + */"######## Dentro da linha de corte ###### BAM mantido MESMO CENARIO - Somente Validar Solução ", rodada.filename);	
 					}
+					
+					
 					
 				}else if (ParametrosDSTE.RecomendacaoCBRRetencao){
 					mudouBAM=1;
@@ -347,16 +343,8 @@ public class TesteSimulacao {
 				//Agenda avaliar rentenção 
 				if (ParametrosDSTE.RecomendacaoCBRRetencao){
 					if (mudouBAM==1){
-						if (casoRenAntigo!=null){
-						//	rodada.cancelp_tkn(casoRenAntigo);
-							//BancoDeDados.setXML(rodada.simtime()+300 + "##############. Desagenda retenção - Duas Trocas ==== avaliar isso",rodada.filename );
-						}
-						casoRenAntigo = (CBRCase)no.item;
-						
 						rodada.schedulep(6, ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10, no);
-						rodada.schedulep(5, ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida, null);
-						//rodada.schedulep(5, ParametrosDSTE.Janela, null);
-						
+						rodada.schedulep(5, ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida, null);						
 					}else if (mudouBAM==0){
 						rodada.schedulep(6, ParametrosDSTE.Janela-0.10, no);///////////////////////colocar  batida em vez ee janela??? ,,,<<<<<<<<<<<<<+============
 						//casoRenAntigo = null;
@@ -413,9 +401,9 @@ public class TesteSimulacao {
 							double []devolucoesCTJanelaAgora   	= new double [] {((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT0(), ((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT1(), ((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT2()} ;
 							
 							double somatorioUtilizacaoCTJanelaAnterior = utilizacaoCTJanelaAnterior[0]+utilizacaoCTJanelaAnterior[1]+	utilizacaoCTJanelaAnterior[2];
-							double somatorioUtilizacaoCTJanelaAgora    = utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[1]+utilizacaoCTJanelaAgora[2];
+							//double somatorioUtilizacaoCTJanelaAgora    = utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[1]+utilizacaoCTJanelaAgora[2];
 							
-							double somatorioPonderadoBloqueioCTJanelaAnterior = (bloqueioCTJanelaAnterior[0]*to.link[0].BC[0] + bloqueioCTJanelaAnterior[1]*to.link[0].BC[1] + bloqueioCTJanelaAnterior[2]*to.link[0].BC[2])  /  (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]) ;				
+							//double somatorioPonderadoBloqueioCTJanelaAnterior = (bloqueioCTJanelaAnterior[0]*to.link[0].BC[0] + bloqueioCTJanelaAnterior[1]*to.link[0].BC[1] + bloqueioCTJanelaAnterior[2]*to.link[0].BC[2])  /  (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]) ;				
 							double somatorioPonderadoBloqueioCTJanelaAgora = (bloqueiosCTJanelaAgora[0]*to.link[0].BC[0] + bloqueiosCTJanelaAgora[1]*to.link[0].BC[1] + bloqueiosCTJanelaAgora[2]*to.link[0].BC[2])  /  (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]) ;				
 							
 							double somatorioPreempcoesCTJanelaAnterior = preempcoesCTJanelaAnterior[0]+preempcoesCTJanelaAnterior[1]+preempcoesCTJanelaAnterior[2];
@@ -756,14 +744,14 @@ public class TesteSimulacao {
 										+ devolucoesCTJanela[0] + "\t"
 										+ devolucoesCTJanela[1] + "\t"
 										+ devolucoesCTJanela[2] + "\t"
-										+ (rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace)  + "\t"
-										+ rodada.estatistica.lspRequested(ParametrosDSTE.Janela)
+										//+ (rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace)  + "\t"
+										//+ rodada.estatistica.lspRequested(ParametrosDSTE.Janela)
 
 										//, "saida");
 							//, rodada.filename+"_7");
 							, rodada.filename);
 								
-								BancoDeDados.setXML(  rodada.simtime() + "\t"
+							/*	BancoDeDados.setXML(  rodada.simtime() + "\t"
 										+ nomeBAMAtual + "\t"
 										
 										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
@@ -781,12 +769,12 @@ public class TesteSimulacao {
 										+ devolucoesCTJanela[0] + "\t"
 										+ devolucoesCTJanela[1] + "\t"
 										+ devolucoesCTJanela[2] + "\t"
-										+ (rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace)  + "\t"
-										+ rodada.estatistica.lspRequested(ParametrosDSTE.Janela)
+										//+ (rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace)  + "\t"
+										//+ rodada.estatistica.lspRequested(ParametrosDSTE.Janela)
 										
 
 										//,"saida");
-										, rodada.filename+"_7");
+										, rodada.filename+"_7");*/
 								
 				
 					rodada.schedulep(7, ParametrosDSTE.RRDBatida, null);

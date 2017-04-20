@@ -42,10 +42,10 @@ public class ParametrosDSTE {
 	
 	
 	public static final int  Escada = 128; //limite da função de similaridade Threshold
-	public static final double SLAPreempcoes = 0;
-	public static final double SLADevolucoes = 0;
-	public static final double SLABloqueios = 0.25;  ////0.25
-	public static final double SLAUtilizacao = 60;
+	public static final double SLAPreempcoes = 0.0;
+	public static final double SLADevolucoes = 0.0;
+	public static final double SLABloqueios = 0.0;  ////0.25
+	public static final double SLAUtilizacao = 60.0;
 	public static final long TempoSimulacao = 3600*5;
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
@@ -67,7 +67,7 @@ public class ParametrosDSTE {
 	
 	
 	
-	public static final boolean RecomendacaoCBRSwitchBAM = false;
+	public static final boolean RecomendacaoCBRSwitchBAM = true;
 	public static final boolean RecomendacaoCBRRetencao = true ;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.97;
@@ -77,7 +77,7 @@ public class ParametrosDSTE {
 	
 	
 	
-	public static final Boolean baseCBRManual= false;
+	public static final Boolean baseCBRManual= true;
 	public static final Boolean topologiaManual= false;
 	public static final Boolean matrizCaminhosManual= false;
 	//public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
@@ -91,8 +91,9 @@ public class ParametrosDSTE {
 
 		//GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
 		//GeradorDeTrafego.trafegoDeterministico2(rodada, to, dados);
+		//GeradorDeTrafego.trafegoDeterministico(rodada, to, dados);
+		GeradorDeTrafego.trafegoForcado(rodada, to, dados);
 		
-		GeradorDeTrafego.trafegoDeterministico(rodada, to, dados);
 	}
 	
 	
@@ -207,13 +208,10 @@ public class ParametrosDSTE {
 	}
 	
 	
-	/*
-	public static double [] BCPadrao= new double[]    // para AllocCTSharing  //PreemptionRDM
-			{	100, // BC[0] =CT0 + CT1 + CT2 (Valor do Enlace)
-				75, // BC[1] = CT1 + CT2
-				40 // BC[1] = CT2
-			};
+	/*	public static double [] BCPadrao= new double[]    // para AllocCTSharing  //PreemptionRDM			{	100, // BC[0] =CT0 + CT1 + CT2 (Valor do Enlace)				75, // BC[1] = CT1 + CT2				40 // BC[1] = CT2			};
 */	
+	
+	
 	public static double [] BCPadrao= new double[]           //para MAN 
 			{	40, // BC[0] =CT0 (Valor do Enlace)
 				35, // BC[1] = CT1
@@ -228,8 +226,8 @@ public class ParametrosDSTE {
 			};
 	
 	public static double [] BCLTHPadrao= new double[]
-			{	00, //BC0 
-				00, //BC1
+			{	100, //BC0 
+				100, //BC1
 				
 				0//BC2 Nunca mudar
 			};
