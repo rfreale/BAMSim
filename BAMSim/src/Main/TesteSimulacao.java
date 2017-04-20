@@ -120,6 +120,7 @@ public class TesteSimulacao {
 			//Agenda primeira avaliação
 			rodada.schedulep (5, ParametrosDSTE.Janela+0.40, null);
 		}
+		
 		rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
 		
 		try {
@@ -670,11 +671,11 @@ public class TesteSimulacao {
 					
 								BancoDeDados.setXML(  rodada.simtime() + "\t"
 										+ nomeBAMAtual + "\t"
-										/////////////+ ParametrosDSTE.Janela + "\t"
+										+ ParametrosDSTE.Janela + "\t"
 										
-										///////////////+ to.link[0].CargaEnlace * to.link[0].BC[0] / 100 + "\t"
-										///////////////+ to.link[0].CargaEnlace * to.link[0].BC[1] / 100 + "\t"
-										////////////////+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
+										+ to.link[0].CargaEnlace * to.link[0].BC[0] / 100 + "\t"
+										+ to.link[0].CargaEnlace * to.link[0].BC[1] / 100 + "\t"
+										+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
 										
 										
 									/*	+ to.link[0].CargaCTAtual[0] + "\t"
@@ -744,8 +745,8 @@ public class TesteSimulacao {
 										+ devolucoesCTJanela[0] + "\t"
 										+ devolucoesCTJanela[1] + "\t"
 										+ devolucoesCTJanela[2] + "\t"
-										//+ (rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace)  + "\t"
-										//+ rodada.estatistica.lspRequested(ParametrosDSTE.Janela)
+										+ (rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace)  + "\t"
+										+ rodada.estatistica.lspRequested(ParametrosDSTE.Janela)
 
 										//, "saida");
 							//, rodada.filename+"_7");

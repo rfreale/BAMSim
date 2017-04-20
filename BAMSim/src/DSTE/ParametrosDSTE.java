@@ -46,7 +46,7 @@ public class ParametrosDSTE {
 	public static final double SLADevolucoes = 0.0;
 	public static final double SLABloqueios = 0.0;  ////0.25
 	public static final double SLAUtilizacao = 60.0;
-	public static final long TempoSimulacao = 3600*5;
+	public static final long TempoSimulacao = 3600*3;
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -67,7 +67,7 @@ public class ParametrosDSTE {
 	
 	
 	
-	public static final boolean RecomendacaoCBRSwitchBAM = true;
+	public static final boolean RecomendacaoCBRSwitchBAM = false;
 	public static final boolean RecomendacaoCBRRetencao = true ;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.97;
@@ -88,15 +88,11 @@ public class ParametrosDSTE {
 	
 	public static void trafegoManual(RodadaDeSimulacao rodada,Topologia to, No dados)
 	{
-
 		//GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
 		//GeradorDeTrafego.trafegoDeterministico2(rodada, to, dados);
 		//GeradorDeTrafego.trafegoDeterministico(rodada, to, dados);
 		GeradorDeTrafego.trafegoForcado(rodada, to, dados);
-		
 	}
-	
-	
 	
 	public static void topologiaManual(Topologia t)
 	{
