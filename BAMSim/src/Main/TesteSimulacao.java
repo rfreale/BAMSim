@@ -148,7 +148,6 @@ public class TesteSimulacao {
 	public void cadeiaDeEventos(RodadaDeSimulacao rodada, Topologia to)
 			throws IOException, RrdException, ExecutionException {
 		No dados;
-		
 
 		// Lsp lsp;
 		rodada.estatistica.tempoSimulacaoInicio=System.currentTimeMillis();
@@ -256,6 +255,7 @@ public class TesteSimulacao {
 					
 					String solutionRecomendada = ((BAMSolution) cbrCase.getSolution()).getBAMNovo().toString();
 					
+					
 					if (solutionRecomendada != nomeBAMAtual ){
 						switchBAM(to, solutionRecomendada);
 						mudouBAM= 1;
@@ -264,12 +264,14 @@ public class TesteSimulacao {
 						no.item=novocase;
 						BancoDeDados.setXML("\nCASO SUGERIDO ID: " + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename);
 						
+						
 					}else{
-						mudouBAM= 0;
+						/*mudouBAM= 0;
 						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
 						novocase.setSolution(sol);
-						no.item=novocase;
-						BancoDeDados.setXML(/*"\n" + rodada.simtime() + */"######## Dentro da linha de corte ###### BAM mantido MESMO CENARIO - Somente Validar Solução ", rodada.filename);	
+						no.item=novocase;*/
+						BancoDeDados.setXML("\n" + rodada.simtime() + "######## Dentro da linha de corte ###### BAM mantido. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
+						
 					}
 					
 					
@@ -334,9 +336,9 @@ public class TesteSimulacao {
 									
 					if (mudouBAM==1)
 					{
-						//BancoDeDados.setXML(rodada.simtime() + "######## Fora da linha de corte ######  BAM Modificado. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) + "##################", rodada.filename);
+						BancoDeDados.setXML(rodada.simtime() + "######## Fora da linha de corte ######  BAM Modificado. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) + "##################", rodada.filename);
 					}else {
-						//BancoDeDados.setXML(rodada.simtime() + "######## Fora da linha de corte ######  BAM Mantido. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
+						BancoDeDados.setXML(rodada.simtime() + "######## Fora da linha de corte ######  BAM Mantido. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
 
 					}
 				}
@@ -414,7 +416,7 @@ public class TesteSimulacao {
 							double somatorioDevolucoesCTJanelaAgora = devolucoesCTJanelaAgora[0]+devolucoesCTJanelaAgora[1]+devolucoesCTJanelaAgora[2];
 							
 							
-							double utilizacao =  ( ( Math.min(to.link[0].BC[0], to.link[0].BC[1]) + Math.min(to.link[0].BC[1], to.link[0].BC[2]) ))/ (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]);
+							double utilizacao = ParametrosDSTE.SLAUtilizacao; //( ( Math.min(to.link[0].BC[0], to.link[0].BC[1]) + Math.min(to.link[0].BC[1], to.link[0].BC[2]) ))/ (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]);
 							double bloqueio = utilizacao * ParametrosDSTE.SLABloqueios;
 							
 							
@@ -671,11 +673,11 @@ public class TesteSimulacao {
 					
 								BancoDeDados.setXML(  rodada.simtime() + "\t"
 										+ nomeBAMAtual + "\t"
-										+ ParametrosDSTE.Janela + "\t"
+										/*+ ParametrosDSTE.Janela + "\t"
 										
 										+ to.link[0].CargaEnlace * to.link[0].BC[0] / 100 + "\t"
 										+ to.link[0].CargaEnlace * to.link[0].BC[1] / 100 + "\t"
-										+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"
+										+ to.link[0].CargaEnlace * to.link[0].BC[2] / 100 + "\t"*/
 										
 										
 									/*	+ to.link[0].CargaCTAtual[0] + "\t"
