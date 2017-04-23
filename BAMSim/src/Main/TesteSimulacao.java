@@ -331,7 +331,7 @@ public class TesteSimulacao {
 					sol.setAceita(true);
 					novocase.setSolution(sol);
 					no.item=novocase;
-					BancoDeDados.setXML("\tCASO SUGERIDO:" + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo()+ "\n", rodada.filename);
+					BancoDeDados.setXML("\tCASO SUGERIDO: " + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo()+ "\n", rodada.filename);
 					//Por enquanto só recomendação
 									
 					if (mudouBAM==1)

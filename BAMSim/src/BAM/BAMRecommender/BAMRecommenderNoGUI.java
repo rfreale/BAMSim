@@ -187,10 +187,13 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 				sol = ((BAMSolution) rr.get_case().getSolution()).clone();
 				novocase.setSolution(sol);
 
-				if ((!this.equal(novocase, _caseBaseDB2)))
-					return rr.get_case();
+				if ((!this.equal(novocase, _caseBaseDB2))){  // isso é necessário para corigir casos que vão gradativamente se aproxiamndo de outro caso negativo
+					return rr.get_case();}
+				else{
+					BancoDeDados.setXML("\t#$%&* Caso NEGATIVADO ");}
+				
+				
 			} else {
-				BancoDeDados.setXML("\t#$%&* Caso NEGATIVADO ");
 				return null;
 
 			}
