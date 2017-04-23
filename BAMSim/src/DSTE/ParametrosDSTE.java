@@ -46,7 +46,7 @@ public class ParametrosDSTE {
 	public static final double SLADevolucoes = 0.00;
 	public static final double SLABloqueios = 0.00;  ////0.25
 	public static final double SLAUtilizacao = 0.80;
-	public static final long TempoSimulacao = 3600*5;
+	public static final long TempoSimulacao = 3600*25;
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -71,7 +71,7 @@ public class ParametrosDSTE {
 	public static final boolean RecomendacaoCBRRetencao = true ;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.97;
-	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.95;
+	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.97;
 	public static final String filenameBaseCBRP= ".//basesCBR//baseP.sql";
 	public static final String filenameBaseCBRN= ".//basesCBR//baseN.sql";
 	
@@ -287,11 +287,11 @@ public class ParametrosDSTE {
 		config.setWeight(attribute, 1.0);*/
 		
 				
-	/*	attribute = new Attribute("utilizacaoDoEnlace",BAMDescription.class); 
+		attribute = new Attribute("utilizacaoDoEnlace",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(1));
-		config.setWeight(attribute, 30.0);*/
+		config.setWeight(attribute, 30.0);
 		
-		attribute = new Attribute("utilizacaoDoEnlaceCT0",BAMDescription.class); 
+	/*	attribute = new Attribute("utilizacaoDoEnlaceCT0",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(1));
 		config.setWeight(attribute, 30.0);
 		
@@ -301,7 +301,7 @@ public class ParametrosDSTE {
 		
 		attribute = new Attribute("utilizacaoDoEnlaceCT2",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(1));
-		config.setWeight(attribute, 30.0);
+		config.setWeight(attribute, 30.0);*/
 		
 		if(ParametrosDSTE.RecomendacaoCBRIndexarBloPreDev)
 		{
@@ -326,7 +326,7 @@ public class ParametrosDSTE {
 					
 			attribute = new Attribute("numeroDePreempcoes",BAMDescription.class); 
 			config.addMapping(attribute, new Interval(1));
-			config.setWeight(attribute, 10.0);
+			config.setWeight(attribute, 20.0);
 	
 			/*attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class); 
 			config.addMapping(attribute, new Interval(1));
@@ -350,7 +350,7 @@ public class ParametrosDSTE {
 			
 			attribute = new Attribute("numeroDeDevolucoes",BAMDescription.class);
 			config.addMapping(attribute, new Interval(1));
-			config.setWeight(attribute, 10.0);
+			config.setWeight(attribute, 20.0);
 			
 			/*attribute = new Attribute("numeroDeDevolucoesCT1",BAMDescription.class);
 			config.addMapping(attribute, new Interval(1));

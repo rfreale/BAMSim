@@ -262,8 +262,7 @@ public class TesteSimulacao {
 						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
 						novocase.setSolution(sol);
 						no.item=novocase;
-						BancoDeDados.setXML("\nCASO SUGERIDO ID: " + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename);
-						
+						BancoDeDados.setXML("\n" + rodada.simtime() + "######## Dentro da linha de corte ###### BAM ALTERADO. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) + "##################", rodada.filename);
 						
 					}else{
 						/*mudouBAM= 0;
@@ -593,7 +592,7 @@ public class TesteSimulacao {
 								((BAMSolution)novocase.getSolution()).setId("N_"+(recommender.getCaseBase().getCases().size()+1));
 								
 								jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
-								BancoDeDados.setXML( rodada.simtime() + "Aceito o caso: "+  ((BAMDescription)novocase.getDescription()).toTabela() + " Dif LSFs:" + difLSPs  ,rodada.filename );
+								BancoDeDados.setXML( rodada.simtime() + "Aceito o caso: "+  ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).toString()  +" Dif LSFs:" + difLSPs  ,rodada.filename );
 								
 							}
 							
@@ -605,7 +604,7 @@ public class TesteSimulacao {
 								((BAMSolution)badcase.getSolution()).setId("R_"+(recommender.getCaseBaseDB2().getCases().size()+1));
 								
 								jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), badcase);
-								BancoDeDados.setXML( rodada.simtime() + "Rejeitado o caso: "+ ((BAMDescription)badcase.getDescription()).toTabela()   +  "Dif LSFs:" + difLSPs,rodada.filename );
+								BancoDeDados.setXML( rodada.simtime() + "Rejeitado o caso: "+ ((BAMDescription)badcase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).toString()  +  "Dif LSFs:" + difLSPs,rodada.filename );
 								/*BancoDeDados.setXML( rodada.simtime() + "Voltando para :"+ bamAnterior ,rodada.filename );
 								 switchBAM(to, bamAnterior);*/
 								
