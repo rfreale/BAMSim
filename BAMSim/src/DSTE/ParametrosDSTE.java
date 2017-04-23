@@ -46,7 +46,7 @@ public class ParametrosDSTE {
 	public static final double SLADevolucoes = 0.00;
 	public static final double SLABloqueios = 0.00;  ////0.25
 	public static final double SLAUtilizacao = 0.80;
-	public static final long TempoSimulacao = 3600*25;
+	public static final long TempoSimulacao = 3600*10;
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
