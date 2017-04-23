@@ -356,7 +356,7 @@ public class ResultDialog extends JDialog {
 		
 		BAMDescription desc = (BAMDescription) _case.getDescription();
 		
-		this.gestor.setText(valueOf(desc.getGestor()));
+		/*this.gestor.setText(valueOf(desc.getGestor()));
 		this.BAMAtual.setText(valueOf(desc.getBAMAtual()));
 		//this.problema.setText(valueOf(desc.getProblema()));
 		
@@ -371,11 +371,11 @@ public class ResultDialog extends JDialog {
 
 		this.SLAPreempcoesCT0.setText(valueOf(desc.getSLAPreempcoesCT0()));
 		this.SLAPreempcoesCT1.setText(valueOf(desc.getSLAPreempcoesCT1()));
-		/*this.SLAPreempcoesCT2.setText(valueOf(desc.getSLAPreempcoesCT2()));
+		this.SLAPreempcoesCT2.setText(valueOf(desc.getSLAPreempcoesCT2()));
 
-		this.SLADevolucoesCT0.setText(valueOf(desc.getSLADevolucoesCT0()));*/
+		this.SLADevolucoesCT0.setText(valueOf(desc.getSLADevolucoesCT0()));
 		this.SLADevolucoesCT1.setText(valueOf(desc.getSLADevolucoesCT1()));
-		this.SLADevolucoesCT2.setText(valueOf(desc.getSLADevolucoesCT2()));
+		this.SLADevolucoesCT2.setText(valueOf(desc.getSLADevolucoesCT2()));*/
 
 		this.BC0.setText(valueOf(desc.getBC0()));
 		this.BC1.setText(valueOf(desc.getBC1()));

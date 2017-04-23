@@ -1412,19 +1412,19 @@ public class EstatisticasDSTE {
 		
 	}
 	
-	public CBRQuery getQuery(Link link, 
+	public CBRQuery getQuery(Link link /*, 
 							String  gestor,
 							double []SLAUtilizacaoCT,
 							double []SLABloqueiosCT,
 							double []SLAPreempcoesCT, 
-							double []SLADevolucoesCT )   
+							double []SLADevolucoesCT*/ )   
 	{
 		BAMDescription desc = new BAMDescription();
 		
 		
 		try {
 			
-			desc.setGestor(gestor);
+			//desc.setGestor(gestor);
 			
 			//Compatibilidade com G-BAM apenas refeltindo MAM, RDM e Alloc
 			
@@ -1444,7 +1444,7 @@ public class EstatisticasDSTE {
 					desc.setBAMAtual(BAMTypes.NoPreemptionMAM);
 			}
 			//desc.setProblema(Problemas.valueOf(problema.toString()));
-			desc.setJanela(ParametrosDSTE.Janela);
+			/*desc.setJanela(ParametrosDSTE.Janela);
 			
 			desc.setSLAUtilizacaoCT0(SLAUtilizacaoCT[0]);
 			desc.setSLAUtilizacaoCT1(SLAUtilizacaoCT[1]);
@@ -1460,12 +1460,14 @@ public class EstatisticasDSTE {
 			
 			desc.setSLADevolucoesCT0(  SLADevolucoesCT[0]);
 			desc.setSLADevolucoesCT1(  SLADevolucoesCT[1]);
-			desc.setSLADevolucoesCT2(  SLADevolucoesCT[2]);
+			desc.setSLADevolucoesCT2(  SLADevolucoesCT[2]);*/
 			
 						
 			desc.setBC0(  (link.BC[0] * link.CargaEnlace) /100);
 			desc.setBC1(  (link.BC[1] * link.CargaEnlace) /100);
 			desc.setBC2(  (link.BC[2] * link.CargaEnlace) /100);
+			
+			desc.setUtilizacaoDoEnlace(this.picoDeUtilizacaoDoEnlace(ParametrosDSTE.Janela,link) /  link.CargaEnlace );
 			
 			desc.setUtilizacaoDoEnlaceCT0(this.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,0) /  link.CargaEnlace );
 			desc.setUtilizacaoDoEnlaceCT1(this.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,1) /  link.CargaEnlace );
@@ -1474,15 +1476,21 @@ public class EstatisticasDSTE {
 			
 			// operador ternário de if - a = condicao ? 1 : 2			
 			//lspRequestedCT(ParametrosDSTE.Janela, 0) > 0 ? valor verdadeiro : valor falso
+			desc.setNumeroDeBloqueios(lspRequested(ParametrosDSTE.Janela) > 0 ? (double)this.bloqueios(ParametrosDSTE.Janela)/lspRequested(ParametrosDSTE.Janela):0);
+			
 			desc.setNumeroDeBloqueiosCT0(lspRequestedCT(ParametrosDSTE.Janela, 0) > 0 ? (double)this.bloqueiosCT(ParametrosDSTE.Janela,0)/lspRequestedCT(ParametrosDSTE.Janela, 0):0);
 			desc.setNumeroDeBloqueiosCT1(lspRequestedCT(ParametrosDSTE.Janela, 1) > 0 ? (double)this.bloqueiosCT(ParametrosDSTE.Janela,1)/lspRequestedCT(ParametrosDSTE.Janela, 1):0);
 			desc.setNumeroDeBloqueiosCT2(lspRequestedCT(ParametrosDSTE.Janela, 2) > 0 ? (double)this.bloqueiosCT(ParametrosDSTE.Janela,2)/lspRequestedCT(ParametrosDSTE.Janela, 2):0);
 			
 			
+			desc.setNumeroDePreempcoes((lspEstablishedTotal(ParametrosDSTE.Janela) + lspEstablishedAnterior(ParametrosDSTE.Janela) ) > 0 ? (double)preempcoes(ParametrosDSTE.Janela)/ (lspEstablishedTotal(ParametrosDSTE.Janela)	+ lspEstablishedAnterior(ParametrosDSTE.Janela)):0);  	
+			
 			desc.setNumeroDePreempcoesCT0((lspEstablishedTotalCT(ParametrosDSTE.Janela, 0) + lspEstablishedAnterior(ParametrosDSTE.Janela, 0) ) > 0 ? (double)preempcoesCT(ParametrosDSTE.Janela,0)/ (lspEstablishedTotalCT(ParametrosDSTE.Janela, 0)	+ lspEstablishedAnterior(ParametrosDSTE.Janela, 0)):0);  	
 			desc.setNumeroDePreempcoesCT1((lspEstablishedTotalCT(ParametrosDSTE.Janela, 1) + lspEstablishedAnterior(ParametrosDSTE.Janela, 1) ) > 0 ? (double)preempcoesCT(ParametrosDSTE.Janela,1)/ (lspEstablishedTotalCT(ParametrosDSTE.Janela, 1)	+ lspEstablishedAnterior(ParametrosDSTE.Janela, 1)):0);  	
 			desc.setNumeroDePreempcoesCT2((lspEstablishedTotalCT(ParametrosDSTE.Janela, 2) + lspEstablishedAnterior(ParametrosDSTE.Janela, 2) ) > 0 ? (double)preempcoesCT(ParametrosDSTE.Janela,2)/ (lspEstablishedTotalCT(ParametrosDSTE.Janela, 2)	+ lspEstablishedAnterior(ParametrosDSTE.Janela, 2)):0);  	
 			
+			
+			desc.setNumeroDeDevolucoes((lspEstablishedTotal(ParametrosDSTE.Janela) + lspEstablishedAnterior(ParametrosDSTE.Janela)) > 0 ? (double)devolucoes(ParametrosDSTE.Janela)/(lspEstablishedTotal(ParametrosDSTE.Janela)+ lspEstablishedAnterior(ParametrosDSTE.Janela)):0);
 			
 			desc.setNumeroDeDevolucoesCT0((lspEstablishedTotalCT(ParametrosDSTE.Janela, 0) + lspEstablishedAnterior(ParametrosDSTE.Janela, 0)) > 0 ? (double)devolucoesCT(ParametrosDSTE.Janela,0)/(lspEstablishedTotalCT(ParametrosDSTE.Janela, 0)+ lspEstablishedAnterior(ParametrosDSTE.Janela, 0)):0);
 			desc.setNumeroDeDevolucoesCT1((lspEstablishedTotalCT(ParametrosDSTE.Janela, 1) + lspEstablishedAnterior(ParametrosDSTE.Janela, 1)) > 0 ? (double)devolucoesCT(ParametrosDSTE.Janela,1)/(lspEstablishedTotalCT(ParametrosDSTE.Janela, 1)+ lspEstablishedAnterior(ParametrosDSTE.Janela, 1)):0);

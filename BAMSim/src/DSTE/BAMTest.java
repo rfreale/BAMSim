@@ -559,13 +559,13 @@ public class BAMTest {
 
 		BAMDescription desc = new BAMDescription();
 		
-		desc.setGestor("Rafael");
+		//desc.setGestor("Rafael");
 		
 		
 		desc.setBAMAtual(BAMTypes.NoPreemptionMAM);
 		//desc.setProblema(Problemas.valueOf(problema.toString()));
 		
-		desc.setSLAUtilizacaoCT0(ParametrosDSTE.SLAUtilizacaoCT[0]);
+	/*	desc.setSLAUtilizacaoCT0(ParametrosDSTE.SLAUtilizacaoCT[0]);
 		desc.setSLAUtilizacaoCT1(ParametrosDSTE.SLAUtilizacaoCT[1]);
 		desc.setSLAUtilizacaoCT2(ParametrosDSTE.SLAUtilizacaoCT[2]);
 							
@@ -579,7 +579,7 @@ public class BAMTest {
 		
 		//desc.setSLADevolucoesCT0( ParametrosDSTE.SLADevolucoesCT[0]);
 		desc.setSLADevolucoesCT1( ParametrosDSTE.SLADevolucoesCT[1]);
-		desc.setSLADevolucoesCT2( ParametrosDSTE.SLADevolucoesCT[2]);
+		desc.setSLADevolucoesCT2( ParametrosDSTE.SLADevolucoesCT[2]);*/
 		
 					
 		desc.setBC0( 250.0 );

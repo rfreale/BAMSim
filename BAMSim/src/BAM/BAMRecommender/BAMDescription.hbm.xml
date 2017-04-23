@@ -3,10 +3,9 @@
 <hibernate-mapping default-lazy="false">
 <class name="BAM.BAMRecommender.BAMDescription" table="bam">
 
-	<id name="caseId" column="caseId">
-
-	</id>
-	<property name="gestor" column="gestor"/>
+	<id name="caseId" column="caseId"> 	</id>
+	
+	<!-- <property name="gestor" column="gestor"/> -->
 	
 	<property name="BAMAtual" column="BAMAtual">
 		<type name="jcolibri.connector.databaseutils.EnumUserType">
@@ -20,9 +19,9 @@
     	</type>
   	</property> -->
   	
-	<property name="Janela" column="Janela"/>
+	<!-- <property name="Janela" column="Janela"/> -->
 	
-	<property name="SLAUtilizacaoCT0" column="SLAUtilizacaoCT0"/>
+	<!-- <property name="SLAUtilizacaoCT0" column="SLAUtilizacaoCT0"/>
 	<property name="SLAUtilizacaoCT1" column="SLAUtilizacaoCT1"/>
 	<property name="SLAUtilizacaoCT2" column="SLAUtilizacaoCT2"/>
 	
@@ -36,23 +35,31 @@
 			
 	<property name="SLADevolucoesCT0" column="SLADevolucoesCT0"/>
 	<property name="SLADevolucoesCT1" column="SLADevolucoesCT1"/>
-	<property name="SLADevolucoesCT2" column="SLADevolucoesCT2"/>	
+	<property name="SLADevolucoesCT2" column="SLADevolucoesCT2"/>	 -->
 	
 	<property name="BC0" column="BC0"/>
 	<property name="BC1" column="BC1"/>
 	<property name="BC2" column="BC2"/>
 	
+	<property name="utilizacaoDoEnlace" column="utilizacaoDoEnlace"/>
+	
 	<property name="utilizacaoDoEnlaceCT0" column="utilizacaoDoEnlaceCT0"/>
 	<property name="utilizacaoDoEnlaceCT1" column="utilizacaoDoEnlaceCT1"/>
 	<property name="utilizacaoDoEnlaceCT2" column="utilizacaoDoEnlaceCT2"/>
+	
+	<property name="numeroDeBloqueios" column="numeroDeBloqueios"/>
 	
 	<property name="numeroDeBloqueiosCT0" column="numeroDeBloqueiosCT0"/>
 	<property name="numeroDeBloqueiosCT1" column="numeroDeBloqueiosCT1"/>
 	<property name="numeroDeBloqueiosCT2" column="numeroDeBloqueiosCT2"/>
 	
+	<property name="numeroDePreempcoes" column="numeroDePreempcoes"/>
+	
 	<property name="numeroDePreempcoesCT0" column="numeroDePreempcoesCT0"/>
 	<property name="numeroDePreempcoesCT1" column="numeroDePreempcoesCT1"/>
 	<property name="numeroDePreempcoesCT2" column="numeroDePreempcoesCT2"/>
+	
+	<property name="numeroDeDevolucoes" column="numeroDeDevolucoes"/>
 	
 	<property name="numeroDeDevolucoesCT0" column="numeroDeDevolucoesCT0"/>
 	<property name="numeroDeDevolucoesCT1" column="numeroDeDevolucoesCT1"/>

@@ -6,14 +6,7 @@
  * 25/07/2006
  */
 package BAM.BAMRecommender;
-
-import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.Collection;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
@@ -23,12 +16,6 @@ import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.cbrcore.Connector;
 import jcolibri.connector.DataBaseConnector;
-import BAM.BAMRecommender.gui.AutoAdaptationDialog;
-import BAM.BAMRecommender.gui.QueryDialog;
-import BAM.BAMRecommender.gui.ResultDialog;
-import BAM.BAMRecommender.gui.RetainDialog;
-import BAM.BAMRecommender.gui.RevisionDialog;
-import BAM.BAMRecommender.gui.SimilarityDialog;
 import DSTE.BancoDeDados;
 import DSTE.ParametrosDSTE;
 import jcolibri.exception.ExecutionException;
@@ -41,9 +28,7 @@ import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.selection.SelectCases;
 import jcolibri.method.reuse.NumericDirectProportionMethod;
-import jcolibri.util.FileIO;
-import es.ucm.fdi.gaia.ontobridge.OntoBridge;
-import es.ucm.fdi.gaia.ontobridge.OntologyDocument;
+
 
 /**
  * Implementes the recommender main class

@@ -8,10 +8,7 @@
 package BAM.BAMRecommender;
 
 
-import javax.swing.SpinnerNumberModel;
-
 import jcolibri.cbrcore.Attribute;
-import jcolibri.datatypes.Instance;
 
 
 /**
@@ -61,16 +58,16 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	//Colocar sintoma
 	String  caseId;
 	//Inclusão do gestor
-	String gestor;
+	//String gestor;
 	
 
 	BAMTypes BAMAtual;
 	//Problemas problema;
 	
-	long janela;
+	//long janela;
 	
 	//SLA
-	Double  SLAUtilizacaoCT0;
+	/*Double  SLAUtilizacaoCT0;
 	Double  SLAUtilizacaoCT1;
 	Double  SLAUtilizacaoCT2;
 	
@@ -84,7 +81,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	
 	Double  SLADevolucoesCT0;
 	Double  SLADevolucoesCT1;
-	Double  SLADevolucoesCT2;
+	Double  SLADevolucoesCT2;*/
 	
 	//Limites
 	Double BC0;
@@ -93,17 +90,26 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 		
 		
 	//Medições
+	
+	Double  utilizacaoDoEnlace;
+	
 	Double  utilizacaoDoEnlaceCT0;
 	Double  utilizacaoDoEnlaceCT1;
 	Double  utilizacaoDoEnlaceCT2;
+	
+	Double  numeroDeBloqueios;
 	
 	Double  numeroDeBloqueiosCT0;
 	Double  numeroDeBloqueiosCT1;
 	Double  numeroDeBloqueiosCT2;
 	
+	Double  numeroDePreempcoes;
+	
 	Double  numeroDePreempcoesCT0;
 	Double  numeroDePreempcoesCT1;
 	Double  numeroDePreempcoesCT2;
+	
+	Double  numeroDeDevolucoes;
 	
 	Double  numeroDeDevolucoesCT0;
 	Double  numeroDeDevolucoesCT1;
@@ -136,7 +142,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 
 
 	
-	public String getGestor() {
+	/*public String getGestor() {
 		return gestor;
 	}
 
@@ -144,7 +150,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 
 	public void setGestor(String gestor) {
 		this.gestor = gestor;
-	}
+	}*/
 	
 	
 
@@ -160,7 +166,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 
 
 	
-	public long getJanela() {
+	/*public long getJanela() {
 		return janela;
 	}
 
@@ -168,7 +174,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 
 	public void setJanela(long janela) {
 		this.janela = janela;
-	}
+	}*/
 
 
 
@@ -177,7 +183,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	
 	
 
-	public Double getSLAUtilizacaoCT0() {
+	/*public Double getSLAUtilizacaoCT0() {
 		return SLAUtilizacaoCT0;
 	}
 
@@ -317,14 +323,61 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 
 	public void setSLADevolucoesCT2(Double sLADevolucoesCT2) {
 		SLADevolucoesCT2 = sLADevolucoesCT2;
+	}*/
+
+
+
+	
+
+	public Double getUtilizacaoDoEnlace() {
+		return utilizacaoDoEnlace;
 	}
 
 
+
+	public void setUtilizacaoDoEnlace(Double utilizacaoDoEnlace) {
+		this.utilizacaoDoEnlace = utilizacaoDoEnlace;
+	}
+
+
+
+	public Double getNumeroDeBloqueios() {
+		return numeroDeBloqueios;
+	}
+
+
+
+	public void setNumeroDeBloqueios(Double numeroDeBloqueios) {
+		this.numeroDeBloqueios = numeroDeBloqueios;
+	}
+
+
+
+	public Double getNumeroDePreempcoes() {
+		return numeroDePreempcoes;
+	}
+
+
+
+	public void setNumeroDePreempcoes(Double numeroDePreempcoes) {
+		this.numeroDePreempcoes = numeroDePreempcoes;
+	}
+
+
+
+	public Double getNumeroDeDevolucoes() {
+		return numeroDeDevolucoes;
+	}
+
+
+
+	public void setNumeroDeDevolucoes(Double numeroDeDevolucoes) {
+		this.numeroDeDevolucoes = numeroDeDevolucoes;
+	}
 
 	public Double getBC0() {
 		return BC0;
 	}
-
 
 
 	public void setBC0(Double bC0) {
@@ -508,9 +561,9 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	@Override
 	public String toString() {
 		return "(CaseID=" + caseId 
-				+ ", gestor=" + gestor              //inserir  gestor e SLA  <=
+				//+ ", gestor=" + gestor              //inserir  gestor e SLA  <=
 				+ ", BAMAtual=" + BAMAtual
-				+ ", Janela=" + janela
+				/*+ ", Janela=" + janela
 				+ ", SLAUtilizacaoCT0=" + SLAUtilizacaoCT0
 				+ ", SLAUtilizacaoCT1=" + SLAUtilizacaoCT1
 				+ ", SLAUtilizacaoCT2=" + SLAUtilizacaoCT2
@@ -522,19 +575,23 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 				+ ", SLAPreempcoesCT2=" + SLAPreempcoesCT2
 				+ ", SLADevolucoesCT0=" + SLADevolucoesCT0
 				+ ", SLADevolucoesCT1=" + SLADevolucoesCT1
-				+ ", SLADevolucoesCT2=" + SLADevolucoesCT2
+				+ ", SLADevolucoesCT2=" + SLADevolucoesCT2*/
 				+ ", BC0=" +BC0
 				+ ", BC1=" +BC1
 				+ ", BC2=" +BC2
+				+ ", utilizacaoDoEnlace=" + utilizacaoDoEnlace
 				+ ", utilizacaoDoEnlaceCT0=" + utilizacaoDoEnlaceCT0
 				+ ", utilizacaoDoEnlaceCT1=" + utilizacaoDoEnlaceCT1
 				+ ", utilizacaoDoEnlaceCT2=" + utilizacaoDoEnlaceCT2
+				+ ", numeroDeBloqueios=" + numeroDeBloqueios
 				+ ", numeroDeBloqueiosCT0=" + numeroDeBloqueiosCT0
 				+ ", numeroDeBloqueiosCT1=" + numeroDeBloqueiosCT1
 				+ ", numeroDeBloqueiosCT2=" + numeroDeBloqueiosCT2
+				+ ", numeroDePreempcoes=" + numeroDePreempcoes
 				+ ", numeroDePreempcoesCT0=" + numeroDePreempcoesCT0
 				+ ", numeroDePreempcoesCT1=" + numeroDePreempcoesCT1
 				+ ", numeroDePreempcoesCT2=" + numeroDePreempcoesCT2
+				+ ", numeroDeDevolucoes=" + numeroDeDevolucoes
 				+ ", numeroDeDevolucoesCT0=" + numeroDeDevolucoesCT0
 				+ ", numeroDeDevolucoesCT1=" + numeroDeDevolucoesCT1
 				+ ", numeroDeDevolucoesCT2=" + numeroDeDevolucoesCT2 + ")";
@@ -562,15 +619,19 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 				+ 	BC0				+ "\t"
 				+	BC1				+ "\t"
 				+	BC2				+ "\t"*/
+				+	utilizacaoDoEnlace+ "\t"
 				+	utilizacaoDoEnlaceCT0+ "\t"
 				+ 	utilizacaoDoEnlaceCT1+ "\t"
 				+	utilizacaoDoEnlaceCT2+ "\t"
+				+	numeroDeBloqueios+ "\t"
 				+	numeroDeBloqueiosCT0+ "\t"
 				+ 	numeroDeBloqueiosCT1+ "\t"
 				+ 	numeroDeBloqueiosCT2+ "\t"
+				+ 	numeroDePreempcoes+ "\t"
 				+ 	numeroDePreempcoesCT0+ "\t"
 				+ 	numeroDePreempcoesCT1+ "\t"
 				+ 	numeroDePreempcoesCT2+ "\t"
+				+ 	numeroDeDevolucoes+ "\t"
 				+ 	numeroDeDevolucoesCT0+ "\t"
 				+ 	numeroDeDevolucoesCT1+ "\t"
 				+ 	numeroDeDevolucoesCT2+ "\t" ;
@@ -581,9 +642,9 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	
 	public String getInsertDB() {
 		String aux="insert into bam values(''";
-		aux+=",'"+gestor+"'";
+		//aux+=",'"+gestor+"'";
 		aux+=",'"+BAMAtual+"'";
-		aux+=",'"+janela+"'";
+		/*aux+=",'"+janela+"'";
 		aux+="," + SLAUtilizacaoCT0;
 		aux+="," + SLAUtilizacaoCT1;
 		aux+="," + SLAUtilizacaoCT2;
@@ -595,19 +656,23 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 		aux+="," + SLAPreempcoesCT2;
 		aux+="," + SLADevolucoesCT0;
 		aux+="," + SLADevolucoesCT1;
-		aux+="," + SLADevolucoesCT2;
+		aux+="," + SLADevolucoesCT2;*/
 		aux+="," + BC0;
 		aux+="," + BC1;
 		aux+="," + BC2;
+		aux+="," + utilizacaoDoEnlace;
 		aux+="," + utilizacaoDoEnlaceCT0;
 		aux+="," + utilizacaoDoEnlaceCT1;
 		aux+="," + utilizacaoDoEnlaceCT2;
+		aux+="," + numeroDeBloqueios;
 		aux+="," + numeroDeBloqueiosCT0;
 		aux+="," + numeroDeBloqueiosCT1;
 		aux+="," + numeroDeBloqueiosCT2;
+		aux+="," + numeroDePreempcoes;
 		aux+="," + numeroDePreempcoesCT0;
 		aux+="," + numeroDePreempcoesCT1;
 		aux+="," + numeroDePreempcoesCT2;
+		aux+="," + numeroDeDevolucoes;
 		aux+="," + numeroDeDevolucoesCT0;
 		aux+="," + numeroDeDevolucoesCT1;
 		aux+="," + numeroDeDevolucoesCT2;

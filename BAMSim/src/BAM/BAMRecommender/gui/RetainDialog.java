@@ -469,11 +469,11 @@ public class RetainDialog extends JDialog {
 		
 		BAMDescription desc = (BAMDescription) _case.getDescription();
 		BAMDescription descNew =(BAMDescription) query.getDescription();
-		
+	/*	
 		this.gestor.setText(desc.getGestor().toString());
 		this.BAMAtual.setText(desc.getBAMAtual().toString());
-		/*this.problemaAtual.setText(desc.getProblema().toString());
-		*/
+		this.problemaAtual.setText(desc.getProblema().toString());
+		
 		this.SLAUtilizacaoCT0.setText(valueOf(desc.getSLAUtilizacaoCT0()));
 		this.SLAUtilizacaoCT1.setText(valueOf(desc.getSLAUtilizacaoCT1()));
 		this.SLAUtilizacaoCT2.setText(valueOf(desc.getSLAUtilizacaoCT2()));
@@ -485,11 +485,11 @@ public class RetainDialog extends JDialog {
 		
 		this.SLAPreempcoesCT0.setText(valueOf(desc.getSLAPreempcoesCT0()));
 		this.SLAPreempcoesCT1.setText(valueOf(desc.getSLAPreempcoesCT1()));
-		/*this.SLAPreempcoesCT2.setText(valueOf(desc.getSLAPreempcoesCT2()));
+		this.SLAPreempcoesCT2.setText(valueOf(desc.getSLAPreempcoesCT2()));
 		
-		this.SLADevolucoesCT0.setText(valueOf(desc.getSLADevolucoesCT0()));*/
+		this.SLADevolucoesCT0.setText(valueOf(desc.getSLADevolucoesCT0()));
 		this.SLADevolucoesCT1.setText(valueOf(desc.getSLADevolucoesCT1()));
-		this.SLADevolucoesCT2.setText(valueOf(desc.getSLADevolucoesCT2()));
+		this.SLADevolucoesCT2.setText(valueOf(desc.getSLADevolucoesCT2()));*/
 		
 		this.BC0.setText(valueOf(desc.getBC0()));
 		this.BC1.setText(valueOf(desc.getBC1()));
@@ -512,9 +512,9 @@ public class RetainDialog extends JDialog {
 		this.numeroDeDevolucoesCT2.setText(valueOf(desc.getNumeroDeDevolucoesCT2()));
 		
 		
-		this.gestorNew.setText(descNew.getGestor().toString());
+		/*this.gestorNew.setText(descNew.getGestor().toString());
 		this.BAMAtualNew.setText(descNew.getBAMAtual().toString());
-		/*this.problemaNew.setText(descNew.getProblema().toString());*/
+		this.problemaNew.setText(descNew.getProblema().toString());
 		
 		
 		this.SLAUtilizacaoCT0New.setText(valueOf(descNew.getSLAUtilizacaoCT0()));
@@ -528,11 +528,11 @@ public class RetainDialog extends JDialog {
 		
 		this.SLAPreempcoesCT0New.setText(valueOf(descNew.getSLAPreempcoesCT0()));
 		this.SLAPreempcoesCT1New.setText(valueOf(descNew.getSLAPreempcoesCT1()));
-		/*this.SLAPreempcoesCT2New.setText(valueOf(descNew.getSLAPreempcoesCT2()));
+		this.SLAPreempcoesCT2New.setText(valueOf(descNew.getSLAPreempcoesCT2()));
 		
-		this.SLADevolucoesCT0New.setText(valueOf(descNew.getSLADevolucoesCT0()));*/
+		this.SLADevolucoesCT0New.setText(valueOf(descNew.getSLADevolucoesCT0()));
 		this.SLADevolucoesCT1New.setText(valueOf(descNew.getSLADevolucoesCT1()));
-		this.SLADevolucoesCT2New.setText(valueOf(descNew.getSLADevolucoesCT2()));
+		this.SLADevolucoesCT2New.setText(valueOf(descNew.getSLADevolucoesCT2()));*/
 		
 		this.BC0New.setText(valueOf(descNew.getBC0()));
 		this.BC1New.setText(valueOf(descNew.getBC1()));
