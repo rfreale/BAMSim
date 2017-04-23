@@ -190,6 +190,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 				if ((!this.equal(novocase, _caseBaseDB2)))
 					return rr.get_case();
 			} else {
+				BancoDeDados.setXML("\t#$%&* Caso NEGATIVADO ");
 				return null;
 
 			}
@@ -253,13 +254,14 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		// Obtain configuration for KNN
 
 		simConfigDB2.setDescriptionSimFunction(new Average());
+		simConfig.setDescriptionSimFunction(new Average());
 		query.setDescription(cbrcase.getDescription());
 
 		// Execute NN
-		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase.getCases(), query, simConfigDB2);
+		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase.getCases(), query, simConfig);
 		// Select k cases
 		for (RetrievalResult rr : eval) {
-			if (rr.getEval() >= 1.0) {/////////////////////////////////////diminuir esse valor <<<<<<<<<<<<<<<<<<<<<<<<<<<<<===================================== 
+			if (rr.getEval() >= 0.99) {                                                ///////  esse valor <<<<<<<<<<<<<<<<<<<<<<<<<<<<<===================================== 
 				if (((BAMSolution) rr.get_case().getSolution()).BAMNovo == ((BAMSolution) cbrcase.getSolution()).BAMNovo
 						&& ((BAMSolution) rr.get_case().getSolution()).aceita == ((BAMSolution) cbrcase
 								.getSolution()).aceita) {
