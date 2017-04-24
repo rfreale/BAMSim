@@ -1,14 +1,16 @@
 package DSTE;
 
 import Simulador.*;
+import java.io.IOException; 
+import org.jrobin.core.RrdException; 
 
 public class GeradorDeTrafego {
 
 	private static int numeroDeLSPsPorMinuto[][];
 	private static int numeroDeLSPsPorSlot[][];
-	private static int CT0=6;//10;//40
-	private static int CT1=2;//12;//35
-	private static int CT2=4;//8;//25
+	private static int CT0=2;//10;//40
+	private static int CT1=3;//12;//35
+	private static int CT2=2;//8;//25
 	private static int [][]matriz =
 		{ 
 			{CT0+0, CT1+0, CT2+0},	{CT0+1, CT1+0, CT2+0},	{CT0+2, CT1+0, CT2+0},	{CT0+3, CT1+0, CT2+0},	{CT0+4, CT1+0, CT2+0},	{CT0+5, CT1+0, CT2+0},	{CT0+6, CT1+0, CT2+0},	{CT0+7, CT1+0, CT2+0},	{CT0+8, CT1+0, CT2+0},	{CT0+9, CT1+0, CT2+0},	{CT0+10, CT1+0, CT2+0},	{CT0+11, CT1+0, CT2+0},	{CT0+12, CT1+0, CT2+0},	{CT0+13, CT1+0, CT2+0},	{CT0+14, CT1+0, CT2+0},	{CT0+13, CT1+0, CT2+0},	{CT0+12, CT1+0, CT2+1},	{CT0+11, CT1+0, CT2+2},	{CT0+10, CT1+0, CT2+3},	{CT0+9, CT1+0, CT2+4},	{CT0+8, CT1+0, CT2+5},	{CT0+7, CT1+0, CT2+6},	{CT0+6, CT1+0, CT2+7},	{CT0+5, CT1+0, CT2+8},	{CT0+4, CT1+0, CT2+9},	{CT0+3, CT1+0, CT2+10},	{CT0+2, CT1+0, CT2+11},	{CT0+1, CT1+0, CT2+12},	{CT0+1, CT1+0, CT2+13},	{CT0+0, CT1+0, CT2+14},	{CT0+0, CT1+0, CT2+13},	{CT0+0, CT1+0, CT2+12},	{CT0+0, CT1+0, CT2+11},	{CT0+0, CT1+0, CT2+10},	{CT0+0, CT1+0, CT2+9},	{CT0+0, CT1+0, CT2+8},	{CT0+0, CT1+0, CT2+7},	{CT0+0, CT1+0, CT2+6},	{CT0+0, CT1+0, CT2+5},	{CT0+0, CT1+0, CT2+4},	{CT0+0, CT1+0, CT2+3},	{CT0+0, CT1+0, CT2+2},	{CT0+0, CT1+0, CT2+1},	{CT0+0, CT1+0, CT2+1},	{CT0+0, CT1+0, CT2+0},

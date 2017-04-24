@@ -290,10 +290,10 @@ public class TesteSimulacao {
 						if (bams[2]==0){
 							 bam = BAMTypes.values()[5];
 							 switchBAM(to, bam.name());
-						}else if (bams[1]==0){
+						}else /*if (bams[1]==0){
 							 bam = BAMTypes.values()[4];
 							 switchBAM(to, bam.name());
-						}else {
+						}else*/ {
 							bam = BAMTypes.values()[0];
 							 mudouBAM= 0;
 						}	
@@ -722,19 +722,19 @@ public class TesteSimulacao {
 										+ to.link[0].CargaCTAtual[2] + "\t"*/
 										
 										+ rodada.estatistica.picoDeUtilizacaoDoEnlace(ParametrosDSTE.Janela, to.link[0]) /to.link[0].CargaEnlace + "\t"
-									/*	
+										
 										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 0) /to.link[0].CargaEnlace + "\t"
 										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 1) /to.link[0].CargaEnlace + "\t"
 										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[0], 2) /to.link[0].CargaEnlace + "\t"
-*/
+
 										
 										//+ rodada.estatistica.lspRequested + "\t"
 									
 									
 										+ bloqueiosJanela + "\t"				
-										/*+ bloqueiosCTJanela[0] + "\t"
+										+ bloqueiosCTJanela[0] + "\t"
 										+ bloqueiosCTJanela[1] + "\t"
-										+ bloqueiosCTJanela[2] + "\t"*/
+										+ bloqueiosCTJanela[2] + "\t"
 										
 										+ preempcoesJanela + "\t"
 										/*+ preempcoesCTJanela[0] + "\t"

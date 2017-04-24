@@ -620,13 +620,13 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 				+	BC1				+ "\t"
 				+	BC2				+ "\t"*/
 				+	utilizacaoDoEnlace+ "\t"
-				/*+	utilizacaoDoEnlaceCT0+ "\t"
+				+	utilizacaoDoEnlaceCT0+ "\t"
 				+ 	utilizacaoDoEnlaceCT1+ "\t"
-				+	utilizacaoDoEnlaceCT2+ "\t"*/
+				+	utilizacaoDoEnlaceCT2+ "\t"
 				+	numeroDeBloqueios+ "\t"
-				/*+	numeroDeBloqueiosCT0+ "\t"
+				+	numeroDeBloqueiosCT0+ "\t"
 				+ 	numeroDeBloqueiosCT1+ "\t"
-				+ 	numeroDeBloqueiosCT2+ "\t"*/
+				+ 	numeroDeBloqueiosCT2+ "\t"
 				+ 	numeroDePreempcoes+ "\t"
 				/*+ 	numeroDePreempcoesCT0+ "\t"
 				+ 	numeroDePreempcoesCT1+ "\t"
