@@ -10,6 +10,7 @@ import jcolibri.method.retrieve.NNretrieval.similarity.local.EnumCyclicDistance;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.EnumDistance;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
+import jcolibri.method.retrieve.NNretrieval.similarity.local.IntervalEqual;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Threshold;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.ontology.OntCosine;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.ontology.OntDeep;
@@ -67,7 +68,7 @@ public class ParametrosDSTE {
 	
 	
 	
-	public static final boolean RecomendacaoCBRSwitchBAM = false;
+	public static final boolean RecomendacaoCBRSwitchBAM = true;
 	public static final boolean RecomendacaoCBRRetencao = true ;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.97;
@@ -326,7 +327,7 @@ public class ParametrosDSTE {
 			
 					
 			attribute = new Attribute("numeroDePreempcoes",BAMDescription.class); 
-			config.addMapping(attribute, new Interval(1));
+			config.addMapping(attribute, new IntervalEqual(1));
 			config.setWeight(attribute, 20.0);
 	
 			/*attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class); 
@@ -350,7 +351,7 @@ public class ParametrosDSTE {
 			
 			
 			attribute = new Attribute("numeroDeDevolucoes",BAMDescription.class);
-			config.addMapping(attribute, new Interval(1));
+			config.addMapping(attribute, new IntervalEqual(1));
 			config.setWeight(attribute, 20.0);
 			
 			/*attribute = new Attribute("numeroDeDevolucoesCT1",BAMDescription.class);
