@@ -587,7 +587,7 @@ public class TesteSimulacao {
 								BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
 								((BAMDescription)novocase.getDescription()).setCaseId("N_"+(recommender.getCaseBase().getCases().size()+1));
 								((BAMSolution)novocase.getSolution()).setId("N_"+(recommender.getCaseBase().getCases().size()+1));
-								if (recommender.equal(novocase, recommender.getCaseBase(), 0.998)){
+								if (recommender.equal(novocase, recommender.getCaseBase(), ParametrosDSTE.RecomendacaoCBRLimiarArmazenar)){
 									BancoDeDados.setXML("\t#*123*# Caso muito similar ja na base de casos positiva",rodada.filename );
 								}else{
 									jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
@@ -600,7 +600,7 @@ public class TesteSimulacao {
 								BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
 								((BAMDescription)badcase.getDescription()).setCaseId("R_"+(recommender.getCaseBaseDB2().getCases().size()+1));
 								((BAMSolution)badcase.getSolution()).setId("R_"+(recommender.getCaseBaseDB2().getCases().size()+1));
-								if (recommender.equal(badcase, recommender.getCaseBaseDB2(), 0.998)){
+								if (recommender.equal(badcase, recommender.getCaseBaseDB2(), ParametrosDSTE.RecomendacaoCBRLimiarArmazenar)){
 									BancoDeDados.setXML("\t#*124*# Caso muito similar ja na base de casos Negativa",rodada.filename );
 								}else {
 									jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), badcase);

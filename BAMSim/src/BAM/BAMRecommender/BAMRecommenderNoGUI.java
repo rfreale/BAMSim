@@ -190,7 +190,8 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 				if ((!this.equal(novocase, _caseBaseDB2))){  // isso é necessário para corigir casos que vão gradativamente se aproxiamndo de outro caso negativo
 					return rr.get_case();}
 				else{
-					BancoDeDados.setXML("\t#$%&* Caso NEGATIVADO ");}
+					BancoDeDados.setXML("\t#*999*# - O CASO FOI NEGATIVADO");
+					}
 				
 				
 			} else {
