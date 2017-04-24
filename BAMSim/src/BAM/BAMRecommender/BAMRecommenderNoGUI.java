@@ -277,6 +277,30 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		return false;
 	}
 	
+	public boolean equal(CBRCase cbrcase, CBRCaseBase caseBase, double limiar) {
+		CBRQuery query = new CBRQuery();
+
+		// Obtain configuration for KNN
+
+		simConfigDB2.setDescriptionSimFunction(new Average());
+		simConfig.setDescriptionSimFunction(new Average());
+		query.setDescription(cbrcase.getDescription());
+
+		// Execute NN
+		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase.getCases(), query, simConfig);
+		// Select k cases
+		for (RetrievalResult rr : eval) {
+			if (rr.getEval() >= limiar) {
+				if (   ((BAMSolution) rr.get_case().getSolution()).BAMNovo == ((BAMSolution) cbrcase.getSolution()).BAMNovo  && ((BAMSolution) rr.get_case().getSolution()).aceita == ((BAMSolution) cbrcase.getSolution()).aceita) {
+					return true;
+				}
+			}
+
+		}
+
+		return false;
+	}
+	
 	//BancoDeDados.setXML("Sim \t" + ((BAMDescription) rr.get_case().getDescription()).toTabela() +"\t"+ ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
 
 	public void postCycle() throws ExecutionException {
