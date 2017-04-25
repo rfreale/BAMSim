@@ -290,10 +290,10 @@ public class TesteSimulacao {
 						if (bams[2]==0){
 							 bam = BAMTypes.values()[5];
 							 switchBAM(to, bam.name());
-						}else /*if (bams[1]==0){
+						}else if (bams[1]==0){
 							 bam = BAMTypes.values()[4];
 							 switchBAM(to, bam.name());
-						}else*/ {
+						}else {
 							bam = BAMTypes.values()[0];
 							 mudouBAM= 0;
 						}	
