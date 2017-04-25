@@ -154,49 +154,48 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		simConfig.setDescriptionSimFunction(new Average());
 
 		// Execute NN
-		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
-		// Select k cases
-		// Collection<RetrievalResult> selectedcases =
-		// SelectCases.selectTopKRR(eval,3);
-		//BancoDeDados.setXML("\n");
-		//BancoDeDados.setXML("====Query===");
+		Collection<RetrievalResult> eval1 = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
+		Collection<RetrievalResult> eval2 = NNScoringMethod.evaluateSimilarity(_caseBaseDB2.getCases(), query, simConfig);
 
-		BancoDeDados.setXML("\tQuery, ID: " + ((BAMDescription) query.getDescription()).toTabela() );
-		 //BancoDeDados.setXML(query.toString());
+		BancoDeDados.setXML("\tSolicitanto busca para o caso: " + ((BAMDescription) query.getDescription()).toTabela() );
 
-		// BancoDeDados.setXML(((BAMDescription)query.getDescription()).getInsertDB(),
-		// "Debug");
-		//BancoDeDados.setXML("====Similar===");
-		// BancoDeDados.setXML(eval.toArray()[0].toString(), "Debug");
-		
-		Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval, 3);
-		for (RetrievalResult rr : selectedcases) {
+		BancoDeDados.setXML("\tImprimindo os TOps 4 Casos encontrado na Base positiva:");
+		Collection<RetrievalResult> selectedcases1 = SelectCases.selectTopKRR(eval1, 4);
+		for (RetrievalResult rr : selectedcases1) {
 			BancoDeDados.setXML("\tSim, ID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
-			//BancoDeDados.setXML(rr.toString());
+		}		
+		
+		Collection<RetrievalResult> selectedcases2 = SelectCases.selectTopKRR(eval2, 4);
+		BancoDeDados.setXML("\tImprimindo tot 4 base negativa:");
+		for (RetrievalResult rr : selectedcases2) {
+			BancoDeDados.setXML("\tSim, ID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
 		}
 
 		BAMDescription desc = ((BAMDescription) query.getDescription()).clone();
 		BAMSolution sol = null;
 		CBRCase novocase = new CBRCase();
 		novocase.setDescription(desc);
-
-		for (RetrievalResult rr : eval) {
-
+		
+		
+		BancoDeDados.setXML("\tVerificando casos  acima da linah de corte "+ ParametrosDSTE.RecomendacaoCBRLimiarDeCorte + " e se não foram negativados...");
+		for (RetrievalResult rr : eval1) {
+			
 			if (rr.getEval() >= ParametrosDSTE.RecomendacaoCBRLimiarDeCorte) {
-
 				sol = ((BAMSolution) rr.get_case().getSolution()).clone();
 				novocase.setSolution(sol);
-
-				if ((!this.equal(novocase, _caseBaseDB2))){  // isso é necessário para corigir casos que vão gradativamente se aproxiamndo de outro caso negativo
-					return rr.get_case();}
-				else{
-					BancoDeDados.setXML("\t#*999*# - O CASO FOI NEGATIVADO");
-					}
+				
+				// isso é necessário para corigir casos que vão gradativamente se aproxiamndo de outro caso negativo
+				if ((!this.equal(novocase, _caseBaseDB2))){
+					BancoDeDados.setXML("\tAprovado:"+ ((BAMDescription)rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo());
+					return rr.get_case();
+				}else {
+					BancoDeDados.setXML("\t#*999*# - O CASO: " + ((BAMDescription)rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo()+  " FOI NEGATIVADO. Procurando proximo...");
+				}
 				
 				
-			} else {
+			}else {
+				BancoDeDados.setXML("\tNenhum caso atendeu as requisições");
 				return null;
-
 			}
 
 		}
@@ -257,13 +256,14 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 
 		// Obtain configuration for KNN
 
-		simConfigDB2.setDescriptionSimFunction(new Average());
+		
 		simConfig.setDescriptionSimFunction(new Average());
 		query.setDescription(cbrcase.getDescription());
 
 		// Execute NN
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase.getCases(), query, simConfig);
-		// Select k cases
+		
+		
 		for (RetrievalResult rr : eval) {
 			if (rr.getEval() >= 0.99) {                                                ///////  esse valor <<<<<<<<<<<<<<<<<<<<<<<<<<<<<===================================== 
 				if (((BAMSolution) rr.get_case().getSolution()).BAMNovo == ((BAMSolution) cbrcase.getSolution()).BAMNovo
@@ -283,7 +283,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 
 		// Obtain configuration for KNN
 
-		simConfigDB2.setDescriptionSimFunction(new Average());
+		
 		simConfig.setDescriptionSimFunction(new Average());
 		query.setDescription(cbrcase.getDescription());
 

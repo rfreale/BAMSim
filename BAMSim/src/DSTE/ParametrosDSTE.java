@@ -47,7 +47,7 @@ public class ParametrosDSTE {
 	public static final double SLADevolucoes = 0.00;
 	public static final double SLABloqueios = 0.00;  ////0.25
 	public static final double SLAUtilizacao = 0.00;
-	public static final long TempoSimulacao = 3600*5;
+	public static final long TempoSimulacao = 3600*24;
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -68,12 +68,13 @@ public class ParametrosDSTE {
 	
 	
 	
+	
 	public static final boolean RecomendacaoCBRSwitchBAM = true;
 	public static final boolean RecomendacaoCBRRetencao = true ;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.97;
 	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.97;
-	public static final double RecomendacaoCBRLimiarArmazenar = 0.998;
+	public static final double RecomendacaoCBRLimiarArmazenar = 0.99;    // Silimalidade para armazenar um novo vaso na base de casos positiva ou negativa (o caso não pode ser 0.99x semelhandte a algum caso ja existente)
 	public static final String filenameBaseCBRP= ".//basesCBR//baseP.sql";
 	public static final String filenameBaseCBRN= ".//basesCBR//baseN.sql";
 	

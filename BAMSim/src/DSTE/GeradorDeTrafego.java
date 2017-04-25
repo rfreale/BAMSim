@@ -8,9 +8,9 @@ public class GeradorDeTrafego {
 
 	private static int numeroDeLSPsPorMinuto[][];
 	private static int numeroDeLSPsPorSlot[][];
-	private static int CT0=2;//10;//40
-	private static int CT1=3;//12;//35
-	private static int CT2=2;//8;//25
+	private static int CT0=10;//2;//10;//40
+	private static int CT1=12;//3;//12;//35
+	private static int CT2=8;//2;//8;//25
 	private static int [][]matriz =
 		{ 
 			{CT0+0, CT1+0, CT2+0},	{CT0+1, CT1+0, CT2+0},	{CT0+2, CT1+0, CT2+0},	{CT0+3, CT1+0, CT2+0},	{CT0+4, CT1+0, CT2+0},	{CT0+5, CT1+0, CT2+0},	{CT0+6, CT1+0, CT2+0},	{CT0+7, CT1+0, CT2+0},	{CT0+8, CT1+0, CT2+0},	{CT0+9, CT1+0, CT2+0},	{CT0+10, CT1+0, CT2+0},	{CT0+11, CT1+0, CT2+0},	{CT0+12, CT1+0, CT2+0},	{CT0+13, CT1+0, CT2+0},	{CT0+14, CT1+0, CT2+0},	{CT0+13, CT1+0, CT2+0},	{CT0+12, CT1+0, CT2+1},	{CT0+11, CT1+0, CT2+2},	{CT0+10, CT1+0, CT2+3},	{CT0+9, CT1+0, CT2+4},	{CT0+8, CT1+0, CT2+5},	{CT0+7, CT1+0, CT2+6},	{CT0+6, CT1+0, CT2+7},	{CT0+5, CT1+0, CT2+8},	{CT0+4, CT1+0, CT2+9},	{CT0+3, CT1+0, CT2+10},	{CT0+2, CT1+0, CT2+11},	{CT0+1, CT1+0, CT2+12},	{CT0+1, CT1+0, CT2+13},	{CT0+0, CT1+0, CT2+14},	{CT0+0, CT1+0, CT2+13},	{CT0+0, CT1+0, CT2+12},	{CT0+0, CT1+0, CT2+11},	{CT0+0, CT1+0, CT2+10},	{CT0+0, CT1+0, CT2+9},	{CT0+0, CT1+0, CT2+8},	{CT0+0, CT1+0, CT2+7},	{CT0+0, CT1+0, CT2+6},	{CT0+0, CT1+0, CT2+5},	{CT0+0, CT1+0, CT2+4},	{CT0+0, CT1+0, CT2+3},	{CT0+0, CT1+0, CT2+2},	{CT0+0, CT1+0, CT2+1},	{CT0+0, CT1+0, CT2+1},	{CT0+0, CT1+0, CT2+0},
@@ -97,7 +97,7 @@ public class GeradorDeTrafego {
 		};
 	
 	// Aleatório3
-		public static void trafegoForcado(RodadaDeSimulacao rodada, Topologia to, No dados) {
+	public static void trafegoForcado(RodadaDeSimulacao rodada, Topologia to, No dados) {
 			
 				
 			if (dados == null) {
@@ -174,8 +174,8 @@ public class GeradorDeTrafego {
 						lsp.src = 0; // id do router fonte
 						lsp.dest = 1; // id do router destino
 						lsp.CT = ct;
-						lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
-						lsp.tempoDeVida = (int) GeradorDeNumerosAleatorios.expntl(250);
+						lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);   //10
+						lsp.tempoDeVida = (int) GeradorDeNumerosAleatorios.expntl(250);  //120
 						dadosLSP.item = lsp;
 
 						Debug.setMensagem("Cria LSP " + ((Lsp) dadosLSP.item).ID + " - "
@@ -192,8 +192,61 @@ public class GeradorDeTrafego {
 			}
 
 		}
+	
+		
+		
+		
 	public static void trafegoDeterministico(RodadaDeSimulacao rodada, Topologia to, No dados) {
 
+			
+			/*try {
+				if(rodada.estatistica.devolucoes(300)>=5||rodada.estatistica.preempcoes(300)>=5)
+				{
+					Lsp LSPaux= new Lsp(); 
+					LSPaux.Carga=0; 
+					to.link[0].bamType = BAMType.PreemptionGBAM;
+					to.link[0].BCLTH= new double[]
+					{	000, //BC0 
+						000, //BC1
+						0  //BC2 Nunca mudar
+					};
+					LSPaux.CT=0; 
+		      		BAM.devolutionG(to.link[0],LSPaux);
+					
+					
+					to.link[0].BCHTL= new double[]
+					{	0, //BC0 Nunca mudar
+						000, //BC1
+						000 //BC2
+					};
+					
+					LSPaux.CT=2; 
+		      		BAM.preemptionG(to.link[0],LSPaux); 
+					
+				}
+				else if(rodada.estatistica.picoDeUtilizacaoDoEnlace(300,to.link[0])<=800)
+				{
+					to.link[0].bamType = BAMType.PreemptionGBAM;
+					to.link[0].BCLTH= new double[]
+					{	100, //BC0 
+						100, //BC1
+						0  //BC2 Nunca mudar
+					};
+					
+					to.link[0].BCHTL= new double[]
+					{	0, //BC0 Nunca mudar
+						100, //BC
+						100 //BC2
+					};
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (RrdException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+			
 		// Inicializar Tráfego
 		if (dados == null) {
 			for (int i = 0; i < ParametrosDSTE.MaxClassType; i++) {
@@ -492,6 +545,57 @@ public class GeradorDeTrafego {
 
 	public static void trafegoDeterministico2(RodadaDeSimulacao rodada, Topologia to, No dados) {
 
+		/*try {
+		if(rodada.estatistica.devolucoes(300)>=5||rodada.estatistica.preempcoes(300)>=5)
+		{
+			Lsp LSPaux= new Lsp(); 
+			LSPaux.Carga=0; 
+			to.link[0].bamType = BAMType.PreemptionGBAM;
+			to.link[0].BCLTH= new double[]
+			{	000, //BC0 
+				000, //BC1
+				0  //BC2 Nunca mudar
+			};
+			LSPaux.CT=0; 
+      		BAM.devolutionG(to.link[0],LSPaux);
+			
+			
+			to.link[0].BCHTL= new double[]
+			{	0, //BC0 Nunca mudar
+				000, //BC1
+				000 //BC2
+			};
+			
+			LSPaux.CT=2; 
+      		BAM.preemptionG(to.link[0],LSPaux); 
+			
+		}
+		else if(rodada.estatistica.picoDeUtilizacaoDoEnlace(300,to.link[0])<=800)
+		{
+			to.link[0].bamType = BAMType.PreemptionGBAM;
+			to.link[0].BCLTH= new double[]
+			{	100, //BC0 
+				100, //BC1
+				0  //BC2 Nunca mudar
+			};
+			
+			to.link[0].BCHTL= new double[]
+			{	0, //BC0 Nunca mudar
+				100, //BC
+				100 //BC2
+			};
+		}
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (RrdException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}*/
+		
+		
+		
+		
 		// Inicializar Tráfego
 		if (dados == null) {
 			for (int i = 0; i < ParametrosDSTE.MaxClassType; i++) {
@@ -944,6 +1048,54 @@ public class GeradorDeTrafego {
 
 	// Aleatório3
 	public static void trafegoPoisson(RodadaDeSimulacao rodada, Topologia to, No dados) {
+		
+		/*try {
+		if(rodada.estatistica.devolucoes(300)>=5||rodada.estatistica.preempcoes(300)>=5)
+		{
+			Lsp LSPaux= new Lsp(); 
+			LSPaux.Carga=0; 
+			to.link[0].bamType = BAMType.PreemptionGBAM;
+			to.link[0].BCLTH= new double[]
+			{	000, //BC0 
+				000, //BC1
+				0  //BC2 Nunca mudar
+			};
+			LSPaux.CT=0; 
+      		BAM.devolutionG(to.link[0],LSPaux);
+			
+			
+			to.link[0].BCHTL= new double[]
+			{	0, //BC0 Nunca mudar
+				000, //BC1
+				000 //BC2
+			};
+			
+			LSPaux.CT=2; 
+      		BAM.preemptionG(to.link[0],LSPaux); 
+			
+		}
+		else if(rodada.estatistica.picoDeUtilizacaoDoEnlace(300,to.link[0])<=800)
+		{
+			to.link[0].bamType = BAMType.PreemptionGBAM;
+			to.link[0].BCLTH= new double[]
+			{	100, //BC0 
+				100, //BC1
+				0  //BC2 Nunca mudar
+			};
+			
+			to.link[0].BCHTL= new double[]
+			{	0, //BC0 Nunca mudar
+				100, //BC
+				100 //BC2
+			};
+		}
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (RrdException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}*/
 
 		if (dados == null) {
 			numeroDeLSPsPorMinuto = gerarCurvasPoisson((int) ParametrosDSTE.TempoSimulacao + 60);

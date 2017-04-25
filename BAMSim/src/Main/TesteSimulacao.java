@@ -397,8 +397,8 @@ public class TesteSimulacao {
 							double []preempcoesCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT2()} ;  
 							double []devolucoesCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT2()} ;				
 							*/
-							double utilizacaoJanelaAnterior  	= ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlace();  
-							double bloqueioJanelaAnterior   	= ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueios() ;
+							//double utilizacaoJanelaAnterior  	= ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlace();  
+							//double bloqueioJanelaAnterior   	= ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueios() ;
 							double preempcoesJanelaAnterior  	= ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoes();  
 							double devolucoesJanelaAnterior   	= ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoes();				
 							
@@ -409,8 +409,8 @@ public class TesteSimulacao {
 							double []preempcoesCTJanelaAgora  	= new double [] {((BAMDescription)query.getDescription()).getNumeroDePreempcoesCT0(), ((BAMDescription)query.getDescription()).getNumeroDePreempcoesCT1(), ((BAMDescription)query.getDescription()).getNumeroDePreempcoesCT2()} ;  
 							double []devolucoesCTJanelaAgora   	= new double [] {((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT0(), ((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT1(), ((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT2()} ;
 							*/
-							double utilizacaoJanelaAgora   	= ((BAMDescription)query.getDescription()).getUtilizacaoDoEnlace();
-							double bloqueiosJanelaAgora   	= ((BAMDescription)query.getDescription()).getNumeroDeBloqueios() ; 
+							//double utilizacaoJanelaAgora   	= ((BAMDescription)query.getDescription()).getUtilizacaoDoEnlace();
+							//double bloqueiosJanelaAgora   	= ((BAMDescription)query.getDescription()).getNumeroDeBloqueios() ; 
 							double preempcoesJanelaAgora  	= ((BAMDescription)query.getDescription()).getNumeroDePreempcoes();  
 							double devolucoesJanelaAgora   	= ((BAMDescription)query.getDescription()).getNumeroDeDevolucoes();
 							
