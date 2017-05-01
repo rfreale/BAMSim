@@ -126,7 +126,7 @@ public class TesteSimulacao {
 			}
 		}
 		
-		rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
+		//rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
