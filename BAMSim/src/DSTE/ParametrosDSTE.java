@@ -1,21 +1,12 @@
 package DSTE;
-import Simulador.*;
+import BAM.BAMRecommender.BAMDescription;
+import Simulador.No;
+import Simulador.RodadaDeSimulacao;
 import jcolibri.cbrcore.Attribute;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
-import jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction;
-import BAM.BAMRecommender.BAMDescription;
-import jcolibri.method.retrieve.NNretrieval.NNConfig;
-import jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.EnumCyclicDistance;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.EnumDistance;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.IntervalEqual;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.Threshold;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.ontology.OntCosine;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.ontology.OntDeep;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.ontology.OntDeepBasic;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.ontology.OntDetail;
 
 
 public class ParametrosDSTE {
@@ -84,8 +75,10 @@ public class ParametrosDSTE {
 	public static final Boolean baseCBRManual= true;
 	public static final Boolean topologiaManual= false;
 	public static final Boolean matrizCaminhosManual= false;
-	public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
-	public static final String filenameMatrizCaminhos= ".//topologias//NSF-14n-42e_Caminhos.txt";
+	public static final String filenameTopologia= ".//topologias//PTP-2n-1e.txt";
+	public static final String filenameMatrizCaminhos= ".//topologias//PTP-2n-1e_Caminhos.txt";
+	//public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
+	//public static final String filenameMatrizCaminhos= ".//topologias//NSF-14n-42e_Caminhos.txt";
 	//public static final String filenameTopologia= ".//topologias//PTP-3n-2e.txt";
 	//public static final String filenameMatrizCaminhos= ".//topologias//PTP-3n-2e_Caminhos.txt";
 	

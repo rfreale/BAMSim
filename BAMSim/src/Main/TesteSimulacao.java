@@ -399,7 +399,7 @@ public class TesteSimulacao {
 					
 					
 					//if (Math.abs(difLSPs)< 200){ // verifica se houve mudança na rede	
-					if (true){ // verifica se houve mudança na rede		
+
 							
 							//int score = 10;
 							String bamAnterior = ((BAMDescription)novocase.getDescription()).getBAMAtual().name();
@@ -602,7 +602,7 @@ public class TesteSimulacao {
 									BancoDeDados.setXML("\t#*123*# Caso muito similar ja na base de casos positiva",rodada.filename );
 								}else{
 									jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
-									BancoDeDados.setXML( rodada.simtime() + "\tAceito o caso: "+  ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo()  +"\tDif LSFs:" + difLSPs  ,rodada.filename );
+									BancoDeDados.setXML( rodada.simtime() + "\tAceito o caso: "+  ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo()    ,rodada.filename );
 								}
 							}
 							
@@ -615,14 +615,14 @@ public class TesteSimulacao {
 									BancoDeDados.setXML("\t#*124*# Caso muito similar ja na base de casos Negativa",rodada.filename );
 								}else {
 									jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), badcase);
-									BancoDeDados.setXML( rodada.simtime() + "\tRejeitado o caso: "+ ((BAMDescription)badcase.getDescription()).toTabela() + ((BAMSolution)badcase.getSolution()).getBAMNovo()  +  "\tDif LSFs:" + difLSPs,rodada.filename );
+									BancoDeDados.setXML( rodada.simtime() + "\tRejeitado o caso: "+ ((BAMDescription)badcase.getDescription()).toTabela() + ((BAMSolution)badcase.getSolution()).getBAMNovo()  ,rodada.filename );
 								}							
 							}
 							
 							
-					}else{
-							BancoDeDados.setXML(rodada.simtime() + "\tBAM não validado. A rede mudou o comportamento. Dif LSFs:" + difLSPs,rodada.filename );
-						}
+				/*	}else{
+							BancoDeDados.setXML(rodada.simtime() + "\tBAM não validado. A rede mudou o comportamento. " ,rodada.filename );
+						}*/
 				BancoDeDados.setXML(rodada.simtime() + "\tSaiu em retenção\n", rodada.filename);
 			break;
 			
