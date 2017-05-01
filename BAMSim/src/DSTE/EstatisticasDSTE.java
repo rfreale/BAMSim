@@ -5,8 +5,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
@@ -278,11 +280,48 @@ public class EstatisticasDSTE {
 			rrdDef.setStartTime(starTime-2*ParametrosDSTE.RRDBatida);
 			for(Link aux : to.link)
 			{
+				rrdDef.addDatasource(aux.ID+"_"+"preempcao", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax );
 				for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 				{
-					rrdDef.addDatasource(aux.ID+"_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+					rrdDef.addDatasource(aux.ID+"_"+"preempcao_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 				}
-				rrdDef.addDatasource(aux.ID+"_total", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				rrdDef.addDatasource(aux.ID+"_"+"bloqueio", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
+				{
+					rrdDef.addDatasource(aux.ID+"_"+"bloqueio_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				}
+				rrdDef.addDatasource(aux.ID+"_"+"devolucao", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
+				{
+					rrdDef.addDatasource(aux.ID+"_"+"devolucao_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				}
+				rrdDef.addDatasource(aux.ID+"_"+"lspRequested", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
+				{
+					rrdDef.addDatasource(aux.ID+"_"+"lspRequested_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				}
+				rrdDef.addDatasource(aux.ID+"_"+"lspUnbroken", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
+				{
+					rrdDef.addDatasource(aux.ID+"_"+"lspUnbroken_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				}
+				rrdDef.addDatasource(aux.ID+"_"+"lspEstab", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
+				{
+					rrdDef.addDatasource(aux.ID+"_"+"lspEstab_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				}
+				rrdDef.addDatasource(aux.ID+"_"+"lspEstabTotal", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
+				{
+					rrdDef.addDatasource(aux.ID+"_"+"lspEstabTotal_CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				}
+				rrdDef.addDatasource(aux.ID+"_"+"bandaUnbroken", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				rrdDef.addDatasource(aux.ID+"_"+"bandaRequested", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
+				{
+					rrdDef.addDatasource(aux.ID+"_"+"CT"+i, "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
+				}
+				rrdDef.addDatasource(aux.ID+"_"+"total", "GAUGE", ParametrosDSTE.RRDBatida, ParametrosDSTE.RRDMin, ParametrosDSTE.RRDMax);
 			}
 			
 
@@ -392,6 +431,17 @@ public class EstatisticasDSTE {
 		rrdDb.close();
 		return prempcoes;
 	}
+	public int preempcoes(long time, Link link) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		int prempcoes=(int) (fetchData.getAggregate(link.ID+"_"+"preempcao", "MAX")-fetchData.getAggregate(link.ID+"_"+"preempcao", "MIN"));
+		
+		rrdDb.close();
+		return prempcoes;
+	}
 	public int preempcoesAbsoluto(long time) throws IOException, RrdException
 	{
 		//Aponta para o arquivo da base
@@ -416,6 +466,18 @@ public class EstatisticasDSTE {
 		rrdDb.close();
 		return prempcoes;
 	}
+	public int preempcoesCT(long time, Link link, int ct) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int prempcoes=(int) (fetchData.getAggregate(link.ID+"_"+"preempcao_CT"+ct, "MAX")-fetchData.getAggregate(link.ID+"_"+"preempcao_CT"+ct, "MIN"));
+		
+		rrdDb.close();
+		return prempcoes;
+	}
 	public int lspRequested(long time) throws IOException, RrdException
 	{
 		//Aponta para o arquivo da base
@@ -424,6 +486,18 @@ public class EstatisticasDSTE {
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		int lspRequested=(int) (fetchData.getAggregate("lspRequested", "MAX")-fetchData.getAggregate("lspRequested", "MIN"));
+		
+		rrdDb.close();
+		return lspRequested;
+	}
+	public int lspRequested(long time, Link link) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int lspRequested=(int) (fetchData.getAggregate(link.ID+"_"+"lspRequested", "MAX")-fetchData.getAggregate(link.ID+"_"+"lspRequested", "MIN"));
 		
 		rrdDb.close();
 		return lspRequested;
@@ -441,6 +515,18 @@ public class EstatisticasDSTE {
 		rrdDb.close();
 		return lspRequested;
 	}
+	public int lspRequestedCT(long time, Link link, int ct) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int lspRequested=(int) (fetchData.getAggregate(link.ID+"_"+"lspRequested_CT"+ct, "MAX")-fetchData.getAggregate(link.ID+"_"+"lspRequested_CT"+ct, "MIN"));
+		
+		rrdDb.close();
+		return lspRequested;
+	}
 	
 	public int lspEstablished(long time) throws IOException, RrdException
 	{
@@ -450,6 +536,18 @@ public class EstatisticasDSTE {
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		int lspEstablished=(int) (fetchData.getAggregate("lspEstablished", "AVERAGE"));//////////////////////////////<<<<----- porque média??????????
+		
+		rrdDb.close();
+		return lspEstablished;
+	}
+	public int lspEstablished(long time, Link link) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int lspEstablished=(int) (fetchData.getAggregate(link.ID+"_"+"lspEstab", "AVERAGE"));//////////////////////////////<<<<----- porque média??????????
 		
 		rrdDb.close();
 		return lspEstablished;
@@ -467,6 +565,18 @@ public class EstatisticasDSTE {
 		rrdDb.close();
 		return lspEstablished;
 	}
+	public int lspEstablishedCT(long time, Link link, int ct) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int lspEstablished=(int) (fetchData.getAggregate(link.ID+"_"+"lspEstab_CT"+ct, "AVERAGE")); 
+		
+		rrdDb.close();
+		return lspEstablished;
+	}
 	public int lspEstablishedAnterior(long time) throws IOException, RrdException
 	{
 		//Aponta para o arquivo da base
@@ -475,6 +585,18 @@ public class EstatisticasDSTE {
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		int lspEstablished=(int) (fetchData.getAggregate("lspEstablished", "FIRST")); 
+		
+		rrdDb.close();
+		return lspEstablished;
+	}
+	public int lspEstablishedAnterior(long time, Link link) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int lspEstablished=(int) (fetchData.getAggregate(link.ID+"_"+"lspEstab", "FIRST")); 
 		
 		rrdDb.close();
 		return lspEstablished;
@@ -492,6 +614,18 @@ public class EstatisticasDSTE {
 		rrdDb.close();
 		return lspEstablished;
 	}
+	public int lspEstablishedAnterior(long time, Link link, int ct) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int lspEstablished=(int) (fetchData.getAggregate(link.ID+"_"+"lspEstab_CT"+ct, "FIRST"));  
+		
+		rrdDb.close();
+		return lspEstablished;
+	}
 	public int lspEstablishedTotal(long time) throws IOException, RrdException
 	{
 		//Aponta para o arquivo da base
@@ -504,7 +638,18 @@ public class EstatisticasDSTE {
 		rrdDb.close();
 		return lspEstablished;
 	}
-	
+	public int lspEstablishedTotal(long time, Link link) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int lspEstablished=(int) (fetchData.getAggregate(link.ID+"_"+"lspEstabTotal", "MAX")-fetchData.getAggregate(link.ID+"_"+"lspEstabTotal", "MIN"));
+		
+		rrdDb.close();
+		return lspEstablished;
+	}
 	public int lspEstablishedTotalCT(long time, int ct) throws IOException, RrdException
 	{
 		//Aponta para o arquivo da base
@@ -518,7 +663,19 @@ public class EstatisticasDSTE {
 		return lspEstablished;
 		
 	}
-	
+	public int lspEstablishedTotalCT(long time, Link link, int ct) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int lspEstablished=(int) (fetchData.getAggregate(link.ID+"_"+"lspEstabTotal_CT"+ct, "MAX")-fetchData.getAggregate(link.ID+"_"+"lspEstabTotal_CT"+ct, "MIN"));
+		
+		rrdDb.close();
+		return lspEstablished;
+		
+	}
 	public int bloqueios(long time) throws IOException, RrdException
 	{
 		//Aponta para o arquivo da base
@@ -527,6 +684,18 @@ public class EstatisticasDSTE {
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		int bloqueios=(int) (fetchData.getAggregate("bloqueio", "MAX")-fetchData.getAggregate("bloqueio", "MIN"));
+		
+		rrdDb.close();
+		return bloqueios;
+	}
+	public int bloqueios(long time, Link link) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int bloqueios=(int) (fetchData.getAggregate(link.ID+"_"+"bloqueio", "MAX")-fetchData.getAggregate(link.ID+"_"+"bloqueio", "MIN"));
 		
 		rrdDb.close();
 		return bloqueios;
@@ -543,6 +712,18 @@ public class EstatisticasDSTE {
 		rrdDb.close();
 		return bloqueios;
 	}
+	public int bloqueiosCT(long time, Link link, int ct) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int bloqueios=(int) (fetchData.getAggregate(link.ID+"_"+"bloqueio_CT"+ct, "MAX")-fetchData.getAggregate(link.ID+"_"+"bloqueio_CT"+ct, "MIN"));
+		
+		rrdDb.close();
+		return bloqueios;
+	}
 	public int devolucoes(long time) throws IOException, RrdException
 	{
 		//Aponta para o arquivo da base
@@ -554,6 +735,17 @@ public class EstatisticasDSTE {
 		rrdDb.close();
 		return devolucoes;
 	}
+	public int devolucoes(long time, Link link) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int devolucoes=(int) (fetchData.getAggregate(link.ID+"_"+"devolucao", "MAX")-fetchData.getAggregate(link.ID+"_"+"devolucao", "MIN"));
+		rrdDb.close();
+		return devolucoes;
+	}
 	public int devolucoesCT(long time, int ct) throws IOException, RrdException
 	{
 		//Aponta para o arquivo da base
@@ -562,6 +754,18 @@ public class EstatisticasDSTE {
 		FetchData fetchData = fetchRequest.fetchData();
 		//Faz a subtração dos dois valores para pegar o valor na janela
 		int devolucoes=(int) (fetchData.getAggregate("devolucao_CT"+ct, "MAX")-fetchData.getAggregate("devolucao_CT"+ct, "MIN"));
+		
+		rrdDb.close();
+		return devolucoes;
+	}
+	public int devolucoesCT(long time, Link link, int ct) throws IOException, RrdException
+	{
+		//Aponta para o arquivo da base
+		RrdDb rrdDb = new RrdDb("saida/"+filename+"/"+filename+"_links.rrd");
+		FetchRequest fetchRequest = rrdDb.createFetchRequest("MAX", curretTime-time-ParametrosDSTE.RRDBatida*ParametrosDSTE.RRDSteps,curretTime);
+		FetchData fetchData = fetchRequest.fetchData();
+		//Faz a subtração dos dois valores para pegar o valor na janela
+		int devolucoes=(int) (fetchData.getAggregate(link.ID+"_"+"devolucao_CT"+ct, "MAX")-fetchData.getAggregate(link.ID+"_"+"devolucao_CT"+ct, "MIN"));
 		
 		rrdDb.close();
 		return devolucoes;
@@ -1276,6 +1480,7 @@ public class EstatisticasDSTE {
 		
 		for(Link aux : to.link)
 		{
+			retorno+=":"+aux.preempcoes+":"+aux.preempcoesCT[0]+":"+aux.preempcoesCT[1]+":"+aux.preempcoesCT[2]+":"+aux.bloqueios+":"+aux.bloqueiosCT[0]+":"+aux.bloqueiosCT[1]+":"+aux.bloqueiosCT[2]+":"+aux.devolucoes+":"+aux.devolucoesCT[0]+":"+aux.devolucoesCT[1]+":"+aux.devolucoesCT[2]+":"+aux.lspRequested+":"+aux.lspRequestedCT[0]+":"+aux.lspRequestedCT[1]+":"+aux.lspRequestedCT[2]+":"+aux.lspUnbroken+":"+aux.lspUnbrokenCT[0]+":"+aux.lspUnbrokenCT[1]+":"+aux.lspUnbrokenCT[2]+":"+aux.lspEstablished+":"+aux.lspEstablishedCT[0]+":"+aux.lspEstablishedCT[1]+":"+aux.lspEstablishedCT[2]+":"+aux.lspEstablishedTotal+":"+aux.lspEstablishedTotalCT[0]+":"+aux.lspEstablishedTotalCT[1]+":"+aux.lspEstablishedTotalCT[2]+":"+aux.bandaUnbroken+":"+aux.bandaRequested;
 			for(int i=0;i<ParametrosDSTE.MaxClassType;i++)
 			{
 				retorno+=":"+aux.CargaCTAtual[i];
@@ -1425,6 +1630,8 @@ public class EstatisticasDSTE {
 		try {
 			
 			//desc.setGestor(gestor);
+			desc.setLink(link.ID);
+
 			
 			//Compatibilidade com G-BAM apenas refeltindo MAM, RDM e Alloc
 			
@@ -1473,28 +1680,43 @@ public class EstatisticasDSTE {
 			desc.setUtilizacaoDoEnlaceCT1(this.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,1) /  link.CargaEnlace );
 			desc.setUtilizacaoDoEnlaceCT2(this.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela,link,2) /  link.CargaEnlace );
 			
+			//Variáveis para evitar muitas consultas repetidas
+      int lspRequested=lspRequested(ParametrosDSTE.Janela,link);
+			int lspRequestedCT0=lspRequestedCT(ParametrosDSTE.Janela,link, 0);
+			int lspRequestedCT1=lspRequestedCT(ParametrosDSTE.Janela,link, 1);
+			int lspRequestedCT2=lspRequestedCT(ParametrosDSTE.Janela,link, 2);
+      int lspEstablishedTotal = lspEstablishedTotal(ParametrosDSTE.Janela,link)
+			int lspEstablishedTotalCT0=lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 0);
+			int lspEstablishedTotalCT1=lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 1);
+			int lspEstablishedTotalCT2=lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 2);
+      int lspEstablishedAnterior=lspEstablishedAnterior(ParametrosDSTE.Janela,link);
+			int lspEstablishedAnteriorCT0=lspEstablishedAnterior(ParametrosDSTE.Janela,link, 0);
+			int lspEstablishedAnteriorCT1=lspEstablishedAnterior(ParametrosDSTE.Janela,link, 1);
+			int lspEstablishedAnteriorCT2=lspEstablishedAnterior(ParametrosDSTE.Janela,link, 2);
 			
 			// operador ternário de if - a = condicao ? 1 : 2			
 			//lspRequestedCT(ParametrosDSTE.Janela, 0) > 0 ? valor verdadeiro : valor falso
-			desc.setNumeroDeBloqueios(lspRequested(ParametrosDSTE.Janela) > 0 ? (double)this.bloqueios(ParametrosDSTE.Janela)/lspRequested(ParametrosDSTE.Janela):0);
+
+			desc.setNumeroDeBloqueios(lspRequested > 0 ? (double)this.bloqueios(ParametrosDSTE.Janela,link)/lspRequested:0);
 			
-			desc.setNumeroDeBloqueiosCT0(lspRequestedCT(ParametrosDSTE.Janela, 0) > 0 ? (double)this.bloqueiosCT(ParametrosDSTE.Janela,0)/lspRequestedCT(ParametrosDSTE.Janela, 0):0);
-			desc.setNumeroDeBloqueiosCT1(lspRequestedCT(ParametrosDSTE.Janela, 1) > 0 ? (double)this.bloqueiosCT(ParametrosDSTE.Janela,1)/lspRequestedCT(ParametrosDSTE.Janela, 1):0);
-			desc.setNumeroDeBloqueiosCT2(lspRequestedCT(ParametrosDSTE.Janela, 2) > 0 ? (double)this.bloqueiosCT(ParametrosDSTE.Janela,2)/lspRequestedCT(ParametrosDSTE.Janela, 2):0);
-			
-			
-			desc.setNumeroDePreempcoes((lspEstablishedTotal(ParametrosDSTE.Janela) + lspEstablishedAnterior(ParametrosDSTE.Janela) ) > 0 ? (double)preempcoes(ParametrosDSTE.Janela)/ (lspEstablishedTotal(ParametrosDSTE.Janela)	+ lspEstablishedAnterior(ParametrosDSTE.Janela)):0);  	
-			
-			desc.setNumeroDePreempcoesCT0((lspEstablishedTotalCT(ParametrosDSTE.Janela, 0) + lspEstablishedAnterior(ParametrosDSTE.Janela, 0) ) > 0 ? (double)preempcoesCT(ParametrosDSTE.Janela,0)/ (lspEstablishedTotalCT(ParametrosDSTE.Janela, 0)	+ lspEstablishedAnterior(ParametrosDSTE.Janela, 0)):0);  	
-			desc.setNumeroDePreempcoesCT1((lspEstablishedTotalCT(ParametrosDSTE.Janela, 1) + lspEstablishedAnterior(ParametrosDSTE.Janela, 1) ) > 0 ? (double)preempcoesCT(ParametrosDSTE.Janela,1)/ (lspEstablishedTotalCT(ParametrosDSTE.Janela, 1)	+ lspEstablishedAnterior(ParametrosDSTE.Janela, 1)):0);  	
-			desc.setNumeroDePreempcoesCT2((lspEstablishedTotalCT(ParametrosDSTE.Janela, 2) + lspEstablishedAnterior(ParametrosDSTE.Janela, 2) ) > 0 ? (double)preempcoesCT(ParametrosDSTE.Janela,2)/ (lspEstablishedTotalCT(ParametrosDSTE.Janela, 2)	+ lspEstablishedAnterior(ParametrosDSTE.Janela, 2)):0);  	
+			desc.setNumeroDeBloqueiosCT0(lspRequestedCT0 > 0 ? (double)this.bloqueiosCT(ParametrosDSTE.Janela,link,0)/lspRequestedCT0:0);
+			desc.setNumeroDeBloqueiosCT1(lspRequestedCT1 > 0 ? (double)this.bloqueiosCT(ParametrosDSTE.Janela,link,1)/lspRequestedCT1:0);
+			desc.setNumeroDeBloqueiosCT2(lspRequestedCT2 > 0 ? (double)this.bloqueiosCT(ParametrosDSTE.Janela,link,2)/lspRequestedCT2:0);
 			
 			
-			desc.setNumeroDeDevolucoes((lspEstablishedTotal(ParametrosDSTE.Janela) + lspEstablishedAnterior(ParametrosDSTE.Janela)) > 0 ? (double)devolucoes(ParametrosDSTE.Janela)/(lspEstablishedTotal(ParametrosDSTE.Janela)+ lspEstablishedAnterior(ParametrosDSTE.Janela)):0);
+			desc.setNumeroDePreempcoes((lspEstablishedTotal + lspEstablishedAnterior ) > 0 ? (double)preempcoes(ParametrosDSTE.Janela,link)/ (lspEstablishedTotal	+ lspEstablishedAnterior):0);  	
 			
-			desc.setNumeroDeDevolucoesCT0((lspEstablishedTotalCT(ParametrosDSTE.Janela, 0) + lspEstablishedAnterior(ParametrosDSTE.Janela, 0)) > 0 ? (double)devolucoesCT(ParametrosDSTE.Janela,0)/(lspEstablishedTotalCT(ParametrosDSTE.Janela, 0)+ lspEstablishedAnterior(ParametrosDSTE.Janela, 0)):0);
-			desc.setNumeroDeDevolucoesCT1((lspEstablishedTotalCT(ParametrosDSTE.Janela, 1) + lspEstablishedAnterior(ParametrosDSTE.Janela, 1)) > 0 ? (double)devolucoesCT(ParametrosDSTE.Janela,1)/(lspEstablishedTotalCT(ParametrosDSTE.Janela, 1)+ lspEstablishedAnterior(ParametrosDSTE.Janela, 1)):0);
-			desc.setNumeroDeDevolucoesCT2((lspEstablishedTotalCT(ParametrosDSTE.Janela, 2) + lspEstablishedAnterior(ParametrosDSTE.Janela, 2)) > 0 ? (double)devolucoesCT(ParametrosDSTE.Janela,2)/(lspEstablishedTotalCT(ParametrosDSTE.Janela, 2)+ lspEstablishedAnterior(ParametrosDSTE.Janela, 2)):0);
+			desc.setNumeroDePreempcoesCT0((lspEstablishedTotalCT0 + lspEstablishedAnteriorCT0 ) > 0 ? (double)preempcoesCT(ParametrosDSTE.Janela,link,0)/ (lspEstablishedTotalCT0	+ lspEstablishedAnteriorCT0):0);  	
+			desc.setNumeroDePreempcoesCT1((lspEstablishedTotalCT1 + lspEstablishedAnteriorCT1 ) > 0 ? (double)preempcoesCT(ParametrosDSTE.Janela,link,1)/ (lspEstablishedTotalCT1	+ lspEstablishedAnteriorCT1):0);  	
+			desc.setNumeroDePreempcoesCT2((lspEstablishedTotalCT2 + lspEstablishedAnteriorCT2 ) > 0 ? (double)preempcoesCT(ParametrosDSTE.Janela,link,2)/ (lspEstablishedTotalCT2	+ lspEstablishedAnteriorCT2):0);  	
+			
+			
+			desc.setNumeroDeDevolucoes((lspEstablishedTotal + lspEstablishedAnterior) > 0 ? (double)devolucoes(ParametrosDSTE.Janela,link)/(lspEstablishedTotal+ lspEstablishedAnterior):0);
+			
+			desc.setNumeroDeDevolucoesCT0(lspEstablishedTotalCT0 + lspEstablishedAnteriorCT0) > 0 ? (double)devolucoesCT(ParametrosDSTE.Janela,link,0)/(lspEstablishedTotalCT0+ lspEstablishedAnteriorCT0):0);
+			desc.setNumeroDeDevolucoesCT1(lspEstablishedTotalCT1 + lspEstablishedAnteriorCT1) > 0 ? (double)devolucoesCT(ParametrosDSTE.Janela,link,1)/(lspEstablishedTotalCT1+ lspEstablishedAnteriorCT1):0);
+			desc.setNumeroDeDevolucoesCT2(lspEstablishedTotalCT2 + lspEstablishedAnteriorCT2) > 0 ? (double)devolucoesCT(ParametrosDSTE.Janela,link,2)/(lspEstablishedTotalCT2+ lspEstablishedAnteriorCT2):0);
+
 				
 
 			/*//BancoDeDados.setXML("UCT0" + "\t" + "UCT1" + "\t" + "UCT2" + "\t" + "BCT0" + "\t" + "BCT1" + "\t" + "BCT2" + "\t" + "PCT0" + "\t" + "PCT1" + "\t" + "PCT2"+ "\t" + "DCT0" + "\t" + "DCT1" + "\t" + "DCT2", "Gerar_base");
@@ -1509,6 +1731,57 @@ public class EstatisticasDSTE {
 		CBRQuery query = new CBRQuery();
 		query.setDescription(desc);
 		
+		
+		
+		
+		/*Validação comparativa das estatísticas da rede com um enlace vesus estatíticas do enlace
+		String aux = "";
+		aux += String.valueOf(lspRequestedCT(ParametrosDSTE.Janela, 0))+"\r\n"; 
+		aux += String.valueOf(lspRequestedCT(ParametrosDSTE.Janela,link, 0))+"\r\n"; 
+		aux += String.valueOf(lspRequestedCT(ParametrosDSTE.Janela, 1))+"\r\n"; 
+		aux += String.valueOf(lspRequestedCT(ParametrosDSTE.Janela,link, 1))+"\r\n";
+		aux += String.valueOf(lspRequestedCT(ParametrosDSTE.Janela, 2))+"\r\n";
+		aux += String.valueOf(lspRequestedCT(ParametrosDSTE.Janela,link, 2))+"\r\n"; 
+		aux +=this.bloqueiosCT(ParametrosDSTE.Janela,0)+"\r\n"; 
+		aux +=this.bloqueiosCT(ParametrosDSTE.Janela,link,0)+"\r\n"; 
+		aux +=this.bloqueiosCT(ParametrosDSTE.Janela,1)+"\r\n"; 
+		aux +=this.bloqueiosCT(ParametrosDSTE.Janela,link,1)+"\r\n"; 
+		aux +=this.bloqueiosCT(ParametrosDSTE.Janela,2)+"\r\n"; 
+		aux +=this.bloqueiosCT(ParametrosDSTE.Janela,link,2)+"\r\n"; 
+		aux += lspEstablishedTotalCT(ParametrosDSTE.Janela, 0)+"\r\n"; 
+		aux += lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 0)+"\r\n"; 
+		aux += lspEstablishedTotalCT(ParametrosDSTE.Janela, 1)+"\r\n"; 
+		aux += lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 1)+"\r\n"; 
+		aux += lspEstablishedTotalCT(ParametrosDSTE.Janela, 2)+"\r\n"; 
+		aux += lspEstablishedTotalCT(ParametrosDSTE.Janela,link, 2)+"\r\n"; 
+		aux += lspEstablishedAnterior(ParametrosDSTE.Janela, 0)+"\r\n"; 
+		aux += lspEstablishedAnterior(ParametrosDSTE.Janela,link, 0)+"\r\n"; 
+		aux += lspEstablishedAnterior(ParametrosDSTE.Janela, 1)+"\r\n"; 
+		aux += lspEstablishedAnterior(ParametrosDSTE.Janela,link, 1)+"\r\n"; 
+		aux += lspEstablishedAnterior(ParametrosDSTE.Janela, 2)+"\r\n"; 
+		aux += lspEstablishedAnterior(ParametrosDSTE.Janela,link, 2)+"\r\n"; 
+		aux += preempcoesCT(ParametrosDSTE.Janela,0)+"\r\n"; 
+		aux += preempcoesCT(ParametrosDSTE.Janela,link,0)+"\r\n"; 
+		aux += preempcoesCT(ParametrosDSTE.Janela,1)+"\r\n"; 
+		aux += preempcoesCT(ParametrosDSTE.Janela,link,1)+"\r\n"; 
+		aux += preempcoesCT(ParametrosDSTE.Janela,2)+"\r\n"; 
+		aux += preempcoesCT(ParametrosDSTE.Janela,link,2)+"\r\n"; 
+		aux += devolucoesCT(ParametrosDSTE.Janela,0)+"\r\n"; 
+		aux += devolucoesCT(ParametrosDSTE.Janela,link,0)+"\r\n"; 
+		aux += devolucoesCT(ParametrosDSTE.Janela,1)+"\r\n"; 
+		aux += devolucoesCT(ParametrosDSTE.Janela,link,1)+"\r\n"; 
+		aux += devolucoesCT(ParametrosDSTE.Janela,2)+"\r\n"; 
+		aux += devolucoesCT(ParametrosDSTE.Janela,link,2)+"\r\n"; 
+		
+		aux += "=====================================================\r\n";
+		File outputfile = new File("saida/teste/teste.txt");
+		  outputfile.getParentFile().mkdirs();
+		  
+		  BufferedWriter writer = new BufferedWriter(new FileWriter(outputfile,true));
+		  writer.write(aux);
+		  writer.newLine();
+		  writer.close();  
+		  */
 		return query;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

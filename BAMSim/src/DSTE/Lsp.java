@@ -76,10 +76,10 @@ public class Lsp {
 			}
 			
 			caminho[j].insereLsp(this);
-			caminho[j].lspEstabelecidas++;
-			caminho[j].lspEstabelecidasCT[this.CT]++;
-			caminho[j].lspEstabelecidasTotal++;
-			caminho[j].lspEstabelecidasTotalCT[this.CT]++;
+			caminho[j].lspEstablished++;
+			caminho[j].lspEstablishedCT[this.CT]++;
+			caminho[j].lspEstablishedTotal++;
+			caminho[j].lspEstablishedTotalCT[this.CT]++;
 			if(caminho[j].lsrDest.ID==this.dest)
 			{
 				break;
@@ -123,16 +123,27 @@ public class Lsp {
 			
 		}
 		
-		public  void preemptaLSP()
+		public  void preemptaLSP(Link link)
 		{
-			int nEnl;
+			
 
 			
 			for(int j=0;this.caminho[j]!=null&&j<ParametrosDSTE.MaxSaltos;j++)
 			{
 				this.caminho[j].removeLsp(this);
-				this.caminho[j].preempcoes++;
-				this.caminho[j].preempcoesCT[this.CT]++;
+				//Se é o enlace gerador da preempção
+				//Conta como preempção para o link e para demais conta como encerrada
+				if(link==this.caminho[j])
+				{
+					this.caminho[j].preempcoes++;
+					this.caminho[j].preempcoesCT[this.CT]++;
+				}
+				else
+				{
+					caminho[j].lspUnbroken++;
+					caminho[j].lspUnbrokenCT[this.CT]++;
+					caminho[j].bandaUnbroken+=this.Carga;
+				}
 				if(caminho[j].lsrDest.ID==this.dest)
 				{
 					break;
@@ -154,16 +165,28 @@ public class Lsp {
 			}
 			
 		}
-		public  void devolveLSP()
+		public  void devolveLSP(Link link)
 		{
 			int nEnl;
 
 			
 			for(int j=0;this.caminho[j]!=null&&j<ParametrosDSTE.MaxSaltos;j++)
 			{
+				
 				this.caminho[j].removeLsp(this);
-				this.caminho[j].devolucoes++;
-				this.caminho[j].devolucoesCT[this.CT]++;
+				//Se é o enlace gerador da devolução
+				//Conta como devolução para o link e para demais conta como encerrada
+				if(link==this.caminho[j])
+				{
+					this.caminho[j].devolucoes++;
+					this.caminho[j].devolucoesCT[this.CT]++;
+				}
+				else
+				{
+					caminho[j].lspUnbroken++;
+					caminho[j].lspUnbrokenCT[this.CT]++;
+					caminho[j].bandaUnbroken+=this.Carga;
+				}
 				if(caminho[j].lsrDest.ID==this.dest)
 				{
 					break;

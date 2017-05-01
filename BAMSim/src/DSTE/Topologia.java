@@ -346,11 +346,12 @@ public class Topologia {
 				retorno+=("Carga:"+aux.getCargaEnlaceAtual()+"\r\n");
 				retorno+=("Preempções:"+aux.preempcoes+"\r\n");
 				retorno+=("Devoluções:"+aux.devolucoes+"\r\n");
-				retorno+=("LSP Estabelecidas:"+aux.lspEstabelecidas+"\r\n");
-				retorno+=("LSP EstabelecidasCT0:"+aux.lspEstabelecidasCT[0]+"\r\n");
-				retorno+=("LSP EstabelecidasCT1:"+aux.lspEstabelecidasCT[1]+"\r\n");
-				retorno+=("LSP EstabelecidasCT2:"+aux.lspEstabelecidasCT[2]+"\r\n");
-				retorno+=("LSP Estabelecidas Total:"+aux.lspEstabelecidasTotal+"\r\n");
+				retorno+=("Bloqueios:"+aux.bloqueios+"\r\n");
+				retorno+=("LSP Estabelecidas:"+aux.lspEstablished+"\r\n");
+				retorno+=("LSP EstabelecidasCT0:"+aux.lspEstablishedCT[0]+"\r\n");
+				retorno+=("LSP EstabelecidasCT1:"+aux.lspEstablishedCT[1]+"\r\n");
+				retorno+=("LSP EstabelecidasCT2:"+aux.lspEstablishedCT[2]+"\r\n");
+				retorno+=("LSP Estabelecidas Total:"+aux.lspEstablishedTotal+"\r\n");
 				retorno+=("LSP Unbroken:"+aux.lspUnbroken+"\r\n");
 				retorno+=("Banda Unbroken:"+aux.bandaUnbroken+"\r\n");
 			}	

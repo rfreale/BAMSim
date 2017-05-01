@@ -3,9 +3,11 @@
 <hibernate-mapping default-lazy="false">
 <class name="BAM.BAMRecommender.BAMDescription" table="bam">
 
+
 	<id name="caseId" column="caseId"> 	</id>
-	
 	<!-- <property name="gestor" column="gestor"/> -->
+	<property name="link" column="link"/>
+
 	
 	<property name="BAMAtual" column="BAMAtual">
 		<type name="jcolibri.connector.databaseutils.EnumUserType">

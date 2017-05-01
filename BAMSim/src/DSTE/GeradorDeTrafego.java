@@ -236,7 +236,7 @@ public class GeradorDeTrafego {
 				Lsp lsp = new Lsp(rodada);
 				lsp.CargaReduzida = 0;
 				lsp.src = 0; // id do router fonte
-				lsp.dest = 1; // id do router destino
+				lsp.dest = 2; // id do router destino
 				lsp.CT = auxCT;
 				lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
 				dados.item = lsp;
@@ -260,7 +260,7 @@ public class GeradorDeTrafego {
 			Lsp lsp = new Lsp(rodada);
 			lsp.CargaReduzida = 0;
 			lsp.src = 0; // id do router fonte
-			lsp.dest = 1; // id do router destino
+			lsp.dest = 2; // id do router destino
 			lsp.CT = auxCT;
 			lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
 			dados.item = lsp;
@@ -585,7 +585,7 @@ public class GeradorDeTrafego {
 				Lsp lsp = new Lsp(rodada);
 				lsp.CargaReduzida = 0;
 				lsp.src = 0; // id do router fonte
-				lsp.dest = 1; // id do router destino
+				lsp.dest = 2; // id do router destino
 				lsp.CT = auxCT;
 				lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
 				dados.item = lsp;
@@ -623,7 +623,7 @@ public class GeradorDeTrafego {
 			Lsp lsp = new Lsp(rodada);
 			lsp.CargaReduzida = 0;
 			lsp.src = 0; // id do router fonte
-			lsp.dest = 1; // id do router destino
+			lsp.dest = 2; // id do router destino
 			lsp.CT = auxCT;
 			lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
 			dados.item = lsp;
@@ -942,41 +942,73 @@ public class GeradorDeTrafego {
 
 	// Aleatório1
 	public static void trafegoAleatorio(RodadaDeSimulacao rodada, Topologia to, No dados) {
-
+		int fonteDeTrafego = 2;
 		if (dados != null) {
-			Debug.setMensagem("Agenda estabelecimento da LSP " + ((Lsp) dados.item).ID + " - "
-					+ to.getRoteador(((Lsp) dados.item).src).getDescricao() + " -->"
-					+ to.getRoteador(((Lsp) dados.item).dest).getDescricao());
-			rodada.schedulep(1, 0.0, dados);
+			Lsp [] lsps=(Lsp[]) dados.item;
+			for (int i=0; i<lsps.length; i++)
+			{
+				Debug.setMensagem("Agenda estabelecimento da LSP " + lsps[i].ID + " - "
+						+ to.getRoteador(lsps[i].src).getDescricao() + " -->"
+						+ to.getRoteador(lsps[i].dest).getDescricao());
+				No dadosAux = new No();
+				dadosAux.item=lsps[i];
+				rodada.schedulep(1, 0.0, dadosAux);
+			}
 		}
 
 		dados = new No();
-		Lsp lsp = new Lsp(rodada);
-		lsp.CargaReduzida = 0;
-		lsp.src = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES - 1); // id
-																						// do
-																						// router
-																						// fonte
-		do {
-			lsp.dest = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES - 1); // id
-																								// do
-																								// router
-																								// destino
-		} while (lsp.src == lsp.dest);
-		// lsp.src = 0;
-		// lsp.dest = 1;
-		lsp.CT = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.MaxClassType - 1);
-		lsp.Carga = GeradorDeNumerosAleatorios.uniform(5, 30);
-		dados.item = lsp;
-		Debug.setMensagem(
-				"Cria LSP " + ((Lsp) dados.item).ID + " - " + to.getRoteador(((Lsp) dados.item).src).getDescricao()
-						+ " -->" + to.getRoteador(((Lsp) dados.item).dest).getDescricao());
-		((Lsp) dados.item).tempoDeVida = GeradorDeNumerosAleatorios.expntl(300);
-		if (rodada.simtime() < 2000)
+		Lsp [] lsps = new Lsp[fonteDeTrafego];
+		for (int i=0; i<fonteDeTrafego; i++)
+		{
+			Lsp lsp = new Lsp(rodada);
+			lsp.CargaReduzida = 0;
+			lsp.src = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES - 1); // id
+																							// do
+																							// router
+																							// fonte
+			do {
+				lsp.dest = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES - 1); // id
+																									// do
+																									// router
+																									// destino
+			} while (lsp.src == lsp.dest);
+			// lsp.src = 0;
+			// lsp.dest = 1;
+			lsp.CT = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.MaxClassType - 1);
+			lsp.Carga = GeradorDeNumerosAleatorios.uniform(10, 60);
+			lsp.tempoDeVida = GeradorDeNumerosAleatorios.expntl(600);
+			lsps[i] = lsp;
+			Debug.setMensagem(
+					"Cria LSP " + lsps[i].ID + " - " + to.getRoteador(lsps[i].src).getDescricao()
+							+ " -->" + to.getRoteador(lsps[i].dest).getDescricao());
+			
+		
+		}
+		dados.item = lsps;
+		if (rodada.simtime() < 1800)
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(8), dados);
+		else if (rodada.simtime() < 3600)//1
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(8), dados);
+		else if (rodada.simtime() < 5400)
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(1), dados);
+		else if (rodada.simtime() < 7200)//2
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(1), dados);
+		else if (rodada.simtime() < 9000)
 			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(2), dados);
+		else if (rodada.simtime() < 10800)//3
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(1), dados);
+		else if (rodada.simtime() < 12600)
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(1), dados);
+		else if (rodada.simtime() < 14400)//4
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(8), dados);
+		else if (rodada.simtime() < 16200)
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(8), dados);
+		else if (rodada.simtime() < 18000)//5
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(1), dados);
+		else if (rodada.simtime() < 19800)
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(1), dados);
 		else
-			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(20), dados);
-
+			rodada.schedulep(3, GeradorDeNumerosAleatorios.expntl(8), dados);
 	}
 
 	// Aleatório2
@@ -1096,7 +1128,7 @@ public class GeradorDeTrafego {
 					Lsp lsp = new Lsp(rodada);
 					lsp.CargaReduzida = 0;
 					lsp.src = 0; // id do router fonte
-					lsp.dest = 1; // id do router destino
+					lsp.dest = 2; // id do router destino
 					lsp.CT = ct;
 					lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
 					lsp.tempoDeVida = (int) GeradorDeNumerosAleatorios.expntl(250);
@@ -1145,7 +1177,7 @@ public class GeradorDeTrafego {
 					Lsp lsp = new Lsp(rodada);
 					lsp.CargaReduzida = 0;
 					lsp.src = 0; // id do router fonte
-					lsp.dest = 1; // id do router destino
+					lsp.dest = 2; // id do router destino
 					lsp.CT = ct;
 					lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
 					lsp.tempoDeVida = (int) GeradorDeNumerosAleatorios.expntl(250);
@@ -1227,7 +1259,7 @@ public class GeradorDeTrafego {
 						Lsp lsp = new Lsp(rodada);
 						lsp.CargaReduzida = 0;
 						lsp.src = 0; // id do router fonte
-						lsp.dest = 1; // id do router destino
+						lsp.dest = 2; // id do router destino
 						lsp.CT = ct;
 						lsp.Carga = (int) GeradorDeNumerosAleatorios.uniform(5, 15);
 						lsp.tempoDeVida = (int) GeradorDeNumerosAleatorios.expntl(250);

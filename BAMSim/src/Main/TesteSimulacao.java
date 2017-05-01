@@ -118,7 +118,12 @@ public class TesteSimulacao {
 			//Inicia Debug CBR
 			BancoDeDados.setXML("", rodada.filename);
 			//Agenda primeira avaliação
-			rodada.schedulep (5, ParametrosDSTE.Janela+0.40, null);
+			for (int i=0;i<ParametrosDSTE.LINKS;i++)
+			{
+				No no = new No();
+				no.item=to.link[i];
+				rodada.schedulep (5, ParametrosDSTE.Janela+0.40, no);
+			}
 		}
 		
 		rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
@@ -230,14 +235,15 @@ public class TesteSimulacao {
 				break;
 			case 5:
 				//Avalia BAM via CBR
-				
-				BancoDeDados.setXML(rodada.simtime() + "\tEntrou na Recomendação", rodada.filename);
-				
+
+				No noComLinkAtual=dados;
+				BancoDeDados.setXML(rodada.simtime() + " Entrou na Recomendação", rodada.filename);
+				Link link = ((Link)noComLinkAtual.item);
 				int mudouBAM= -1;
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
 				
-				query = rodada.estatistica.getQuery(to.link[0]);
+				query = rodada.estatistica.getQuery(link);
 				cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
 				
 				String nomeBAMAtual = ((BAMDescription)query.getDescription()).getBAMAtual().name();
@@ -257,7 +263,8 @@ public class TesteSimulacao {
 					
 					
 					if (solutionRecomendada != nomeBAMAtual ){
-						switchBAM(to, solutionRecomendada);
+						//Temporário para forçar devolução
+						switchBAM(link, solutionRecomendada);
 						mudouBAM= 1;
 						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
 						novocase.setSolution(sol);
@@ -289,10 +296,10 @@ public class TesteSimulacao {
 					case "NoPreemptionMAM":
 						if (bams[2]==0){
 							 bam = BAMTypes.values()[5];
-							 switchBAM(to, bam.name());
+							 switchBAM(link, bam.name());
 						}else if (bams[1]==0){
 							 bam = BAMTypes.values()[4];
-							 switchBAM(to, bam.name());
+							 switchBAM(link, bam.name());
 						}else {
 							bam = BAMTypes.values()[0];
 							 mudouBAM= 0;
@@ -302,13 +309,13 @@ public class TesteSimulacao {
 					case "PreemptionRDM":
 						if (bams[2]==0){
 							 bam = BAMTypes.values()[5];
-							 switchBAM(to, bam.name());
+							 switchBAM(link, bam.name());
 						}else if (bams[1]==0){
 							bam = BAMTypes.values()[4];
 							mudouBAM= 0;
 						}else {
 							 bam = BAMTypes.values()[0];
-							 switchBAM(to, bam.name());
+							 switchBAM(link, bam.name());
 						}
 						break;
 					
@@ -318,10 +325,10 @@ public class TesteSimulacao {
 							mudouBAM= 0;
 						}else if (bams[1]==0){
 							 bam = BAMTypes.values()[4];
-							 switchBAM(to, bam.name());
+							 switchBAM(link, bam.name());
 						}else {
 							 bam = BAMTypes.values()[0];
-							 switchBAM(to, bam.name());
+							 switchBAM(link, bam.name());
 						}
 						break;
 					}
@@ -347,18 +354,20 @@ public class TesteSimulacao {
 				if (ParametrosDSTE.RecomendacaoCBRRetencao){
 					if (mudouBAM==1){
 						rodada.schedulep(6, ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10, no);
-						rodada.schedulep(5, ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida, null);						
+						rodada.schedulep(5, ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida, noComLinkAtual);
+						//rodada.schedulep(5, ParametrosDSTE.Janela, null);
+						
 					}else if (mudouBAM==0){
 						rodada.schedulep(6, ParametrosDSTE.Janela-0.10, no);///////////////////////colocar  batida em vez ee janela??? ,,,<<<<<<<<<<<<<+============
 						//casoRenAntigo = null;
-						rodada.schedulep(5, ParametrosDSTE.Janela, null);
+						rodada.schedulep(5, ParametrosDSTE.Janela, noComLinkAtual);
 					}else{
 						//casoRenAntigo = null;
-						rodada.schedulep(5, ParametrosDSTE.Janela, null);
+						rodada.schedulep(5, ParametrosDSTE.Janela, noComLinkAtual);
 					}
 					
 				}else{
-					rodada.schedulep(5, ParametrosDSTE.Janela, null);
+					rodada.schedulep(5, ParametrosDSTE.Janela, noComLinkAtual);
 				}
 					BancoDeDados.setXML(rodada.simtime() + "\tSaio da Recomendação.", rodada.filename);	
 					//rodada.schedulep(5, ParametrosDSTE.Janela, null);
@@ -370,10 +379,12 @@ public class TesteSimulacao {
 				//Avalia rentenção
 				BancoDeDados.setXML(rodada.simtime() + "\tEntrou em retenção.", rodada.filename);
 				
-					 novocase = ((CBRCase)dados.item);
+				novocase = ((CBRCase)dados.item);
 					((BAMDescription)novocase.getDescription()).setCaseId("tmp01") ;
+				link=to.link[((BAMDescription)novocase.getDescription()).getLink()];
 					
-					query = rodada.estatistica.getQuery(to.link[0]);
+				query = rodada.estatistica.getQuery(link);
+
 					
 					//Caso que será colocado na base de caos negativos. OBS é possivel cria tb um 3° caso aqui  (caso atual com a nova query acima) 
 					CBRCase badcase = new CBRCase();
@@ -381,14 +392,14 @@ public class TesteSimulacao {
 					badcase.setSolution(null);
 								
 					
-					int lspRequestedAgora = rodada.estatistica.lspRequested(ParametrosDSTE.Janela);
-					int lspRequestedAnterior = Math.abs(rodada.estatistica.lspRequested(ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida) - rodada.estatistica.lspRequested(ParametrosDSTE.Janela*2+ParametrosDSTE.RRDBatida ) );
+					//int lspRequestedAgora = rodada.estatistica.lspRequested(ParametrosDSTE.Janela,link);
+					//int lspRequestedAnterior = Math.abs(rodada.estatistica.lspRequested(ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida, link) - rodada.estatistica.lspRequested(ParametrosDSTE.Janela*2+ParametrosDSTE.RRDBatida,link ) );
 					
-					int difLSPs = lspRequestedAgora - lspRequestedAnterior;
+					//int difLSPs = lspRequestedAgora - lspRequestedAnterior;
 					
 					
-					if (Math.abs(difLSPs)< 200){ // verifica se houve mudança na rede	
-						
+					//if (Math.abs(difLSPs)< 200){ // verifica se houve mudança na rede	
+					if (true){ // verifica se houve mudança na rede		
 							
 							//int score = 10;
 							String bamAnterior = ((BAMDescription)novocase.getDescription()).getBAMAtual().name();
@@ -418,8 +429,8 @@ public class TesteSimulacao {
 							//double somatorioUtilizacaoCTJanelaAnterior = utilizacaoCTJanelaAnterior[0]+utilizacaoCTJanelaAnterior[1]+	utilizacaoCTJanelaAnterior[2];
 							//double somatorioUtilizacaoCTJanelaAgora    = utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[1]+utilizacaoCTJanelaAgora[2];
 							
-							//double somatorioPonderadoBloqueioCTJanelaAnterior = (bloqueioCTJanelaAnterior[0]*to.link[0].BC[0] + bloqueioCTJanelaAnterior[1]*to.link[0].BC[1] + bloqueioCTJanelaAnterior[2]*to.link[0].BC[2])  /  (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]) ;				
-							//double somatorioPonderadoBloqueioCTJanelaAgora = (bloqueiosCTJanelaAgora[0]*to.link[0].BC[0] + bloqueiosCTJanelaAgora[1]*to.link[0].BC[1] + bloqueiosCTJanelaAgora[2]*to.link[0].BC[2])  /  (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]) ;				
+							//double somatorioPonderadoBloqueioCTJanelaAnterior = (bloqueioCTJanelaAnterior[0]*link.BC[0] + bloqueioCTJanelaAnterior[1]*link.BC[1] + bloqueioCTJanelaAnterior[2]*link.BC[2])  /  (link.BC[0] + link.BC[1] + link.BC[2]) ;				
+							//double somatorioPonderadoBloqueioCTJanelaAgora = (bloqueiosCTJanelaAgora[0]*link.BC[0] + bloqueiosCTJanelaAgora[1]*link.BC[1] + bloqueiosCTJanelaAgora[2]*link.BC[2])  /  (link.BC[0] + link.BC[1] + link.BC[2]) ;				
 							
 							//double somatorioPreempcoesCTJanelaAnterior = preempcoesCTJanelaAnterior[0]+preempcoesCTJanelaAnterior[1]+preempcoesCTJanelaAnterior[2];
 							//double somatorioPreempcoesCTJanelaAgora = preempcoesCTJanelaAgora[0]+preempcoesCTJanelaAgora[1]+preempcoesCTJanelaAgora[2];
@@ -427,10 +438,10 @@ public class TesteSimulacao {
 							//double somatorioDevolucoesCTJanelaAnterior = devolucoesCTJanelaAnterior[0]+devolucoesCTJanelaAnterior[1]+devolucoesCTJanelaAnterior[2];
 							//double somatorioDevolucoesCTJanelaAgora = devolucoesCTJanelaAgora[0]+devolucoesCTJanelaAgora[1]+devolucoesCTJanelaAgora[2];
 							
-							
-							//double utilizacao = ParametrosDSTE.SLAUtilizacao; //( ( Math.min(to.link[0].BC[0], to.link[0].BC[1]) + Math.min(to.link[0].BC[1], to.link[0].BC[2]) ))/ (to.link[0].BC[0] + to.link[0].BC[1] + to.link[0].BC[2]);
+	
+							//double utilizacao =  ( ( Math.min(link.BC[0], link.BC[1]) + Math.min(link.BC[1], link.BC[2]) ))/ (link.BC[0] + link.BC[1] + link.BC[2]);
 							//double bloqueio = utilizacao * ParametrosDSTE.SLABloqueios;
-							
+						
 							
 							
 						if (bamAnterior == BAMTypes.NoPreemptionMAM.name()){
@@ -621,20 +632,20 @@ public class TesteSimulacao {
 			case 7:
 				
 				
-				
+				int idLinkDebug=0;
 
-				 nomeBAMAtual = null;
+				nomeBAMAtual = null;
 				
-				if(to.link[0].bamType!=BAMType.PreemptionGBAM)
+				if(to.link[idLinkDebug].bamType!=BAMType.PreemptionGBAM)
 				{
-					nomeBAMAtual = to.link[0].bamType.toString();
+					nomeBAMAtual = to.link[idLinkDebug].bamType.toString();
 				}else
 				{
 					//Se BCLTH diferente de 0 é pq reflete Alloc
-					if (to.link[0].BCLTH[0]!=0)
+					if (to.link[idLinkDebug].BCLTH[0]!=0)
 						nomeBAMAtual = "PreemptionAllocCTSharing";
 					//Se BCLTH diferente é igual a 0 e BCHTL diferente de 0 é pq reflete RDM
-					else if (to.link[0].BCHTL[2]!=0)
+					else if (to.link[idLinkDebug].BCHTL[2]!=0)
 						nomeBAMAtual = "PreemptionRDM";
 					//Se BCLTH e BCHTL igual a 0 é pq reflete MAM
 					else
@@ -821,44 +832,47 @@ public class TesteSimulacao {
 
 	}
 
-	private void switchBAM(Topologia to, String solutionRecomendada) {
+	private void switchBAM(Link link, String solutionRecomendada) {
 		Lsp LSPaux= new Lsp(); 
 		LSPaux.Carga=0; 
 		
 		
 		switch (solutionRecomendada) {
 		case "NoPreemptionMAM":
-			to.link[0].bamType = BAMType.PreemptionGBAM;
-			to.link[0].BCLTH= new double[]
+
+			link.bamType = BAMType.PreemptionGBAM;
+			link.BCLTH= new double[]
 			{	000, //BC0 
 				000, //BC1
 				0  //BC2 Nunca mudar
 			};
 			LSPaux.CT=0; 
-      		BAM.devolutionG(to.link[0],LSPaux);
+      		BAM.devolutionG(link,LSPaux);
 			
 			
-			to.link[0].BCHTL= new double[]
+      		link.BCHTL= new double[]
 			{	0, //BC0 Nunca mudar
 				000, //BC1
 				000 //BC2
 			};
 			
 			LSPaux.CT=2; 
-      		BAM.preemptionG(to.link[0],LSPaux); 
+      		BAM.preemptionG(link,LSPaux);
+			
 			break;
 		case "PreemptionRDM":
-			to.link[0].bamType = BAMType.PreemptionGBAM;
-			to.link[0].BCLTH= new double[]
+
+			link.bamType = BAMType.PreemptionGBAM;
+			link.BCLTH= new double[]
 			{	000, //BC0 
 				000, //BC1
 				0  //BC2 Nunca mudar
 			};
 			LSPaux.CT=0; 
-      		BAM.devolutionG(to.link[0],LSPaux);
-			
-			
-			to.link[0].BCHTL= new double[]
+      		BAM.devolutionG(link,LSPaux);
+				
+				
+      		link.BCHTL= new double[]
 			{	0, //BC0 Nunca mudar
 				100, //BC1
 				100 //BC2
@@ -866,18 +880,20 @@ public class TesteSimulacao {
 			
 			break;
 		case "PreemptionAllocCTSharing":
-			to.link[0].bamType = BAMType.PreemptionGBAM;
-			to.link[0].BCLTH= new double[]
+			
+			link.bamType = BAMType.PreemptionGBAM;
+			link.BCLTH= new double[]
 			{	100, //BC0 
 				100, //BC1
 				0  //BC2 Nunca mudar
 			};
-			
-			to.link[0].BCHTL= new double[]
+				
+			link.BCHTL= new double[]
 			{	0, //BC0 Nunca mudar
 				100, //BC
 				100 //BC2
 			};
+			
 			break;
 		}
 		

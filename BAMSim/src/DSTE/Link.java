@@ -31,20 +31,29 @@ public class Link {
 		public Lista ListaLSPsPorCT[] = new Lista[ParametrosDSTE.MaxClassType];
 		
 		//Estatísticas
-		double BandaPreemptada =0; // Variável que contém a Banda Preemptada atual no Enlace, se preempção for necessária
+		/*double BandaPreemptada =0; // Variável que contém a Banda Preemptada atual no Enlace, se preempção for necessária
 		double TotalBandaPreemptada = 0; // Variável com o total de banda preemptada de cada enlace para computação das estatísticas finais
-		double BandaPreemptadaCT[] = new double[ParametrosDSTE.MaxClassType];
+		double BandaPreemptadaCT[] = new double[ParametrosDSTE.MaxClassType];*/
 		
+		//como computar bloqueio e requested para o enlace, como?
+		public int bloqueios = 0;
 		public int preempcoes = 0;
 		public int devolucoes = 0;
-		public int lspEstabelecidas = 0;
-		public int lspEstabelecidasTotal = 0;
+		//Quantas LSP Tem estabelecida no momento
+		public int lspEstablished = 0;
+		//Qualtas LSP foram estabelecidas no enlace até o momento
+		public int lspEstablishedTotal = 0;
 		public int lspUnbroken = 0;
+		public int lspRequested = 0;
 		public double bandaUnbroken = 0;
+		public double bandaRequested = 0;
 
+		public int [] lspRequestedCT = new int [ParametrosDSTE.MaxClassType];
+		public double [] bandaRequestedCT = new double [ParametrosDSTE.MaxClassType];
 		public int [] lspUnbrokenCT = new int [ParametrosDSTE.MaxClassType];
-		public int [] lspEstabelecidasCT = new int [ParametrosDSTE.MaxClassType];
-		public int [] lspEstabelecidasTotalCT = new int [ParametrosDSTE.MaxClassType];
+		public int [] lspEstablishedCT = new int [ParametrosDSTE.MaxClassType];
+		public int [] lspEstablishedTotalCT = new int [ParametrosDSTE.MaxClassType];
+		public int [] bloqueiosCT = new int [ParametrosDSTE.MaxClassType];
 		public int [] preempcoesCT = new int [ParametrosDSTE.MaxClassType];
 		public int [] devolucoesCT = new int [ParametrosDSTE.MaxClassType];
 
@@ -168,8 +177,8 @@ public class Link {
 			else
 				Debug.setMensagem(imprimirUtilizacaoGBAM(),8,8);
 			
-			this.lspEstabelecidas--;
-			this.lspEstabelecidasCT[lsp.CT]--;
+			this.lspEstablished--;
+			this.lspEstablishedCT[lsp.CT]--;
 			
 			return(retorno);		
 			
@@ -635,11 +644,11 @@ public class Link {
 					retorno+=("Carga:"+aux.getCargaEnlaceAtual()+"\r\n");
 					retorno+=("Preempções:"+aux.preempcoes+"\r\n");
 					retorno+=("Devoluções:"+aux.devolucoes+"\r\n");
-					retorno+=("LSP Estabelecidas:"+aux.lspEstabelecidas+"\r\n");
-					retorno+=("LSP EstabelecidasCT0:"+aux.lspEstabelecidasCT[0]+"\r\n");
-					retorno+=("LSP EstabelecidasCT1:"+aux.lspEstabelecidasCT[1]+"\r\n");
-					retorno+=("LSP EstabelecidasCT2:"+aux.lspEstabelecidasCT[2]+"\r\n");
-					retorno+=("LSP Estabelecidas Total:"+aux.lspEstabelecidasTotal+"\r\n");
+					retorno+=("LSP Estabelecidas:"+aux.lspEstablished+"\r\n");
+					retorno+=("LSP EstabelecidasCT0:"+aux.lspEstablishedCT[0]+"\r\n");
+					retorno+=("LSP EstabelecidasCT1:"+aux.lspEstablishedCT[1]+"\r\n");
+					retorno+=("LSP EstabelecidasCT2:"+aux.lspEstablishedCT[2]+"\r\n");
+					retorno+=("LSP Estabelecidas Total:"+aux.lspEstablishedTotal+"\r\n");
 					retorno+=("LSP Unbroken:"+aux.lspUnbroken+"\r\n");
 					retorno+=("Banda Unbroken:"+aux.bandaUnbroken+"\r\n");
 				
