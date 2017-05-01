@@ -326,11 +326,11 @@ public class QueryDialog extends JDialog {
 	{
 		BAMDescription desc = new BAMDescription();
 		
-		desc.setGestor(this.gestor.getText());
+		//desc.setGestor(this.gestor.getText());
 		desc.setBAMAtual(BAMTypes.valueOf((String)this.BAMAtual.getSelectedItem()));
 		//desc.setProblema(Problemas.valueOf((String)this.problema.getSelectedItem()));
 		
-		desc.setSLAUtilizacaoCT0(this.SLAUtilizacaoCT0.getNumber().doubleValue());
+		/*desc.setSLAUtilizacaoCT0(this.SLAUtilizacaoCT0.getNumber().doubleValue());
 		desc.setSLAUtilizacaoCT1(this.SLAUtilizacaoCT1.getNumber().doubleValue());
 		desc.setSLAUtilizacaoCT2(this.SLAUtilizacaoCT2.getNumber().doubleValue());
 		
@@ -341,11 +341,11 @@ public class QueryDialog extends JDialog {
 		
 		desc.setSLAPreempcoesCT0(this.SLAPreempcoesCT0.getNumber().doubleValue());
 		desc.setSLAPreempcoesCT1(this.SLAPreempcoesCT1.getNumber().doubleValue());
-		/*desc.setSLAPreempcoesCT2(this.SLAPreempcoesCT2.getNumber().intValue());
+		desc.setSLAPreempcoesCT2(this.SLAPreempcoesCT2.getNumber().intValue());
 		
-		desc.setSLADevolucoesCT0(this.SLADevolucoesCT0.getNumber().intValue());*/
+		desc.setSLADevolucoesCT0(this.SLADevolucoesCT0.getNumber().intValue());
 		desc.setSLADevolucoesCT1(this.SLADevolucoesCT1.getNumber().doubleValue());
-		desc.setSLADevolucoesCT2(this.SLADevolucoesCT2.getNumber().doubleValue());
+		desc.setSLADevolucoesCT2(this.SLADevolucoesCT2.getNumber().doubleValue());*/
 		
 		
 		desc.setBC0(this.BC0.getNumber().doubleValue());

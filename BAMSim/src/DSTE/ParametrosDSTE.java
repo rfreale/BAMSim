@@ -10,6 +10,7 @@ import jcolibri.method.retrieve.NNretrieval.similarity.local.EnumCyclicDistance;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.EnumDistance;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
+import jcolibri.method.retrieve.NNretrieval.similarity.local.IntervalEqual;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Threshold;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.ontology.OntCosine;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.ontology.OntDeep;
@@ -34,19 +35,20 @@ public class ParametrosDSTE {
 	public static final String Gestor = "Conservador";
 	//SLAs em Percentual
 	
-	public static final double []SLAUtilizacaoCT   = new double [] {35, 40, 45} ;  // ou SLA
+	/*public static final double []SLAUtilizacaoCT   = new double [] {35, 40, 45} ;  // ou SLA
 	public static final double []SLABloqueiosCT    = new double [] {80, 70, 80} ;  // ou SLA
 	public static final double []SLAPreempcoesCT   = new double [] {80, 80, 00} ;  // ou SLA
 	public static final double []SLADevolucoesCT   = new double [] {00, 80, 80} ;  // ou SLA
-	
+*/	
 	
 	
 	public static final int  Escada = 128; //limite da função de similaridade Threshold
-	public static final double SLAPreempcoes = 0;
-	public static final double SLADevolucoes = 0;
-	public static final double SLABloqueios = 0.25;  ////0.25
-	public static final double SLAUtilizacao = 60;
-	public static final long TempoSimulacao = 3600*12;
+	public static final double SLAPreempcoes = 0.00;
+	public static final double SLADevolucoes = 0.00;
+	public static final double SLABloqueios = 0.00;  ////0.25
+	public static final double SLAUtilizacao = 0.00;
+	public static final long TempoSimulacao = 3600*24;
+
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
 	 * RRA:{AVERAGE | MIN | MAX | LAST}:xff:steps:rows
@@ -67,16 +69,19 @@ public class ParametrosDSTE {
 	
 	
 	
+	
 	public static final boolean RecomendacaoCBRSwitchBAM = true;
 	public static final boolean RecomendacaoCBRRetencao = true ;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.97;
-	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.95;
-	public static final String filenameBaseCBR= ".//basesCBR//baseZ.sql";
+	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.97;
+	public static final double RecomendacaoCBRLimiarArmazenar = 0.99;    // Silimalidade para armazenar um novo vaso na base de casos positiva ou negativa (o caso não pode ser 0.99x semelhandte a algum caso ja existente)
+	public static final String filenameBaseCBRP= ".//basesCBR//baseP.sql";
+	public static final String filenameBaseCBRN= ".//basesCBR//baseN.sql";
 	
 	
 	
-	public static final Boolean baseCBRManual= false;
+	public static final Boolean baseCBRManual= true;
 	public static final Boolean topologiaManual= false;
 	public static final Boolean matrizCaminhosManual= false;
 	public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
@@ -88,11 +93,15 @@ public class ParametrosDSTE {
 	public static void trafegoManual(RodadaDeSimulacao rodada,Topologia to, No dados)
 	{
 
-		GeradorDeTrafego.trafegoAleatorio(rodada, to, dados);
+		//GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
+		//GeradorDeTrafego.trafegoAleatorio(rodada, to, dados);
 		//GeradorDeTrafego.trafegoDeterministico2(rodada, to, dados);
-
+		//GeradorDeTrafego.trafegoDeterministico(rodada, to, dados);
+		GeradorDeTrafego.trafegoForcado(rodada, to, dados);
 	}
 	
+	/*	public static double [] BCPadrao= new double[]    // para AllocCTSharing  //PreemptionRDM			{	100, // BC[0] =CT0 + CT1 + CT2 (Valor do Enlace)				75, // BC[1] = CT1 + CT2				40 // BC[1] = CT2			};
+*/	
 	public static double [] BCPadrao= new double[]           //para MAN 
 			{	40, // BC[0] =CT0 (Valor do Enlace)
 				35, // BC[1] = CT1
@@ -113,6 +122,7 @@ public class ParametrosDSTE {
 				0//BC2 Nunca mudar
 			};
 	
+
 	public static void topologiaManual(Topologia t)
 	{
 		
@@ -223,15 +233,7 @@ public class ParametrosDSTE {
 	}
 	
 	
-	/*
-	public static double [] BCPadrao= new double[]    // para AllocCTSharing  //PreemptionRDM
-			{	100, // BC[0] =CT0 + CT1 + CT2 (Valor do Enlace)
-				75, // BC[1] = CT1 + CT2
-				40 // BC[1] = CT2
-			};
-*/	
-
-		
+	
 	public static boolean condicaoDeParada(RodadaDeSimulacao rodada)
 	{
 		// rodada.simtime()<=36000
@@ -270,75 +272,12 @@ public class ParametrosDSTE {
 		NNConfig config = new NNConfig();
 		Attribute attribute;
 		
-		LocalSimilarityFunction function;
+		//LocalSimilarityFunction function;
 		
 
 		attribute = new Attribute("BAMAtual",BAMDescription.class); 
 		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 50.0);
-		
-		/*attribute = new Attribute("gestor",BAMDescription.class); 
-		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 1.0);*/
-
-		/*attribute = new Attribute("problema",BAMDescription.class); 
-		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 100.0);*/
-		
-		/*attribute = new Attribute("janela",BAMDescription.class); 
-		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 1.0);*/
-		
-		/*attribute = new Attribute("SLAUtilizacaoCT0",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 1.0);
-		
-		attribute = new Attribute("SLAUtilizacaoCT1",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 1.0);
-		
-		attribute = new Attribute("SLAUtilizacaoCT2",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 1.0);
-		
-				
-		attribute = new Attribute("SLABloqueiosCT0",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 1.0);
-		
-		attribute = new Attribute("SLABloqueiosCT1",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 1.0);
-		
-		attribute = new Attribute("SLABloqueiosCT2",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 1.0);
-		
-				
-		attribute = new Attribute("SLAPreempcoesCT0",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 1.0);
-		
-		attribute = new Attribute("SLAPreempcoesCT1",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 1.0);*/
-		
-		/*attribute = new Attribute("SLAPreempcoesCT2",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 1.0);*/
-		
-		
-		/*attribute = new Attribute("SLADevolucoesCT0",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 1.0);*/
-	/*			
-		attribute = new Attribute("SLADevolucoesCT1",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 1.0);
-		
-		attribute = new Attribute("SLADevolucoesCT2",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 1.0);*/
+		config.setWeight(attribute, 40.0);
 		
 				
 		/*attribute = new Attribute("BC0",BAMDescription.class); 
@@ -354,7 +293,11 @@ public class ParametrosDSTE {
 		config.setWeight(attribute, 1.0);*/
 		
 				
-		attribute = new Attribute("utilizacaoDoEnlaceCT0",BAMDescription.class); 
+		attribute = new Attribute("utilizacaoDoEnlace",BAMDescription.class); 
+		config.addMapping(attribute, new Interval(1));
+		config.setWeight(attribute, 30.0);
+		
+	/*	attribute = new Attribute("utilizacaoDoEnlaceCT0",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(1));
 		config.setWeight(attribute, 30.0);
 		
@@ -364,32 +307,40 @@ public class ParametrosDSTE {
 		
 		attribute = new Attribute("utilizacaoDoEnlaceCT2",BAMDescription.class); 
 		config.addMapping(attribute, new Interval(1));
-		config.setWeight(attribute, 30.0);
+		config.setWeight(attribute, 30.0);*/
 		
 		if(ParametrosDSTE.RecomendacaoCBRIndexarBloPreDev)
 		{
-			attribute = new Attribute("numeroDeBloqueiosCT0",BAMDescription.class);
+			attribute = new Attribute("numeroDeBloqueios",BAMDescription.class);
 			config.addMapping(attribute, new Interval(1));
-			config.setWeight(attribute, 10.0);
+			config.setWeight(attribute, 20.0);
+			
+			/*attribute = new Attribute("numeroDeBloqueiosCT0",BAMDescription.class);
+			config.addMapping(attribute, new Interval(1));
+			config.setWeight(attribute, 20.0);
 			
 	
 			attribute = new Attribute("numeroDeBloqueiosCT1",BAMDescription.class);
 			config.addMapping(attribute, new Interval(1));
-			config.setWeight(attribute, 10.0);
+			config.setWeight(attribute, 20.0);
 			
 	
 			attribute = new Attribute("numeroDeBloqueiosCT2",BAMDescription.class);
 			config.addMapping(attribute, new Interval(1));
-			config.setWeight(attribute, 10.0);
+			config.setWeight(attribute, 20.0);*/
 			
 					
-			attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class); 
+			attribute = new Attribute("numeroDePreempcoes",BAMDescription.class); 
+			config.addMapping(attribute, new IntervalEqual(1));
+			config.setWeight(attribute, 20.0);
+	
+			/*attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class); 
 			config.addMapping(attribute, new Interval(1));
-			config.setWeight(attribute, 1.0);
+			config.setWeight(attribute, 10.0);
 	
 			attribute = new Attribute("numeroDePreempcoesCT1",BAMDescription.class); 
 			config.addMapping(attribute, new Interval(1));
-			config.setWeight(attribute, 1.0);
+			config.setWeight(attribute, 10.0);*/
 			
 			/*nunca existe esse valor
 			attribute = new Attribute("numeroDePreempcoesCT2",BAMDescription.class);
@@ -403,155 +354,21 @@ public class ParametrosDSTE {
 			config.setWeight(attribute, 0.0);*/
 			
 			
-			attribute = new Attribute("numeroDeDevolucoesCT1",BAMDescription.class);
-			config.addMapping(attribute, new Interval(1));
-			config.setWeight(attribute, 1.0);
+			attribute = new Attribute("numeroDeDevolucoes",BAMDescription.class);
+			config.addMapping(attribute, new IntervalEqual(1));
+			config.setWeight(attribute, 20.0);
 			
+			/*attribute = new Attribute("numeroDeDevolucoesCT1",BAMDescription.class);
+			config.addMapping(attribute, new Interval(1));
+			config.setWeight(attribute, 10.0);
 			
 			attribute = new Attribute("numeroDeDevolucoesCT2",BAMDescription.class);
 			config.addMapping(attribute, new Interval(1));
-			config.setWeight(attribute, 1.0);
+			config.setWeight(attribute, 10.0);*/
 		}
 
 		
 		return config;
 	}
-	public static NNConfig getSimilarityConfig2()
-	{
-		NNConfig config = new NNConfig();
-		Attribute attribute;
-		
-		LocalSimilarityFunction function;
-		
-
-		attribute = new Attribute("BAMAtual",BAMDescription.class); 
-		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 100.0);
-
-		/*attribute = new Attribute("problema",BAMDescription.class); 
-		config.addMapping(attribute, new Equal());
-		config.setWeight(attribute, 100.0);*/
-		
-		/*attribute = new Attribute("utilizacaoDoEnlace",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 9.0);*/
-
-
-		attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 5.0);
-
-
-		attribute = new Attribute("numeroDePreempcoesCT1",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 6.0);
-		
-
-		attribute = new Attribute("numeroDePreempcoesCT2",BAMDescription.class);
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 0.0);
-		
-
-		attribute = new Attribute("numeroDeBloqueiosCT0",BAMDescription.class);
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 2.0);
-		
-
-		attribute = new Attribute("numeroDeBloqueiosCT1",BAMDescription.class);
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 3.0);
-		
-
-		attribute = new Attribute("numeroDeBloqueiosCT2",BAMDescription.class);
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 4.0);
-		
-		
-		attribute = new Attribute("numeroDeDevolucoesCT0",BAMDescription.class);
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 0.0);
-		
-		
-		attribute = new Attribute("numeroDeDevolucoesCT1",BAMDescription.class);
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 7.0);
-		
-		
-		attribute = new Attribute("numeroDeDevolucoesCT2",BAMDescription.class);
-		config.addMapping(attribute, new Interval(100));
-		config.setWeight(attribute, 8.0);
-
-		
-		return config;
-	}
 	
-	public static NNConfig getSimilarityConfigRede()   ////////////criar a função de similaridade  colocar novos campos.
-	{
-		NNConfig config = new NNConfig();
-		Attribute attribute;
-		LocalSimilarityFunction function;
-						
-		attribute = new Attribute("utilizacaoDoEnlaceCT0",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(1));
-		config.setWeight(attribute, 50.0);
-		
-		attribute = new Attribute("utilizacaoDoEnlaceCT1",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(1));
-		config.setWeight(attribute, 50.0);
-		
-		attribute = new Attribute("utilizacaoDoEnlaceCT2",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(1));
-		config.setWeight(attribute, 50.0);
-		
-		attribute = new Attribute("numeroDeBloqueiosCT0",BAMDescription.class);
-		config.addMapping(attribute, new Interval(0.5));
-		config.setWeight(attribute, 1.0);
-		
-
-		attribute = new Attribute("numeroDeBloqueiosCT1",BAMDescription.class);
-		config.addMapping(attribute, new Interval(0.5));
-		config.setWeight(attribute, 1.0);
-		
-
-		attribute = new Attribute("numeroDeBloqueiosCT2",BAMDescription.class);
-		config.addMapping(attribute, new Interval(0.5));
-		config.setWeight(attribute, 1.0);
-		
-				
-		attribute = new Attribute("numeroDePreempcoesCT0",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(1));
-		config.setWeight(attribute, 1.0);
-
-		attribute = new Attribute("numeroDePreempcoesCT1",BAMDescription.class); 
-		config.addMapping(attribute, new Interval(1));
-		config.setWeight(attribute, 1.0);
-		
-					/*nunca existe esse valor
-					attribute = new Attribute("numeroDePreempcoesCT2",BAMDescription.class);
-					config.addMapping(attribute, new Interval(100));
-					config.setWeight(attribute, 0.0);*/
-					
-					
-					/*nunca existe esse valor
-					attribute = new Attribute("numeroDeDevolucoesCT0",BAMDescription.class);
-					config.addMapping(attribute, new Interval(100));
-					config.setWeight(attribute, 0.0);*/
-					
-		
-		attribute = new Attribute("numeroDeDevolucoesCT1",BAMDescription.class);
-		config.addMapping(attribute, new Interval(1));
-		config.setWeight(attribute, 1.0);
-		
-		
-		attribute = new Attribute("numeroDeDevolucoesCT2",BAMDescription.class);
-		config.addMapping(attribute, new Interval(1));
-		config.setWeight(attribute, 1.0);
-		
-		
-		return config;
-	}
-	
-	
-	
-
 }
