@@ -44,160 +44,166 @@ public class HSQLDBserver
      */
     public static void init()
     {
-	if (initialized)
-	    return;
-        org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).info("Creating data base ...");
+		if (initialized)
+		    return;
+		org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).info("Data base initialization ...");
 
-	server = new Server();
 	
-	
-	Path directory = Paths.get("saida/database");
-	   try {
-		Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
-			   @Override
-			   public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-				   Files.delete(file);
-				   return FileVisitResult.CONTINUE;
-			   }
-
-			   @Override
-			   public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-				   Files.delete(dir);
-				   return FileVisitResult.CONTINUE;
-			   }
-
-		   });
-	} catch (IOException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
-	server.setDatabaseName(0, "bam");
-	server.setDatabasePath(0, "saida/database/bam");
-	//server.setDatabasePath(0, "mem:bam;sql.enforce_strict_size=true");
-	server.setDatabaseName(1, "bam2");
-	server.setDatabasePath(1, "saida/database/bam2");
-	//server.setDatabasePath(1, "mem:bam2;sql.enforce_strict_size=true");
-	
-	server.setLogWriter(null);
-	server.setErrWriter(null);
-	server.setSilent(true);
-	server.start();
-
-	initialized = true;
-	try
-	{
-	    Class.forName("org.hsqldb.jdbcDriver");
-
-	    PrintStream out = new PrintStream(new ByteArrayOutputStream());
-	    Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/bam", "sa", "");
-	    Connection conn2 = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/bam2", "sa", "");
-	    //conn.prepareStatement("create database bam;").execute();
-	   // conn.prepareStatement("use bam;").execute();
-	   // conn.prepareStatement("drop table bam;").execute();
-	    conn.prepareStatement("create table bam(caseId VARCHAR(15), "
-	    		+ "link INTEGER, "
-	    		+ "BAMAtual VARCHAR(30), "
-//	    		+ "problema VARCHAR(30), "
-	    		/*+ "Janela INTEGER, "
-	    		+ "SLAUtilizacaoCT0 DOUBLE, "
-	    		+ "SLAUtilizacaoCT1 DOUBLE, "
-	    		+ "SLAUtilizacaoCT2 DOUBLE, "
-	    		+ "SLABloqueiosCT0 DOUBLE, "
-	    		+ "SLABloqueiosCT1 DOUBLE, "
-	    		+ "SLABloqueiosCT2 DOUBLE, "
-	    		+ "SLAPreempcoesCT0 DOUBLE, "
-	    		+ "SLAPreempcoesCT1 DOUBLE, "
-	    		+ "SLAPreempcoesCT2 DOUBLE, "
-	    		+ "SLADevolucoesCT0 DOUBLE, "
-	    		+ "SLADevolucoesCT1 DOUBLE, "
-	    		+ "SLADevolucoesCT2 DOUBLE, "*/
-	    		+ "BC0 DOUBLE, "
-	    		+ "BC1 DOUBLE, "
-	    		+ "BC2 DOUBLE, "
-	    		+ "utilizacaoDoEnlace DOUBLE, "
-	    		+ "utilizacaoDoEnlaceCT0 DOUBLE, "
-	    		+ "utilizacaoDoEnlaceCT1 DOUBLE, "
-	    		+ "utilizacaoDoEnlaceCT2 DOUBLE, "
-	    		+ "numeroDeBloqueios DOUBLE, "
-	    		+ "numeroDeBloqueiosCT0 DOUBLE, "
-	    		+ "numeroDeBloqueiosCT1 DOUBLE, "
-	    		+ "numeroDeBloqueiosCT2 DOUBLE, "
-	    		+ "numeroDePreempcoes DOUBLE, "
-	    		+ "numeroDePreempcoesCT0 DOUBLE, "
-	    		+ "numeroDePreempcoesCT1 DOUBLE, "
-	    		+ "numeroDePreempcoesCT2 DOUBLE, "
-	    		+ "numeroDeDevolucoes DOUBLE, "
-	    		+ "numeroDeDevolucoesCT0 DOUBLE, "
-	    		+ "numeroDeDevolucoesCT1 DOUBLE, "
-	    		+ "numeroDeDevolucoesCT2 DOUBLE, "
-	    		+ "BAMNovo VARCHAR(30), "
-	    		+ "aceita BIT);").execute();
-	    
-	    conn2.prepareStatement("create table bam(caseId VARCHAR(15), "
-	    		//+ "gestor VARCHAR(30), "
-	    		+ "link INTEGER, "
-	    		+ "BAMAtual VARCHAR(30), "
-//	    		+ "problema VARCHAR(30), "
-	    		/*+ "Janela INTEGER, "
-	    		+ "SLAUtilizacaoCT0 DOUBLE, "
-	    		+ "SLAUtilizacaoCT1 DOUBLE, "
-	    		+ "SLAUtilizacaoCT2 DOUBLE, "
-	    		+ "SLABloqueiosCT0 DOUBLE, "
-	    		+ "SLABloqueiosCT1 DOUBLE, "
-	    		+ "SLABloqueiosCT2 DOUBLE, "
-	    		+ "SLAPreempcoesCT0 DOUBLE, "
-	    		+ "SLAPreempcoesCT1 DOUBLE, "
-	    		+ "SLAPreempcoesCT2 DOUBLE, "
-	    		+ "SLADevolucoesCT0 DOUBLE, "
-	    		+ "SLADevolucoesCT1 DOUBLE, "
-	    		+ "SLADevolucoesCT2 DOUBLE, "*/
-	    		+ "BC0 DOUBLE, "
-	    		+ "BC1 DOUBLE, "
-	    		+ "BC2 DOUBLE, "
-	    		+ "utilizacaoDoEnlace DOUBLE, "
-	    		+ "utilizacaoDoEnlaceCT0 DOUBLE, "
-	    		+ "utilizacaoDoEnlaceCT1 DOUBLE, "
-	    		+ "utilizacaoDoEnlaceCT2 DOUBLE, "
-	    		+ "numeroDeBloqueios DOUBLE, "
-	    		+ "numeroDeBloqueiosCT0 DOUBLE, "
-	    		+ "numeroDeBloqueiosCT1 DOUBLE, "
-	    		+ "numeroDeBloqueiosCT2 DOUBLE, "
-	    		+ "numeroDePreempcoes DOUBLE, "
-	    		+ "numeroDePreempcoesCT0 DOUBLE, "
-	    		+ "numeroDePreempcoesCT1 DOUBLE, "
-	    		+ "numeroDePreempcoesCT2 DOUBLE, "
-	    		+ "numeroDeDevolucoes DOUBLE, "
-	    		+ "numeroDeDevolucoesCT0 DOUBLE, "
-	    		+ "numeroDeDevolucoesCT1 DOUBLE, "
-	    		+ "numeroDeDevolucoesCT2 DOUBLE, "
-	    		+ "BAMNovo VARCHAR(30), "
-	    		+ "aceita BIT);").execute();
-	    
-	   if(ParametrosDSTE.baseCBRManual){
-		   carregarBaseCRBManualP(conn);
-		   carregarBaseCRBManualN(conn2);  
-	   }
-	   else{
-		   carregarBaseCBRDeArquivoP(conn);
-		   carregarBaseCBRDeArquivoN(conn2);
-	   }
-		   
+		server = new Server();
 		
-		 
-
-	    /*SqlFile file = new SqlFile(new
-	    File(FileIO.findFile("BAM/BAMRecommender/bam.sql").getFile()),false,new HashMap());
-	    file.execute(conn,out,out, true);*/
-	    
-	    
-	    
-	    org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).info("Data base generation finished");
-	    
-	} catch (Exception e)
-	{
-	    org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).error(e);
-	}
-
+		
+		Path directory = Paths.get("saida/database");
+		if(ParametrosDSTE.limpaBaseCBR){
+		   try {
+			Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+				   @Override
+				   public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+					   Files.delete(file);
+					   return FileVisitResult.CONTINUE;
+				   }
+	
+				   @Override
+				   public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+					   Files.delete(dir);
+					   return FileVisitResult.CONTINUE;
+				   }
+	
+			   });
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		server.setDatabaseName(0, "bam");
+		server.setDatabasePath(0, "saida/database/bam");
+		//server.setDatabasePath(0, "mem:bam;sql.enforce_strict_size=true");
+		server.setDatabaseName(1, "bam2");
+		server.setDatabasePath(1, "saida/database/bam2");
+		//server.setDatabasePath(1, "mem:bam2;sql.enforce_strict_size=true");
+		
+		server.setLogWriter(null);
+		server.setErrWriter(null);
+		server.setSilent(true);
+		server.start();
+	
+		initialized = true;
+		if(ParametrosDSTE.limpaBaseCBR)
+		{
+			try
+			{
+			    Class.forName("org.hsqldb.jdbcDriver");
+			    org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).info("Creating data base ...");
+			    PrintStream out = new PrintStream(new ByteArrayOutputStream());
+			    Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/bam", "sa", "");
+			    Connection conn2 = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/bam2", "sa", "");
+			    //conn.prepareStatement("create database bam;").execute();
+			   // conn.prepareStatement("use bam;").execute();
+			   // conn.prepareStatement("drop table bam;").execute();
+			    conn.prepareStatement("create table bam(caseId VARCHAR(15), "
+			    		+ "link INTEGER, "
+			    		+ "BAMAtual VARCHAR(30), "
+		//	    		+ "problema VARCHAR(30), "
+			    		/*+ "Janela INTEGER, "
+			    		+ "SLAUtilizacaoCT0 DOUBLE, "
+			    		+ "SLAUtilizacaoCT1 DOUBLE, "
+			    		+ "SLAUtilizacaoCT2 DOUBLE, "
+			    		+ "SLABloqueiosCT0 DOUBLE, "
+			    		+ "SLABloqueiosCT1 DOUBLE, "
+			    		+ "SLABloqueiosCT2 DOUBLE, "
+			    		+ "SLAPreempcoesCT0 DOUBLE, "
+			    		+ "SLAPreempcoesCT1 DOUBLE, "
+			    		+ "SLAPreempcoesCT2 DOUBLE, "
+			    		+ "SLADevolucoesCT0 DOUBLE, "
+			    		+ "SLADevolucoesCT1 DOUBLE, "
+			    		+ "SLADevolucoesCT2 DOUBLE, "*/
+			    		+ "BC0 DOUBLE, "
+			    		+ "BC1 DOUBLE, "
+			    		+ "BC2 DOUBLE, "
+			    		+ "utilizacaoDoEnlace DOUBLE, "
+			    		+ "utilizacaoDoEnlaceCT0 DOUBLE, "
+			    		+ "utilizacaoDoEnlaceCT1 DOUBLE, "
+			    		+ "utilizacaoDoEnlaceCT2 DOUBLE, "
+			    		+ "numeroDeBloqueios DOUBLE, "
+			    		+ "numeroDeBloqueiosCT0 DOUBLE, "
+			    		+ "numeroDeBloqueiosCT1 DOUBLE, "
+			    		+ "numeroDeBloqueiosCT2 DOUBLE, "
+			    		+ "numeroDePreempcoes DOUBLE, "
+			    		+ "numeroDePreempcoesCT0 DOUBLE, "
+			    		+ "numeroDePreempcoesCT1 DOUBLE, "
+			    		+ "numeroDePreempcoesCT2 DOUBLE, "
+			    		+ "numeroDeDevolucoes DOUBLE, "
+			    		+ "numeroDeDevolucoesCT0 DOUBLE, "
+			    		+ "numeroDeDevolucoesCT1 DOUBLE, "
+			    		+ "numeroDeDevolucoesCT2 DOUBLE, "
+			    		+ "BAMNovo VARCHAR(30), "
+			    		+ "aceita BIT);").execute();
+			    
+			    conn2.prepareStatement("create table bam(caseId VARCHAR(15), "
+			    		//+ "gestor VARCHAR(30), "
+			    		+ "link INTEGER, "
+			    		+ "BAMAtual VARCHAR(30), "
+		//	    		+ "problema VARCHAR(30), "
+			    		/*+ "Janela INTEGER, "
+			    		+ "SLAUtilizacaoCT0 DOUBLE, "
+			    		+ "SLAUtilizacaoCT1 DOUBLE, "
+			    		+ "SLAUtilizacaoCT2 DOUBLE, "
+			    		+ "SLABloqueiosCT0 DOUBLE, "
+			    		+ "SLABloqueiosCT1 DOUBLE, "
+			    		+ "SLABloqueiosCT2 DOUBLE, "
+			    		+ "SLAPreempcoesCT0 DOUBLE, "
+			    		+ "SLAPreempcoesCT1 DOUBLE, "
+			    		+ "SLAPreempcoesCT2 DOUBLE, "
+			    		+ "SLADevolucoesCT0 DOUBLE, "
+			    		+ "SLADevolucoesCT1 DOUBLE, "
+			    		+ "SLADevolucoesCT2 DOUBLE, "*/
+			    		+ "BC0 DOUBLE, "
+			    		+ "BC1 DOUBLE, "
+			    		+ "BC2 DOUBLE, "
+			    		+ "utilizacaoDoEnlace DOUBLE, "
+			    		+ "utilizacaoDoEnlaceCT0 DOUBLE, "
+			    		+ "utilizacaoDoEnlaceCT1 DOUBLE, "
+			    		+ "utilizacaoDoEnlaceCT2 DOUBLE, "
+			    		+ "numeroDeBloqueios DOUBLE, "
+			    		+ "numeroDeBloqueiosCT0 DOUBLE, "
+			    		+ "numeroDeBloqueiosCT1 DOUBLE, "
+			    		+ "numeroDeBloqueiosCT2 DOUBLE, "
+			    		+ "numeroDePreempcoes DOUBLE, "
+			    		+ "numeroDePreempcoesCT0 DOUBLE, "
+			    		+ "numeroDePreempcoesCT1 DOUBLE, "
+			    		+ "numeroDePreempcoesCT2 DOUBLE, "
+			    		+ "numeroDeDevolucoes DOUBLE, "
+			    		+ "numeroDeDevolucoesCT0 DOUBLE, "
+			    		+ "numeroDeDevolucoesCT1 DOUBLE, "
+			    		+ "numeroDeDevolucoesCT2 DOUBLE, "
+			    		+ "BAMNovo VARCHAR(30), "
+			    		+ "aceita BIT);").execute();
+			    
+			   if(ParametrosDSTE.baseCBRManual){
+				   carregarBaseCRBManualP(conn);
+				   carregarBaseCRBManualN(conn2);  
+			   }
+			   else{
+				   carregarBaseCBRDeArquivoP(conn);
+				   carregarBaseCBRDeArquivoN(conn2);
+			   }
+				   
+				
+				 
+		
+			    /*SqlFile file = new SqlFile(new
+			    File(FileIO.findFile("BAM/BAMRecommender/bam.sql").getFile()),false,new HashMap());
+			    file.execute(conn,out,out, true);*/
+			    
+			    
+			    
+			    org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).info("Data base generation finished");
+			    
+			} catch (Exception e)
+			{
+			    org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).error(e);
+			}
+		}
+		org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).info("Data base initialization finished");
     }
 
     /**
