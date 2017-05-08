@@ -75,10 +75,10 @@ public class ParametrosDSTE {
 	public static final Boolean baseCBRManual= true;
 	public static final Boolean topologiaManual= false;
 	public static final Boolean matrizCaminhosManual= false;
-	//public static final String filenameTopologia= ".//topologias//PTP-2n-1e.txt";
-	//public static final String filenameMatrizCaminhos= ".//topologias//PTP-2n-1e_Caminhos.txt";
-	public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
-	public static final String filenameMatrizCaminhos= ".//topologias//NSF-14n-42e_Caminhos.txt";
+	public static final String filenameTopologia= ".//topologias//PTP-2n-1e.txt";
+	public static final String filenameMatrizCaminhos= ".//topologias//PTP-2n-1e_Caminhos.txt";
+	///public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
+	///public static final String filenameMatrizCaminhos= ".//topologias//NSF-14n-42e_Caminhos.txt";
 	//public static final String filenameTopologia= ".//topologias//PTP-3n-2e.txt";
 	//public static final String filenameMatrizCaminhos= ".//topologias//PTP-3n-2e_Caminhos.txt";
 	
@@ -89,9 +89,9 @@ public class ParametrosDSTE {
 		//GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
 		//GeradorDeTrafego.trafegoDeterministico2(rodada, to, dados);
 		//GeradorDeTrafego.trafegoDeterministico(rodada, to, dados);
-		//GeradorDeTrafego.trafegoForcado(rodada, to, dados);
+		GeradorDeTrafego.trafegoForcado(rodada, to, dados);
 		//GeradorDeTrafego.trafegoAleatorioNTT(rodada, to, dados);
-		GeradorDeTrafego.trafegoForcadoNTT(rodada, to, dados);
+		//GeradorDeTrafego.trafegoForcadoNTT(rodada, to, dados);
 	}
 	
 	/*	public static double [] BCPadrao= new double[]    // para AllocCTSharing  //PreemptionRDM			{	100, // BC[0] =CT0 + CT1 + CT2 (Valor do Enlace)				75, // BC[1] = CT1 + CT2				40 // BC[1] = CT2			};

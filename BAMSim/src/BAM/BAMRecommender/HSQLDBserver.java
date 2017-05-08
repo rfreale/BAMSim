@@ -75,11 +75,11 @@ public class HSQLDBserver
 			}
 		}
 		server.setDatabaseName(0, "bam");
-		server.setDatabasePath(0, "saida/database/bam");
-		//server.setDatabasePath(0, "mem:bam;sql.enforce_strict_size=true");
+		//server.setDatabasePath(0, "saida/database/bam");
+		server.setDatabasePath(0, "mem:bam;sql.enforce_strict_size=true");
 		server.setDatabaseName(1, "bam2");
-		server.setDatabasePath(1, "saida/database/bam2");
-		//server.setDatabasePath(1, "mem:bam2;sql.enforce_strict_size=true");
+		//server.setDatabasePath(1, "saida/database/bam2");
+		server.setDatabasePath(1, "mem:bam2;sql.enforce_strict_size=true");
 		
 		server.setLogWriter(null);
 		server.setErrWriter(null);
