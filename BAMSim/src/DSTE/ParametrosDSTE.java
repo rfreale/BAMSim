@@ -1,21 +1,12 @@
 package DSTE;
-import Simulador.*;
+import BAM.BAMRecommender.BAMDescription;
+import Simulador.No;
+import Simulador.RodadaDeSimulacao;
 import jcolibri.cbrcore.Attribute;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
-import jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction;
-import BAM.BAMRecommender.BAMDescription;
-import jcolibri.method.retrieve.NNretrieval.NNConfig;
-import jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.EnumCyclicDistance;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.EnumDistance;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.IntervalEqual;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.Threshold;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.ontology.OntCosine;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.ontology.OntDeep;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.ontology.OntDeepBasic;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.ontology.OntDetail;
 
 
 public class ParametrosDSTE {
@@ -47,7 +38,7 @@ public class ParametrosDSTE {
 	public static final double SLADevolucoes = 0.00;
 	public static final double SLABloqueios = 0.00;  ////0.25
 	public static final double SLAUtilizacao = 0.00;
-	public static final long TempoSimulacao = 3600*24;
+	public static final long TempoSimulacao = 3600*4;
 
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
@@ -71,7 +62,7 @@ public class ParametrosDSTE {
 	
 	
 	public static final boolean RecomendacaoCBRSwitchBAM = true;
-	public static final boolean RecomendacaoCBRRetencao = true ;
+	public static final boolean RecomendacaoCBRRetencao = true;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.97;
 	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.97;
@@ -80,10 +71,12 @@ public class ParametrosDSTE {
 	public static final String filenameBaseCBRN= ".//basesCBR//baseN.sql";
 	
 	
-	
+	public static final Boolean limpaBaseNoInicioCBR= true;
 	public static final Boolean baseCBRManual= true;
 	public static final Boolean topologiaManual= false;
 	public static final Boolean matrizCaminhosManual= false;
+	//public static final String filenameTopologia= ".//topologias//PTP-2n-1e.txt";
+	//public static final String filenameMatrizCaminhos= ".//topologias//PTP-2n-1e_Caminhos.txt";
 	public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
 	public static final String filenameMatrizCaminhos= ".//topologias//NSF-14n-42e_Caminhos.txt";
 	//public static final String filenameTopologia= ".//topologias//PTP-3n-2e.txt";
@@ -94,10 +87,11 @@ public class ParametrosDSTE {
 	{
 
 		//GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
-		//GeradorDeTrafego.trafegoAleatorio(rodada, to, dados);
 		//GeradorDeTrafego.trafegoDeterministico2(rodada, to, dados);
 		//GeradorDeTrafego.trafegoDeterministico(rodada, to, dados);
-		GeradorDeTrafego.trafegoForcado(rodada, to, dados);
+		//GeradorDeTrafego.trafegoForcado(rodada, to, dados);
+		//GeradorDeTrafego.trafegoAleatorioNTT(rodada, to, dados);
+		GeradorDeTrafego.trafegoForcadoNTT(rodada, to, dados);
 	}
 	
 	/*	public static double [] BCPadrao= new double[]    // para AllocCTSharing  //PreemptionRDM			{	100, // BC[0] =CT0 + CT1 + CT2 (Valor do Enlace)				75, // BC[1] = CT1 + CT2				40 // BC[1] = CT2			};

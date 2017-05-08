@@ -175,6 +175,126 @@ public class GeradorDeTrafego {
 		}
 	
 		
+	public static void trafegoForcadoNTT(RodadaDeSimulacao rodada, Topologia to, No dados) {
+		int fonteDeTrafego = 3;
+		
+		if (dados == null) {
+			dados = new No();
+			dados.item = 0;
+			Debug.setMensagem("Agenda estabelecimento de LSP do slot:" + 0);
+			rodada.schedulep(3, 0, dados);
+
+		} else {
+
+			int slot = (int) dados.item;
+			/*if(slot%5==4)
+			{
+				try {
+					if(rodada.estatistica.devolucoes(300)>=5||rodada.estatistica.preempcoes(300)>=5)
+					{
+						Lsp LSPaux= new Lsp(); 
+						LSPaux.Carga=0; 
+						to.link[0].bamType = BAMType.PreemptionGBAM;
+						to.link[0].BCLTH= new double[]
+						{	000, //BC0 
+							000, //BC1
+							0  //BC2 Nunca mudar
+						};
+						LSPaux.CT=0; 
+			      		BAM.devolutionG(to.link[0],LSPaux);
+						
+						
+						to.link[0].BCHTL= new double[]
+						{	0, //BC0 Nunca mudar
+							000, //BC1
+							000 //BC2
+						};
+						
+						LSPaux.CT=2; 
+			      		BAM.preemptionG(to.link[0],LSPaux); 
+						
+					}
+					else if(rodada.estatistica.picoDeUtilizacaoDoEnlace(300,to.link[0])<=800)
+					{
+						to.link[0].bamType = BAMType.PreemptionGBAM;
+						to.link[0].BCLTH= new double[]
+						{	100, //BC0 
+							100, //BC1
+							0  //BC2 Nunca mudar
+						};
+						
+						to.link[0].BCHTL= new double[]
+						{	0, //BC0 Nunca mudar
+							100, //BC
+							100 //BC2
+						};
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (RrdException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			
+			
+			}
+			*/
+			for (int z=0; z<fonteDeTrafego; z++)
+			{
+				for (int ct = 0; ct < ParametrosDSTE.MaxClassType; ct++) {
+	
+					for (int i = 0; i < matriz[slot][ct]; i++) {
+						No dadosLSP = new No();
+	
+						Lsp lsp = new Lsp(rodada);
+						lsp.CargaReduzida = 0;
+						if (z==1)
+						{
+							lsp.src = 0; // id do router fonte
+							lsp.dest = 9; // id do router destino
+						} else if (z==2)
+						{
+							lsp.src = 0; // id do router fonte
+							lsp.dest = 13; // id do router destino
+						}
+						else 
+						{
+							lsp.src = 0; // id do router fonte
+							lsp.dest = 12; // id do router destino
+						}
+						/*lsp.src = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES - 1); // id
+						// do
+						// router
+						// fonte
+						do {
+						lsp.dest = GeradorDeNumerosAleatorios.uniform(0, ParametrosDSTE.ROTEADORES - 1); // id
+													// do
+													// router
+													// destino
+						} while (lsp.src == lsp.dest);*/
+						lsp.CT = ct;
+						lsp.Carga = 10;//(int) GeradorDeNumerosAleatorios.uniform(5, 15);   //10
+						lsp.tempoDeVida = 120; //(int) GeradorDeNumerosAleatorios.expntl(250);  //120
+						dadosLSP.item = lsp;
+	
+						Debug.setMensagem("Cria LSP " + ((Lsp) dadosLSP.item).ID + " - "
+								+ to.getRoteador(((Lsp) dadosLSP.item).src).getDescricao() + " -->"
+								+ to.getRoteador(((Lsp) dadosLSP.item).dest).getDescricao());
+						rodada.schedulep(1, GeradorDeNumerosAleatorios.uniform(0, 59), dadosLSP);
+	
+					}
+				}
+			}
+			Debug.setMensagem("Agenda estabelecimento de LSP do slot:" + slot);
+			dados.item = slot + 1;
+			rodada.schedulep(3, 60, dados);
+
+		}
+
+	}
+
 		
 		
 	public static void trafegoDeterministico(RodadaDeSimulacao rodada, Topologia to, No dados) {
@@ -941,7 +1061,7 @@ public class GeradorDeTrafego {
 	}
 
 	// Aleatório1
-	public static void trafegoAleatorio(RodadaDeSimulacao rodada, Topologia to, No dados) {
+	public static void trafegoAleatorioNTT(RodadaDeSimulacao rodada, Topologia to, No dados) {
 		int fonteDeTrafego = 2;
 		if (dados != null) {
 			Lsp [] lsps=(Lsp[]) dados.item;
