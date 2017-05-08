@@ -53,7 +53,7 @@ public class HSQLDBserver
 		
 		
 		Path directory = Paths.get("saida/database");
-		if(ParametrosDSTE.limpaBaseCBR){
+		if(ParametrosDSTE.limpaBaseNoInicioCBR){
 		   try {
 			Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
 				   @Override
@@ -87,7 +87,7 @@ public class HSQLDBserver
 		server.start();
 	
 		initialized = true;
-		if(ParametrosDSTE.limpaBaseCBR)
+		if(ParametrosDSTE.limpaBaseNoInicioCBR)
 		{
 			try
 			{
