@@ -695,6 +695,7 @@ public class TesteSimulacao {
 
 					
 								BancoDeDados.setXML(  rodada.simtime() + "\t\t"
+										+ to.link[idLinkDebug].getID() + "\t"
 										+ nomeBAMAtual + "\t"
 										/*+ ParametrosDSTE.Janela + "\t"
 										
