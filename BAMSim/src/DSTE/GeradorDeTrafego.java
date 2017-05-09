@@ -176,7 +176,7 @@ public class GeradorDeTrafego {
 	
 		
 	public static void trafegoForcadoNTT(RodadaDeSimulacao rodada, Topologia to, No dados) {
-		int fonteDeTrafego = 3;
+		int fonteDeTrafego = 1;
 		
 		if (dados == null) {
 			dados = new No();
@@ -250,11 +250,11 @@ public class GeradorDeTrafego {
 	
 						Lsp lsp = new Lsp(rodada);
 						lsp.CargaReduzida = 0;
-						if (z==1)
+						if (z==0)
 						{
 							lsp.src = 0; // id do router fonte
 							lsp.dest = 9; // id do router destino
-						} else if (z==2)
+						} else if (z==1)
 						{
 							lsp.src = 0; // id do router fonte
 							lsp.dest = 13; // id do router destino
