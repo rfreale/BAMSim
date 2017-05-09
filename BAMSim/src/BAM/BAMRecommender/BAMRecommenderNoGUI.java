@@ -157,16 +157,16 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		Collection<RetrievalResult> eval1 = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
 		Collection<RetrievalResult> eval2 = NNScoringMethod.evaluateSimilarity(_caseBaseDB2.getCases(), query, simConfig);
 
-		BancoDeDados.setXML("\tSolicitanto busca para o caso: " + ((BAMDescription) query.getDescription()).toTabela() );
+		BancoDeDados.setXML("\tSolicitando busca para o caso: " + ((BAMDescription) query.getDescription()).toTabela() );
 
-		BancoDeDados.setXML("\tImprimindo os TOps 4 Casos encontrado na Base positiva:");
+		BancoDeDados.setXML("\tImprimindo os tops 4 Casos encontrado na Base positiva:");
 		Collection<RetrievalResult> selectedcases1 = SelectCases.selectTopKRR(eval1, 4);
 		for (RetrievalResult rr : selectedcases1) {
 			BancoDeDados.setXML("\tSim, ID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
 		}		
 		
 		Collection<RetrievalResult> selectedcases2 = SelectCases.selectTopKRR(eval2, 4);
-		BancoDeDados.setXML("\tImprimindo tot 4 base negativa:");
+		BancoDeDados.setXML("\tImprimindo tops 4 base negativa:");
 		for (RetrievalResult rr : selectedcases2) {
 			BancoDeDados.setXML("\tSim, ID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
 		}
@@ -177,7 +177,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		novocase.setDescription(desc);
 		
 		
-		BancoDeDados.setXML("\tVerificando casos  acima da linah de corte "+ ParametrosDSTE.RecomendacaoCBRLimiarDeCorte + " e se não foram negativados...");
+		BancoDeDados.setXML("\tVerificando casos  acima da linha de corte: "+ ParametrosDSTE.RecomendacaoCBRLimiarDeCorte + ", e se não foram negativados...");
 		for (RetrievalResult rr : eval1) {
 			
 			if (rr.getEval() >= ParametrosDSTE.RecomendacaoCBRLimiarDeCorte) {
@@ -269,6 +269,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 				if (((BAMSolution) rr.get_case().getSolution()).BAMNovo == ((BAMSolution) cbrcase.getSolution()).BAMNovo
 						&& ((BAMSolution) rr.get_case().getSolution()).aceita == ((BAMSolution) cbrcase
 								.getSolution()).aceita) {
+					BancoDeDados.setXML("\tSimilaridade na base: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
 					return true;
 				}
 			}
@@ -293,6 +294,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		for (RetrievalResult rr : eval) {
 			if (rr.getEval() >= limiar) {
 				if (   ((BAMSolution) rr.get_case().getSolution()).BAMNovo == ((BAMSolution) cbrcase.getSolution()).BAMNovo  && ((BAMSolution) rr.get_case().getSolution()).aceita == ((BAMSolution) cbrcase.getSolution()).aceita) {
+					BancoDeDados.setXML("\tSimilaridade na base: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
 					return true;
 				}
 			}

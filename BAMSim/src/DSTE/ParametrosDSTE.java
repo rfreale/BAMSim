@@ -64,21 +64,21 @@ public class ParametrosDSTE {
 	public static final boolean RecomendacaoCBRSwitchBAM = true;
 	public static final boolean RecomendacaoCBRRetencao = true;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
-	public static final double RecomendacaoCBRLimiarDeCorte = 0.97;
-	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.97;
-	public static final double RecomendacaoCBRLimiarArmazenar = 0.99;    // Silimalidade para armazenar um novo vaso na base de casos positiva ou negativa (o caso não pode ser 0.99x semelhandte a algum caso ja existente)
+	public static final double RecomendacaoCBRLimiarDeCorte = 0.96;
+	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.96;
+	public static final double RecomendacaoCBRLimiarArmazenar = 0.985;    // Silimalidade para armazenar um novo vaso na base de casos positiva ou negativa (o caso não pode ser 0.99x semelhandte a algum caso ja existente)
 	public static final String filenameBaseCBRP= ".//basesCBR//baseP.sql";
 	public static final String filenameBaseCBRN= ".//basesCBR//baseN.sql";
 	
 	
-	public static final Boolean limpaBaseNoInicioCBR= true;
+	public static final Boolean limpaBaseNoInicioCBR= false;
 	public static final Boolean baseCBRManual= true;
 	public static final Boolean topologiaManual= false;
 	public static final Boolean matrizCaminhosManual= false;
-	//public static final String filenameTopologia= ".//topologias//PTP-2n-1e.txt";
-	//public static final String filenameMatrizCaminhos= ".//topologias//PTP-2n-1e_Caminhos.txt";
-	public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
-	public static final String filenameMatrizCaminhos= ".//topologias//NSF-14n-42e_Caminhos.txt";
+	public static final String filenameTopologia= ".//topologias//PTP-2n-1e.txt";
+	public static final String filenameMatrizCaminhos= ".//topologias//PTP-2n-1e_Caminhos.txt";
+	///public static final String filenameTopologia= ".//topologias//NSF-14n-42e.txt";
+	///public static final String filenameMatrizCaminhos= ".//topologias//NSF-14n-42e_Caminhos.txt";
 	//public static final String filenameTopologia= ".//topologias//PTP-3n-2e.txt";
 	//public static final String filenameMatrizCaminhos= ".//topologias//PTP-3n-2e_Caminhos.txt";
 	
@@ -89,9 +89,9 @@ public class ParametrosDSTE {
 		//GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
 		//GeradorDeTrafego.trafegoDeterministico2(rodada, to, dados);
 		//GeradorDeTrafego.trafegoDeterministico(rodada, to, dados);
-		//GeradorDeTrafego.trafegoForcado(rodada, to, dados);
+		GeradorDeTrafego.trafegoForcado(rodada, to, dados);
 		//GeradorDeTrafego.trafegoAleatorioNTT(rodada, to, dados);
-		GeradorDeTrafego.trafegoForcadoNTT(rodada, to, dados);
+		//GeradorDeTrafego.trafegoForcadoNTT(rodada, to, dados);
 	}
 	
 	/*	public static double [] BCPadrao= new double[]    // para AllocCTSharing  //PreemptionRDM			{	100, // BC[0] =CT0 + CT1 + CT2 (Valor do Enlace)				75, // BC[1] = CT1 + CT2				40 // BC[1] = CT2			};
@@ -307,7 +307,7 @@ public class ParametrosDSTE {
 		{
 			attribute = new Attribute("numeroDeBloqueios",BAMDescription.class);
 			config.addMapping(attribute, new Interval(1));
-			config.setWeight(attribute, 20.0);
+			config.setWeight(attribute, 30.0);
 			
 			/*attribute = new Attribute("numeroDeBloqueiosCT0",BAMDescription.class);
 			config.addMapping(attribute, new Interval(1));
