@@ -38,20 +38,12 @@ public class Simulador
 			int sementeAgora = ParametrosDoSimulador.semente;
 			for (int j=0;j<sim.length;j++)
 			{
-				//GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente+j*100);
-				 if (j>=20){
-					GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente+(j+0)*100);
-				}
-				 /*else if (j==14){
-					GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente+j*100);
-				}else if (j==21){
-					GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente+j*100);
+				 if (j>=0){
+					GeradorDeNumerosAleatorios.rand= new Random(sementeAgora += (j+1)*100);
 				}else{
-					GeradorDeNumerosAleatorios.rand= new Random(ParametrosDoSimulador.semente);
-				}*/
+					GeradorDeNumerosAleatorios.rand= new Random(sementeAgora);
+				}
 				
-				
-				//GeradorDeNumerosAleatorios.rand= new Random(sementeAgora);
 				sim[j]=new RodadaDeSimulacao();
 				Debug.filename=sim[j].filename;
 				filenames[j]=sim[j].filename;
