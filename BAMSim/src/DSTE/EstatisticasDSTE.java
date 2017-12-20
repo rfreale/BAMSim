@@ -105,7 +105,7 @@ public class EstatisticasDSTE {
 	public	int graphMajorUnit=RrdGraphConstants.HOUR;
 	public	int graphMajorUnitCount=1;
 	public	int graphLabelUnit=RrdGraphConstants.HOUR;
-	public	int graphLabelUnitCount=1;
+	public	int graphLabelUnitCount=3;  ///<<<<<<<<<<<<<<<<--------------
 	public	int graphLabelSpan= 0;
 	public	String graphSimpleDateFormat="HH:mm";
     
