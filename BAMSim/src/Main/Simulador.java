@@ -38,7 +38,7 @@ public class Simulador
 			int sementeAgora = ParametrosDoSimulador.semente;
 			for (int j=0;j<sim.length;j++)
 			{
-				 if (j>=0){
+				 if (j>10){
 					GeradorDeNumerosAleatorios.rand= new Random(sementeAgora += (j+1)*100);
 				}else{
 					GeradorDeNumerosAleatorios.rand= new Random(sementeAgora);
