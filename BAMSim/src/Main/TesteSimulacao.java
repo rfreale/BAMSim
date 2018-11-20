@@ -122,11 +122,11 @@ public class TesteSimulacao {
 			{
 				No no = new No();
 				no.item=to.link[i];
-				rodada.schedulep (5, ParametrosDSTE.Janela+0.40, no);
+				rodada.schedulep(5, ParametrosDSTE.Janela+0.40, no);    ///////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 			}
 		}
 		
-		rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
+		rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);/////<<<<<<<<<<<
 		
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
@@ -694,28 +694,28 @@ public class TesteSimulacao {
 				
 
 					
-								BancoDeDados.setXML(  rodada.simtime() + "\t\t"
-										+ to.link[idLinkDebug].getID() + "\t"
-										+ nomeBAMAtual + "\t"
-										/*+ ParametrosDSTE.Janela + "\t"
+								BancoDeDados.setXML(  rodada.simtime() + "\t\t"       ////Imprime  o tempo de execução da simulação
+										+ to.link[idLinkDebug].getID() + "\t"         ////Imprime  o ID do link debugado
+										+ nomeBAMAtual + "\t"                         ////Imprime  o nome do Bam Atual
+										+ ParametrosDSTE.Janela + "\t"                ////Imprime  o tamanho da jamela escolhida 
 										
-										+ to.link[idLinkDebug].CargaEnlace * to.link[idLinkDebug].BC[0] / 100 + "\t"
-										+ to.link[idLinkDebug].CargaEnlace * to.link[idLinkDebug].BC[1] / 100 + "\t"
-										+ to.link[idLinkDebug].CargaEnlace * to.link[idLinkDebug].BC[2] / 100 + "\t"*/
+										+ to.link[idLinkDebug].CargaEnlace * to.link[idLinkDebug].BC[0] / 100 + "\t"  ////Imprime  a banda reservada para o BC0
+										+ to.link[idLinkDebug].CargaEnlace * to.link[idLinkDebug].BC[1] / 100 + "\t"  ////Imprime  a banda reservada para o BC1
+										+ to.link[idLinkDebug].CargaEnlace * to.link[idLinkDebug].BC[2] / 100 + "\t"  ////Imprime  a banda reservada para o BC2
 										
 										
-									/*	+ to.link[idLinkDebug].CargaCTAtual[0] + "\t"
-										+ to.link[idLinkDebug].CargaCTAtual[1] + "\t"
-										+ to.link[idLinkDebug].CargaCTAtual[2] + "\t"*/
+										+ (to.link[idLinkDebug].CargaCTAtual[0]+to.link[idLinkDebug].CargaCTAtual[1]+to.link[idLinkDebug].CargaCTAtual[2]) + "\t"  ////Imprime  a Carga de utilização Geral
+										+ to.link[idLinkDebug].CargaCTAtual[0] + "\t"  ////Imprime  a Carga de utilização no CT0
+										+ to.link[idLinkDebug].CargaCTAtual[1] + "\t"  ////Imprime  a Carga de utilização no CT1
+										+ to.link[idLinkDebug].CargaCTAtual[2] + "\t"  ////Imprime  a Carga de utilização no CT2
 										
 										+ rodada.estatistica.picoDeUtilizacaoDoEnlace(ParametrosDSTE.Janela, to.link[idLinkDebug]) /to.link[idLinkDebug].CargaEnlace + "\t"
-										
-										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 0) /to.link[idLinkDebug].CargaEnlace + "\t"
-										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 1) /to.link[idLinkDebug].CargaEnlace + "\t"
-										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 2) /to.link[idLinkDebug].CargaEnlace + "\t"
+										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 0) /to.link[idLinkDebug].CargaEnlace + "\t"  ////Imprime  a Utilização do enlarce  no CT0 em cada janela
+										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 1) /to.link[idLinkDebug].CargaEnlace + "\t"  ////Imprime  a Utilização do enlarce  no CT1 em cada janela
+										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 2) /to.link[idLinkDebug].CargaEnlace + "\t"  ////Imprime  a Utilização do enlarce  no CT2 em cada janela
 
 										
-										//+ rodada.estatistica.lspRequested + "\t"
+										+ rodada.estatistica.lspRequested + "\t"
 									
 									
 										+ bloqueiosJanela + "\t"				
@@ -724,20 +724,20 @@ public class TesteSimulacao {
 										+ bloqueiosCTJanela[2] + "\t"
 										
 										+ preempcoesJanela + "\t"
-										/*+ preempcoesCTJanela[0] + "\t"
+										+ preempcoesCTJanela[0] + "\t"
 										+ preempcoesCTJanela[1] + "\t"
-										+ preempcoesCTJanela[2] + "\t"*/
+										+ preempcoesCTJanela[2] + "\t"
 										
 										+ devolucoesJanela + "\t"
-										/*+ devolucoesCTJanela[0] + "\t"
+										+ devolucoesCTJanela[0] + "\t"
 										+ devolucoesCTJanela[1] + "\t"
-										+ devolucoesCTJanela[2] + "\t"*/
+										+ devolucoesCTJanela[2] + "\t"
 										
 										//+ (rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 0) /to.link[idLinkDebug].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 1) /to.link[idLinkDebug].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 2) /to.link[idLinkDebug].CargaEnlace)  + "\t"
 										+ "\t"+lspRequested
 
 										//, "saida");
-							//, rodada.filename+"_7");
+//							, rodada.filename+"_7");
 							, rodada.filename);
 								
 							/*	BancoDeDados.setXML(  rodada.simtime() + "\t"
