@@ -36,6 +36,7 @@ public class Simulador
 			String [] filenames= new String[ParametrosDoSimulador.MAX_SIMULATIONS];
 			
 			int sementeAgora = ParametrosDoSimulador.semente;
+			
 			for (int j=0;j<sim.length;j++)
 			{
 				 if (j>10){

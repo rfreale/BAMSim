@@ -20,7 +20,7 @@ public class ParametrosDSTE {
 	public static int LINKS = 6; // Número de LINKS (Simplex) do Modelo
 	public static int ROTEADORES = 5; // Número de roteadores DSTE
 	public static BAMType BAMTypePadrao = BAMType.PreemptionGBAM;  //NoPreemptionMAM  //PreemptionAllocCTSharing  //PreemptionRDM
-	
+	public static int BANDA_LINK = 1000; // Tamanho do link - largura da banda
 	
 	
 	public static final String Gestor = "Conservador";
@@ -38,7 +38,7 @@ public class ParametrosDSTE {
 	public static final double SLADevolucoes = 0.00;
 	public static final double SLABloqueios = 0.00;  ////0.25
 	public static final double SLAUtilizacao = 0.00;
-	public static final long TempoSimulacao = 3600*1; ////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	public static final long TempoSimulacao = 3600*24; ////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
@@ -61,7 +61,7 @@ public class ParametrosDSTE {
 	
 	
 	
-	public static final boolean RecomendacaoCBRSwitchBAM = false; /////<<<<<Liga e desliga a recoemndação<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	public static final boolean RecomendacaoCBRSwitchBAM = true; /////<<<<<Liga e desliga a recoemndação<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	public static final boolean RecomendacaoCBRRetencao = true;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.96;
@@ -87,9 +87,9 @@ public class ParametrosDSTE {
 	{
 
 		//GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
-		//GeradorDeTrafego.trafegoDeterministico2(rodada, to, dados);
+		GeradorDeTrafego.trafegoDeterministico2(rodada, to, dados);
 		//GeradorDeTrafego.trafegoDeterministico(rodada, to, dados);
-		GeradorDeTrafego.trafegoForcado(rodada, to, dados);
+	///	GeradorDeTrafego.trafegoForcado(rodada, to, dados);
 		//GeradorDeTrafego.trafegoAleatorioNTT(rodada, to, dados);
 		//GeradorDeTrafego.trafegoForcadoNTT(rodada, to, dados);
 	}

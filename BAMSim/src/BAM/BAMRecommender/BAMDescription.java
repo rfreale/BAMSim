@@ -619,7 +619,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	public String toTabela() {
 		return  	caseId			+ "\t"
 				//+ 	gestor			+ "\t" 
-				+ 	link		+ "\t"
+				//+ 	link		+ "\t"
 				+ 	BAMAtual		+ "\t"
 				/*+ 	janela			+ "\t"
 				+ 	SLAUtilizacaoCT0+ "\t"
@@ -633,26 +633,55 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 				+ 	SLAPreempcoesCT2+ "\t"
 				+ 	SLADevolucoesCT0+ "\t"
 				+ 	SLADevolucoesCT1+ "\t"
-				+ 	SLADevolucoesCT2+ "\t"
+				+ 	SLADevolucoesCT2+ "\t"*/
+				+	""				+ "\t"
 				+ 	BC0				+ "\t"
 				+	BC1				+ "\t"
-				+	BC2				+ "\t"*/
+				+	BC2				+ "\t"
+				
+    			+	""				+ "\t"
+//				+	""				+ "\t"
+//				+ 	""				+ "\t"
+//				+	""				+ "\t"
+//				+	""				+ "\t"
+//				
+//				+	""				+ "\t"
+//				+	""				+ "\t"
+//				+	""				+ "\t"
+//				+	""				+ "\t"
+				
 				+	utilizacaoDoEnlace+ "\t"
-				+	utilizacaoDoEnlaceCT0+ "\t"
-				+ 	utilizacaoDoEnlaceCT1+ "\t"
-				+	utilizacaoDoEnlaceCT2+ "\t"
+//				+	utilizacaoDoEnlaceCT0+ "\t"
+//				+ 	utilizacaoDoEnlaceCT1+ "\t"
+//				+	utilizacaoDoEnlaceCT2+ "\t"
+//				+	""				+ "\t"
+//				+	""				+ "\t"
+//				+	""				+ "\t"
+				
 				+	numeroDeBloqueios+ "\t"
-				+	numeroDeBloqueiosCT0+ "\t"
-				+ 	numeroDeBloqueiosCT1+ "\t"
-				+ 	numeroDeBloqueiosCT2+ "\t"
+//				+	numeroDeBloqueiosCT0+ "\t"
+//				+ 	numeroDeBloqueiosCT1+ "\t"
+//				+ 	numeroDeBloqueiosCT2+ "\t"
+//				+	""				+ "\t"
+//				+	""				+ "\t"
+//				+	""				+ "\t"
+				
 				+ 	numeroDePreempcoes+ "\t"
-				/*+ 	numeroDePreempcoesCT0+ "\t"
+				/*+ numeroDePreempcoesCT0+ "\t"
 				+ 	numeroDePreempcoesCT1+ "\t"
 				+ 	numeroDePreempcoesCT2+ "\t"*/
+//				+	""				+ "\t"
+//				+	""				+ "\t"
+//				+	""				+ "\t"
+				
 				+ 	numeroDeDevolucoes+ "\t"
-				/*+ 	numeroDeDevolucoesCT0+ "\t"
+				/*+ numeroDeDevolucoesCT0+ "\t"
 				+ 	numeroDeDevolucoesCT1+ "\t"
-				+ 	numeroDeDevolucoesCT2+ "\t"*/ ;
+				+ 	numeroDeDevolucoesCT2+ "\t"*/
+//				+	""				+ "\t"
+//				+	""				+ "\t"
+//				+	""				+ "\t"
+				;
 	}
 	
 	
