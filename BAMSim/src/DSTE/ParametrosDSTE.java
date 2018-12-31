@@ -20,7 +20,7 @@ public class ParametrosDSTE {
 	public static int LINKS = 6; // Número de LINKS (Simplex) do Modelo
 	public static int ROTEADORES = 5; // Número de roteadores DSTE
 	public static BAMType BAMTypePadrao = BAMType.PreemptionGBAM;  //NoPreemptionMAM  //PreemptionAllocCTSharing  //PreemptionRDM
-	public static int BANDA_LINK = 1000; // Tamanho do link - largura da banda
+	public static int BANDA_LINK = 1200; // Tamanho do link - largura da banda
 	
 	
 	public static final String Gestor = "Conservador";
@@ -38,6 +38,8 @@ public class ParametrosDSTE {
 	public static final double SLADevolucoes = 0.00;
 	public static final double SLABloqueios = 0.00;  ////0.25
 	public static final double SLAUtilizacao = 0.00;
+	public static final int DifLSP = 30;   // Diferença maxima aceita na rede par que a revisão/ retenção seja iniciada
+	public static final boolean ligarDBug = false;
 	public static final long TempoSimulacao = 3600*24; ////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	/*//////Dados do RRDTools
@@ -67,6 +69,9 @@ public class ParametrosDSTE {
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.96;
 	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.96;
 	public static final double RecomendacaoCBRLimiarArmazenar = 0.985;    // Silimalidade para armazenar um novo vaso na base de casos positiva ou negativa (o caso não pode ser 0.99x semelhandte a algum caso ja existente)
+	public static final double RecomendacaoCBRLimiarDeCorteNEGATIVAR = 0.985;//0.959;
+	
+
 	public static final String filenameBaseCBRP= ".//basesCBR//baseZ.sql";
 	public static final String filenameBaseCBRN= ".//basesCBR//baseZ.sql";
 	
@@ -87,9 +92,10 @@ public class ParametrosDSTE {
 	{
 
 		//GeradorDeTrafego.trafegoPoisson(rodada, to, dados);
-		GeradorDeTrafego.trafegoDeterministico2(rodada, to, dados);
+		//GeradorDeTrafego.trafegoDeterministico2(rodada, to, dados);
 		//GeradorDeTrafego.trafegoDeterministico(rodada, to, dados);
-	///	GeradorDeTrafego.trafegoForcado(rodada, to, dados);
+		//GeradorDeTrafego.trafegoForcado(rodada, to, dados);
+		GeradorDeTrafego.trafegoForcado2(rodada, to, dados);
 		//GeradorDeTrafego.trafegoAleatorioNTT(rodada, to, dados);
 		//GeradorDeTrafego.trafegoForcadoNTT(rodada, to, dados);
 	}
@@ -97,9 +103,9 @@ public class ParametrosDSTE {
 	/*	public static double [] BCPadrao= new double[]    // para AllocCTSharing  //PreemptionRDM			{	100, // BC[0] =CT0 + CT1 + CT2 (Valor do Enlace)				75, // BC[1] = CT1 + CT2				40 // BC[1] = CT2			};
 */	
 	public static double [] BCPadrao= new double[]           //para MAN 
-			{	40, // BC[0] =CT0 (Valor do Enlace)
-				35, // BC[1] = CT1
-				25 // BC[2] =  CT2
+			{	33.3333,//40, // BC[0] =CT0 (Valor do Enlace)
+				33.3333,//35, // BC[1] = CT1
+				33.3333//25 // BC[2] =  CT2
 			};
 	
 	public static double [] BCHTLPadrao= new double[]

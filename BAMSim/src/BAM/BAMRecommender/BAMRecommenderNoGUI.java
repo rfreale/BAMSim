@@ -38,6 +38,8 @@ import jcolibri.method.reuse.NumericDirectProportionMethod;
  */
 public class BAMRecommenderNoGUI implements StandardCBRApplication {
 
+	boolean dBug = ParametrosDSTE.ligarDBug;
+	
 	int K = 2;
 	NNConfig simConfig;
 
@@ -158,30 +160,32 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		Collection<RetrievalResult> eval1 = NNScoringMethod.evaluateSimilarity(basePositiva.getCases(), query, simConfig);
 		Collection<RetrievalResult> eval2 = NNScoringMethod.evaluateSimilarity(baseNegativa.getCases(), query, simConfig);
 
-		BancoDeDados.setXML("\tSolicitando busca para o caso: " + ((BAMDescription) query.getDescription()).toTabela() );
+		if (dBug) {BancoDeDados.setXML("\tBuscando caso similar ao caso: ID " + ((BAMDescription) query.getDescription()).toTabela() );}
 		
-		/////////////////////////////
-		if(!eval1.isEmpty()) {
-			encontrouUmCaso = true;
-			BancoDeDados.setXML("\tImprimindo os tops 4 Casos encontrado na Base positiva:");
-			Collection<RetrievalResult> selectedcases1 = SelectCases.selectTopKRR(eval1, 4);
-			for (RetrievalResult rr : selectedcases1) {
-				BancoDeDados.setXML("\tSim, ID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
-			}	
-		}else {
-			BancoDeDados.setXML("\tNenhum caso encontrado na base de casos positiva");
-		}
-			
-		if(!eval2.isEmpty()) {
 		
-			Collection<RetrievalResult> selectedcases2 = SelectCases.selectTopKRR(eval2, 4);
-			BancoDeDados.setXML("\tImprimindo tops 4 base negativa:");
-			for (RetrievalResult rr : selectedcases2) {
-				BancoDeDados.setXML("\tSim, ID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
+			if(!eval1.isEmpty()) {
+				encontrouUmCaso = true;
+				if (dBug) {BancoDeDados.setXML("\tImprimindo os tops 4 Casos encontrado na Base Positiva:");}
+				Collection<RetrievalResult> selectedcases1 = SelectCases.selectTopKRR(eval1, 4);
+				for (RetrievalResult rr : selectedcases1) {
+					if (dBug) {BancoDeDados.setXML("\tID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).toTabela() +"\t"+ rr.getEval());}
+				}	
+			}else {
+				if (dBug) {BancoDeDados.setXML("\tNenhum caso encontrado na base de casos Positiva");}
 			}
-		}else {
-			BancoDeDados.setXML("\tNenhum caso encontrado na base de casos Negativa");
-		}
+				
+			if(!eval2.isEmpty()) {
+			
+				Collection<RetrievalResult> selectedcases2 = SelectCases.selectTopKRR(eval2, 4);
+				if (dBug) {BancoDeDados.setXML("\tImprimindo tops 4 base Negativa:");}
+				for (RetrievalResult rr : selectedcases2) {
+					if (dBug) {BancoDeDados.setXML("\tID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).toTabela() +"\t"+ rr.getEval());}
+				}
+			}else {
+				if (dBug) {BancoDeDados.setXML("\tNenhum caso encontrado na base de casos Negativa");}
+			}	
+		
+		
 		
 		/////////////////////////////
 
@@ -197,34 +201,48 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 			/////Verifica dse os casos encontrados estão acima da linha de corte
 			/////Verifica se os casos encontrados estão na base de casos negativa ou seja, se não foram negativados
 			///// Retorna o caso mais similar que coresponda as pespectativas
-			BancoDeDados.setXML("\tVerificando casos acima da linha de corte: "+ ParametrosDSTE.RecomendacaoCBRLimiarDeCorte + ", que não foram negativados...");
+			if(dBug) {BancoDeDados.setXML("\tVerificando casos acima da linha de corte: "+ ParametrosDSTE.RecomendacaoCBRLimiarDeCorte + ", que não foram negativados;;;");}
 			for (RetrievalResult rr : eval1) {
 				
-				if (rr.getEval() >= ParametrosDSTE.RecomendacaoCBRLimiarDeCorte) {
+				if (rr.getEval() >= ParametrosDSTE.RecomendacaoCBRLimiarDeCorte) { /////deveria ter e a solução é true
 					sol = ((BAMSolution) rr.get_case().getSolution()).clone();
 					novocase.setSolution(sol);
 					
 					// isso é necessário para corigir casos que vão gradativamente se aproxiamndo de outro caso negativo
-					if ((!this.equal(novocase, baseNegativa))){
+					if (         (!this.equal(novocase, baseNegativa, ParametrosDSTE.RecomendacaoCBRLimiarDeCorteNEGATIVAR))   &&  ((BAMSolution)rr.get_case().getSolution()).getAceita()      ){
 						
-						BancoDeDados.setXML("\tCaso Aprovado:"+ ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo());
+						//if(dBug) {BancoDeDados.setXML("\tO caso a seguir foi qualificado... ->  ID:"+ ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo());}
+						if(true) {BancoDeDados.setXML("\tO caso: " + ((BAMDescription)rr.get_case().getDescription()).getCaseId() + " foi qualificado; Retornado um novo caso; Case_ID: "+ ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).toTabela());}
+
 						return novocase;
 						//BancoDeDados.setXML("\tCaso Aprovado:"+ ((BAMDescription)rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo());
 						//return rr.get_case();
 					}else {
-						BancoDeDados.setXML("\t#999# - O CASO: " + ((BAMDescription)rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo()+  " FOI NEGATIVADO. Procurando proximo...");
+						if(true) {BancoDeDados.setXML("\t**O CASO: " + ((BAMDescription)rr.get_case().getDescription()).getCaseId() + " FOI NEGATIVADO; Procurando proximo;;;  "+ ((BAMDescription)rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).toTabela());}
+						
+						//// Se o caso foi negativado e o aceita estiver true, ele precisa ser colocado na base negaativa e o aceiteira modificado para false
+						if( ((BAMSolution) rr.get_case().getSolution()  ).getAceita()   ) {
+								CBRCase caseTMP = new CBRCase();
+								caseTMP.setDescription(((BAMDescription) rr.get_case().getDescription()).clone());
+								caseTMP.setSolution(((BAMSolution) rr.get_case().getSolution()).clone());
+								((BAMDescription)caseTMP.getDescription()).setCaseId("BAD_"+(this.getCaseBaseDB2().getCases().size()+1)+"_" + ((BAMSolution) rr.get_case().getSolution()  ).getId());
+																
+								jcolibri.method.retain.StoreCasesMethod.storeCase( this.getCaseBaseDB2(), caseTMP);
+								((BAMSolution) rr.get_case().getSolution()).setAceita(false);
+								
+						}
 					}
 					
 					
 				}else {
-					BancoDeDados.setXML("\tO caso está abaixo da linha de corte.");
+					if(dBug) {BancoDeDados.setXML("\tNenhum caso acima da linha de corte foi aceito.");}
 					return null;
 				}
 	
 			}
 			return null;
 		}else {
-			BancoDeDados.setXML("\tFim Ciclo - Nenhum caso Encontrado.");
+			if(dBug) {BancoDeDados.setXML("\tFim DA BUSCA - Nenhum caso Encontrado.");}
 			return null;
 		}
 	}
@@ -238,13 +256,13 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		
 		int []bams = {0,0,0};
 		
-		BancoDeDados.setXML("\tCaso Sugerido ID: " + ((BAMDescription) query.getDescription()).toTabela() );
+		if(dBug) {BancoDeDados.setXML("\tFunc_sugestion retornadno caso Sugerido ID: " + ((BAMDescription) query.getDescription()).toTabela() );}
 				
 		if(!eval.isEmpty()) {
-			BancoDeDados.setXML("\t#998# Func_sugestion - Imprimindo os 3 casos mais similares na base de casos NEGATIVA...");
+			if(dBug) {BancoDeDados.setXML("\t#998# Func_sugestion - Imprimindo os 3 casos mais similares na base de casos NEGATIVA...");}
 			Collection<RetrievalResult> selectedcases = SelectCases.selectTopKRR(eval, 3);
 			for (RetrievalResult rr : selectedcases) {
-				BancoDeDados.setXML("\tID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
+				if(dBug) {BancoDeDados.setXML("\tID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).toTabela() +"\t"+ rr.getEval());}
 			}
 		
 		
@@ -260,7 +278,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 			for (RetrievalResult rr : eval) {
 	
 				if (rr.getEval() >= ParametrosDSTE.RecomendacaoCBRLimiarDeCorte2) {
-					BancoDeDados.setXML("\t#997# Func_sugestion  - Um caso acima da linha de corte da base negativa...");
+					if(dBug) {BancoDeDados.setXML("\t#997# Func_sugestion  - Um caso acima da linha de corte da base negativa...");}
 					sol = ((BAMSolution) rr.get_case().getSolution());
 					if (   sol.getBAMNovo().toString() == BAMTypes.NoPreemptionMAM.toString()              )
 					{
@@ -274,7 +292,7 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 					}
 					
 				} else {
-					BancoDeDados.setXML("\t#996# Func_sugestion  - Nenhum caso encontrado na base negativa...");
+					if(dBug) {BancoDeDados.setXML("\t#996# Func_sugestion  - Nenhum caso encontrado na base negativa...");}
 					return bams;
 				}
 			}
@@ -285,11 +303,11 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 	}
 
 	
-	public boolean equal(CBRCase cbrcase, CBRCaseBase caseBase) {
+	/*public boolean equal(CBRCase cbrcase, CBRCaseBase caseBase) {
 		CBRQuery query = new CBRQuery();
 
 		// Obtain configuration for KNN
-
+		BancoDeDados.setXML("\tFunction equal; Verificando se o caso já exite na base" + caseBase.toString());
 		
 		simConfig.setDescriptionSimFunction(new Average());
 		query.setDescription(cbrcase.getDescription());
@@ -299,25 +317,30 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		
 		
 		for (RetrievalResult rr : eval) {
-			if (rr.getEval() >= 0.99) {                                                ///////  esse valor <<<<<<<<<<<<<<<<<<<<<<<<<<<<<===================================== 
+			if (rr.getEval() >= ParametrosDSTE.RecomendacaoCBRLimiarDeCorteNEGATIVAR) {
 				if (((BAMSolution) rr.get_case().getSolution()).BAMNovo == ((BAMSolution) cbrcase.getSolution()).BAMNovo
 						&& ((BAMSolution) rr.get_case().getSolution()).aceita == ((BAMSolution) cbrcase
 								.getSolution()).aceita) {
-					BancoDeDados.setXML("\tSimilaridade na base: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
+					if(dBug) {
+						BancoDeDados.setXML("\tO novo caso: Case_ID: " + ((BAMDescription) cbrcase.getDescription()).toTabela() + ((BAMSolution)cbrcase.getSolution()).getBAMNovo() +"\t Similaridade entre casos abaixo:");
+						BancoDeDados.setXML("\tÉ similar ao caso: Case_ID:  " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());}
 					return true;
-				}
+				}else if(dBug) {
+					BancoDeDados.setXML("\tO caso NÃO é similar a nunhum caso existente: Case_ID: " + ((BAMDescription) cbrcase.getDescription()).toTabela() + ((BAMSolution)cbrcase.getSolution()).getBAMNovo());
+					}
 			}
 
 		}
 
 		return false;
-	}
+	}*/
 	
 	public boolean equal(CBRCase cbrcase, CBRCaseBase caseBase, double limiar) {
 		CBRQuery query = new CBRQuery();
-
+		
 		// Obtain configuration for KNN
-
+		if(dBug) {BancoDeDados.setXML("\tFunction equal; Verificando se o caso já exite na base" + caseBase.toString());}
+		
 		
 		simConfig.setDescriptionSimFunction(new Average());
 		query.setDescription(cbrcase.getDescription());
@@ -328,13 +351,28 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		for (RetrievalResult rr : eval) {
 			if (rr.getEval() >= limiar) {
 				if (   ((BAMSolution) rr.get_case().getSolution()).BAMNovo == ((BAMSolution) cbrcase.getSolution()).BAMNovo  && ((BAMSolution) rr.get_case().getSolution()).aceita == ((BAMSolution) cbrcase.getSolution()).aceita) {
-					BancoDeDados.setXML("\tSimilaridade na base: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());
+					if(dBug) {
+						BancoDeDados.setXML("\tO novo caso: Case_ID: " + ((BAMDescription) cbrcase.getDescription()).toTabela() + ((BAMSolution)cbrcase.getSolution()).getBAMNovo() +"\t Similaridade entre casos abaixo:");
+						BancoDeDados.setXML("\tÉ similar ao caso: Case_ID:  " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).getBAMNovo() +"\t"+ rr.getEval());}
 					return true;
-				}
+				}else if(dBug) {
+					BancoDeDados.setXML("\tO caso NÃO é IGUAL a nunhum caso existente: Case_ID: " + ((BAMDescription) cbrcase.getDescription()).toTabela() + ((BAMSolution)cbrcase.getSolution()).getBAMNovo());
+					}
 			}
 
 		}
-
+		if(dBug) {
+			BancoDeDados.setXML("\tNenhum caso dentro da linha de corte encontrado para comparar");
+			if(!eval.isEmpty()) {
+				BancoDeDados.setXML("\tImprimindo os tops 3 Casos encontrado na Base:");
+				Collection<RetrievalResult> selectedcases1 = SelectCases.selectTopKRR(eval, 3);
+				for (RetrievalResult rr : selectedcases1) {
+					BancoDeDados.setXML("\tID: " + ((BAMDescription) rr.get_case().getDescription()).toTabela() + ((BAMSolution)rr.get_case().getSolution()).toTabela() +"\t"+ rr.getEval());
+				}	
+			}else {
+				BancoDeDados.setXML("\tBase vazia ainda");
+			}
+		}
 		return false;
 	}
 	
@@ -344,12 +382,12 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		java.util.Collection<CBRCase> cases = basePositiva.getCases();
 		System.out.println("===================DB==================");
 		for (CBRCase c : cases)
-			System.out.println( ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo()  );
+			System.out.println( ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).toTabela()  );
 		_connectorBP.close();
 		System.out.println("===================DB2==================");
 		cases = baseNegativa.getCases();
 		for (CBRCase c : cases)
-			System.out.println( ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo());
+			System.out.println( ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).toTabela()  );
 		_connectorBN.close();
 
 		HSQLDBserver.shutDown();
@@ -359,11 +397,11 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		String aux = "===================DB==================\r\n";
 		java.util.Collection<CBRCase> cases = basePositiva.getCases();
 		for (CBRCase c : cases)
-			aux += ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo() + "\n";
+			aux += ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).toTabela() + "\n";
 		aux += "===================DB2==================\r\n";
 		cases = baseNegativa.getCases();
 		for (CBRCase c : cases)
-			aux += ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).getBAMNovo() + "\n";
+			aux += ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).toTabela() + "\n";
 		return aux;
 	}
 

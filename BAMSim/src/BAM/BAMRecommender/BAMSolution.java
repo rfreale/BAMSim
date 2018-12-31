@@ -84,6 +84,32 @@ public class BAMSolution  implements jcolibri.cbrcore.CaseComponent, Cloneable {
 		this.aceita = aceita;
 	}
 
+	public String toTabela() {
+		return  	//id + "\t" +
+					BAMNovo + "\t" +
+				 	aceita;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
