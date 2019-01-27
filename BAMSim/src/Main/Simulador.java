@@ -17,20 +17,23 @@ public class Simulador
 	public static void main(String[] args) throws IOException, RrdException {
 
 		BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
-		try
+		if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
 		{
-			recommender.configure();
-			recommender.preCycle();
-			recommender.setSimConfig(ParametrosDSTE.getSimilarityConfig());
-			
+			try
+			{
+				recommender.configure();
+				recommender.preCycle();
+				recommender.setSimConfig(ParametrosDSTE.getSimilarityConfig());
+				
+				
+					
 			
 				
-		
-			
-			}catch(Exception e)
-			{
-			org.apache.commons.logging.LogFactory.getLog(BAMRecommenderNoGUI.class).error(e);
-			//javax.swing.JOptionPane.showMessageDialog(null, e.getMessage());
+				}catch(Exception e)
+				{
+				org.apache.commons.logging.LogFactory.getLog(BAMRecommenderNoGUI.class).error(e);
+				//javax.swing.JOptionPane.showMessageDialog(null, e.getMessage());
+			}
 		}
 			RodadaDeSimulacao sim[] = new RodadaDeSimulacao[ParametrosDoSimulador.MAX_SIMULATIONS];
 			String [] filenames= new String[ParametrosDoSimulador.MAX_SIMULATIONS];
@@ -83,12 +86,14 @@ public class Simulador
 				GraficosRRD.agregarRRD(filenames,"Bloqueios","bloqueio");
 				GraficosRRD.agregarRRD(filenames,"Devoloções","devolucao");
 			}*/
-				
-			try {
-				recommender.postCycle();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
+			{	
+				try {
+					recommender.postCycle();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			System.exit(0);
 	}
