@@ -17,104 +17,104 @@ public class GeradorDeTrafego {
 	private static int a = 20;  //alto
 	private static int ma = 38+2;  //muito alto
 	
-	
-	private static int CT0_h1  = ma ;
-	private static int CT1_h1  = b ;
-	private static int CT2_h1  = b ;
-	   
-	private static int CT0_h2  = ma ;
-	private static int CT1_h2  = ma ;
-	private static int CT2_h2  = ma ;
-	   
-	private static int CT0_h3  = a ;
-	private static int CT1_h3  = m ;
-	private static int CT2_h3  = b ;
-	   
-	private static int CT0_h4  = ma ;
-	private static int CT1_h4  = a ;
-	private static int CT2_h4  = a ;
-	   
-	private static int CT0_h5  = a ;
-	private static int CT1_h5  = b ;
-	private static int CT2_h5  = b ;
-	   
-	private static int CT0_h6  = ma ;
-	private static int CT1_h6  = m ;
-	private static int CT2_h6  = a ;
-	   
-	private static int CT0_h7  = m ;
-	private static int CT1_h7  = m ;
-	private static int CT2_h7  = m ;
-	   
-	private static int CT0_h8  = a ;
-	private static int CT1_h8  = ma ;
-	private static int CT2_h8  = a ;
-	   
-	private static int CT0_h9  = b ;
-	private static int CT1_h9  = ma ;
-	private static int CT2_h9  = b ;
-	   
-	private static int CT0_h10  = ma ;
-	private static int CT1_h10  = ma ;
-	private static int CT2_h10  = a ;
-	   
-	private static int CT0_h11  = m ;
-	private static int CT1_h11  = a ;
-	private static int CT2_h11  = b ;
-	   
-	private static int CT0_h12  = a ;
-	private static int CT1_h12  = ma ;
-	private static int CT2_h12  = a ;
-	   
-	private static int CT0_h13  = b ;
-	private static int CT1_h13  = a ;
-	private static int CT2_h13  = b ;
-	   
-	private static int CT0_h14  = a ;
-	private static int CT1_h14  = ma ;
-	private static int CT2_h14  = ma ;
-	   
-	private static int CT0_h15  = ma ;
-	private static int CT1_h15  = b ;
-	private static int CT2_h15  = b ;
-	   
-	private static int CT0_h16  = a ;
-	private static int CT1_h16  = a ;
-	private static int CT2_h16  = ma ;
-	   
-	private static int CT0_h17  = b ;
-	private static int CT1_h17  = b ;
-	private static int CT2_h17  = ma ;
-	   
-	private static int CT0_h18  = a ;
-	private static int CT1_h18  = ma ;
-	private static int CT2_h18  = ma ;
-	   
-	private static int CT0_h19  = b ;
-	private static int CT1_h19  = m ;
-	private static int CT2_h19  = a ;
-	   
-	private static int CT0_h20  = m ;
-	private static int CT1_h20  = a ;
-	private static int CT2_h20  = ma ;
-	   
-	private static int CT0_h21  = b ;
-	private static int CT1_h21  = b ;
-	private static int CT2_h21  = a ;
-	   
-	private static int CT0_h22  = a ; ////colocar MA depois
-	private static int CT1_h22  = m ;
-	private static int CT2_h22  = ma ;
-	   
-	private static int CT0_h23  = b ;
-	private static int CT1_h23  = ma ;
-	private static int CT2_h23  = b ;
-	   
-	private static int CT0_h24  = m ;
-	private static int CT1_h24  = ma ;
-	private static int CT2_h24  = a ;
 
 	
+	private static int CT0_h1  =	a	;
+	private static int CT1_h1  =	b	;
+	private static int CT2_h1  =	b	;
+			
+	private static int CT0_h2  =	ma	;
+	private static int CT1_h2  =	ma	;
+	private static int CT2_h2  =	ma	;
+	   		
+	private static int CT0_h3  =	a	;
+	private static int CT1_h3  =	b	;
+	private static int CT2_h3  =	m	;
+	   		
+	private static int CT0_h4  =	ma	;
+	private static int CT1_h4  =	m	;
+	private static int CT2_h4  =	ma	;
+	   		
+	private static int CT0_h5  =	m	;
+	private static int CT1_h5  =	b	;
+	private static int CT2_h5  =	a	;
+	   		
+	private static int CT0_h6  =	a	;
+	private static int CT1_h6  =	ma	;
+	private static int CT2_h6  =	a	;
+	   		
+	private static int CT0_h7  =	m	;
+	private static int CT1_h7  =	a	;
+	private static int CT2_h7  =	b	;
+	   		
+	private static int CT0_h8  =	ma	;
+	private static int CT1_h8  =	ma	;
+	private static int CT2_h8  =	a	;
+	   		
+	private static int CT0_h9  =	b	;
+	private static int CT1_h9  =	a	;
+	private static int CT2_h9  =	b	;
+	   		
+	private static int CT0_h10  =	ma	;
+	private static int CT1_h10  =	ma	;
+	private static int CT2_h10  =	ma	;
+	   		
+	private static int CT0_h11  =	b	;
+	private static int CT1_h11  =	ma	;
+	private static int CT2_h11  =	b	;
+	   		
+	private static int CT0_h12  =	ma	;
+	private static int CT1_h12  =	a	;
+	private static int CT2_h12  =	ma	;
+	   		
+	private static int CT0_h13  =	ma	;
+	private static int CT1_h13  =	b	;
+	private static int CT2_h13  =	b	;
+	   		
+	private static int CT0_h14  =	m	;
+	private static int CT1_h14  =	ma	;
+	private static int CT2_h14  =	ma	;
+	   		
+	private static int CT0_h15  =	b	;
+	private static int CT1_h15  =	a	;
+	private static int CT2_h15  =	m	;
+	   		
+	private static int CT0_h16  =	ma	;
+	private static int CT1_h16  =	ma	;
+	private static int CT2_h16  =	ma	;
+	   		
+	private static int CT0_h17  =	a	;
+	private static int CT1_h17  =	m	;
+	private static int CT2_h17  =	b	;
+	   		
+	private static int CT0_h18  =	ma	;
+	private static int CT1_h18  =	a	;
+	private static int CT2_h18  =	a	;
+	   		
+	private static int CT0_h19  =	b	;
+	private static int CT1_h19  =	m	;
+	private static int CT2_h19  =	a	;
+	   		
+	private static int CT0_h20  =	a	;
+	private static int CT1_h20  =	ma	;
+	private static int CT2_h20  =	ma	;
+	   		
+	private static int CT0_h21  =	b	;
+	private static int CT1_h21  =	b	;
+	private static int CT2_h21  =	a	;
+	   		
+	private static int CT0_h22  =	a	;
+	private static int CT1_h22  =	a	;
+	private static int CT2_h22  =	ma	;
+	   		
+	private static int CT0_h23  =	b	;
+	private static int CT1_h23  =	b	;
+	private static int CT2_h23  =	ma	;
+	   		
+	private static int CT0_h24  =	ma	;
+	private static int CT1_h24  =	ma	;
+	private static int CT2_h24  =	m	;
+
 	
 	
 	
