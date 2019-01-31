@@ -52,9 +52,9 @@ public class Simulador
 				Debug.filename=sim[j].filename;
 				filenames[j]=sim[j].filename;
 				TesteSimulacao t1 = new TesteSimulacao(sim[j]);
-				Debug.setMensagem("Numero da Rodada:\t" + j+1 + "ª",3,3);
+				Debug.setMensagem("Numero da Rodada:\t" + (j+1) + "ª",3,3);
 				Debug.setMensagem("Semente da Rodada:\t" + sementeAgora ,3,3);
-				Debug.setMensagem("#===========================================================================================#",3,3);
+				Debug.setMensagem("#===========================================================================================#\r\n\r\n",3,3);
 
 			}
 	
