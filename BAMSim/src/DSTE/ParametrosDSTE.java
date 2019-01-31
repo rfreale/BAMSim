@@ -111,8 +111,8 @@ public class ParametrosDSTE {
 	public static double [] BCHTLPadrao= new double[]
 			{	0,//BC0 Nunca mudar
 				
-				100, //BC1
-				100 //BC2
+				00, //BC1
+				00 //BC2
 			};
 	
 	public static double [] BCLTHPadrao= new double[]
