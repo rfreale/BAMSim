@@ -42,7 +42,7 @@ public class Simulador
 			
 			for (int j=0;j<sim.length;j++)
 			{
-				 if (j>100){
+				 if (j>=1){
 					GeradorDeNumerosAleatorios.rand= new Random(sementeAgora += (j+3)*7);
 				}else{
 					GeradorDeNumerosAleatorios.rand= new Random(sementeAgora);
@@ -52,9 +52,10 @@ public class Simulador
 				Debug.filename=sim[j].filename;
 				filenames[j]=sim[j].filename;
 				TesteSimulacao t1 = new TesteSimulacao(sim[j]);
-				Debug.setMensagem("Numero da Rodada:\t" + j);
-				Debug.setMensagem("Semente da Rodada:\t" + sementeAgora);
-				
+				Debug.setMensagem("Numero da Rodada:\t" + j+1 + "ª",3,3);
+				Debug.setMensagem("Semente da Rodada:\t" + sementeAgora ,3,3);
+				Debug.setMensagem("#===========================================================================================#",3,3);
+
 			}
 	
 			/*RodadaDeSimulacao sim = new RodadaDeSimulacao();

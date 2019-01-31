@@ -10,7 +10,7 @@ public class Debug {
 	
 	public static String filename = new Date().getTime()+"";
 
-	public static void setMensagem(String mensagem) {
+	public static void setMensagem0(String mensagem) {
 		setMensagem(mensagem, 0, 0);
 	}
 	

@@ -63,7 +63,7 @@ public class ParametrosDSTE {
 	
 	
 	
-	public static final boolean RecomendacaoCBRSwitchBAM = true; /////<<<<<Liga e desliga a recoemndação<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	public static final boolean RecomendacaoCBRSwitchBAM = false; /////<<<<<Liga e desliga a recoemndação<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	public static final boolean RecomendacaoCBRRetencao = true;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.96;
@@ -103,9 +103,9 @@ public class ParametrosDSTE {
 	/*	public static double [] BCPadrao= new double[]    // para AllocCTSharing  //PreemptionRDM			{	100, // BC[0] =CT0 + CT1 + CT2 (Valor do Enlace)				75, // BC[1] = CT1 + CT2				40 // BC[1] = CT2			};
 */	
 	public static double [] BCPadrao= new double[]           //para MAN 
-			{	33.333333334,//40, // BC[0] =CT0 (Valor do Enlace)
-				33.333333334,//35, // BC[1] = CT1
-				33.333333334//25 // BC[2] =  CT2
+			{	33.33333333334,//40, // BC[0] =CT0 (Valor do Enlace)
+				33.33333333334,//35, // BC[1] = CT1
+				33.33333333334//25 // BC[2] =  CT2
 			};
 	
 	public static double [] BCHTLPadrao= new double[]

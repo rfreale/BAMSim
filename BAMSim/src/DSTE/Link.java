@@ -135,8 +135,8 @@ public class Link {
 		
 		public void insereLsp(Lsp lsp)
 		{
-			Debug.setMensagem("------- "+this.Descricao+" -------");
-			Debug.setMensagem("Estabelece LSP"+lsp.ID+":"+lsp.Carga+"("+lsp.src+"-"+lsp.dest+")(CT="+lsp.CT+")");
+			Debug.setMensagem("------- "+this.Descricao+" -------",7,7);
+			Debug.setMensagem("Estabelece LSP"+lsp.ID+":"+lsp.Carga+"("+lsp.src+"-"+lsp.dest+")(CT="+lsp.CT+")",7,7);
 			if(this.bamType==BAMType.PreemptionGBAM)
 			{
 				Debug.setMensagem("------- Configurado -------",8,8);
@@ -166,8 +166,8 @@ public class Link {
 		public No removeLsp(Lsp lsp)
 		{ 
 			No retorno;
-			Debug.setMensagem("------- "+this.Descricao+" -------");
-			Debug.setMensagem("Remove LSP"+lsp.ID+":"+lsp.Carga+"("+lsp.src+"-"+lsp.dest+")(CT="+lsp.CT+")");
+			Debug.setMensagem("------- "+this.Descricao+" -------",7,7);
+			Debug.setMensagem("Remove LSP"+lsp.ID+":"+lsp.Carga+"("+lsp.src+"-"+lsp.dest+")(CT="+lsp.CT+")",7,7);
 			if(this.bamType==BAMType.PreemptionGBAM)
 			{
 				Debug.setMensagem("------- Configurado -------",8,8);

@@ -1253,11 +1253,11 @@ public class BAMTest {
 		//RodadaDeSimulacao sim[] = new RodadaDeSimulacao[ParametrosDoSimulador.MAX_SIMULATIONS];
 				BancoDeDados.setXML("<?xml version='1.0'?>\r\n",filename);
 				BancoDeDados.setXML("<simulacao>\r\n",filename);
-				Debug.setMensagem("============================ Início da Primeira Rodada ============================");
+				Debug.setMensagem("============================ Início da Primeira Rodada ============================",7,7);
 				RodadaDeSimulacao sim = new RodadaDeSimulacao();
 				Main.TesteSimulacao t1 = new Main.TesteSimulacao(sim);
 				BancoDeDados.setXML("</simulacao>\r\n",filename);
-				Debug.setMensagem("============================ Fim da Primeira Rodada ============================");
+				Debug.setMensagem("============================ Fim da Primeira Rodada ============================",7,7);
 				//RodadaDeSimulacao sim2 = new RodadaDeSimulacao();
 				//TesteSimulacao t2 = new TesteSimulacao(sim2);
 	}
