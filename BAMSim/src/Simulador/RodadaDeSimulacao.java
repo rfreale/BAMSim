@@ -1,6 +1,7 @@
 package Simulador;
 import java.util.Date;
 import java.util.Random;
+import java.time.Duration;
 
 import DSTE.EstatisticasDSTE;
 import DSTE.Lsp;
@@ -23,10 +24,26 @@ public class RodadaDeSimulacao
 	public final String filename = new Date().getTime()+"";/*Usado com prefixo para arquivos e pastas*/
 	public EstatisticasDSTE estatistica = new EstatisticasDSTE(filename);
 	public Long LSPcount = (long) 0;
-	public double simtime()
-	{
+	
+	public double simtime()	{
 		return(this.clock);
 	}
+	
+	
+	
+
+	
+	   /* public String simtimeHora() {
+	        long input = (long)this.clock;
+	        Duration duracao =  Duration.ofSeconds(input);
+	        long horas = duracao.toHours();
+	        long minutos = duracao.minusHours(horas).toMinutes();
+	        long segundos = duracao.minusHours(horas).minusMinutes(minutos).getSeconds();
+	        return String.format ("%02d", horas) +":"+  String.format ("%02d", minutos)  + ":" +String.format ("%02d", segundos)     ;
+	    }*/
+	
+	
+	
 	
 	/*-------CANCEL TOKEN WITH TOKEN POINTER - FC cancelp_tkn ---------------------*/
 	/* Esta rotina cancela uma token da cadeia de eventos retornando um apontador para

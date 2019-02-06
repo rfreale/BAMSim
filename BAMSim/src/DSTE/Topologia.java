@@ -185,7 +185,7 @@ public class Topologia {
 					link[count].Descricao = "Physical Link "+count+" ("+roteador[origem].Descricao+"->"+roteador[destino].Descricao+")";
 					link[count].ID = count;
 					link[count].CustoEnlace = 1;
-					link[count].CargaEnlace = 1000;
+					link[count].CargaEnlace = ParametrosDSTE.BANDA_LINK;
 					link[count].lsrSrc = roteador[origem];
 					link[count].lsrDest = roteador[destino];
 					count++;

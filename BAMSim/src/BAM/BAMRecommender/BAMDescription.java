@@ -577,8 +577,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	public String toString() {
 		return "(CaseID=" + caseId 
         //+ ", gestor=" + gestor              //inserir  gestor e SLA  <=
-				+ ", link=" + link 
-
+				//+ ", link=" + link 
 				+ ", BAMAtual=" + BAMAtual
 				/*+ ", Janela=" + janela
 				+ ", SLAUtilizacaoCT0=" + SLAUtilizacaoCT0
@@ -593,25 +592,25 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 				+ ", SLADevolucoesCT0=" + SLADevolucoesCT0
 				+ ", SLADevolucoesCT1=" + SLADevolucoesCT1
 				+ ", SLADevolucoesCT2=" + SLADevolucoesCT2*/
-				+ ", BC0=" +BC0
+				/*+ ", BC0=" +BC0
 				+ ", BC1=" +BC1
-				+ ", BC2=" +BC2
+				+ ", BC2=" +BC2*/
 				+ ", utilizacaoDoEnlace=" + utilizacaoDoEnlace
-				+ ", utilizacaoDoEnlaceCT0=" + utilizacaoDoEnlaceCT0
+				/*+ ", utilizacaoDoEnlaceCT0=" + utilizacaoDoEnlaceCT0
 				+ ", utilizacaoDoEnlaceCT1=" + utilizacaoDoEnlaceCT1
-				+ ", utilizacaoDoEnlaceCT2=" + utilizacaoDoEnlaceCT2
+				+ ", utilizacaoDoEnlaceCT2=" + utilizacaoDoEnlaceCT2*/
 				+ ", numeroDeBloqueios=" + numeroDeBloqueios
-				+ ", numeroDeBloqueiosCT0=" + numeroDeBloqueiosCT0
+			/*	+ ", numeroDeBloqueiosCT0=" + numeroDeBloqueiosCT0
 				+ ", numeroDeBloqueiosCT1=" + numeroDeBloqueiosCT1
-				+ ", numeroDeBloqueiosCT2=" + numeroDeBloqueiosCT2
+				+ ", numeroDeBloqueiosCT2=" + numeroDeBloqueiosCT2*/
 				+ ", numeroDePreempcoes=" + numeroDePreempcoes
-				+ ", numeroDePreempcoesCT0=" + numeroDePreempcoesCT0
+				/*+ ", numeroDePreempcoesCT0=" + numeroDePreempcoesCT0
 				+ ", numeroDePreempcoesCT1=" + numeroDePreempcoesCT1
-				+ ", numeroDePreempcoesCT2=" + numeroDePreempcoesCT2
+				+ ", numeroDePreempcoesCT2=" + numeroDePreempcoesCT2*/
 				+ ", numeroDeDevolucoes=" + numeroDeDevolucoes
-				+ ", numeroDeDevolucoesCT0=" + numeroDeDevolucoesCT0
+			/*	+ ", numeroDeDevolucoesCT0=" + numeroDeDevolucoesCT0
 				+ ", numeroDeDevolucoesCT1=" + numeroDeDevolucoesCT1
-				+ ", numeroDeDevolucoesCT2=" + numeroDeDevolucoesCT2 + ")";
+				+ ", numeroDeDevolucoesCT2=" + numeroDeDevolucoesCT2*/ + ")";
 	}
 	
 	
@@ -619,7 +618,7 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 	public String toTabela() {
 		return  	caseId			+ "\t"
 				//+ 	gestor			+ "\t" 
-				+ 	link		+ "\t"
+				//+ 	link		+ "\t"
 				+ 	BAMAtual		+ "\t"
 				/*+ 	janela			+ "\t"
 				+ 	SLAUtilizacaoCT0+ "\t"
@@ -633,26 +632,36 @@ public class BAMDescription implements jcolibri.cbrcore.CaseComponent, Cloneable
 				+ 	SLAPreempcoesCT2+ "\t"
 				+ 	SLADevolucoesCT0+ "\t"
 				+ 	SLADevolucoesCT1+ "\t"
-				+ 	SLADevolucoesCT2+ "\t"
+				+ 	SLADevolucoesCT2+ "\t"*/
+				/*+	""				+ "\t"
 				+ 	BC0				+ "\t"
 				+	BC1				+ "\t"
 				+	BC2				+ "\t"*/
+				
 				+	utilizacaoDoEnlace+ "\t"
-				+	utilizacaoDoEnlaceCT0+ "\t"
-				+ 	utilizacaoDoEnlaceCT1+ "\t"
-				+	utilizacaoDoEnlaceCT2+ "\t"
+//				+	utilizacaoDoEnlaceCT0+ "\t"
+//				+ 	utilizacaoDoEnlaceCT1+ "\t"
+//				+	utilizacaoDoEnlaceCT2+ "\t"
+
+				
 				+	numeroDeBloqueios+ "\t"
-				+	numeroDeBloqueiosCT0+ "\t"
-				+ 	numeroDeBloqueiosCT1+ "\t"
-				+ 	numeroDeBloqueiosCT2+ "\t"
+//				+	numeroDeBloqueiosCT0+ "\t"
+//				+ 	numeroDeBloqueiosCT1+ "\t"
+//				+ 	numeroDeBloqueiosCT2+ "\t"
+
+				
 				+ 	numeroDePreempcoes+ "\t"
-				/*+ 	numeroDePreempcoesCT0+ "\t"
+				/*+ numeroDePreempcoesCT0+ "\t"
 				+ 	numeroDePreempcoesCT1+ "\t"
 				+ 	numeroDePreempcoesCT2+ "\t"*/
+
+				
 				+ 	numeroDeDevolucoes+ "\t"
-				/*+ 	numeroDeDevolucoesCT0+ "\t"
+				/*+ numeroDeDevolucoesCT0+ "\t"
 				+ 	numeroDeDevolucoesCT1+ "\t"
-				+ 	numeroDeDevolucoesCT2+ "\t"*/ ;
+				+ 	numeroDeDevolucoesCT2+ "\t"*/
+
+				;
 	}
 	
 	

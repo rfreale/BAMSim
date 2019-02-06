@@ -82,7 +82,7 @@ public class EstatisticasDSTE {
 	public int [] devolucoesCTAUX = new int [ParametrosDSTE.MaxClassType];
 	public int [] bloqueiosCTAUX = new int [ParametrosDSTE.MaxClassType];
 	
-	public long starTime = ParametrosDSTE.RRDStarTime;
+	public long starTime = ParametrosDSTE.RRDStarTime;///<<<<<<<<<<<<<<<<--------------
 	public long tempoAcumuladoGrantDeny=0;
 	public long tempoAcumuladoEstabelecimento=0;
 	

@@ -34,13 +34,12 @@ import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
 public class TesteSimulacao {
 	
 	
-	
 
 	public TesteSimulacao(RodadaDeSimulacao rodada) throws IOException,
 			RrdException {
 
 
-		Debug.setMensagem("============================ Início da Primeira Rodada ============================");
+		Debug.setMensagem("============================ Início da Rodada "+ rodada.filename +  " ============================",3,3);
 		Topologia to = new Topologia();
 
 		// Mostra parámetros padrões
@@ -90,23 +89,23 @@ public class TesteSimulacao {
 		Debug.setMensagem("Fim: to.gerarTopologiaDosLinks()", 10, 10);
 
 		// Imprime no console a Topologia Roteador x Roteador
-		Debug.setMensagem("\r\n\r\n ==== Topologia Roteador x Roteador  ====");
-		Debug.setMensagem(to.imprimirTopologiaDosRoteadores());
+		Debug.setMensagem("\r\n\r\n ==== Topologia Roteador x Roteador  ====",7,7);
+		Debug.setMensagem(to.imprimirTopologiaDosRoteadores(),7,7);
 
 		// Imprime no console a Topologia Link x Roteador
-		Debug.setMensagem("\r\n\r\n ==== Topologia Link x Roteador  ====");
-		Debug.setMensagem(to.imprimirTopologiaDosLinks());
+		Debug.setMensagem("\r\n\r\n ==== Topologia Link x Roteador  ====",7,7);
+		Debug.setMensagem(to.imprimirTopologiaDosLinks(),7,7);
 
 		// Imprime no console a Matriz de Caminhos				 por Roteador
-		Debug.setMensagem("\r\n\r\n ==== Matriz de Caminhos por Roteador  ====");
-		Debug.setMensagem(to.imprimirCaminhos());
+		Debug.setMensagem("\r\n\r\n ==== Matriz de Caminhos por Roteador  ====",7,7);
+		Debug.setMensagem(to.imprimirCaminhos(),7,7);
 
 		// Imprime no console o Status dos Links
-		Debug.setMensagem("\r\n\r\n ==== Status dos Links  ====");
-		Debug.setMensagem(to.statusLinks());
+		Debug.setMensagem("\r\n\r\n ==== Status dos Links  ====",7,7);
+		Debug.setMensagem(to.statusLinks(),7,7);
 
 		// Inicializa tráfego
-		Debug.setMensagem("\r\n\r\n ==== Inicializa o tráfego  ====");
+		Debug.setMensagem("\r\n\r\n ==== Inicializa o tráfego  ====",7,7);
 		rodada.schedulep (3, 0.0, null);	
 
 		// agenda estatísticas
@@ -122,12 +121,13 @@ public class TesteSimulacao {
 			{
 				No no = new No();
 				no.item=to.link[i];
-				rodada.schedulep (5, ParametrosDSTE.Janela+0.40, no);
+				rodada.schedulep(5, ParametrosDSTE.Janela+0.40, no);    ///////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 			}
 		}
-		
-		rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);
-		
+		if (ParametrosDSTE.ligarDBug)
+		{
+			rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);/////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		}
 		try {
 			rodada.estatistica.iniciarRRDLinks(to);
 		} catch (IOException e) {
@@ -137,16 +137,16 @@ public class TesteSimulacao {
 		// inciatrafego2(rodada);
 
 		// Inicializa a cadeia de eventos
-		Debug.setMensagem("\r\n\r\n ==== Inicio da simulação  ====");
+		Debug.setMensagem("\r\n\r\n ==== Inicio da simulação  ====",3,3);
 		try {
 			cadeiaDeEventos(rodada, to);
 		} catch (ExecutionException e) {
 			
 			e.printStackTrace();
 		}
-		Debug.setMensagem("\r\n\r\n ==== Fim da simulação  ====");
+		Debug.setMensagem("\r\n ==== Fim da simulação  ====",3,3);
 
-		Debug.setMensagem("============================ Fim da Primeira Rodada ============================");
+		Debug.setMensagem("============================ Fim da Rodada " + rodada.filename + " ============================",3,3);
 
 	}
 
@@ -176,7 +176,7 @@ public class TesteSimulacao {
 				Debug.setMensagem("Tipo 1 - Tentar estabelecer LSP "
 						+ ((Lsp) dados.item).ID + " com "
 						+ ((Lsp) dados.item).Carga + " Mbps CT="
-						+ ((Lsp) dados.item).CT  + "");
+						+ ((Lsp) dados.item).CT  + "",7,7);
 				
 				Long tempoInicial=System.nanoTime();
 				Link[] menorCaminho = Roteamento.TryPath_CSPF(
@@ -184,19 +184,19 @@ public class TesteSimulacao {
 				rodada.estatistica.tempoAcumuladoGrantDeny+=System.nanoTime()-tempoInicial;
 				
 				if (menorCaminho != null) {
-					Debug.setMensagem(" ==== Menor caminho  ====");
-					Debug.setMensagem(to.imprimirCaminho(menorCaminho));
+					Debug.setMensagem(" ==== Menor caminho  ====",7,7);
+					Debug.setMensagem(to.imprimirCaminho(menorCaminho),7,7);
 					((Lsp) dados.item).estabelecerLSP(menorCaminho);
 					((Lsp) dados.item).status = LspStatus.estabelecida;
 
 					
-					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID + " Estabelecida ========"  + " Em CT=" + ((Lsp) dados.item).CT);
+					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID + " Estabelecida ========"  + " Em CT=" + ((Lsp) dados.item).CT,7,7);
 
 					// agenda desestabelecimento
 					rodada.schedulep(2, ((Lsp) dados.item).tempoDeVida, dados);
 
 				} else {
-					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID + " Bloqueada ========" + " Em CT=" + ((Lsp) dados.item).CT );
+					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID + " Bloqueada ========" + " Em CT=" + ((Lsp) dados.item).CT ,7,7);
 					((Lsp) dados.item).status = LspStatus.bloqueada;
 					rodada.estatistica.bloqueios++;
 					rodada.estatistica.bloqueiosCT[((Lsp) dados.item).CT]++;
@@ -209,7 +209,7 @@ public class TesteSimulacao {
 						+ ((Lsp) dados.item).ID + " com "
 						+ ((Lsp) dados.item).Carga + " Mbps  CT="
 						+ ((Lsp) dados.item).CT 
-						);
+						,7,7);
 				((Lsp) dados.item).desestabeleceLSP();
 				rodada.estatistica.lspUnbroken++;
 				rodada.estatistica.lspUnbrokenCT[((Lsp) dados.item).CT]++;
@@ -219,7 +219,7 @@ public class TesteSimulacao {
 
 				break;
 			case 3:// geracao de trafego
-				Debug.setMensagem("Tipo 3 - Agenda/Cria LSP ");
+				Debug.setMensagem("Tipo 3 - Agenda/Cria LSP ",7,7);
 				ParametrosDSTE.trafegoManual(rodada, to, dados);
 
 				break;
@@ -233,17 +233,17 @@ public class TesteSimulacao {
 
 				rodada.schedulep(4, ParametrosDSTE.RRDBatida, null);
 				break;
-			case 5:
-				//Avalia BAM via CBR
+			case 5:	//inicia o BAMCBR 
 
 				No noComLinkAtual=dados;
-				BancoDeDados.setXML(rodada.simtime() + " Entrou na Recomendação", rodada.filename);
+				BancoDeDados.setXML( rodada.simtime() + "\tIniciando BAMCBR;;;", rodada.filename);
 				Link link = ((Link)noComLinkAtual.item);
 				int mudouBAM= -1;
 				CBRCase cbrCase = null;
 				CBRQuery query = null;
 				
 				query = rodada.estatistica.getQuery(link);
+				////inicia a procura na base de casos
 				cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
 				
 				String nomeBAMAtual = ((BAMDescription)query.getDescription()).getBAMAtual().name();
@@ -269,27 +269,27 @@ public class TesteSimulacao {
 						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
 						novocase.setSolution(sol);
 						no.item=novocase;
-						BancoDeDados.setXML(rodada.simtime() + "\t## Dentro da linha de corte ## BAM ALTERADO. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) + "##################", rodada.filename);
+						BancoDeDados.setXML( rodada.simtime() + "\tRecomendação encontrada; Açao: ALTERAR BAM; Agendando retenção de novo caso para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) , rodada.filename);
 						
 					}else{
-						/*mudouBAM= 0;
+						mudouBAM= 0;
 						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
 						novocase.setSolution(sol);
-						no.item=novocase;*/
-						//BancoDeDados.setXML("\n" + rodada.simtime() + "######## Dentro da linha de corte ###### BAM mantido. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
-						BancoDeDados.setXML(rodada.simtime() + "\t## Dentro da linha de corte ## BAM mantido. NADA a ser feito.", rodada.filename);
+						no.item=novocase;
+						BancoDeDados.setXML( rodada.simtime() + "\tRecomendação encontrada; Ação: MANTER BAM ATUAL;  Agendando retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)), rodada.filename);
+						//BancoDeDados.setXML( rodada.simtime() + "\tRecomendação encontrada; Ação: MANTER BAM ATUAL; *Sem novo caso*", rodada.filename);
 						
 					}
 					
 					
-					
+					////Se não achou nenhuma recomendação faça:
 				}else if (ParametrosDSTE.RecomendacaoCBRRetencao){
 					mudouBAM=1;
-					BancoDeDados.setXML("\tNenhum caso válido na base", rodada.filename);
-					int []bams = BAMRecommenderNoGUI.getInstance().foraDaLinha(query);  // busca na bae de casos negativa se existe alguma caso negativado na base e de que BAm eles são
+					BancoDeDados.setXML( rodada.simtime() + "\tNenhum caso encontrado na base, iniciado Sugestão;;;", rodada.filename);
+					int []bams = BAMRecommenderNoGUI.getInstance().sugerirRecomendacao(query);  // busca na bae de casos negativa se existe alguma caso negativado na base e de que BAm eles são
 					BAMTypes bam = null;
 					
-					BancoDeDados.setXML("\tBAMs Negativos em: MAM:"+bams[0]+" RDM:"+bams[1]+" ALLOC: "+bams[2] , rodada.filename);
+					if (ParametrosDSTE.ligarDBug) {BancoDeDados.setXML( rodada.simtime() + "\tSituação das negativações - MAM:"+bams[0]+" RDM:"+bams[1]+" ALLOC: "+bams[2] , rodada.filename);}
 					///man=0   RDM=4  ALLOC=5
 					
 					switch (nomeBAMAtual) {
@@ -338,15 +338,15 @@ public class TesteSimulacao {
 					sol.setAceita(true);
 					novocase.setSolution(sol);
 					no.item=novocase;
-					BancoDeDados.setXML("\tCASO SUGERIDO: " + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo()+ "\n", rodada.filename);
+					//BancoDeDados.setXML( rodada.simtime() + "\tCASO SUGERIDO: " + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo()+ "\n", rodada.filename);
 					//Por enquanto só recomendação
 									
-					if (mudouBAM==1)
-					{
-						BancoDeDados.setXML(rodada.simtime() + "\t######## Fora da linha de corte ######  BAM Modificado. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) + "##################", rodada.filename);
+					if (mudouBAM==1){
+						BancoDeDados.setXML( rodada.simtime() + "\tCaso sugerido, agendado retenção para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) + " Case_ID: " +((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename) ;
+						if(ParametrosDSTE.ligarDBug) {BancoDeDados.setXML( rodada.simtime() + "\tFinalizando sugestão: #BAM Modificado#; Agendado retenção para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)), rodada.filename) ;}
 					}else {
-						BancoDeDados.setXML(rodada.simtime() + "\t######## Fora da linha de corte ######  BAM Mantido. Agendado retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) + "##################", rodada.filename);
-
+						BancoDeDados.setXML( rodada.simtime() + "\tCaso sugerido, agendado retenção para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) +                          " Case_ID: " +((BAMDescription)novocase.getDescription()).toTabela() +((BAMSolution)novocase.getSolution()).getBAMNovo() , rodada.filename);
+						if(ParametrosDSTE.ligarDBug) {BancoDeDados.setXML( rodada.simtime() + "\tFinalizando sugestão: #BAM Mantido#;    Agendado retenção para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) +                          " CASO SUGERIDO -> ID: " +((BAMDescription)novocase.getDescription()).toTabela() +((BAMSolution)novocase.getSolution()).getBAMNovo() , rodada.filename);}
 					}
 				}
 					
@@ -369,7 +369,8 @@ public class TesteSimulacao {
 				}else{
 					rodada.schedulep(5, ParametrosDSTE.Janela, noComLinkAtual);
 				}
-					BancoDeDados.setXML(rodada.simtime() + "\tSaio da Recomendação.", rodada.filename);	
+					
+				if(ParametrosDSTE.ligarDBug) {BancoDeDados.setXML( rodada.simtime() + "\tSaio da Recomendação;", rodada.filename);}	
 					//rodada.schedulep(5, ParametrosDSTE.Janela, null);
 				
 				
@@ -377,253 +378,220 @@ public class TesteSimulacao {
 			
 			case 6:
 				//Avalia rentenção
-				BancoDeDados.setXML(rodada.simtime() + "\tEntrou em retenção.", rodada.filename);
+				BancoDeDados.setXML( rodada.simtime() + "\tIniciando revisão e reteção;;;", rodada.filename);
 				
 				novocase = ((CBRCase)dados.item);
-					((BAMDescription)novocase.getDescription()).setCaseId("tmp01") ;
+				((BAMDescription)novocase.getDescription()).setCaseId("tmp01") ;
 				link=to.link[((BAMDescription)novocase.getDescription()).getLink()];
-					
-				query = rodada.estatistica.getQuery(link);
-
-					
-					//Caso que será colocado na base de caos negativos. OBS é possivel cria tb um 3° caso aqui  (caso atual com a nova query acima) 
-					CBRCase badcase = new CBRCase();
-					badcase.setDescription(    ( (BAMDescription)novocase.getDescription()  ).clone()    );
-					badcase.setSolution(null);
-								
-					
-					//int lspRequestedAgora = rodada.estatistica.lspRequested(ParametrosDSTE.Janela,link);
-					//int lspRequestedAnterior = Math.abs(rodada.estatistica.lspRequested(ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida, link) - rodada.estatistica.lspRequested(ParametrosDSTE.Janela*2+ParametrosDSTE.RRDBatida,link ) );
-					
-					//int difLSPs = lspRequestedAgora - lspRequestedAnterior;
-					
-					
-					//if (Math.abs(difLSPs)< 200){ // verifica se houve mudança na rede	
-
-							
-							//int score = 10;
-							String bamAnterior = ((BAMDescription)novocase.getDescription()).getBAMAtual().name();
-							/*double []utilizacaoCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT0(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT1(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT2()} ;  
-							double []bloqueioCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT2()} ;
-							double []preempcoesCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT2()} ;  
-							double []devolucoesCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT2()} ;				
-							*/
-							//double utilizacaoJanelaAnterior  	= ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlace();  
-							//double bloqueioJanelaAnterior   	= ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueios() ;
-							double preempcoesJanelaAnterior  	= ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoes();  
-							double devolucoesJanelaAnterior   	= ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoes();				
-							
-							
-							String bamAgora = ((BAMDescription)query.getDescription()).getBAMAtual().name();
-							/*double []utilizacaoCTJanelaAgora   	= new double [] {((BAMDescription)query.getDescription()).getUtilizacaoDoEnlaceCT0(), ((BAMDescription)query.getDescription()).getUtilizacaoDoEnlaceCT1(), ((BAMDescription)query.getDescription()).getUtilizacaoDoEnlaceCT2()} ;
-							double []bloqueiosCTJanelaAgora   	= new double [] {((BAMDescription)query.getDescription()).getNumeroDeBloqueiosCT0(), ((BAMDescription)query.getDescription()).getNumeroDeBloqueiosCT1(), ((BAMDescription)query.getDescription()).getNumeroDeBloqueiosCT2()} ; 
-							double []preempcoesCTJanelaAgora  	= new double [] {((BAMDescription)query.getDescription()).getNumeroDePreempcoesCT0(), ((BAMDescription)query.getDescription()).getNumeroDePreempcoesCT1(), ((BAMDescription)query.getDescription()).getNumeroDePreempcoesCT2()} ;  
-							double []devolucoesCTJanelaAgora   	= new double [] {((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT0(), ((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT1(), ((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT2()} ;
-							*/
-							//double utilizacaoJanelaAgora   	= ((BAMDescription)query.getDescription()).getUtilizacaoDoEnlace();
-							//double bloqueiosJanelaAgora   	= ((BAMDescription)query.getDescription()).getNumeroDeBloqueios() ; 
-							double preempcoesJanelaAgora  	= ((BAMDescription)query.getDescription()).getNumeroDePreempcoes();  
-							double devolucoesJanelaAgora   	= ((BAMDescription)query.getDescription()).getNumeroDeDevolucoes();
-							
-							
-							//double somatorioUtilizacaoCTJanelaAnterior = utilizacaoCTJanelaAnterior[0]+utilizacaoCTJanelaAnterior[1]+	utilizacaoCTJanelaAnterior[2];
-							//double somatorioUtilizacaoCTJanelaAgora    = utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[1]+utilizacaoCTJanelaAgora[2];
-							
-							//double somatorioPonderadoBloqueioCTJanelaAnterior = (bloqueioCTJanelaAnterior[0]*link.BC[0] + bloqueioCTJanelaAnterior[1]*link.BC[1] + bloqueioCTJanelaAnterior[2]*link.BC[2])  /  (link.BC[0] + link.BC[1] + link.BC[2]) ;				
-							//double somatorioPonderadoBloqueioCTJanelaAgora = (bloqueiosCTJanelaAgora[0]*link.BC[0] + bloqueiosCTJanelaAgora[1]*link.BC[1] + bloqueiosCTJanelaAgora[2]*link.BC[2])  /  (link.BC[0] + link.BC[1] + link.BC[2]) ;				
-							
-							//double somatorioPreempcoesCTJanelaAnterior = preempcoesCTJanelaAnterior[0]+preempcoesCTJanelaAnterior[1]+preempcoesCTJanelaAnterior[2];
-							//double somatorioPreempcoesCTJanelaAgora = preempcoesCTJanelaAgora[0]+preempcoesCTJanelaAgora[1]+preempcoesCTJanelaAgora[2];
-							
-							//double somatorioDevolucoesCTJanelaAnterior = devolucoesCTJanelaAnterior[0]+devolucoesCTJanelaAnterior[1]+devolucoesCTJanelaAnterior[2];
-							//double somatorioDevolucoesCTJanelaAgora = devolucoesCTJanelaAgora[0]+devolucoesCTJanelaAgora[1]+devolucoesCTJanelaAgora[2];
-							
+				
+				int lspRequestedAgora = rodada.estatistica.lspRequested(ParametrosDSTE.Janela,link);
+				int lspRequestedAnterior = Math.abs(rodada.estatistica.lspRequested(ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida, link) - rodada.estatistica.lspRequested(ParametrosDSTE.Janela*2+ParametrosDSTE.RRDBatida,link ) );
+				int difLSPs = Math.abs(lspRequestedAgora - lspRequestedAnterior);
+				if (ParametrosDSTE.ligarDBug) {BancoDeDados.setXML( rodada.simtime() + "\tDiferença da rede:\t" + difLSPs, rodada.filename);}
+				
+				if (difLSPs <= ParametrosDSTE.DifLSP){ // verifica se houve mudança na rede	
+				
+						query = rodada.estatistica.getQuery(link);
 	
-							//double utilizacao =  ( ( Math.min(link.BC[0], link.BC[1]) + Math.min(link.BC[1], link.BC[2]) ))/ (link.BC[0] + link.BC[1] + link.BC[2]);
-							//double bloqueio = utilizacao * ParametrosDSTE.SLABloqueios;
 						
-							
-							
-						if (bamAnterior == BAMTypes.NoPreemptionMAM.name()){
-							switch (bamAgora) {
-							case "NoPreemptionMAM":
-								//não tive problema de performasse na rede. Vou verificar agora subina e decida
-								/*if ( utilizacaoJanelaAnterior < utilizacao  && bloqueioJanelaAnterior<bloqueio )
-								{
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MA
-								}*/
-							break;
-							
-							case "PreemptionRDM":
-								/*if(somatorioPreempcoesCTJanelaAnterior+somatorioDevolucoesCTJanelaAnterior > ParametrosDSTE.SLADevolucoes){
-								}*/
-								if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
-								}else {
-										//não tive problema de performasse na rede. Vou verificar agora subina e decida
-										/*if ( utilizacaoJanelaAnterior > utilizacao  || bloqueioJanelaAnterior>bloqueio ){
-											badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-											((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
-										}*/
-								}
-							break;
-							
-							case "PreemptionAllocCTSharing":
-								if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
-								}else if(devolucoesJanelaAgora > ParametrosDSTE.SLADevolucoes ){
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									novocase.setSolution(null);///// nesse caso eu não si o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
-								}else {
-									/*	//não tive problema de performasse na rede. Vou verificar agora subina e decida <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,, descomentar
-									 * 
-										if ( utilizacaoJanelaAnterior > utilizacao  || bloqueioJanelaAnterior>bloqueio ){
-											badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-											novocase.setSolution(null);///// nesse caso eu não si o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
-										}*/
-								}
-							break;
-							}
-							
-							
-							
-							
-							
-						} else if (bamAnterior == BAMTypes.PreemptionRDM.name()){
-							switch (bamAgora) {
-							case "NoPreemptionMAM":								
-								//não tive problema de performasse na rede. Vou verificar agora subina e decida
-									/*if ( utilizacaoJanelaAnterior < utilizacao  && bloqueioJanelaAnterior<bloqueio )
-									{
-										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-										novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MA
-									}*/
-							break;
-							
-							case "PreemptionRDM":
-								if(preempcoesJanelaAnterior > ParametrosDSTE.SLAPreempcoes){
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
-								}else if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){   
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
-								}else {
-									/*if ( utilizacaoJanelaAnterior < utilizacao  && bloqueioJanelaAnterior<bloqueio )
-									{
-										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-										novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MA
-									}*/
-								}
-							break;
-							
-							case "PreemptionAllocCTSharing":
-								if(preempcoesJanelaAnterior > ParametrosDSTE.SLAPreempcoes){
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
-								}else if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
-								}else if(devolucoesJanelaAgora > ParametrosDSTE.SLADevolucoes){
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									novocase.setSolution(null);///// nesse caso eu não si o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
-								}else {
-										/*//não tive problema de performasse na rede. Vou verificar agora subina e decida  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-										if ( utilizacaoJanelaAnterior > utilizacao  || bloqueioJanelaAnterior>bloqueio ){
-											badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-											novocase.setSolution(null);///// nesse caso eu não si o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
-										}*/
-								}
-							break;
-							}
-
-
-							
-							
-							
-						}else if (bamAnterior == BAMTypes.PreemptionAllocCTSharing.name()){
-							switch (bamAgora) {
-							case "NoPreemptionMAM":
+						//Caso que será colocado na base de caos negativos. OBS é possivel cria tb um 3° caso aqui  (caso atual com a nova query acima) 
+						CBRCase badcase = new CBRCase();
+						badcase.setDescription(    ( (BAMDescription)novocase.getDescription()  ).clone()    );
+						badcase.setSolution(null);
 								
-								//não tive problema de performasse na rede. Vou verificar agora subina e decida
-							/*	if ( utilizacaoJanelaAnterior < utilizacao  && bloqueioJanelaAnterior<bloqueio )
-								{
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MA
-								}*/
-								
-							break;
+											
+						//int score = 10;
+						String bamAnterior = ((BAMDescription)novocase.getDescription()).getBAMAtual().name();
+						/*double []utilizacaoCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT0(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT1(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT2()} ;  
+						double []bloqueioCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT2()} ;
+						double []preempcoesCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT2()} ;  
+						double []devolucoesCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT2()} ;				
+						*/
+						//double utilizacaoJanelaAnterior  	= ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlace();  
+						//double bloqueioJanelaAnterior   	= ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueios() ;
+						double preempcoesJanelaAnterior  	= ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoes();  
+						double devolucoesJanelaAnterior   	= ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoes();				
+						
+						
+						String bamAgora = ((BAMDescription)query.getDescription()).getBAMAtual().name();
+						/*double []utilizacaoCTJanelaAgora   	= new double [] {((BAMDescription)query.getDescription()).getUtilizacaoDoEnlaceCT0(), ((BAMDescription)query.getDescription()).getUtilizacaoDoEnlaceCT1(), ((BAMDescription)query.getDescription()).getUtilizacaoDoEnlaceCT2()} ;
+						double []bloqueiosCTJanelaAgora   	= new double [] {((BAMDescription)query.getDescription()).getNumeroDeBloqueiosCT0(), ((BAMDescription)query.getDescription()).getNumeroDeBloqueiosCT1(), ((BAMDescription)query.getDescription()).getNumeroDeBloqueiosCT2()} ; 
+						double []preempcoesCTJanelaAgora  	= new double [] {((BAMDescription)query.getDescription()).getNumeroDePreempcoesCT0(), ((BAMDescription)query.getDescription()).getNumeroDePreempcoesCT1(), ((BAMDescription)query.getDescription()).getNumeroDePreempcoesCT2()} ;  
+						double []devolucoesCTJanelaAgora   	= new double [] {((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT0(), ((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT1(), ((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT2()} ;
+						*/
+						//double utilizacaoJanelaAgora   	= ((BAMDescription)query.getDescription()).getUtilizacaoDoEnlace();
+						//double bloqueiosJanelaAgora   	= ((BAMDescription)query.getDescription()).getNumeroDeBloqueios() ; 
+						double preempcoesJanelaAgora  	= ((BAMDescription)query.getDescription()).getNumeroDePreempcoes();  
+						double devolucoesJanelaAgora   	= ((BAMDescription)query.getDescription()).getNumeroDeDevolucoes();
+						
+						
+						//double somatorioUtilizacaoCTJanelaAnterior = utilizacaoCTJanelaAnterior[0]+utilizacaoCTJanelaAnterior[1]+	utilizacaoCTJanelaAnterior[2];
+						//double somatorioUtilizacaoCTJanelaAgora    = utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[1]+utilizacaoCTJanelaAgora[2];
+						
+						//double somatorioPonderadoBloqueioCTJanelaAnterior = (bloqueioCTJanelaAnterior[0]*link.BC[0] + bloqueioCTJanelaAnterior[1]*link.BC[1] + bloqueioCTJanelaAnterior[2]*link.BC[2])  /  (link.BC[0] + link.BC[1] + link.BC[2]) ;				
+						//double somatorioPonderadoBloqueioCTJanelaAgora = (bloqueiosCTJanelaAgora[0]*link.BC[0] + bloqueiosCTJanelaAgora[1]*link.BC[1] + bloqueiosCTJanelaAgora[2]*link.BC[2])  /  (link.BC[0] + link.BC[1] + link.BC[2]) ;				
+						
+						//double somatorioPreempcoesCTJanelaAnterior = preempcoesCTJanelaAnterior[0]+preempcoesCTJanelaAnterior[1]+preempcoesCTJanelaAnterior[2];
+						//double somatorioPreempcoesCTJanelaAgora = preempcoesCTJanelaAgora[0]+preempcoesCTJanelaAgora[1]+preempcoesCTJanelaAgora[2];
+						
+						//double somatorioDevolucoesCTJanelaAnterior = devolucoesCTJanelaAnterior[0]+devolucoesCTJanelaAnterior[1]+devolucoesCTJanelaAnterior[2];
+						//double somatorioDevolucoesCTJanelaAgora = devolucoesCTJanelaAgora[0]+devolucoesCTJanelaAgora[1]+devolucoesCTJanelaAgora[2];
+						
+
+						//double utilizacao =  ( ( Math.min(link.BC[0], link.BC[1]) + Math.min(link.BC[1], link.BC[2]) ))/ (link.BC[0] + link.BC[1] + link.BC[2]);
+						//double bloqueio = utilizacao * ParametrosDSTE.SLABloqueios;
+						
+							boolean apg=false; //solução Aprendida Pelo Gestor
 							
-							case "PreemptionRDM":
-								if(preempcoesJanelaAnterior > ParametrosDSTE.SLAPreempcoes){
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
-								}else if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){   
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
-								}else {
-										//não tive problema de performasse na rede. Vou verificar agora subina e decida
-										/*if ( utilizacaoJanelaAnterior < utilizacao  && bloqueioJanelaAnterior<bloqueio )
-										{
-											badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-											novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MA
-										}*/
+							if (bamAnterior == BAMTypes.NoPreemptionMAM.name()){         /////////////////////1
+								switch (bamAgora) {
+								case "NoPreemptionMAM":
+									break;
+
+								case "PreemptionRDM":
+									if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+										apg=true;
+									}else {
+										apg=false;	
+									}
+									break;
+
+								case "PreemptionAllocCTSharing":
+									if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+										apg=true;
+									}else if(devolucoesJanelaAgora > ParametrosDSTE.SLADevolucoes ){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
+										apg=false;
+									}else {
+										apg=false;
+									}
+									break;
 								}
-							break;
-							
-							case "PreemptionAllocCTSharing":
-								if(preempcoesJanelaAnterior > ParametrosDSTE.SLAPreempcoes){
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
-								}else if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
-								}else if(devolucoesJanelaAnterior  > ParametrosDSTE.SLADevolucoes		){ 
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									novocase.setSolution(null);///// nesse caso eu não si o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
-								}else if(devolucoesJanelaAgora  > ParametrosDSTE.SLADevolucoes ){
-									badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
-									novocase.setSolution(null);///// nesse caso eu não si o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
-								}else {
-									//não tive problema de performasse na rede. Vou verificar agora subina e decida????????
+
+							} else if (bamAnterior == BAMTypes.PreemptionRDM.name()){    /////////////////////2
+								switch (bamAgora) {
+								case "NoPreemptionMAM":								
+									break;
+
+								case "PreemptionRDM":
+									if(preempcoesJanelaAnterior > ParametrosDSTE.SLAPreempcoes){ //// Porque  eu testo a janela anterior??? R: Porque se eu ja tinha prempção não era pra ir para RMD ou Alloc.
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM); ////Aproveitando para já aprender qual deveria ter sido a solução correta
+										apg=true;
+									}else if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){   
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );									
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);////Aproveitando para já aprender qual deveria ter sido a solução correta
+										apg=true;
+									}else {
+										apg=false;
+									}
+									break;
+
+								case "PreemptionAllocCTSharing":
+									if(preempcoesJanelaAnterior > ParametrosDSTE.SLAPreempcoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+										apg=true;
+									}else if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+										apg=true;
+									}else if(devolucoesJanelaAgora > ParametrosDSTE.SLADevolucoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
+										apg=false;
+									}else {
+										apg=false;	
+									}
+									break;
 								}
-							break;
-							}
-						}
-							
-							
-							if (novocase.getSolution() !=null ){
-								BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
-								((BAMDescription)novocase.getDescription()).setCaseId("N_"+(recommender.getCaseBase().getCases().size()+1));
-								((BAMSolution)novocase.getSolution()).setId("N_"+(recommender.getCaseBase().getCases().size()+1));
-								if (recommender.equal(novocase, recommender.getCaseBase(), ParametrosDSTE.RecomendacaoCBRLimiarArmazenar)){
-									BancoDeDados.setXML("\t#*123*# Caso muito similar ja na base de casos positiva",rodada.filename );
-								}else{
-									jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
-									BancoDeDados.setXML( rodada.simtime() + "\tAceito o caso: "+  ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo()    ,rodada.filename );
+
+							}else if (bamAnterior == BAMTypes.PreemptionAllocCTSharing.name()){    /////////////////////3
+								switch (bamAgora) {
+								case "NoPreemptionMAM":
+
+									break;
+
+								case "PreemptionRDM":
+									if(preempcoesJanelaAnterior > ParametrosDSTE.SLAPreempcoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);////Aproveitando para já aprender qual deveria ter sido a solução correta
+										apg=true;
+									}else if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){   
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);////Aproveitando para já aprender qual deveria ter sido a solução correta
+										apg=true;
+									}
+
+									break;
+
+								case "PreemptionAllocCTSharing":
+									if(preempcoesJanelaAnterior > ParametrosDSTE.SLAPreempcoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+										apg=true;
+									}else if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+										apg=true;
+									}else if(devolucoesJanelaAnterior  > ParametrosDSTE.SLADevolucoes		){ 
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
+										apg=false;
+									}else if(devolucoesJanelaAgora  > ParametrosDSTE.SLADevolucoes ){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
+									}else {
+										apg=false;	
+									}
+									break;
 								}
 							}
 							
 							
 							if(badcase.getSolution()!=null) {
 								BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
-								((BAMDescription)badcase.getDescription()).setCaseId("R_"+(recommender.getCaseBaseDB2().getCases().size()+1));
-								((BAMSolution)badcase.getSolution()).setId("R_"+(recommender.getCaseBaseDB2().getCases().size()+1));
+								((BAMDescription)badcase.getDescription()).setCaseId("BAD_"+(recommender.getCaseBaseDB2().getCases().size()+1));
+								((BAMSolution)badcase.getSolution()).setId("BAD_"+(recommender.getCaseBaseDB2().getCases().size()+1));
 								if (recommender.equal(badcase, recommender.getCaseBaseDB2(), ParametrosDSTE.RecomendacaoCBRLimiarArmazenar)){
-									BancoDeDados.setXML("\t#*124*# Caso muito similar ja na base de casos Negativa",rodada.filename );
+									BancoDeDados.setXML("\tCaso muito SIMILAR ja na base de casos Negativa",rodada.filename );
 								}else {
 									jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), badcase);
-									BancoDeDados.setXML( rodada.simtime() + "\tRejeitado o caso: "+ ((BAMDescription)badcase.getDescription()).toTabela() + ((BAMSolution)badcase.getSolution()).getBAMNovo()  ,rodada.filename );
+									BancoDeDados.setXML( rodada.simtime() + "\tO caso foi regeitado e armazenado na base NEGATIVA; Case_ID: "+ ((BAMDescription)badcase.getDescription()).toTabela() + ((BAMSolution)badcase.getSolution()).getBAMNovo()  ,rodada.filename );
 								}							
+							}
+						
+						
+							if (novocase.getSolution() !=null ){
+								BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
+								((BAMDescription)novocase.getDescription()).setCaseId("New_"+(recommender.getCaseBase().getCases().size()+1));
+								((BAMSolution)novocase.getSolution()).setId("New_"+(recommender.getCaseBase().getCases().size()+1));
+								if (recommender.equal(novocase, recommender.getCaseBase(), ParametrosDSTE.RecomendacaoCBRLimiarArmazenar)){
+									BancoDeDados.setXML("\tO caso foi aceito, porem é muito SIMILAR a um caso exstnte na base e por isso não será armazenedo;",rodada.filename );
+								}else{
+									jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
+									if (apg) {
+										BancoDeDados.setXML( rodada.simtime() + "\tCaso aprendido pelo módulo de inteligência; Finaliznado retenção;;; Case_ID: "+  ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo()    ,rodada.filename );
+									}else {
+										BancoDeDados.setXML( rodada.simtime() + "\tCaso Aceito; Finaliznado retenção;;; Case_ID: "+  ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo()    ,rodada.filename );
+									}
+								}
 							}
 							
 							
-				/*	}else{
-							BancoDeDados.setXML(rodada.simtime() + "\tBAM não validado. A rede mudou o comportamento. " ,rodada.filename );
-						}*/
-				BancoDeDados.setXML(rodada.simtime() + "\tSaiu em retenção\n", rodada.filename);
+							
+							
+					}else{
+							BancoDeDados.setXML( rodada.simtime() + "\tA rede mudou o comportamento, não é possível validar o caso; Descartando alterações; " ,rodada.filename );
+						}
+				
+				BancoDeDados.setXML( rodada.simtime() + "\tFinalizando BAMCBR;;;", rodada.filename);
+				
 			break;
 			
 			
@@ -694,50 +662,51 @@ public class TesteSimulacao {
 				
 
 					
-								BancoDeDados.setXML(  rodada.simtime() + "\t\t"
-										+ to.link[idLinkDebug].getID() + "\t"
-										+ nomeBAMAtual + "\t"
-										/*+ ParametrosDSTE.Janela + "\t"
+								BancoDeDados.setXML(  rodada.simtime() + "\t<<<- Leitura da rede ->>>\t"       ////Imprime  o tempo de execução da simulação
+										//+ to.link[idLinkDebug].getID() + "\t"         ////Imprime  o ID do link debugado
+										+ nomeBAMAtual + "\t"                         ////Imprime  o nome do Bam Atual
+										//+ ParametrosDSTE.Janela + "\t"                ////Imprime  o tamanho da jamela escolhida
+										//+ to.link[idLinkDebug].CargaEnlace  + "\t"    ////Imprime  a banda Do link
 										
-										+ to.link[idLinkDebug].CargaEnlace * to.link[idLinkDebug].BC[0] / 100 + "\t"
-										+ to.link[idLinkDebug].CargaEnlace * to.link[idLinkDebug].BC[1] / 100 + "\t"
-										+ to.link[idLinkDebug].CargaEnlace * to.link[idLinkDebug].BC[2] / 100 + "\t"*/
+										//+ to.link[idLinkDebug].CargaEnlace * to.link[idLinkDebug].BC[0] / 100 + "\t"  ////Imprime  a banda reservada para o BC0
+										///+ to.link[idLinkDebug].CargaEnlace * to.link[idLinkDebug].BC[1] / 100 + "\t"  ////Imprime  a banda reservada para o BC1
+										//+ to.link[idLinkDebug].CargaEnlace * to.link[idLinkDebug].BC[2] / 100 + "\t"  ////Imprime  a banda reservada para o BC2
 										
 										
-									/*	+ to.link[idLinkDebug].CargaCTAtual[0] + "\t"
-										+ to.link[idLinkDebug].CargaCTAtual[1] + "\t"
-										+ to.link[idLinkDebug].CargaCTAtual[2] + "\t"*/
+									/*	+ to.link[idLinkDebug].getCargaEnlaceAtual()  + "\t"  ////Imprime  a Carga de utilização Geral
+										+ to.link[idLinkDebug].CargaCTAtual[0] + "\t"  ////Imprime  a Carga de utilização no CT0
+										+ to.link[idLinkDebug].CargaCTAtual[1] + "\t"  ////Imprime  a Carga de utilização no CT1
+										+ to.link[idLinkDebug].CargaCTAtual[2] + "\t"  ////Imprime  a Carga de utilização no CT2
+										*/
+										//+"\t\t\t\t"
 										
-										+ rodada.estatistica.picoDeUtilizacaoDoEnlace(ParametrosDSTE.Janela, to.link[idLinkDebug]) /to.link[idLinkDebug].CargaEnlace + "\t"
-										
-										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 0) /to.link[idLinkDebug].CargaEnlace + "\t"
-										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 1) /to.link[idLinkDebug].CargaEnlace + "\t"
-										+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 2) /to.link[idLinkDebug].CargaEnlace + "\t"
+										+ rodada.estatistica.picoDeUtilizacaoDoEnlace(ParametrosDSTE.Janela, to.link[idLinkDebug]) /to.link[idLinkDebug].CargaEnlace + "\t"       ////Imprime  a % da Utilização TOTAL do enlarce em cada janela
+										//+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 0) /to.link[idLinkDebug].CargaEnlace + "\t"  ////Imprime  a % da Utilização do enlarce  no CT0 em cada janela
+										//+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 1) /to.link[idLinkDebug].CargaEnlace + "\t"  ////Imprime  a % da Utilização do enlarce  no CT1 em cada janela
+										//+ rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 2) /to.link[idLinkDebug].CargaEnlace + "\t"  ////Imprime  a % da Utilização do enlarce  no CT2 em cada janela
 
-										
-										//+ rodada.estatistica.lspRequested + "\t"
+
 									
-									
-										+ bloqueiosJanela + "\t"				
-										+ bloqueiosCTJanela[0] + "\t"
-										+ bloqueiosCTJanela[1] + "\t"
-										+ bloqueiosCTJanela[2] + "\t"
+										+ bloqueiosJanela + "\t"		     ////Imprime  a % da taxa de BLOQUEIO TOTAL do enlarce em cada janela		
+										//+ bloqueiosCTJanela[0] + "\t"        ////Imprime  a % da taxa de BLOQUEIO do enlarce No CT0 em cada janela
+										//+ bloqueiosCTJanela[1] + "\t"        ////Imprime  a % da taxa de BLOQUEIO do enlarce No CT1 em cada janela
+										//+ bloqueiosCTJanela[2] + "\t"        ////Imprime  a % da taxa de BLOQUEIO do enlarce No CT2 em cada janela
 										
-										+ preempcoesJanela + "\t"
-										/*+ preempcoesCTJanela[0] + "\t"
-										+ preempcoesCTJanela[1] + "\t"
-										+ preempcoesCTJanela[2] + "\t"*/
+										+ preempcoesJanela + "\t"		     ////Imprime  a % da taxa de PREEMPÇÃO TOTAL do enlarce em cada janela
+										//+ preempcoesCTJanela[0] + "\t"		 ////Imprime  a % da taxa de PREEMPÇÃO  do enlarce No CT0 em cada janela
+										//+ preempcoesCTJanela[1] + "\t"		 ////Imprime  a % da taxa de PREEMPÇÃO  do enlarce No CT1 em cada janela
+										//+ preempcoesCTJanela[2] + "\t"		 ////Imprime  a % da taxa de PREEMPÇÃO  do enlarce No CT2 em cada janela
 										
-										+ devolucoesJanela + "\t"
-										/*+ devolucoesCTJanela[0] + "\t"
-										+ devolucoesCTJanela[1] + "\t"
-										+ devolucoesCTJanela[2] + "\t"*/
+										+ devolucoesJanela + "\t"		     ////Imprime  a % da taxa de DEVOLUÇÃO TOTAL do enlarce em cada janela
+										//+ devolucoesCTJanela[0] + "\t"		 ////Imprime  a % da taxa de DEVOLUÇÃO  do enlarce No CT0 em cada janela
+										//+ devolucoesCTJanela[1] + "\t"		 ////Imprime  a % da taxa de DEVOLUÇÃO  do enlarce No CT0 em cada janela
+										//+ devolucoesCTJanela[2] + "\t"		 ////Imprime  a % da taxa de DEVOLUÇÃO  do enlarce No CT0 em cada janela
 										
 										//+ (rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 0) /to.link[idLinkDebug].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 1) /to.link[idLinkDebug].CargaEnlace+rodada.estatistica.picoDeUtilizacaoDoEnlaceCT(ParametrosDSTE.Janela, to.link[idLinkDebug], 2) /to.link[idLinkDebug].CargaEnlace)  + "\t"
-										+ "\t"+lspRequested
+										+ "\t"+lspRequested 		 ////Imprime  o numero de LSPs geradas até o momento.
 
 										//, "saida");
-							//, rodada.filename+"_7");
+//							, rodada.filename+"_7");
 							, rodada.filename);
 								
 							/*	BancoDeDados.setXML(  rodada.simtime() + "\t"
@@ -775,21 +744,24 @@ public class TesteSimulacao {
 			
 
 			}
-			Debug.setMensagem(" ==== Status dos Links  ====");
-			Debug.setMensagem(to.statusLinks());
+			Debug.setMensagem(" ==== Status dos Links  ====",5,5);
+			Debug.setMensagem(to.statusLinks(),5,5);
 			//Debug.setMensagem(rodada.imprime_evchain(), 0, 0);
 			//BancoDeDados.setXML(rodada.imprime_evchain(),"debug2");
 
 		}
 		
 		
-		Debug.setMensagem("\r\n\r\n ==== Status dos Links  ====");
-		Debug.setMensagem(to.statusLinks());
+		Debug.setMensagem("\r\n\r\n ==== Status dos Links  ====",5,5);
+		Debug.setMensagem(to.statusLinks(),5,5);
 		rodada.estatistica.tempoSimulacaoFim=System.currentTimeMillis();
-		Debug.setMensagem(rodada.estatistica.getEstatisticas());
-		Debug.setMensagem(BAMRecommenderNoGUI.getInstance().getStringCases());
+		Debug.setMensagem(rodada.estatistica.getEstatisticas(),3,3);
+		if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
+		{
+			Debug.setMensagem(BAMRecommenderNoGUI.getInstance().getStringCases(),3,3);
+		}
 		try {
-			System.out.println("Plotando os gráficos...");
+			Debug.setMensagem("Plotando os gráficos..." ,3,3);
 			rodada.estatistica.gerarLinkRRDPNG(to);
 			rodada.estatistica.gerarRRDPNGpreempcao();
 			rodada.estatistica.gerarRRDPNGlspRequested();
@@ -799,7 +771,7 @@ public class TesteSimulacao {
 			rodada.estatistica.gerarRRDPNGdevolucao();
 			rodada.estatistica.gerarRRDXML();
 			rodada.estatistica.gerarLinksRRDXML();
-			System.out.println("Agora sim acabou");
+			//System.out.println("Agora sim acabou");
 			
 		} catch (RrdException e) {
 			

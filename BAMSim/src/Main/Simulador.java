@@ -17,29 +17,33 @@ public class Simulador
 	public static void main(String[] args) throws IOException, RrdException {
 
 		BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
-		try
+		if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
 		{
-			recommender.configure();
-			recommender.preCycle();
-			recommender.setSimConfig(ParametrosDSTE.getSimilarityConfig());
-			
+			try
+			{
+				recommender.configure();
+				recommender.preCycle();
+				recommender.setSimConfig(ParametrosDSTE.getSimilarityConfig());
+				
+				
+					
 			
 				
-		
-			
-			}catch(Exception e)
-			{
-			org.apache.commons.logging.LogFactory.getLog(BAMRecommenderNoGUI.class).error(e);
-			//javax.swing.JOptionPane.showMessageDialog(null, e.getMessage());
+				}catch(Exception e)
+				{
+				org.apache.commons.logging.LogFactory.getLog(BAMRecommenderNoGUI.class).error(e);
+				//javax.swing.JOptionPane.showMessageDialog(null, e.getMessage());
+			}
 		}
 			RodadaDeSimulacao sim[] = new RodadaDeSimulacao[ParametrosDoSimulador.MAX_SIMULATIONS];
 			String [] filenames= new String[ParametrosDoSimulador.MAX_SIMULATIONS];
 			
 			int sementeAgora = ParametrosDoSimulador.semente;
+			
 			for (int j=0;j<sim.length;j++)
 			{
-				 if (j>10){
-					GeradorDeNumerosAleatorios.rand= new Random(sementeAgora += (j+1)*100);
+				 if (j>=1){
+					GeradorDeNumerosAleatorios.rand= new Random(sementeAgora += (j+3)*7);
 				}else{
 					GeradorDeNumerosAleatorios.rand= new Random(sementeAgora);
 				}
@@ -48,8 +52,10 @@ public class Simulador
 				Debug.filename=sim[j].filename;
 				filenames[j]=sim[j].filename;
 				TesteSimulacao t1 = new TesteSimulacao(sim[j]);
-				Debug.setMensagem("Semente da Rodada:\t" + sementeAgora);
-				
+				Debug.setMensagem("Numero da Rodada:\t" + (j+1) + "ª",3,3);
+				Debug.setMensagem("Semente da Rodada:\t" + sementeAgora ,3,3);
+				Debug.setMensagem("#===========================================================================================#\r\n\r\n",3,3);
+
 			}
 	
 			/*RodadaDeSimulacao sim = new RodadaDeSimulacao();
@@ -81,12 +87,14 @@ public class Simulador
 				GraficosRRD.agregarRRD(filenames,"Bloqueios","bloqueio");
 				GraficosRRD.agregarRRD(filenames,"Devoloções","devolucao");
 			}*/
-				
-			try {
-				recommender.postCycle();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
+			{	
+				try {
+					recommender.postCycle();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			System.exit(0);
 	}

@@ -170,7 +170,7 @@ public class BAM {
 						
 					while(aux!=null&&(BandaAcimaCT > bandaPreemptada)) //Banda que é necessária ser preemptada no enlace
 					{
-						Debug.setMensagem("============= preempção =============");
+						Debug.setMensagem("============= preempção =============",7,7);
 						((Lsp)aux.item).preemptaLSP(link);
 						((Lsp)aux.item).status=LspStatus.preemptada;
 
@@ -200,7 +200,7 @@ public class BAM {
 						
 					while(aux!=null&&(BandaAcimaCT > bandaPreemptada)) //Banda que é necessária ser preemptada no enlace
 					{
-						Debug.setMensagem("============= preempção =============");
+						Debug.setMensagem("============= preempção =============",7,7);
 						((Lsp)aux.item).preemptaLSP(link);
 						((Lsp)aux.item).status=LspStatus.preemptada;
 
@@ -239,7 +239,7 @@ public class BAM {
 					
 					while(aux!=null&&(BandaAcimaCT > bandaDevolvida)) //Banda que é necessária ser preemptada no enlace
 					{
-						Debug.setMensagem("============= Devolução =============");
+						Debug.setMensagem("============= Devolução =============",7,7);
 						((Lsp)aux.item).devolveLSP(link);
 						((Lsp)aux.item).status=LspStatus.devolvida;
 
@@ -373,7 +373,7 @@ public class BAM {
 					) 
 			  ) )
 			{
-					Debug.setMensagem("============= preempção =============");
+					Debug.setMensagem("============= preempção =============",7,7);
 					((Lsp)aux.item).preemptaLSP(link);
 					((Lsp)aux.item).status=LspStatus.preemptada;
 
@@ -415,7 +415,7 @@ public class BAM {
 					)) 
 			  )
 			{
-				Debug.setMensagem("============= Devolução =============");
+				Debug.setMensagem("============= Devolução =============",7,7);
 				((Lsp)aux.item).devolveLSP(link);
 				((Lsp)aux.item).status=LspStatus.devolvida;
 
@@ -484,7 +484,7 @@ public class BAM {
 					) 
 			  ) 
 			{
-					Debug.setMensagem("============= preempção =============");
+					Debug.setMensagem("============= preempção =============",7,7);
 					((Lsp)aux.item).preemptaLSP(link);
 					((Lsp)aux.item).status=LspStatus.preemptada;
 
