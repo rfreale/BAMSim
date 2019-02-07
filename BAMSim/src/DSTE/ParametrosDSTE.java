@@ -40,7 +40,7 @@ public class ParametrosDSTE {
 	public static final double SLAUtilizacao = 0.00;
 	public static final int DifLSP = 30;   // Diferença maxima aceita na rede par que a revisão/ retenção seja iniciada
 	public static final boolean ligarDBug = false;
-	public static final long TempoSimulacao = 3600*24; ////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	public static final long TempoSimulacao = 3600*4; ////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
@@ -58,12 +58,12 @@ public class ParametrosDSTE {
 	
 	
 	
-	public static final long Janela = RRDBatida *5 ;
+	public static final long Janela = RRDBatida *10 ;
 	
 	
 	
 	
-	public static final boolean RecomendacaoCBRSwitchBAM = false; /////<<<<<Liga e desliga a recoemndação<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	public static final boolean RecomendacaoCBRSwitchBAM = true; /////<<<<<Liga e desliga a recoemndação<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	public static final boolean RecomendacaoCBRRetencao = true;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
 	public static final double RecomendacaoCBRLimiarDeCorte = 0.96;
