@@ -397,11 +397,11 @@ public class BAMRecommenderNoGUI implements StandardCBRApplication {
 		String aux = "===================DB==================\r\n";
 		java.util.Collection<CBRCase> cases = basePositiva.getCases();
 		for (CBRCase c : cases)
-			aux += ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).toTabela() + "\n";
+			aux += ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).toTabela() + "\r\n";
 		aux += "===================DB2==================\r\n";
 		cases = baseNegativa.getCases();
 		for (CBRCase c : cases)
-			aux += ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).toTabela() + "\n";
+			aux += ((BAMDescription) c.getDescription()).toTabela() + ((BAMSolution) c.getSolution()).toTabela() + "\r\n";
 		return aux;
 	}
 

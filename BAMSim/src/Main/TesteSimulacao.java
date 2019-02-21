@@ -118,7 +118,7 @@ public class TesteSimulacao {
 		rodada.schedulep(4, ParametrosDSTE.RRDBatida+0.10, null);
 
 		// agenda avaliação CBR
-		if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
+		if(ParametrosDSTE.SwitchBAM)
 		{
 			//Inicia Debug CBR
 			BancoDeDados.setXML("", rodada.filename);
@@ -127,9 +127,13 @@ public class TesteSimulacao {
 			{
 				No no = new No();
 				no.item=to.link[i];
-				rodada.schedulep(5, ParametrosDSTE.Janela+0.40, no);    ///////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+				if(ParametrosDSTE.RecomendacaoCBRRevisaoAutonoma)
+					rodada.schedulep(5, ParametrosDSTE.Janela+0.40, no);    ///////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+				else
+					rodada.schedulep(8, ParametrosDSTE.Janela+0.40, no);    ///////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 			}
 		}
+
 		if (ParametrosDSTE.ligarDBug)
 		{
 			rodada.schedulep(7, ParametrosDSTE.RRDBatida + 0.20, null);/////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -239,6 +243,7 @@ public class TesteSimulacao {
 
 				rodada.schedulep(4, ParametrosDSTE.RRDBatida, null);
 				break;
+			
 			case 5:	//inicia o BAMCBR 
 
 				No noComLinkAtual=dados;
@@ -261,112 +266,99 @@ public class TesteSimulacao {
 				No no = new No();
 				
 				
-			
+				
 				
 				if (cbrCase != null) {
 					
 					String solutionRecomendada = ((BAMSolution) cbrCase.getSolution()).getBAMNovo().toString();
-					Object[] opcoes = {"NoPreemptionMAM", "PreemptionRDM", "PreemptionAllocCTSharing"};
 					
-					
-					
-					Recomendacao qr = new Recomendacao();
-					qr.showCase(novocase, cbrCase);
-					qr.setVisible(true);
-
-				
-					
-					int resposta = JOptionPane.showOptionDialog(null,
-                            "O modelo sugerido é "+solutionRecomendada+".\n Qual o modelo desejado ?",
-                            "Recomendação",
-                            JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.PLAIN_MESSAGE,
-                            null,
-                            opcoes,
-                            ((BAMSolution) cbrCase.getSolution()).getBAMNovo().name());
-					if(resposta==-1)
-					{
-						System.exit(0);
-					}
-					//sol.setBAMNovo(BAMTypes.valueOf(opcoes[resposta].toString()));
-					
-					qr.dispose();
-					
-					solutionRecomendada =opcoes[resposta].toString();
 					
 					if (solutionRecomendada != nomeBAMAtual ){
 						//Temporário para forçar devolução
 						switchBAM(link, solutionRecomendada);
 						mudouBAM= 1;
+						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
+						novocase.setSolution(sol);
+						no.item=novocase;
 						BancoDeDados.setXML( rodada.simtime() + "\tRecomendação encontrada; Açao: ALTERAR BAM; Agendando retenção de novo caso para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) , rodada.filename);
 						
 					}else{
 						mudouBAM= 0;
+						BAMSolution sol = ((BAMSolution) cbrCase.getSolution()).clone();
+						novocase.setSolution(sol);
+						no.item=novocase;
 						BancoDeDados.setXML( rodada.simtime() + "\tRecomendação encontrada; Ação: MANTER BAM ATUAL;  Agendando retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)), rodada.filename);
 						//BancoDeDados.setXML( rodada.simtime() + "\tRecomendação encontrada; Ação: MANTER BAM ATUAL; *Sem novo caso*", rodada.filename);
+						
 					}
 					
-					BAMSolution sol = new BAMSolution() ;
-					sol.setBAMNovo(BAMTypes.valueOf(opcoes[resposta].toString()));
-					sol.setAceita(true);
-					novocase.setSolution(sol);
-					no.item=novocase;
 					
 					////Se não achou nenhuma recomendação faça:
 				}else if (ParametrosDSTE.RecomendacaoCBRRetencao){
 					mudouBAM=1;
-					Recomendacao qr = new Recomendacao();
-					qr.showCase(novocase, null);
-					qr.setVisible(true);
-					Object[] opcoes = {"NoPreemptionMAM", "PreemptionRDM", "PreemptionAllocCTSharing"};
-					int resposta = JOptionPane.showOptionDialog(null,
-                            "Não existe soluções recomendadas.\n Qual o modelo desejado?",
-                            "Recomendação",
-                            JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.PLAIN_MESSAGE,
-                            null,
-                            opcoes,
-                            null);
-					if(resposta==-1)
-					{
-						System.exit(0);
-					}
-					qr.dispose();
-					
 					BancoDeDados.setXML( rodada.simtime() + "\tNenhum caso encontrado na base, iniciado Sugestão;;;", rodada.filename);
+					int []bams = BAMRecommenderNoGUI.getInstance().sugerirRecomendacao(query);  // busca na bae de casos negativa se existe alguma caso negativado na base e de que BAm eles são
+					BAMTypes bam = null;
+					
+					if (ParametrosDSTE.ligarDBug) {BancoDeDados.setXML( rodada.simtime() + "\tSituação das negativações - MAM:"+bams[0]+" RDM:"+bams[1]+" ALLOC: "+bams[2] , rodada.filename);}
+					///man=0   RDM=4  ALLOC=5
+					
+					switch (nomeBAMAtual) {
+					case "NoPreemptionMAM":
+						if (bams[2]==0){
+							 bam = BAMTypes.values()[5];
+							 switchBAM(link, bam.name());
+						}else if (bams[1]==0){
+							 bam = BAMTypes.values()[4];
+							 switchBAM(link, bam.name());
+						}else {
+							bam = BAMTypes.values()[0];
+							 mudouBAM= 0;
+						}	
+						break;
+					
+					case "PreemptionRDM":
+						if (bams[2]==0){
+							 bam = BAMTypes.values()[5];
+							 switchBAM(link, bam.name());
+						}else if (bams[1]==0){
+							bam = BAMTypes.values()[4];
+							mudouBAM= 0;
+						}else {
+							 bam = BAMTypes.values()[0];
+							 switchBAM(link, bam.name());
+						}
+						break;
+					
+					case "PreemptionAllocCTSharing":
+						if (bams[2]==0){
+							bam = BAMTypes.values()[5];
+							mudouBAM= 0;
+						}else if (bams[1]==0){
+							 bam = BAMTypes.values()[4];
+							 switchBAM(link, bam.name());
+						}else {
+							 bam = BAMTypes.values()[0];
+							 switchBAM(link, bam.name());
+						}
+						break;
+					}
 					
 					BAMSolution sol = new BAMSolution() ;
-					sol.setBAMNovo(BAMTypes.valueOf(opcoes[resposta].toString()));
+					sol.setBAMNovo(bam);
 					sol.setAceita(true);
 					novocase.setSolution(sol);
 					no.item=novocase;
-					
 					//BancoDeDados.setXML( rodada.simtime() + "\tCASO SUGERIDO: " + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo()+ "\n", rodada.filename);
 					//Por enquanto só recomendação
-					String solutionRecomendada =opcoes[resposta].toString();
-					
-					if (solutionRecomendada != nomeBAMAtual ){
-						//Temporário para forçar devolução
-						switchBAM(link, solutionRecomendada);
-						mudouBAM= 1;
-						BancoDeDados.setXML( rodada.simtime() + "\tRecomendação encontrada; Açao: ALTERAR BAM; Agendando retenção de novo caso para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) , rodada.filename);
-						
-					}else{
-						mudouBAM= 0;
-						BancoDeDados.setXML( rodada.simtime() + "\tRecomendação encontrada; Ação: MANTER BAM ATUAL;  Agendando retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)), rodada.filename);
-						//BancoDeDados.setXML( rodada.simtime() + "\tRecomendação encontrada; Ação: MANTER BAM ATUAL; *Sem novo caso*", rodada.filename);
-					}
 									
 					if (mudouBAM==1){
-						//Temporário para forçar devolução
 						BancoDeDados.setXML( rodada.simtime() + "\tCaso sugerido, agendado retenção para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) + " Case_ID: " +((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename) ;
 						if(ParametrosDSTE.ligarDBug) {BancoDeDados.setXML( rodada.simtime() + "\tFinalizando sugestão: #BAM Modificado#; Agendado retenção para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)), rodada.filename) ;}
 					}else {
 						BancoDeDados.setXML( rodada.simtime() + "\tCaso sugerido, agendado retenção para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) +                          " Case_ID: " +((BAMDescription)novocase.getDescription()).toTabela() +((BAMSolution)novocase.getSolution()).getBAMNovo() , rodada.filename);
 						if(ParametrosDSTE.ligarDBug) {BancoDeDados.setXML( rodada.simtime() + "\tFinalizando sugestão: #BAM Mantido#;    Agendado retenção para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) +                          " CASO SUGERIDO -> ID: " +((BAMDescription)novocase.getDescription()).toTabela() +((BAMSolution)novocase.getSolution()).getBAMNovo() , rodada.filename);}
 					}
-					
-
 				}
 					
 				//Agenda avaliar rentenção 
@@ -400,60 +392,221 @@ public class TesteSimulacao {
 				BancoDeDados.setXML( rodada.simtime() + "\tIniciando revisão e reteção;;;", rodada.filename);
 				
 				novocase = ((CBRCase)dados.item);
-				
 				((BAMDescription)novocase.getDescription()).setCaseId("tmp01") ;
 				link=to.link[((BAMDescription)novocase.getDescription()).getLink()];
-
-				query = rodada.estatistica.getQuery(link);
 				
-
-//				String bamAnterior = ((BAMDescription)novocase.getDescription()).getBAMAtual().name();
+				int lspRequestedAgora = rodada.estatistica.lspRequested(ParametrosDSTE.Janela,link);
+				int lspRequestedAnterior = Math.abs(rodada.estatistica.lspRequested(ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida, link) - rodada.estatistica.lspRequested(ParametrosDSTE.Janela*2+ParametrosDSTE.RRDBatida,link ) );
+				int difLSPs = Math.abs(lspRequestedAgora - lspRequestedAnterior);
+				if (ParametrosDSTE.ligarDBug) {BancoDeDados.setXML( rodada.simtime() + "\tDiferença da rede:\t" + difLSPs, rodada.filename);}
 				
-				String bamAtual = ((BAMDescription)query.getDescription()).getBAMAtual().name();
+				if (difLSPs <= ParametrosDSTE.DifLSP){ // verifica se houve mudança na rede	
 				
-				
-				//String solutionRecomendada = ((BAMSolution) cbrCase.getSolution()).getBAMNovo().toString();
-				Object[] opcoes = {"NoPreemptionMAM", "PreemptionRDM", "PreemptionAllocCTSharing","Não reter"};
-				
-				
-				
-				Retencao qr = new Retencao();
-				qr.showCase(novocase, query);
-				qr.setVisible(true);
-
-			
-				
-				int resposta = JOptionPane.showOptionDialog(null,
-                        "O modelo sugerido foi "+bamAtual+".\n Qual o modelo desejado ?",
-                        "Retenção",
-                        JOptionPane.DEFAULT_OPTION,
-                        JOptionPane.PLAIN_MESSAGE,
-                        null,
-                        opcoes,
-                        bamAtual);
-				//sol.setBAMNovo(BAMTypes.valueOf(opcoes[resposta].toString()));
-				if(resposta==-1)
-				{
-					System.exit(0);
-				}
-				
-				qr.dispose();
-						
-				if (opcoes[resposta].toString()!="Não reter")	
-				{
-					BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
-					((BAMDescription)novocase.getDescription()).setCaseId("New_"+(recommender.getCaseBase().getCases().size()+1));
-					((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.valueOf(opcoes[resposta].toString()));
-					((BAMSolution)novocase.getSolution()).setId("New_"+(recommender.getCaseBase().getCases().size()+1));
+						query = rodada.estatistica.getQuery(link);
 	
-					jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
-					BancoDeDados.setXML( rodada.simtime() + "\tAprendeu;;;", rodada.filename);
+						
+						//Caso que será colocado na base de caos negativos. OBS é possivel cria tb um 3° caso aqui  (caso atual com a nova query acima) 
+						CBRCase badcase = new CBRCase();
+						badcase.setDescription(    ( (BAMDescription)novocase.getDescription()  ).clone()    );
+						badcase.setSolution(null);
+								
+											
+						//int score = 10;
+						String bamAnterior = ((BAMDescription)novocase.getDescription()).getBAMAtual().name();
+						/*double []utilizacaoCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT0(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT1(), ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlaceCT2()} ;  
+						double []bloqueioCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueiosCT2()} ;
+						double []preempcoesCTJanelaAnterior  	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoesCT2()} ;  
+						double []devolucoesCTJanelaAnterior   	= new double [] {((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT0(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT1(), ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoesCT2()} ;				
+						*/
+						//double utilizacaoJanelaAnterior  	= ((BAMDescription)novocase.getDescription()).getUtilizacaoDoEnlace();  
+						//double bloqueioJanelaAnterior   	= ((BAMDescription)novocase.getDescription()).getNumeroDeBloqueios() ;
+						double preempcoesJanelaAnterior  	= ((BAMDescription)novocase.getDescription()).getNumeroDePreempcoes();  
+						double devolucoesJanelaAnterior   	= ((BAMDescription)novocase.getDescription()).getNumeroDeDevolucoes();				
+						
+						
+						String bamAgora = ((BAMDescription)query.getDescription()).getBAMAtual().name();
+						/*double []utilizacaoCTJanelaAgora   	= new double [] {((BAMDescription)query.getDescription()).getUtilizacaoDoEnlaceCT0(), ((BAMDescription)query.getDescription()).getUtilizacaoDoEnlaceCT1(), ((BAMDescription)query.getDescription()).getUtilizacaoDoEnlaceCT2()} ;
+						double []bloqueiosCTJanelaAgora   	= new double [] {((BAMDescription)query.getDescription()).getNumeroDeBloqueiosCT0(), ((BAMDescription)query.getDescription()).getNumeroDeBloqueiosCT1(), ((BAMDescription)query.getDescription()).getNumeroDeBloqueiosCT2()} ; 
+						double []preempcoesCTJanelaAgora  	= new double [] {((BAMDescription)query.getDescription()).getNumeroDePreempcoesCT0(), ((BAMDescription)query.getDescription()).getNumeroDePreempcoesCT1(), ((BAMDescription)query.getDescription()).getNumeroDePreempcoesCT2()} ;  
+						double []devolucoesCTJanelaAgora   	= new double [] {((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT0(), ((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT1(), ((BAMDescription)query.getDescription()).getNumeroDeDevolucoesCT2()} ;
+						*/
+						//double utilizacaoJanelaAgora   	= ((BAMDescription)query.getDescription()).getUtilizacaoDoEnlace();
+						//double bloqueiosJanelaAgora   	= ((BAMDescription)query.getDescription()).getNumeroDeBloqueios() ; 
+						double preempcoesJanelaAgora  	= ((BAMDescription)query.getDescription()).getNumeroDePreempcoes();  
+						double devolucoesJanelaAgora   	= ((BAMDescription)query.getDescription()).getNumeroDeDevolucoes();
+						
+						
+						//double somatorioUtilizacaoCTJanelaAnterior = utilizacaoCTJanelaAnterior[0]+utilizacaoCTJanelaAnterior[1]+	utilizacaoCTJanelaAnterior[2];
+						//double somatorioUtilizacaoCTJanelaAgora    = utilizacaoCTJanelaAgora[0]+utilizacaoCTJanelaAgora[1]+utilizacaoCTJanelaAgora[2];
+						
+						//double somatorioPonderadoBloqueioCTJanelaAnterior = (bloqueioCTJanelaAnterior[0]*link.BC[0] + bloqueioCTJanelaAnterior[1]*link.BC[1] + bloqueioCTJanelaAnterior[2]*link.BC[2])  /  (link.BC[0] + link.BC[1] + link.BC[2]) ;				
+						//double somatorioPonderadoBloqueioCTJanelaAgora = (bloqueiosCTJanelaAgora[0]*link.BC[0] + bloqueiosCTJanelaAgora[1]*link.BC[1] + bloqueiosCTJanelaAgora[2]*link.BC[2])  /  (link.BC[0] + link.BC[1] + link.BC[2]) ;				
+						
+						//double somatorioPreempcoesCTJanelaAnterior = preempcoesCTJanelaAnterior[0]+preempcoesCTJanelaAnterior[1]+preempcoesCTJanelaAnterior[2];
+						//double somatorioPreempcoesCTJanelaAgora = preempcoesCTJanelaAgora[0]+preempcoesCTJanelaAgora[1]+preempcoesCTJanelaAgora[2];
+						
+						//double somatorioDevolucoesCTJanelaAnterior = devolucoesCTJanelaAnterior[0]+devolucoesCTJanelaAnterior[1]+devolucoesCTJanelaAnterior[2];
+						//double somatorioDevolucoesCTJanelaAgora = devolucoesCTJanelaAgora[0]+devolucoesCTJanelaAgora[1]+devolucoesCTJanelaAgora[2];
+						
 
-				}
+						//double utilizacao =  ( ( Math.min(link.BC[0], link.BC[1]) + Math.min(link.BC[1], link.BC[2]) ))/ (link.BC[0] + link.BC[1] + link.BC[2]);
+						//double bloqueio = utilizacao * ParametrosDSTE.SLABloqueios;
+						
+							boolean apg=false; //solução Aprendida Pelo Gestor
+							
+							if (bamAnterior == BAMTypes.NoPreemptionMAM.name()){         /////////////////////1
+								switch (bamAgora) {
+								case "NoPreemptionMAM":
+									break;
+
+								case "PreemptionRDM":
+									if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+										apg=true;
+									}else {
+										apg=false;	
+									}
+									break;
+
+								case "PreemptionAllocCTSharing":
+									if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+										apg=true;
+									}else if(devolucoesJanelaAgora > ParametrosDSTE.SLADevolucoes ){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
+										apg=false;
+									}else {
+										apg=false;
+									}
+									break;
+								}
+
+							} else if (bamAnterior == BAMTypes.PreemptionRDM.name()){    /////////////////////2
+								switch (bamAgora) {
+								case "NoPreemptionMAM":								
+									break;
+
+								case "PreemptionRDM":
+									if(preempcoesJanelaAnterior > ParametrosDSTE.SLAPreempcoes){ //// Porque  eu testo a janela anterior??? R: Porque se eu ja tinha prempção não era pra ir para RMD ou Alloc.
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM); ////Aproveitando para já aprender qual deveria ter sido a solução correta
+										apg=true;
+									}else if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){   
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );									
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);////Aproveitando para já aprender qual deveria ter sido a solução correta
+										apg=true;
+									}else {
+										apg=false;
+									}
+									break;
+
+								case "PreemptionAllocCTSharing":
+									if(preempcoesJanelaAnterior > ParametrosDSTE.SLAPreempcoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+										apg=true;
+									}else if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+										apg=true;
+									}else if(devolucoesJanelaAgora > ParametrosDSTE.SLADevolucoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
+										apg=false;
+									}else {
+										apg=false;	
+									}
+									break;
+								}
+
+							}else if (bamAnterior == BAMTypes.PreemptionAllocCTSharing.name()){    /////////////////////3
+								switch (bamAgora) {
+								case "NoPreemptionMAM":
+
+									break;
+
+								case "PreemptionRDM":
+									if(preempcoesJanelaAnterior > ParametrosDSTE.SLAPreempcoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);////Aproveitando para já aprender qual deveria ter sido a solução correta
+										apg=true;
+									}else if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){   
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);////Aproveitando para já aprender qual deveria ter sido a solução correta
+										apg=true;
+									}
+
+									break;
+
+								case "PreemptionAllocCTSharing":
+									if(preempcoesJanelaAnterior > ParametrosDSTE.SLAPreempcoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+										apg=true;
+									}else if(preempcoesJanelaAgora > ParametrosDSTE.SLAPreempcoes){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.NoPreemptionMAM);
+										apg=true;
+									}else if(devolucoesJanelaAnterior  > ParametrosDSTE.SLADevolucoes		){ 
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
+										apg=false;
+									}else if(devolucoesJanelaAgora  > ParametrosDSTE.SLADevolucoes ){
+										badcase.setSolution(    ( (BAMSolution)novocase.getSolution()  ).clone()    );
+										novocase.setSolution(null);///// nesse caso eu não sei o que fazer, por isso eu preciso do CBR pois eu posso ir tanto pra RDM quanto pra MAM
+									}else {
+										apg=false;	
+									}
+									break;
+								}
+							}
+							
+							
+							if(badcase.getSolution()!=null) {
+								BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
+								((BAMDescription)badcase.getDescription()).setCaseId("BAD_"+(recommender.getCaseBaseDB2().getCases().size()+1));
+								((BAMSolution)badcase.getSolution()).setId("BAD_"+(recommender.getCaseBaseDB2().getCases().size()+1));
+								if (recommender.equal(badcase, recommender.getCaseBaseDB2(), ParametrosDSTE.RecomendacaoCBRLimiarArmazenar)){
+									BancoDeDados.setXML("\tCaso muito SIMILAR ja na base de casos Negativa",rodada.filename );
+								}else {
+									jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBaseDB2(), badcase);
+									BancoDeDados.setXML( rodada.simtime() + "\tO caso foi regeitado e armazenado na base NEGATIVA; Case_ID: "+ ((BAMDescription)badcase.getDescription()).toTabela() + ((BAMSolution)badcase.getSolution()).getBAMNovo()  ,rodada.filename );
+								}							
+							}
+						
+						
+							if (novocase.getSolution() !=null ){
+								BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
+								((BAMDescription)novocase.getDescription()).setCaseId("New_"+(recommender.getCaseBase().getCases().size()+1));
+								((BAMSolution)novocase.getSolution()).setId("New_"+(recommender.getCaseBase().getCases().size()+1));
+								if (recommender.equal(novocase, recommender.getCaseBase(), ParametrosDSTE.RecomendacaoCBRLimiarArmazenar)){
+									BancoDeDados.setXML("\tO caso foi aceito, porem é muito SIMILAR a um caso exstnte na base e por isso não será armazenedo;",rodada.filename );
+								}else{
+									jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
+									if (apg) {
+										BancoDeDados.setXML( rodada.simtime() + "\tCaso aprendido pelo módulo de inteligência; Finaliznado retenção;;; Case_ID: "+  ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo()    ,rodada.filename );
+									}else {
+										BancoDeDados.setXML( rodada.simtime() + "\tCaso Aceito; Finaliznado retenção;;; Case_ID: "+  ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo()    ,rodada.filename );
+									}
+								}
+							}
+							
+							
+							
+							
+					}else{
+							BancoDeDados.setXML( rodada.simtime() + "\tA rede mudou o comportamento, não é possível validar o caso; Descartando alterações; " ,rodada.filename );
+						}
+				
 				BancoDeDados.setXML( rodada.simtime() + "\tFinalizando BAMCBR;;;", rodada.filename);
 				
 			break;
 			
+			
+					
 			
 			
 			
@@ -601,7 +754,226 @@ public class TesteSimulacao {
 					
 				break;
 			
+			case 8:	//inicia o BAMCBR 
+
+				noComLinkAtual=dados;
+				BancoDeDados.setXML( rodada.simtime() + "\tIniciando BAMCBR;;;", rodada.filename);
+				link = ((Link)noComLinkAtual.item);
+				mudouBAM= -1;
+				cbrCase = null;
+				query = null;
+				
+				
+					query = rodada.estatistica.getQuery(link);
+					if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
+					{
+						////inicia a procura na base de casos
+						cbrCase = BAMRecommenderNoGUI.getInstance().cycle(query);
+					}
+					nomeBAMAtual = ((BAMDescription)query.getDescription()).getBAMAtual().name();
+	
+
+				desc = ((BAMDescription) query.getDescription()).clone();
+				
+				novocase = new CBRCase();
+				novocase.setDescription(desc);
+				no = new No();
+				
+				
 			
+				
+				if (cbrCase != null) {
+					
+					String solutionRecomendada = ((BAMSolution) cbrCase.getSolution()).getBAMNovo().toString();
+					Object[] opcoes = {"NoPreemptionMAM", "PreemptionRDM", "PreemptionAllocCTSharing"};
+					
+					
+					
+					Recomendacao qr = new Recomendacao();
+					qr.showCase(novocase, cbrCase);
+					qr.setVisible(true);
+
+				
+					
+					int resposta = JOptionPane.showOptionDialog(null,
+                            "The suggested BAM is "+solutionRecomendada+".\n Which model do you want?",
+                            "Recommendation",
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.PLAIN_MESSAGE,
+                            null,
+                            opcoes,
+                            ((BAMSolution) cbrCase.getSolution()).getBAMNovo().name());
+					if(resposta==-1)
+					{
+						System.exit(0);
+					}
+					//sol.setBAMNovo(BAMTypes.valueOf(opcoes[resposta].toString()));
+					
+					qr.dispose();
+					
+					solutionRecomendada =opcoes[resposta].toString();
+					
+					if (solutionRecomendada != nomeBAMAtual ){
+						//Temporário para forçar devolução
+						switchBAM(link, solutionRecomendada);
+						mudouBAM= 1;
+						BancoDeDados.setXML( rodada.simtime() + "\tRecomendação encontrada; Açao: ALTERAR BAM; Agendando retenção de novo caso para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) , rodada.filename);
+						
+					}else{
+						mudouBAM= 0;
+						BancoDeDados.setXML( rodada.simtime() + "\tRecomendação encontrada; Ação: MANTER BAM ATUAL;  Agendando retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)), rodada.filename);
+						//BancoDeDados.setXML( rodada.simtime() + "\tRecomendação encontrada; Ação: MANTER BAM ATUAL; *Sem novo caso*", rodada.filename);
+					}
+					
+					BAMSolution sol = new BAMSolution() ;
+					sol.setBAMNovo(BAMTypes.valueOf(opcoes[resposta].toString()));
+					sol.setAceita(true);
+					novocase.setSolution(sol);
+					no.item=novocase;
+					
+					////Se não achou nenhuma recomendação faça:
+				}else if (ParametrosDSTE.RecomendacaoCBRRetencao){
+					mudouBAM=1;
+					Recomendacao qr = new Recomendacao();
+					qr.showCase(novocase, null);
+					qr.setVisible(true);
+					Object[] opcoes = {"NoPreemptionMAM", "PreemptionRDM", "PreemptionAllocCTSharing"};
+					int resposta = JOptionPane.showOptionDialog(null,
+                            "The CBR hasn't recommendation.\n Which model do you want?",
+                            "Recomendação",
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.PLAIN_MESSAGE,
+                            null,
+                            opcoes,
+                            null);
+					if(resposta==-1)
+					{
+						System.exit(0);
+					}
+					qr.dispose();
+					
+					BancoDeDados.setXML( rodada.simtime() + "\tNenhum caso encontrado na base, iniciado Sugestão;;;", rodada.filename);
+					
+					BAMSolution sol = new BAMSolution() ;
+					sol.setBAMNovo(BAMTypes.valueOf(opcoes[resposta].toString()));
+					sol.setAceita(true);
+					novocase.setSolution(sol);
+					no.item=novocase;
+					
+					//BancoDeDados.setXML( rodada.simtime() + "\tCASO SUGERIDO: " + ((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo()+ "\n", rodada.filename);
+					//Por enquanto só recomendação
+					String solutionRecomendada =opcoes[resposta].toString();
+					
+					if (solutionRecomendada != nomeBAMAtual ){
+						//Temporário para forçar devolução
+						switchBAM(link, solutionRecomendada);
+						mudouBAM= 1;
+						BancoDeDados.setXML( rodada.simtime() + "\tRecomendação encontrada; Açao: ALTERAR BAM; Agendando retenção de novo caso para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) , rodada.filename);
+						
+					}else{
+						mudouBAM= 0;
+						BancoDeDados.setXML( rodada.simtime() + "\tRecomendação encontrada; Ação: MANTER BAM ATUAL;  Agendando retenção para tempo:" + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)), rodada.filename);
+						//BancoDeDados.setXML( rodada.simtime() + "\tRecomendação encontrada; Ação: MANTER BAM ATUAL; *Sem novo caso*", rodada.filename);
+					}
+									
+					if (mudouBAM==1){
+						//Temporário para forçar devolução
+						BancoDeDados.setXML( rodada.simtime() + "\tCaso sugerido, agendado retenção para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)) + " Case_ID: " +((BAMDescription)novocase.getDescription()).toTabela() + ((BAMSolution)novocase.getSolution()).getBAMNovo(), rodada.filename) ;
+						if(ParametrosDSTE.ligarDBug) {BancoDeDados.setXML( rodada.simtime() + "\tFinalizando sugestão: #BAM Modificado#; Agendado retenção para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10)), rodada.filename) ;}
+					}else {
+						BancoDeDados.setXML( rodada.simtime() + "\tCaso sugerido, agendado retenção para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) +                          " Case_ID: " +((BAMDescription)novocase.getDescription()).toTabela() +((BAMSolution)novocase.getSolution()).getBAMNovo() , rodada.filename);
+						if(ParametrosDSTE.ligarDBug) {BancoDeDados.setXML( rodada.simtime() + "\tFinalizando sugestão: #BAM Mantido#;    Agendado retenção para tempo: " + (rodada.simtime() + (ParametrosDSTE.Janela-0.10)) +                          " CASO SUGERIDO -> ID: " +((BAMDescription)novocase.getDescription()).toTabela() +((BAMSolution)novocase.getSolution()).getBAMNovo() , rodada.filename);}
+					}
+					
+
+				}
+					
+				//Agenda avaliar rentenção 
+				if (ParametrosDSTE.RecomendacaoCBRSwitchBAM&&ParametrosDSTE.RecomendacaoCBRRetencao){
+					if (mudouBAM==1){
+						rodada.schedulep(9, ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida-0.10, no);
+						rodada.schedulep(8, ParametrosDSTE.Janela+ParametrosDSTE.RRDBatida, noComLinkAtual);
+						//rodada.schedulep(5, ParametrosDSTE.Janela, null);
+						
+					}else if (mudouBAM==0){
+						rodada.schedulep(9, ParametrosDSTE.Janela-0.10, no);///////////////////////colocar  batida em vez ee janela??? ,,,<<<<<<<<<<<<<+============
+						//casoRenAntigo = null;
+						rodada.schedulep(8, ParametrosDSTE.Janela, noComLinkAtual);
+					}else{
+						//casoRenAntigo = null;
+						rodada.schedulep(8, ParametrosDSTE.Janela, noComLinkAtual);
+					}
+					
+				}else{
+					rodada.schedulep(8, ParametrosDSTE.Janela, noComLinkAtual);
+				}
+					
+				if(ParametrosDSTE.ligarDBug) {BancoDeDados.setXML( rodada.simtime() + "\tSaio da Recomendação;", rodada.filename);}	
+					//rodada.schedulep(5, ParametrosDSTE.Janela, null);
+				
+				
+				break;
+
+
+				
+			case 9:
+				//Avalia rentenção
+				BancoDeDados.setXML( rodada.simtime() + "\tIniciando revisão e reteção;;;", rodada.filename);
+				
+				novocase = ((CBRCase)dados.item);
+				
+				((BAMDescription)novocase.getDescription()).setCaseId("tmp01") ;
+				link=to.link[((BAMDescription)novocase.getDescription()).getLink()];
+
+				query = rodada.estatistica.getQuery(link);
+				
+
+//				String bamAnterior = ((BAMDescription)novocase.getDescription()).getBAMAtual().name();
+				
+				String bamAtual = ((BAMDescription)query.getDescription()).getBAMAtual().name();
+				
+				
+				//String solutionRecomendada = ((BAMSolution) cbrCase.getSolution()).getBAMNovo().toString();
+				Object[] opcoes = {"NoPreemptionMAM", "PreemptionRDM", "PreemptionAllocCTSharing","No retain"};
+				
+				
+				
+				Retencao qr = new Retencao();
+				qr.showCase(novocase, query);
+				qr.setVisible(true);
+
+			
+				
+				int resposta = JOptionPane.showOptionDialog(null,
+                        "The recommended model was "+bamAtual+".\n Which model do you want?",
+                        "Retention",
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        opcoes,
+                        bamAtual);
+				//sol.setBAMNovo(BAMTypes.valueOf(opcoes[resposta].toString()));
+				if(resposta==-1)
+				{
+					System.exit(0);
+				}
+				
+				qr.dispose();
+						
+				if (opcoes[resposta].toString()!="No retain")	
+				{
+					BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
+					((BAMDescription)novocase.getDescription()).setCaseId("New_"+(recommender.getCaseBase().getCases().size()+1));
+					((BAMSolution)novocase.getSolution()).setBAMNovo(BAMTypes.valueOf(opcoes[resposta].toString()));
+					((BAMSolution)novocase.getSolution()).setId("New_"+(recommender.getCaseBase().getCases().size()+1));
+	
+					jcolibri.method.retain.StoreCasesMethod.storeCase( recommender.getCaseBase(), novocase);
+					BancoDeDados.setXML( rodada.simtime() + "\tAprendeu;;;", rodada.filename);
+
+				}
+				BancoDeDados.setXML( rodada.simtime() + "\tFinalizando BAMCBR;;;", rodada.filename);
+				
+			break;
 
 			}
 			Debug.setMensagem(" ==== Status dos Links  ====",5,5);

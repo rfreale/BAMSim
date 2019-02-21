@@ -34,13 +34,13 @@ public class ParametrosDSTE {
 	
 	
 	public static final int  Escada = 128; //limite da função de similaridade Threshold
-	public static final double SLAPreempcoes = 0.00;
-	public static final double SLADevolucoes = 0.00;
+	public static double SLAPreempcoes = 0.00;
+	public static double SLADevolucoes = 0.00;
 	public static final double SLABloqueios = 0.00;  ////0.25
 	public static final double SLAUtilizacao = 0.00;
-	public static final int DifLSP = 30;   // Diferença maxima aceita na rede par que a revisão/ retenção seja iniciada
+	public static int DifLSP = 30;   // Diferença maxima aceita na rede par que a revisão/ retenção seja iniciada
 	public static final boolean ligarDBug = false;
-	public static final long TempoSimulacao = 3600*4; ////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	public static long TempoSimulacao = 3600*24; ////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	/*//////Dados do RRDTools
 	 * DS:ds-name:{GAUGE | COUNTER | DERIVE | DCOUNTER | DDERIVE | ABSOLUTE}:heartbeat:min:max
@@ -53,30 +53,33 @@ public class ParametrosDSTE {
 	public static final double RRDMax = Double.NaN;   //valor máximo fora dos quais não deve ser considerada a leitura.
 	public static final double RRDXff = 0.5;   //percentagem de pontos primÃ¡rios que podem ser 'desconhecidos'
 	public static final int RRDSteps = 1;  //Número de 'steps' que devemos esperar até armazenarmos no arquivo o valor da leitura
-	public static final int RRDLinhas= (int) (TempoSimulacao/(RRDSteps*RRDBatida));  //rows  quantas leituras vamos armazenar.
+	public static int RRDLinhas= (int) (TempoSimulacao/(RRDSteps*RRDBatida));  //rows  quantas leituras vamos armazenar.
 	
 	
 	
 	
-	public static final long Janela = RRDBatida *10 ;
+	public static long Janela = RRDBatida *5 ;
 	
 	
 	
-	
-	public static final boolean RecomendacaoCBRSwitchBAM = true; /////<<<<<Liga e desliga a recoemndação<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	public static boolean SwitchBAM = true;
+	public static boolean RecomendacaoCBRSwitchBAM = true;
+	public static boolean RecomendacaoCBRRevisaoAutonoma = true;
+
 	public static final boolean RecomendacaoCBRRetencao = true;
 	public static final boolean RecomendacaoCBRIndexarBloPreDev = true;
-	public static final double RecomendacaoCBRLimiarDeCorte = 0.96;
+	public static double RecomendacaoCBRLimiarDeCorte = 0.96;
 	public static final double RecomendacaoCBRLimiarDeCorte2 = 0.96;
 	public static final double RecomendacaoCBRLimiarArmazenar = 0.985;    // Silimalidade para armazenar um novo vaso na base de casos positiva ou negativa (o caso não pode ser 0.99x semelhandte a algum caso ja existente)
 	public static final double RecomendacaoCBRLimiarDeCorteNEGATIVAR = 0.985;//0.959;
+	public static NNConfig similarityConfig = getDefaultSimilarityConfig();
 	
 
 	public static final String filenameBaseCBRP= ".//basesCBR//baseZ.sql";
 	public static final String filenameBaseCBRN= ".//basesCBR//baseZ.sql";
 	
 	
-	public static final Boolean limpaBaseNoInicioCBR= true;
+	public static Boolean limpaBaseNoInicioCBR= true;
 	public static final Boolean baseCBRManual= false;
 	public static final Boolean topologiaManual= false;
 	public static final Boolean matrizCaminhosManual= false;
@@ -268,6 +271,11 @@ public class ParametrosDSTE {
 	}
 	
 	public static NNConfig getSimilarityConfig()   ////////////criar a função de similaridade  colocar novos campos.
+	{
+		return similarityConfig;
+	}
+	
+	public static NNConfig getDefaultSimilarityConfig()   ////////////criar a função de similaridade  colocar novos campos.
 	{
 		NNConfig config = new NNConfig();
 		Attribute attribute;

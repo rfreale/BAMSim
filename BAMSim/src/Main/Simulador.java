@@ -1,6 +1,8 @@
 package Main;
 import java.io.IOException;
-import java.util.Random; 
+import java.util.Random;
+
+import javax.swing.JOptionPane;
 
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.exception.ExecutionException;
@@ -8,7 +10,9 @@ import jcolibri.exception.ExecutionException;
 import org.jrobin.core.RrdException;
 
 import BAM.BAMRecommender.BAMRecommenderNoGUI;
+import BAM.BAMRecommender.BAMSolution;
 import DSTE.*;
+import Main.gui.BAMSimConfiguration;
 import Simulador.*;
 /****************** ESTRUTURAS BÁSICAS RELACIONADAS A CADEIA DE EVENTOS **********************/
 
@@ -16,9 +20,47 @@ public class Simulador
 {
 	public static void main(String[] args) throws IOException, RrdException {
 
+		BAMSimConfiguration qf = new BAMSimConfiguration(null);
+		qf.setVisible(true);
+		
+		Object[] opcoes = {"Manager Mode", "Assisted Mode (CBR)", "Cognitive BAM"};
+		int resposta = JOptionPane.showOptionDialog(null,
+                "Choose the simulation mode:",
+                "BAMSim Mode",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                opcoes,
+                null);
+		switch (resposta) {
+			case 0:
+				ParametrosDSTE.SwitchBAM = true; /////<<<<<Liga e desliga a recomendação do gestor<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+				ParametrosDSTE.RecomendacaoCBRSwitchBAM = false; /////<<<<<Liga e desliga a recoemndação<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+				ParametrosDSTE.RecomendacaoCBRRevisaoAutonoma = false; /////<<<<<Liga e desliga a recomendação do gestor<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<			
+			
+				break;
+			case 1:
+				ParametrosDSTE.SwitchBAM = true; /////<<<<<Liga e desliga a recomendação do gestor<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+				ParametrosDSTE.RecomendacaoCBRSwitchBAM = true; /////<<<<<Liga e desliga a recoemndação<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+				ParametrosDSTE.RecomendacaoCBRRevisaoAutonoma = false; /////<<<<<Liga e desliga a recomendação do gestor<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+			break;
+			case 2:
+				ParametrosDSTE.SwitchBAM = true; /////<<<<<Liga e desliga a recomendação do gestor<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+				ParametrosDSTE.RecomendacaoCBRSwitchBAM = true; /////<<<<<Liga e desliga a recoemndação<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+				ParametrosDSTE.RecomendacaoCBRRevisaoAutonoma = true; /////<<<<<Liga e desliga a recomendação do gestor<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+			break;
+			case -1:
+				System.exit(0);
+				
+		}
+			
+		
 		BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
 		if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
 		{
+
 			try
 			{
 				recommender.configure();

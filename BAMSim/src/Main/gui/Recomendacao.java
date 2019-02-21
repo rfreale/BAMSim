@@ -52,7 +52,7 @@ public class Recomendacao extends JDialog {
 	 * Create the dialog.
 	 */
 	public Recomendacao() {
-		this.setTitle("Informações");
+		this.setTitle("Network state");
 		setBounds(100, 100, 850, 350);
 		//contentPanel.setLayout(new FlowLayout());
 		contentPanel.setLayout(new GridLayout(0,3));
@@ -63,30 +63,30 @@ public class Recomendacao extends JDialog {
 		JLabel label;
 		contentPanel.add(label = new JLabel("Description"));
 		label.setFont(label.getFont().deriveFont(Font.BOLD));
-		contentPanel.add(label = new JLabel("Estado da Rede"));
-		contentPanel.add(label = new JLabel("Sugestão"));
+		contentPanel.add(label = new JLabel("Network state"));
+		contentPanel.add(label = new JLabel("Sugestion"));
 
 		
-		contentPanel.add(new JLabel("Utilização do Enlace"));
+		contentPanel.add(new JLabel("Link load"));
 		contentPanel.add(this.utilizacaoDoEnlace= new JLabel());
 		contentPanel.add(this.utilizacaoDoEnlaceNew= new JLabel());
 		
 		
-		contentPanel.add(new JLabel("Number de Bloqueios"));
+		contentPanel.add(new JLabel("Blokings"));
 		contentPanel.add(this.numeroDeBloqueios= new JLabel());
 		contentPanel.add(this.numeroDeBloqueiosNew= new JLabel());
 		
 				
-		contentPanel.add(new JLabel("Number de Preempções"));
+		contentPanel.add(new JLabel("Preemptions"));
 		contentPanel.add(this.numeroDePreempcoes= new JLabel());
 		contentPanel.add(this.numeroDePreempcoesNew= new JLabel());
 		
 				
-		contentPanel.add(new JLabel("Number de Devoluções"));
+		contentPanel.add(new JLabel("Devolutions"));
 		contentPanel.add(this.numeroDeDevolucoes= new JLabel());
 		contentPanel.add(this.numeroDeDevolucoesNew= new JLabel());
 		
-		contentPanel.add(new JLabel("Modelo"));
+		contentPanel.add(new JLabel("Model"));
 		contentPanel.add(this.bamAtual= new JLabel());
 		contentPanel.add(this.bamSugerido= new JLabel());
 		
