@@ -24,6 +24,7 @@ import DSTE.LspStatus;
 import DSTE.ParametrosDSTE;
 import DSTE.Roteamento;
 import DSTE.Topologia;
+import Main.gui.BAMSimProgressBar;
 import Main.gui.Recomendacao;
 import Main.gui.Retencao;
 import Simulador.Debug;
@@ -45,11 +46,12 @@ public class TesteSimulacao {
 			RrdException {
 
 
-		Debug.setMensagem("============================ Início da Rodada "+ rodada.filename +  " ============================",3,3);
-		Topologia to = new Topologia();
 
+		Topologia to = new Topologia();
+		BAMSimProgressBar progressBar = new BAMSimProgressBar();
+		Debug.setMensagem("============================ Início da Rodada "+ rodada.filename +  " ============================",3,3, progressBar);
 		// Mostra parámetros padrões
-		Debug.setMensagem(ParametrosDSTE.getParametros(), 7, 7);
+		Debug.setMensagem(ParametrosDSTE.getParametros(), 7, 7, progressBar);
 
 		/*
 		 * ParametrosDSTE.BAMTypePadrao = BAMType.NoPreemptionMAM;
@@ -60,58 +62,58 @@ public class TesteSimulacao {
 		if (ParametrosDSTE.topologiaManual)
 		{
 			// Carrega a topologia da rede manual
-			Debug.setMensagem("Inicio: to.carregarTopologiaManual()", 10, 10);
+			Debug.setMensagem("Inicio: to.carregarTopologiaManual()", 10, 10, progressBar);
 			to.carregarTopologiaManual();
-			Debug.setMensagem("Fim: to.carregarTopologiaManual()", 10, 10);
+			Debug.setMensagem("Fim: to.carregarTopologiaManual()", 10, 10, progressBar);
 		} else
 		{
 			// Carrega a topologia da rede manual
-			Debug.setMensagem("Inicio: to.carregarTopologiaArquivo()", 10, 10);
+			Debug.setMensagem("Inicio: to.carregarTopologiaArquivo()", 10, 10, progressBar);
 			to.carregarTopologiaArquivo();
-			Debug.setMensagem("Fim: to.carregarTopologiaArquivo()", 10, 10);
+			Debug.setMensagem("Fim: to.carregarTopologiaArquivo()", 10, 10, progressBar);
 		}
 		if (ParametrosDSTE.matrizCaminhosManual)
 		{
 			// Carrega a matriz de caminhos por roteador manual
-			Debug.setMensagem("Inicio: to.carregarMatrizDeCaminhosManual()", 10, 10);
+			Debug.setMensagem("Inicio: to.carregarMatrizDeCaminhosManual()", 10, 10, progressBar);
 			to.carregarMatrizDeCaminhosManual();
-			Debug.setMensagem("Fim: to.carregarMatrizDeCaminhosManual()", 10, 10);
+			Debug.setMensagem("Fim: to.carregarMatrizDeCaminhosManual()", 10, 10, progressBar);
 		}else
 		{
 			// Carrega a topologia da rede manual
-			Debug.setMensagem("Inicio: to.carregarMatrizDeCaminhosArquivo()", 10, 10);
+			Debug.setMensagem("Inicio: to.carregarMatrizDeCaminhosArquivo()", 10, 10, progressBar);
 			to.carregarMatrizDeCaminhosArquivo();
-			Debug.setMensagem("Fim: to.carregarMatrizDeCaminhosArquivo()", 10, 10);
+			Debug.setMensagem("Fim: to.carregarMatrizDeCaminhosArquivo()", 10, 10, progressBar);
 		}
 
 		// Gera Topologia Roteador x Roteador
-		Debug.setMensagem("Inicio: to.gerarTopologiaDosRoteadores()", 10, 10);
+		Debug.setMensagem("Inicio: to.gerarTopologiaDosRoteadores()", 10, 10, progressBar);
 		to.gerarTopologiaDosRoteadores();
-		Debug.setMensagem("Fim: to.gerarTopologiaDosRoteadores()", 10, 10);
+		Debug.setMensagem("Fim: to.gerarTopologiaDosRoteadores()", 10, 10, progressBar);
 
 		// Gera Topologia Link x Roteador
-		Debug.setMensagem("Inicio: to.gerarTopologiaDosLinks()", 10, 10);
+		Debug.setMensagem("Inicio: to.gerarTopologiaDosLinks()", 10, 10, progressBar);
 		to.gerarTopologiaDosLinks();
-		Debug.setMensagem("Fim: to.gerarTopologiaDosLinks()", 10, 10);
+		Debug.setMensagem("Fim: to.gerarTopologiaDosLinks()", 10, 10, progressBar);
 
 		// Imprime no console a Topologia Roteador x Roteador
-		Debug.setMensagem("\r\n\r\n ==== Topologia Roteador x Roteador  ====",7,7);
-		Debug.setMensagem(to.imprimirTopologiaDosRoteadores(),7,7);
+		Debug.setMensagem("\r\n\r\n ==== Topologia Roteador x Roteador  ====",7,7, progressBar);
+		Debug.setMensagem(to.imprimirTopologiaDosRoteadores(),7,7, progressBar);
 
 		// Imprime no console a Topologia Link x Roteador
-		Debug.setMensagem("\r\n\r\n ==== Topologia Link x Roteador  ====",7,7);
-		Debug.setMensagem(to.imprimirTopologiaDosLinks(),7,7);
+		Debug.setMensagem("\r\n\r\n ==== Topologia Link x Roteador  ====",7,7, progressBar);
+		Debug.setMensagem(to.imprimirTopologiaDosLinks(),7,7, progressBar);
 
 		// Imprime no console a Matriz de Caminhos				 por Roteador
-		Debug.setMensagem("\r\n\r\n ==== Matriz de Caminhos por Roteador  ====",7,7);
-		Debug.setMensagem(to.imprimirCaminhos(),7,7);
+		Debug.setMensagem("\r\n\r\n ==== Matriz de Caminhos por Roteador  ====",7,7, progressBar);
+		Debug.setMensagem(to.imprimirCaminhos(),7,7, progressBar);
 
 		// Imprime no console o Status dos Links
-		Debug.setMensagem("\r\n\r\n ==== Status dos Links  ====",7,7);
-		Debug.setMensagem(to.statusLinks(),7,7);
+		Debug.setMensagem("\r\n\r\n ==== Status dos Links  ====",7,7, progressBar);
+		Debug.setMensagem(to.statusLinks(),7,7, progressBar);
 
 		// Inicializa tráfego
-		Debug.setMensagem("\r\n\r\n ==== Inicializa o tráfego  ====",7,7);
+		Debug.setMensagem("\r\n\r\n ==== Inicializa o tráfego  ====",7,7, progressBar);
 		rodada.schedulep (3, 0.0, null);	
 
 		// agenda estatísticas
@@ -147,27 +149,29 @@ public class TesteSimulacao {
 		// inciatrafego2(rodada);
 
 		// Inicializa a cadeia de eventos
-		Debug.setMensagem("\r\n\r\n ==== Inicio da simulação  ====",3,3);
+
+		Debug.setMensagem("\r\n\r\n ==== Inicio da simulação  ====",3,3, progressBar);
 		try {
-			cadeiaDeEventos(rodada, to);
+			cadeiaDeEventos(rodada, to, progressBar);
 		} catch (ExecutionException e) {
 			
 			e.printStackTrace();
 		}
-		Debug.setMensagem("\r\n ==== Fim da simulação  ====",3,3);
+		Debug.setMensagem("\r\n ==== Fim da simulação  ====",3,3, progressBar);
 
-		Debug.setMensagem("============================ Fim da Rodada " + rodada.filename + " ============================",3,3);
+		Debug.setMensagem("============================ Fim da Rodada " + rodada.filename + " ============================",3,3, progressBar);
 
 	}
 
-	public void cadeiaDeEventos(RodadaDeSimulacao rodada, Topologia to)
+	public void cadeiaDeEventos(RodadaDeSimulacao rodada, Topologia to, BAMSimProgressBar progressBar)
 			throws IOException, RrdException, ExecutionException {
 		No dados;
+
 
 		// Lsp lsp;
 		rodada.estatistica.tempoSimulacaoInicio=System.currentTimeMillis();
 		//tempo de simulação
-		while (ParametrosDSTE.condicaoDeParada(rodada))
+		while (ParametrosDSTE.condicaoDeParada(rodada, progressBar))
 		{
 
 			
@@ -186,7 +190,7 @@ public class TesteSimulacao {
 				Debug.setMensagem("Tipo 1 - Tentar estabelecer LSP "
 						+ ((Lsp) dados.item).ID + " com "
 						+ ((Lsp) dados.item).Carga + " Mbps CT="
-						+ ((Lsp) dados.item).CT  + "",7,7);
+						+ ((Lsp) dados.item).CT  + "",7,7, progressBar);
 				
 				Long tempoInicial=System.nanoTime();
 				Link[] menorCaminho = Roteamento.TryPath_CSPF(
@@ -194,19 +198,19 @@ public class TesteSimulacao {
 				rodada.estatistica.tempoAcumuladoGrantDeny+=System.nanoTime()-tempoInicial;
 				
 				if (menorCaminho != null) {
-					Debug.setMensagem(" ==== Menor caminho  ====",7,7);
-					Debug.setMensagem(to.imprimirCaminho(menorCaminho),7,7);
+					Debug.setMensagem(" ==== Menor caminho  ====",7,7, progressBar);
+					Debug.setMensagem(to.imprimirCaminho(menorCaminho),7,7, progressBar);
 					((Lsp) dados.item).estabelecerLSP(menorCaminho);
 					((Lsp) dados.item).status = LspStatus.estabelecida;
 
 					
-					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID + " Estabelecida ========"  + " Em CT=" + ((Lsp) dados.item).CT,7,7);
+					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID + " Estabelecida ========"  + " Em CT=" + ((Lsp) dados.item).CT,7,7, progressBar);
 
 					// agenda desestabelecimento
 					rodada.schedulep(2, ((Lsp) dados.item).tempoDeVida, dados);
 
 				} else {
-					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID + " Bloqueada ========" + " Em CT=" + ((Lsp) dados.item).CT ,7,7);
+					Debug.setMensagem("========= LSP" + ((Lsp) dados.item).ID + " Bloqueada ========" + " Em CT=" + ((Lsp) dados.item).CT ,7,7, progressBar);
 					((Lsp) dados.item).status = LspStatus.bloqueada;
 					rodada.estatistica.bloqueios++;
 					rodada.estatistica.bloqueiosCT[((Lsp) dados.item).CT]++;
@@ -219,7 +223,7 @@ public class TesteSimulacao {
 						+ ((Lsp) dados.item).ID + " com "
 						+ ((Lsp) dados.item).Carga + " Mbps  CT="
 						+ ((Lsp) dados.item).CT 
-						,7,7);
+						,7,7, progressBar);
 				((Lsp) dados.item).desestabeleceLSP();
 				rodada.estatistica.lspUnbroken++;
 				rodada.estatistica.lspUnbrokenCT[((Lsp) dados.item).CT]++;
@@ -229,7 +233,7 @@ public class TesteSimulacao {
 
 				break;
 			case 3:// geracao de trafego
-				Debug.setMensagem("Tipo 3 - Agenda/Cria LSP ",7,7);
+				Debug.setMensagem("Tipo 3 - Agenda/Cria LSP ",7,7, progressBar);
 				ParametrosDSTE.trafegoManual(rodada, to, dados);
 
 				break;
@@ -974,26 +978,29 @@ public class TesteSimulacao {
 				BancoDeDados.setXML( rodada.simtime() + "\tFinalizando BAMCBR;;;", rodada.filename);
 				
 			break;
-
+			case 10:
+				
+			break;	
 			}
-			Debug.setMensagem(" ==== Status dos Links  ====",5,5);
-			Debug.setMensagem(to.statusLinks(),5,5);
+			
+			Debug.setMensagem(" ==== Status dos Links  ====",5,5, progressBar);
+			Debug.setMensagem(to.statusLinks(),5,5, progressBar);
 			//Debug.setMensagem(rodada.imprime_evchain(), 0, 0);
 			//BancoDeDados.setXML(rodada.imprime_evchain(),"debug2");
 
 		}
 		
 		
-		Debug.setMensagem("\r\n\r\n ==== Status dos Links  ====",5,5);
-		Debug.setMensagem(to.statusLinks(),5,5);
+		Debug.setMensagem("\r\n\r\n ==== Status dos Links  ====",5,5, progressBar);
+		Debug.setMensagem(to.statusLinks(),5,5, progressBar);
 		rodada.estatistica.tempoSimulacaoFim=System.currentTimeMillis();
-		Debug.setMensagem(rodada.estatistica.getEstatisticas(),3,3);
+		Debug.setMensagem(rodada.estatistica.getEstatisticas(),3,3, progressBar);
 		if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
 		{
-			Debug.setMensagem(BAMRecommenderNoGUI.getInstance().getStringCases(),3,3);
+			Debug.setMensagem(BAMRecommenderNoGUI.getInstance().getStringCases(),3,3, progressBar);
 		}
 		try {
-			Debug.setMensagem("Plotando os gráficos..." ,3,3);
+			Debug.setMensagem("Plotando os gráficos..." ,3,3, progressBar);
 			rodada.estatistica.gerarLinkRRDPNG(to);
 			rodada.estatistica.gerarRRDPNGpreempcao();
 			rodada.estatistica.gerarRRDPNGlspRequested();

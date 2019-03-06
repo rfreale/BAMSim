@@ -3,17 +3,22 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.exception.ExecutionException;
 
 import org.jrobin.core.RrdException;
 
+import com.hp.hpl.jena.iri.impl.Main;
+
 import BAM.BAMRecommender.BAMRecommenderNoGUI;
 import BAM.BAMRecommender.BAMSolution;
 import DSTE.*;
 import Main.gui.BAMSimConfiguration;
 import Simulador.*;
+import Main.gui.BAMSimProgressBar;
 /****************** ESTRUTURAS BÁSICAS RELACIONADAS A CADEIA DE EVENTOS **********************/
 
 public class Simulador
@@ -55,7 +60,14 @@ public class Simulador
 				System.exit(0);
 				
 		}
-			
+		
+
+		
+		
+        
+ 
+        //Call setStringPainted now so that the progress bar height
+        //stays the same whether or not the string is shown.
 		
 		BAMRecommenderNoGUI recommender = BAMRecommenderNoGUI.getInstance();
 		if(ParametrosDSTE.RecomendacaoCBRSwitchBAM)
@@ -137,6 +149,12 @@ public class Simulador
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}
+			try {
+				Thread.sleep(3600000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			System.exit(0);
 	}

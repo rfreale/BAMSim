@@ -1,5 +1,6 @@
 package DSTE;
 import BAM.BAMRecommender.BAMDescription;
+import Main.gui.BAMSimProgressBar;
 import Simulador.No;
 import Simulador.RodadaDeSimulacao;
 import jcolibri.cbrcore.Attribute;
@@ -237,12 +238,15 @@ public class ParametrosDSTE {
 	
 	
 	
-	public static boolean condicaoDeParada(RodadaDeSimulacao rodada)
+	public static boolean condicaoDeParada(RodadaDeSimulacao rodada, BAMSimProgressBar progressBar)
 	{
 		// rodada.simtime()<=36000
 		//rodada.estatistica.lspRequested<=500
-		if(rodada.simtime() <= TempoSimulacao) 
+		if(rodada.simtime() <= TempoSimulacao)
+		{
+			progressBar.setProgress((int)((rodada.simtime()*100)/TempoSimulacao));
 			return true;
+		}
 		else
 			return false;
 	}

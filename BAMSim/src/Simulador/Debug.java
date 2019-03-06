@@ -5,6 +5,8 @@ import Simulador.*;
 
 import java.util.Date;
 
+import Main.gui.BAMSimProgressBar;
+
 
 public class Debug {
 	
@@ -21,6 +23,15 @@ public class Debug {
 			System.out.println(mensagem);
 	}
 	
+	public static void setMensagem(String mensagem, int debugFile, int debugConsole, BAMSimProgressBar progressBar) {
+		if(ParametrosDoSimulador.DebugFile>=debugFile)
+			gravarArquivoTexto(mensagem);
+		if(ParametrosDoSimulador.DebugConsole>=debugConsole)
+		{
+			System.out.println(mensagem);
+			progressBar.setStatus(mensagem);
+		}
+	}
 
 	 public static void gravarArquivoTexto(String mensagem)
 	 {
