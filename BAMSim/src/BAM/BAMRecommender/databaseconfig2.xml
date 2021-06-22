@@ -1,8 +1,0 @@
-<DataBaseConfiguration>
-	<HibernateConfigFile>BAM/BAMRecommender/hibernate.cfg2.xml</HibernateConfigFile>
-	<DescriptionMappingFile>BAM/BAMRecommender/BAMDescription.hbm.xml</DescriptionMappingFile>
-	<DescriptionClassName>BAM.BAMRecommender.BAMDescription</DescriptionClassName>
-	<SolutionMappingFile>BAM/BAMRecommender/BAMSolution.hbm.xml</SolutionMappingFile>
-	<SolutionClassName>BAM.BAMRecommender.BAMSolution</SolutionClassName>
-	
-</DataBaseConfiguration>
