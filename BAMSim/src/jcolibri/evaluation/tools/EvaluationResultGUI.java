@@ -1,7 +1,7 @@
 /**
  * EvaluationResultGUI.java
  * jCOLIBRI2 framework. 
- * @author Juan A. Recio-García.
+ * @author Juan A. Recio-Garcï¿½a.
  * GAIA - Group for Artificial Intelligence Applications
  * http://gaia.fdi.ucm.es
  * 07/05/2007
@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Vector;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -44,9 +45,9 @@ import net.sourceforge.chart2d.LegendProperties;
 import net.sourceforge.chart2d.MultiColorsProperties;
 import net.sourceforge.chart2d.Object2DProperties;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
+//import com.sun.image.codec.jpeg.JPEGCodec;
+//import com.sun.image.codec.jpeg.JPEGEncodeParam;
+//import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 /**
  * Class that visualizates the result of an evaluation in a Swing frame.
@@ -262,14 +263,15 @@ public class EvaluationResultGUI
      }
           
      static void saveComponentToJPG(Component component, File file) throws IOException{
-            BufferedImage image = (BufferedImage)component.createImage(component.getWidth(),component.getHeight());
-            Graphics graphics = image.getGraphics();
-            if(graphics != null) { component.paintAll(graphics); }
-            FileOutputStream fileStream = new FileOutputStream(file);
-            JPEGEncodeParam encodeParam = JPEGCodec.getDefaultJPEGEncodeParam(image);
-            JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(fileStream);
-            encoder.encode(image,encodeParam);
-            fileStream.close();
+         BufferedImage image = (BufferedImage)component.createImage(component.getWidth(),component.getHeight());
+         Graphics graphics = image.getGraphics();
+         if(graphics != null) { component.paintAll(graphics); }
+         FileOutputStream fileStream = new FileOutputStream(file);
+         //JPEGEncodeParam encodeParam = JPEGCodec.getDefaultJPEGEncodeParam(image);
+         //JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(fileStream);
+        // encoder.encode(image,encodeParam);
+         ImageIO.write(image, "JPEG", fileStream);
+         fileStream.close();
      }
 
      

@@ -1,7 +1,7 @@
 /**
  * DisplayCasesTableMethod.java
  * jCOLIBRI2 framework. 
- * @author Juan A. Recio-García.
+ * @author Juan A. Recio-Garcï¿½a.
  * GAIA - Group for Artificial Intelligence Applications
  * http://gaia.fdi.ucm.es
  * 25/10/2007
@@ -106,7 +106,7 @@ public class DisplayCasesTableWithCritiquesMethod
 	Vector<Object> columnNames = extractColumnNames(cases.iterator().next());
 	
 
-	Vector<Object> rows = new Vector<Object>();
+	Vector<Vector<CBRCase>>  rows = new Vector<Vector<CBRCase>>();
 	for(CBRCase c: cases)
 	    rows.add(getAttributes(c));
 	
