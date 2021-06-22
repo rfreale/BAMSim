@@ -36,9 +36,9 @@ import java.io.RandomAccessFile;
 
 import javax.imageio.ImageIO;
 
-//import com.sun.image.codec.jpeg.JPEGCodec;
-//import com.sun.image.codec.jpeg.JPEGEncodeParam;
-//import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGEncodeParam;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 @SuppressWarnings("restriction")
 class ImageWorker {
@@ -192,12 +192,11 @@ class ImageWorker {
 			gifEncoder.encode(stream);
 		}
 		else if (type.equalsIgnoreCase("jpg") || type.equalsIgnoreCase("jpeg")) {
-			//JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(stream);
-			//JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(img);
-			//param.setQuality(quality, false);
-			//encoder.setJPEGEncodeParam(param);
-			//encoder.encode(img);
-			ImageIO.write(img, "JPEG", stream);
+			JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(stream);
+			JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(img);
+			param.setQuality(quality, false);
+			encoder.setJPEGEncodeParam(param);
+			encoder.encode(img);
 		}
 		else {
 			throw new IOException("Unsupported image format: " + type);
