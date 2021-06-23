@@ -108,6 +108,8 @@ public class Link {
 					return BAM.preemptionAllocCTSharing(this, lsp);
 				case PreemptionGBAM:
 					return BAM.preemptionGBAM(this, lsp);
+				case NoPreemptionGBAM:
+					return BAM.noPreemptionGBAM(this, lsp);
 				default:
 	                System.out.println("BAM não implementado!");
 	                break;

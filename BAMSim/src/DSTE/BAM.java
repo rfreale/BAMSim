@@ -499,5 +499,101 @@ public class BAM {
 			
 		return bandaPreemptada;
 	}
+	
+	public static BAMStatus noPreemptionGBAM(Link link, Lsp lsp)
+	{
+		BAMStatus status=null;
+		
+
+		
+		if (
+				//Tem direito a banda por ser privada do BC ou prioritária por estar abaixo do seu BC configurado
+				((link.BCAtual[lsp.CT]+lsp.Carga<=link.privado(lsp.CT))||(link.BCAtual[lsp.CT]+lsp.Carga<=link.BCMbps(lsp.CT)))
+				|| //ou
+				//Tem direito utilizando HTL ou LTH
+				(lsp.Carga<=
+							(link.BCMbps(lsp.CT)- //Limite da BC
+							link.BCAtual[lsp.CT]) //Utilizado pela BC
+							+
+							(link.LTHAcumuladoCompartilhavel(lsp.CT) //Compartilhável LTH
+							+link.HTLAcumuladoCompartilhavel(lsp.CT) //Compartilhável HTL
+							-link.excedenteBCSuperiores(lsp.CT))  //Excedentes superiores utilizando HTL ou LTH
+				)
+			)
+		{
+			
+			
+			
+			//verifica se alguém inferior a nova LSP estourará  -> nesse caso bloqueia
+			for(int c=0; c<lsp.CT; c++)
+			{
+				//Não estrapolou sua BC
+				if(link.BCAtual[c]<=link.BCMbps(c))
+				{
+					int i=0;
+				}else
+				if(		link.BCAtual[c]
+						>
+						(link.BCMbps(c)
+						+
+						(link.LTHAcumuladoCompartilhavelAUX(c,lsp) //Compartilhável LTH
+						+link.HTLAcumuladoCompartilhavelAUX(c,lsp) //Compartilhável HTL
+						-link.excedenteBCSuperioresAUX(c,lsp))
+						) 
+				  )
+				{
+					//status=status==BAMStatus.devolucao?BAMStatus.devolucaoEpreempcao:BAMStatus.preempcao;
+					status=BAMStatus.bloqueada;
+					break;
+				}
+			}
+			
+			//verifica se alguém superior a nova LSP estourará -> bloqueia
+			for(int c=ParametrosDSTE.MaxClassType-1; c>lsp.CT; c--)
+			{
+				//Não estrapolou sua BC
+				if(link.BCAtual[c]<=link.BCMbps(c))
+				{
+					int i=0;
+				}else
+				//Se o que estou utilizando for maior do que o disponível(AUX) após a nova LSP
+				if(		link.BCAtual[c]
+						>
+						(link.BCMbps(c)
+						+
+						(link.LTHAcumuladoCompartilhavelAUX(c,lsp) //Compartilhável LTH
+						+link.HTLAcumuladoCompartilhavelAUX(c,lsp) //Compartilhável HTL
+						-link.excedenteBCSuperioresAUX(c,lsp))
+						) 
+				  )
+				{
+					//status=BAMStatus.devolucao;
+					//status=status==BAMStatus.preempcao?BAMStatus.devolucaoEpreempcao:BAMStatus.devolucao;
+					status=BAMStatus.bloqueada;
+					break;
+				}
+			}
+			
+			//se alguém superior a nova LSP estourar e  alguém inferior a nova LSP estourar 
+			//-> Bloquear
+			//status=BAMStatus.devolucaoEpreempcao;
+			
+			//se alguém superior a mim estourar com a nova LSP -> Bloquear
+			//status=BAMStatus.devolucao;
+			status=status==null?BAMStatus.aceita:status;
+			
+			
+		}
+		else
+		{
+			status=BAMStatus.bloqueada;
+		}
+		
+
+		return status;
+	}
+	
+
+	
 
 }
